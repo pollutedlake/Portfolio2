@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+#include "GImage.h"
 
 #pragma region
 /*
@@ -55,12 +55,19 @@
 
 class GameNode
 {
+private:
+	GImage* _doubleBuffer;
+	void setDoubleBuffer(void);
+
 public:
 
 	virtual HRESULT init(void);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(HDC hdc);
+
+	GImage* getDoubleBuffer(void) { return _doubleBuffer; }
+
 
 	// 순수가상 함수
 	//virtual void IFunction() abstract;

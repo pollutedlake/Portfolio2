@@ -95,8 +95,11 @@ WBCS(와이드 바이트 캐릭터 셋)
 // bitset : 비트 연산을 좀더 쉽게 관리해 주는 함수를 지원하는 STL
 // ㄴ reset(), set, flip(), all(), any(), size() 등등....
 #include<bitset>
+#include<map>
 using std::vector;
 using std::bitset;
+using std::map;
+using std::pair;
 
 /*
 //! D2D/D3D 헤더파일

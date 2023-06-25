@@ -13,8 +13,15 @@ HRESULT GameNode::init(void)
     RND->init();
     KEYMANAGER->init();
 
+    this->setDoubleBuffer();
     // 함수가 성공적으로 실행 되었음을 알린다.
     return S_OK;
+}
+
+void GameNode::setDoubleBuffer(void)
+{
+	_doubleBuffer = new GImage;
+	_doubleBuffer->init(WINSIZE_X, WINSIZE_Y);
 }
 
 void GameNode::release(void)
