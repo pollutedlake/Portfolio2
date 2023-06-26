@@ -4,7 +4,7 @@
 class TitleScene : public GameNode
 {
 private:
-	GImage* _titleBG;
+	GImage* _titleBG;	// 타이틀 화면 배경 이미지
 public :
 	HRESULT init(void);
 	void update(void);

@@ -32,10 +32,10 @@ GImage* ImageManager::addImage(string key, const char* fileName, int width, int 
 
 GImage* ImageManager::findImage(string key)
 {
-	
-	return nullptr;
+	return _imageMap.at(key);
 }
 
 void ImageManager::deleteImage(string key)
 {
+
 }

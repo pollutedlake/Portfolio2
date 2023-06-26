@@ -16,6 +16,9 @@
     <Filter Include="FrameWork">
       <UniqueIdentifier>{99dd31b7-2f5e-40d6-8d49-d7ebbcfee310}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\DesignPattern">
+      <UniqueIdentifier>{20448666-a58a-48ce-9b52-2247ee3086e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
@@ -42,14 +45,14 @@
     <ClInclude Include="RandomFunction.h">
       <Filter>FrameWork</Filter>
     </ClInclude>
-    <ClInclude Include="SingletonBase.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
     <ClInclude Include="Stdafx.h">
       <Filter>FrameWork</Filter>
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>FrameWork\DesignPattern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
