@@ -6,7 +6,7 @@ HRESULT MainGame::init(void)
 {
 	GameNode::init();
 	title = new GImage;
-	title->init("Resources/Images/Title.bmp", WINSIZE_X, WINSIZE_Y);
+	title->init("Resources/Images/BackGround/Title.bmp", WINSIZE_X, WINSIZE_Y);
 	return S_OK;
 }
 

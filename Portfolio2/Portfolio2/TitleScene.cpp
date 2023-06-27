@@ -3,7 +3,7 @@
 
 HRESULT TitleScene::init(void)
 {
-	_titleBG
+	//_titleBG
 	return S_OK;
 }
 

@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -19,64 +15,71 @@
     <Filter Include="FrameWork\DesignPattern">
       <UniqueIdentifier>{20448666-a58a-48ce-9b52-2247ee3086e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\GameCore">
+      <UniqueIdentifier>{3c11e6ba-4464-4fd3-a14c-5fd1d060ef7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GImage">
+      <UniqueIdentifier>{42698969-ec79-48b5-b56d-0b72e44d993b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\PCH">
+      <UniqueIdentifier>{0e1d0a4c-dd43-4c94-8ce3-4e5742f31107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ManagerClass">
+      <UniqueIdentifier>{620d687c-5fd1-4300-9446-e1fb50010d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Utility">
+      <UniqueIdentifier>{733aaaae-5e9f-4cb2-bdaa-0c127ff7c19a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GImage.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="GameNode.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonMacroFunction.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomFunction.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="Stdafx.h">
-      <Filter>FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="SingletonBase.h">
       <Filter>FrameWork\DesignPattern</Filter>
     </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>FrameWork\GameCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GImage.h">
+      <Filter>FrameWork\GImage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>FrameWork\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonMacroFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MainGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>FrameWork</Filter>
-    </ClCompile>
     <ClCompile Include="GameNode.cpp">
-      <Filter>FrameWork</Filter>
+      <Filter>FrameWork\GameCore</Filter>
     </ClCompile>
     <ClCompile Include="GImage.cpp">
-      <Filter>FrameWork</Filter>
+      <Filter>FrameWork\GImage</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>ManagerClass</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">
