@@ -26,7 +26,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
     wndClass.cbClsExtra = 0;                                                    // 클래스 여분 메모리
     wndClass.cbWndExtra = 0;                                                    // 윈도우 여분 메모리
     wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);               // 백그라운드
-    wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);                             // 마우스 커서
+    wndClass.hCursor = LoadCursor(NULL, IDC_CROSS);                             // 마우스 커서
     wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);                           // 아이콘
     wndClass.hInstance = hInstance;                                             // 윈도우를 소요한 프로그램의 식별자 정보
     wndClass.lpfnWndProc = (WNDPROC)WndProc;                                    // 윈도우 프로시저

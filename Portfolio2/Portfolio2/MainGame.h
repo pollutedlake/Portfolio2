@@ -1,10 +1,11 @@
 #pragma once
 #include "GameNode.h"
+#include "SceneManager.h"
 
 class MainGame : public GameNode
 {
 private:
-	GImage* title;
+	SceneManager* _sceneManager;
 
 public:
 	virtual HRESULT init(void);
