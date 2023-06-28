@@ -1,2 +1,14 @@
-﻿  ScenarioScene.cpp
-  Portfolio2.vcxproj -> C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+﻿  GImage.cpp
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\GImage.cpp(138,18): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\GImage.cpp(139,18): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\GImage.cpp(212,18): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\GImage.cpp(213,18): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GameNode.cpp
+  ImageManager.cpp
+  KeyManager.cpp
+  MainGame.cpp
+  ScenarioScene.cpp
+  SceneManager.cpp
+  TitleScene.cpp
+  WinMain.cpp
+  Portfolio2.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

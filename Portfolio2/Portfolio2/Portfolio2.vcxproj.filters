@@ -26,6 +26,9 @@
     <Filter Include="FrameWork\Utility">
       <UniqueIdentifier>{733aaaae-5e9f-4cb2-bdaa-0c127ff7c19a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{f8fbb3f3-a981-406a-a0f7-ce490e7d60d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SingletonBase.h">
@@ -56,11 +59,17 @@
       <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="SceneManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="ScenarioScene.h" />
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -78,12 +87,18 @@
     <ClCompile Include="KeyManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="SceneManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
     <ClCompile Include="ScenarioScene.cpp" />
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">

@@ -14,8 +14,16 @@ public:
 		HDC			hMemDC;
 		HBITMAP		hBit;
 		HBITMAP		hOBit;
-		int			width;
-		int			height;
+		int x;
+		int y;
+		int	width;
+		int	height;
+		int maxFrameX;
+		int maxFrameY;
+		int currentFrameX;
+		int currentFrameY;
+		int frameWidth;
+		int frameHeight;
 		BYTE		loadType;
 
 		tagImage()
@@ -24,8 +32,16 @@ public:
 			hMemDC = NULL;
 			hBit = NULL;
 			hOBit = NULL;
+			x = 0;
+			y = 0;
 			width = 0;
 			height = 0;
+			maxFrameX = 0;
+			maxFrameY = 0;
+			currentFrameX = 0;
+			currentFrameY = 0;
+			frameWidth = 0;
+			frameHeight = 0;
 			loadType = LOAD_RESOURCE;
 		}
 	}IMAGE_INFO, * LPIMAGE_INFO;
@@ -52,6 +68,9 @@ public:
 	HRESULT init(const DWORD resID, int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
 	// 이미지 파일로 초기화
 	HRESULT init(const char* fileName, int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
+	HRESULT init(const char* fileName, float x, float y, int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
+	HRESULT init(const char* fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
+	HRESULT init(const char* fileName, float x, float y, int width, int height, int maxFrameX, int maxFrameY, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
 
 	HRESULT initForAlphaBlend(void);
 
@@ -72,8 +91,16 @@ public:
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
+	// 프레임렌더
+	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
+	void frameRender(HDC hdc, int destX, int destY);
+	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+	void loopRender(HDC hdc, const LPRECT dramArea, int offsetX, int offsetY);
 
-	LPIMAGE_INFO getImageInfo() { return _imageInfo; }
+	inline int  getWidth() { return _imageInfo->width; }
+	inline int  getHeight() { return _imageInfo->height; }
+	inline int  getframeWidth() { return _imageInfo->frameWidth; }
+	inline int  getframeHeight() { return _imageInfo->frameHeight; }
 
 	// = 인라인 함수 =
 	inline HDC getMemDC(void) { return _imageInfo->hMemDC; }

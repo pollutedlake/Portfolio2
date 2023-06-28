@@ -126,17 +126,23 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "CommonMacroFunction.h"
 #include "RandomFunction.h"
 #include "KeyManager.h"
+#include "SceneManager.h"
+#include "ImageManager.h"
+#include "AnimationManager.h"
 
 // # 싱글톤 #
 #define RND RandomFunction::getSingleton()
 #define KEYMANAGER KeyManager::getSingleton()
+#define SCENEMANAGER SceneManager::getSingleton()
+#define IMAGEMANAGER ImageManager::getSingleton()
+#define ANIMATIONMANAGER AnimationManager::getSingleton();
 
 // # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))
 #define WINSTART_X				400
 #define WINSTART_Y				100
-#define WINSIZE_X				1260
-#define WINSIZE_Y				800
+#define WINSIZE_X				960
+#define WINSIZE_Y				720
 
 #define PI                       3.141592
 // WS_CAPTION : 타이틀바를 가지기 위한 옵션

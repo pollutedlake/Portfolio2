@@ -5,14 +5,10 @@ class TitleScene : public GameNode
 {
 private:
 	GImage* _titleBG;	// 타이틀 화면 배경 이미지
-	GImage* _startGame;
-	GImage* _loadGame;
-	GImage* _tutorial;
-	GImage* _exit;
-	RECT _startGameRC;
-	RECT _loadGameRC;
-	RECT _tutorialRC;
-	RECT _exitRC;
+	GImage* _titleName;
+	GImage* _titleEFX;
+	int _frame;
+	int _deltaTime;
 
 public :
 	HRESULT init(void);

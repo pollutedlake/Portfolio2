@@ -1,21 +1,14 @@
 #pragma once
+#include "SingletonBase.h"
 #include "GameNode.h"
 #include "TitleScene.h"
 #include "ScenarioScene.h"
 
-enum class Scene
-{
-	TITLE,
-	SCENARIO,
-	SCENENUM
-};
-
-class SceneManager : public GameNode
+class SceneManager : public SingletonBase<SceneManager>
 {
 private:
-	TitleScene* _titleScene;
-	ScenarioScene* _scenarioScene;
-	Scene _scene;
+	GameNode* _currentScene;
+	map<string, GameNode*> _sceneMap;
 	
 public:
 
@@ -24,7 +17,8 @@ public:
 	void release(void);
 	void render(HDC hdc);
 
-	void changeScene(Scene scene);
+	void addScene(string sceneName, GameNode* scene);
+	HRESULT changeScene(string sceneName);
 
 	SceneManager() {}
 	~SceneManager() {}

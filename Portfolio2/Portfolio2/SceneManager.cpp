@@ -3,47 +3,67 @@
 
 HRESULT SceneManager::init(void)
 {
-    _titleScene = new TitleScene;
-    _scenarioScene = new ScenarioScene;
-    _titleScene->init();
-    _scenarioScene->init();
-    _scene = Scene::TITLE;
+    _currentScene = nullptr;
     return S_OK;
 }
 
 void SceneManager::update(void)
 {
-    switch (_scene)
+    if (_currentScene != nullptr)
     {
-    case Scene::TITLE:
-        _titleScene->update();
-        break;
-    case Scene::SCENARIO:
-        _scenarioScene->update();
-        break;
+        _currentScene->update();
     }
 }
 
 void SceneManager::release(void)
 {
-    SAFE_DELETE(_titleScene);
-    SAFE_DELETE(_scenarioScene);
+	_currentScene->release();
+	SAFE_DELETE(_currentScene);
+    for (auto iter = _sceneMap.begin(); iter != _sceneMap.end();)
+    {
+        if (iter->second != nullptr)
+        {
+            iter->second->release();
+            SAFE_DELETE(iter->second);
+            iter = _sceneMap.erase(iter);
+        }
+        else
+        {
+            ++iter;
+        }
+    }
+    _sceneMap.clear();
 }
 
 void SceneManager::render(HDC hdc)
 {
-    switch (_scene)
+	if (_currentScene != nullptr)
+	{
+		_currentScene->render(hdc);
+	}
+}
+
+
+
+void SceneManager::addScene(string sceneName, GameNode* scene)
+{
+    if (scene != nullptr)
     {
-    case Scene::TITLE:
-        _titleScene->render(hdc);
-        break;
-    case Scene::SCENARIO:
-        _scenarioScene->render(hdc);
-        break;
+        _sceneMap.insert(make_pair(sceneName, scene));
     }
 }
 
-void SceneManager::changeScene(Scene scene)
+HRESULT SceneManager::changeScene(string sceneName)
 {
-    _scene = scene;
+    auto iter = _sceneMap.find(sceneName);
+    if (iter->second == _currentScene)
+    {
+        return S_OK;
+    }
+    if (SUCCEEDED(iter->second->init()))
+    {
+        _currentScene = iter->second;
+        return S_OK;
+    }
+    return E_FAIL;
 }

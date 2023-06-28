@@ -4,6 +4,8 @@ class ScenarioScene : public GameNode
 {
 private:
 	GImage* _background;
+	GImage* _titleName;
+
 public:
 	HRESULT init(void);
 	void update(void);

@@ -1,24 +1,27 @@
 #include "Stdafx.h"
 #include "MainGame.h"
+#include "TitleScene.h"
 
 HRESULT MainGame::init(void)
 {
 	GameNode::init();
-	_sceneManager = new SceneManager;
-	_sceneManager->init();
+	IMAGEMANAGER->init();
+	SCENEMANAGER->addScene("Title", new TitleScene);
+	SCENEMANAGER->changeScene("Title");
 	return S_OK;
 }
 
 void MainGame::release(void)
 {
 	GameNode::release();
-	SAFE_DELETE(_sceneManager);
+	SCENEMANAGER->release();
+	SCENEMANAGER->releaseSingleton();
 }
 
 void MainGame::update(void)
 {
 	GameNode::update();
-	_sceneManager->update();
+	SCENEMANAGER->update();
 }
 
 void MainGame::render(HDC hdc)
@@ -26,7 +29,7 @@ void MainGame::render(HDC hdc)
 	HDC memDC = this->getDoubleBuffer()->getMemDC();
 	PatBlt(memDC, 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
-	_sceneManager->render(memDC);
+	SCENEMANAGER->render(memDC);
 
 	this->getDoubleBuffer()->render(hdc, 0, 0);
 }
