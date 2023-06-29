@@ -97,13 +97,15 @@ public:
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
 	void loopRender(HDC hdc, const LPRECT dramArea, int offsetX, int offsetY);
 
+	// = 인라인 함수 =
 	inline int  getWidth() { return _imageInfo->width; }
 	inline int  getHeight() { return _imageInfo->height; }
 	inline int  getframeWidth() { return _imageInfo->frameWidth; }
 	inline int  getframeHeight() { return _imageInfo->frameHeight; }
-
-	// = 인라인 함수 =
 	inline HDC getMemDC(void) { return _imageInfo->hMemDC; }
+
+	inline void setFrameX(int frameX) { _imageInfo->currentFrameX = frameX; }
+	inline void setFrameY(int frameY) { _imageInfo->currentFrameY = frameY; }
 
 	GImage();
 	~GImage() {}

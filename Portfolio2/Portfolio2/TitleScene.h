@@ -6,7 +6,8 @@ class TitleScene : public GameNode
 private:
 	GImage* _titleBG;	// 타이틀 화면 배경 이미지
 	GImage* _titleName;
-	GImage* _titleEFX;
+	GImage* _titleEFX2;
+	GImage* _titleEFX1;
 	int _frame;
 	int _deltaTime;
 

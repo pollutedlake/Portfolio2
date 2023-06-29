@@ -5,7 +5,8 @@ HRESULT ImageManager::init(void)
 {
 	IMAGEMANAGER->addImage("TitleBG", "Resources/Images/BackGrounds/TitleScene/TitleBG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/BackGrounds/TitleScene/TitleName.bmp", 451, 117, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TitleEFX", "Resources/Images/Effects/TitleScene/TitleEFX.bmp", 2241, 2025, 6, 6, true, RGB(4, 0, 4));
+	IMAGEMANAGER->addFrameImage("TitleEFX2", "Resources/Images/Effects/TitleScene/TitleEFX2.bmp", 2241, 2025, 6, 6, true, RGB(4, 0, 4));
+	IMAGEMANAGER->addFrameImage("TitleEFX1", "Resources/Images/Effects/TitleScene/TitleEFX1.bmp", 3315, 2398, 13, 11, true, RGB(4, 100, 4));
 	return S_OK;
 }
 
