@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GImage.h"
 
 #pragma comment (lib, "msimg32.lib")
@@ -130,7 +130,7 @@ HRESULT GImage::init(const char* fileName, float x, float y, int width, int heig
 
 	_imageInfo = new IMAGE_INFO;
 
-	_imageInfo->loadType = LOAD_FILE;
+	_imageInfo->loadType = LOAD_RESOURCE;
 	_imageInfo->resID = 0;
 	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
 	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
@@ -141,6 +141,7 @@ HRESULT GImage::init(const char* fileName, float x, float y, int width, int heig
 	_imageInfo->height = height;
 
 	int len = strlen(fileName);
+
 	_fileName = new char[len + 1];
 	strcpy_s(_fileName, len + 1, fileName);
 
@@ -165,7 +166,7 @@ HRESULT GImage::init(const char* fileName, int width, int height, int maxFrameX,
 
 	_imageInfo = new IMAGE_INFO;
 
-	_imageInfo->loadType = LOAD_FILE;
+	_imageInfo->loadType = LOAD_RESOURCE;
 	_imageInfo->resID = 0;
 	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
 	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
@@ -180,6 +181,7 @@ HRESULT GImage::init(const char* fileName, int width, int height, int maxFrameX,
 	_imageInfo->frameHeight = height / maxFrameY;
 
 	int len = strlen(fileName);
+
 	_fileName = new char[len + 1];
 	strcpy_s(_fileName, len + 1, fileName);
 
@@ -204,7 +206,7 @@ HRESULT GImage::init(const char* fileName, float x, float y, int width, int heig
 
 	_imageInfo = new IMAGE_INFO;
 
-	_imageInfo->loadType = LOAD_FILE;
+	_imageInfo->loadType = LOAD_RESOURCE;
 	_imageInfo->resID = 0;
 	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
 	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
@@ -221,6 +223,7 @@ HRESULT GImage::init(const char* fileName, float x, float y, int width, int heig
 	_imageInfo->frameHeight = height / maxFrameY;
 
 	int len = strlen(fileName);
+
 	_fileName = new char[len + 1];
 	strcpy_s(_fileName, len + 1, fileName);
 
@@ -636,26 +639,12 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, 
 		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
 	}
 
-	if(!_blendImage) this->initForAlphaBlend();
+	if (!_blendImage) this->initForAlphaBlend();
 	_blendFunc.SourceConstantAlpha = alpha;
-
 	if (_isTrans)
 	{
-		// 1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지 그린다.
-		BitBlt
-		(
-			_blendImage->hMemDC,
-			0, 0,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			hdc,
-			destX, destY,
-			SRCCOPY
-		);
-
-		// 2. 원본 이미지의 배경을 없앤 후 블렌드 이미지에 그린다.
-		GdiTransparentBlt
-		(
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, hdc, destX, destY, SRCCOPY);
+		GdiTransparentBlt(
 			_blendImage->hMemDC,
 			0, 0,
 			_imageInfo->frameWidth,
@@ -665,26 +654,15 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, 
 			_imageInfo->currentFrameY * _imageInfo->frameHeight,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight,
-			_transColor
-		);
+			_transColor);
 
-		// 3. 블렌드 이미지를 화면에 그린다.
-		GdiAlphaBlend
-		(
-			hdc,
-			destX, destY,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_blendImage->hMemDC,
-			0, 0,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_blendFunc
-		);
+		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
 	}
 	else
 	{
-		AlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, _imageInfo->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
 	}
 }
 
@@ -692,18 +670,21 @@ void GImage::frameRender(HDC hdc, int destX, int destY)
 {
 	if (_isTrans)
 	{
+		//GdiTransparentBlt(): 비트맵을 불러올때 특정 색상을 제외하고 복사한다.      
 		GdiTransparentBlt
 		(
-			hdc,
-			destX, destY,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
+			hdc,               //복사할 장소와 DC(화면DC)
+			destX,                  //복사될 좌표시작 X 
+			destY,                  //복사될 좌표시작 Y
+			_imageInfo->frameWidth,      //복사될 이미지 가로크기
+			_imageInfo->frameHeight,      //복사될 이미지 세로크기
+			_imageInfo->hMemDC,      //복사될 대상 메모리DC
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_transColor
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,               //복사 시작 지점
+			_imageInfo->frameWidth,         //복사 영역 가로크기
+			_imageInfo->frameHeight,    //복사 영역 세로크기
+			_transColor            //복사할때 제외할 색상(마젠타)
+
 		);
 	}
 	else
@@ -711,7 +692,8 @@ void GImage::frameRender(HDC hdc, int destX, int destY)
 		BitBlt
 		(
 			hdc,
-			destX, destY,
+			destX,
+			destY,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight,
 			_imageInfo->hMemDC,
@@ -728,44 +710,94 @@ void GImage::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int c
 	_imageInfo->currentFrameY = currentFrameY;
 	if (currentFrameX > _imageInfo->maxFrameX)
 	{
-		_imageInfo->currentFrameX = _imageInfo->maxFrameX;
+		_imageInfo->currentFrameX = _imageInfo->currentFrameX;
 	}
 	if (currentFrameY > _imageInfo->maxFrameY)
 	{
-		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
+		_imageInfo->currentFrameY = _imageInfo->currentFrameY;
 	}
 	if (_isTrans)
 	{
+		// GdiTransparentBlt() : 비트맵을 불러올 때 특정 색상을 제외하고 복사한다.
 		GdiTransparentBlt
 		(
-			hdc,
-			destX, destY,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
+			hdc,                  // 복사할 장소의 DC(화면 DC)
+			destX,                  // 복사될 좌표 시작 X
+			destY,                  // 복사될 좌표 시작 Y
+			_imageInfo->frameWidth,         // 복사될 이미지 가로 크기
+			_imageInfo->frameHeight,         // 복사될 이미지 세로 크기
+			_imageInfo->hMemDC,         // 복사될 대상 메모리DC
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_transColor
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,            // 복사 시작 지점
+			_imageInfo->frameWidth,         // 복사 영역 가로 크기
+			_imageInfo->frameHeight,         // 복사 영역 세로 크기
+			_transColor               // 복사할때 제외할 색상 (마젠타)
 		);
 	}
 	else
 	{
-		BitBlt
+		StretchBlt
 		(
 			hdc,
-			destX, destY,
+			destX,
+			destY,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight,
 			_imageInfo->hMemDC,
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
 			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
 			SRCCOPY
 		);
 	}
 }
 
-void GImage::loopRender(HDC hdc, const LPRECT dramArea, int offsetX, int offsetY)
+void GImage::frameRender(HDC hdc, int destX, int destY, int destWidth, int destHeight, int currentFrameX, int currentFrameY)
 {
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+	if (currentFrameX > _imageInfo->maxFrameX)
+	{
+		_imageInfo->currentFrameX = _imageInfo->currentFrameX;
+	}
+	if (currentFrameY > _imageInfo->maxFrameY)
+	{
+		_imageInfo->currentFrameY = _imageInfo->currentFrameY;
+	}
+	if (_isTrans)
+	{
+		// GdiTransparentBlt() : 비트맵을 불러올 때 특정 색상을 제외하고 복사한다.
+		GdiTransparentBlt
+		(
+			hdc,                  // 복사할 장소의 DC(화면 DC)
+			destX,                  // 복사될 좌표 시작 X
+			destY,                  // 복사될 좌표 시작 Y
+			destWidth,
+			destHeight,
+			_imageInfo->hMemDC,         // 복사될 대상 메모리DC
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,            // 복사 시작 지점
+			_imageInfo->frameWidth,         // 복사 영역 가로 크기
+			_imageInfo->frameHeight,         // 복사 영역 세로 크기
+			_transColor               // 복사할때 제외할 색상 (마젠타)
+		);
+	}
+	else
+	{
+		StretchBlt
+		(
+			hdc,
+			destX,
+			destY,
+			destWidth,
+			destHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			SRCCOPY
+		);
+	}
 }

@@ -4,13 +4,14 @@ class ScenarioScene : public GameNode
 {
 private:
 	GImage* _background;
-	GImage* _titleName;
+	GImage* _senarios;
+	int _senariosY;
 
 public:
 	HRESULT init(void);
 	void update(void);
 	void release(void);
-	void render(HDC hdc);
+	void render(void);
 
 	ScenarioScene() {}
 	~ScenarioScene() {}

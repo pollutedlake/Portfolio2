@@ -7,138 +7,121 @@ HRESULT ImageManager::init(void)
 	IMAGEMANAGER->addImage("TitleName", "Resources/Images/BackGrounds/TitleScene/TitleName.bmp", 451, 117, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TitleEFX2", "Resources/Images/Effects/TitleScene/TitleEFX2.bmp", 2241, 2025, 6, 6, true, RGB(4, 0, 4));
 	IMAGEMANAGER->addFrameImage("TitleEFX1", "Resources/Images/Effects/TitleScene/TitleEFX1.bmp", 3315, 2398, 13, 11, true, RGB(4, 100, 4));
+	IMAGEMANAGER->addFrameImage("TitleButtons", "Resources/Images/BackGrounds/TitleScene/TitleButtons.bmp", 390, 124, 2, 4, true, RGB(252, 0, 0));
+
+
+	IMAGEMANAGER->addImage("ScenarioBG", "Resources/Images/BackGrounds/ScenarioScene/Scenario_BG.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addFrameImage("Scenarios", "Resources/Images/BackGrounds/ScenarioScene/Scenarios.bmp", 450, 810, 3, 27, true, RGB(0, 0, 0));
 	return S_OK;
 }
 
 void ImageManager::release(void)
 {
-	deleteAll();
 }
 
-GImage* ImageManager::addImage(string key, int width, int height)
+GImage* ImageManager::addImage(string strKey, int width, int height)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
+	GImage* img = findImage(strKey);
+	if (img) return img;
+
+	img = new GImage;
+	if (FAILED(img->init(width, height)))
 	{
-		return image;
+		SAFE_DELETE(img);
+		return NULL;
 	}
 
-	image = new GImage;
-	if (FAILED(image->init(width, height)))
-	{
-		image->release();
-		SAFE_DELETE(image);
-		return nullptr;
-	}
+	_mImageList.insert(make_pair(strKey, img));
 
-	_imageMap.insert(make_pair(key, image));
-
-	return image;
+	return img;
 }
 
-GImage* ImageManager::addImage(string key, const char* fileName, int width, int height, bool isTrans, COLORREF transColor)
+GImage* ImageManager::addImage(string strKey, const char* fileName, int width, int height, bool isTrans, COLORREF transColor)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
+	GImage* img = findImage(strKey);
+	if (img) return img;
+
+	img = new GImage;
+	if (FAILED(img->init(fileName, width, height, isTrans, transColor)))
 	{
-		return image;
+		SAFE_DELETE(img);
+		return NULL;
 	}
 
-	image = new GImage;
-	if (FAILED(image->init(fileName, width, height, isTrans, transColor)))
-	{
-		image->release();
-		SAFE_DELETE(image);
-		return nullptr;
-	}
+	_mImageList.insert(make_pair(strKey, img));
 
-	_imageMap.insert(make_pair(key, image));
-
-	return image;
+	return img;
 }
 
-GImage* ImageManager::addImage(string key, const char* fileName, float x, float y, int width, int height, bool isTrans, COLORREF transColor)
+GImage* ImageManager::addImage(string strKey, const char* fileName, float x, float y, int width, int height, bool isTrans, COLORREF transColor)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
+	GImage* img = findImage(strKey);
+	if (img) return img;
+
+	img = new GImage;
+	if (FAILED(img->init(fileName, x, y, width, height, isTrans, transColor)))
 	{
-		return image;
+		SAFE_DELETE(img);
+		return NULL;
 	}
 
-	image = new GImage;
-	if (FAILED(image->init(fileName, x, y, width, height, isTrans, transColor)))
-	{
-		image->release();
-		SAFE_DELETE(image);
-		return nullptr;
-	}
+	_mImageList.insert(make_pair(strKey, img));
 
-	_imageMap.insert(make_pair(key, image));
-
-	return image;
+	return img;
 }
 
-GImage* ImageManager::addFrameImage(string key, const char* fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTrans, COLORREF transColor)
+GImage* ImageManager::addFrameImage(string strKey, const char* fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTrans, COLORREF transColor)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
+	GImage* img = findImage(strKey);
+	if (img) return img;
+
+	img = new GImage;
+	if (FAILED(img->init(fileName, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
 	{
-		return image;
+		SAFE_DELETE(img);
+		return NULL;
 	}
 
-	image = new GImage;
-	if (FAILED(image->init(fileName, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
-	{
-		image->release();
-		SAFE_DELETE(image);
-		return nullptr;
-	}
+	_mImageList.insert(make_pair(strKey, img));
 
-	_imageMap.insert(make_pair(key, image));
-
-	return image;
+	return img;
 }
 
-GImage* ImageManager::addFrameImage(string key, const char* fileName, float x, float y, int width, int height, int maxFrameX, int maxFrameY, bool isTrans, COLORREF transColor)
+GImage* ImageManager::addFrameImage(string strKey, const char* fileName, float x, float y, int width, int height, int maxFrameX, int maxFrameY, bool isTrans, COLORREF transColor)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
+	GImage* img = findImage(strKey);
+	if (img) return img;
+
+	img = new GImage;
+	if (FAILED(img->init(fileName, x, y, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
 	{
-		return image;
+		SAFE_DELETE(img);
+		return NULL;
 	}
-
-	image = new GImage;
-	if (FAILED(image->init(fileName, x, y, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
-	{
-		image->release();
-		SAFE_DELETE(image);
-		return nullptr;
-	}
-
-	_imageMap.insert(make_pair(key, image));
-
-	return image;
+	_mImageList.insert(make_pair(strKey, img));
+	return img;
 }
 
-GImage* ImageManager::findImage(string key)
+GImage* ImageManager::findImage(string strKey)
 {
-	auto node = _imageMap.find(key);
-	if (node != _imageMap.end())
+	auto key = _mImageList.find(strKey);
+
+	if (key != _mImageList.end())
 	{
-		return node->second;
+		return key->second;
 	}
 	return nullptr;
 }
 
-bool ImageManager::deleteImage(string key)
+bool ImageManager::deleteImage(string strKey)
 {
-	auto node = _imageMap.find(key);
+	auto key = _mImageList.find(strKey);
 
-	if (node != _imageMap.end())
+	if (key != _mImageList.end())
 	{
-		node->second->release();
-		SAFE_DELETE(node->second);
-		_imageMap.erase(node);
+		key->second->release();
+		SAFE_DELETE(key->second);
+		_mImageList.erase(key);
 		return true;
 	}
 	return false;
@@ -146,92 +129,93 @@ bool ImageManager::deleteImage(string key)
 
 bool ImageManager::deleteAll()
 {
-	auto iter = _imageMap.begin();
-	for (; iter != _imageMap.end();)
+	auto iter = _mImageList.begin();
+	for (; iter != _mImageList.end();)
 	{
-		if (iter->second != nullptr)
+		if (iter->second != NULL)
 		{
 			iter->second->release();
 			SAFE_DELETE(iter->second);
-			iter = _imageMap.erase(iter);
+			iter = _mImageList.erase(iter);
 		}
 		else
 		{
 			++iter;
 		}
 	}
-	_imageMap.clear();
+	_mImageList.clear();
 	return true;
 }
 
-void ImageManager::render(string key, HDC hdc)
+void ImageManager::render(string strKey, HDC hdc)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->render(hdc);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->render(hdc);
 }
 
-void ImageManager::render(string key, HDC hdc, int destX, int destY)
+void ImageManager::render(string strKey, HDC hdc, int destX, int destY)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->render(hdc, destX, destY);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->render(hdc, destX, destY);
 }
 
-void ImageManager::render(string key, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight)
+void ImageManager::render(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->render(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->render(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight);
 }
 
-void ImageManager::render(string key, HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight)
+void ImageManager::render(string strKey, HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->render(hdc, destX, destY, destWidth, destHeight, sourX, sourY, sourWidth, sourHeight);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->render(hdc, destX, destY, destWidth, destHeight, sourX, sourY, sourWidth, sourHeight);
 }
 
-void ImageManager::alphaRender(string key, HDC hdc, BYTE alphpa)
+void ImageManager::alphaRender(string strKey, HDC hdc, BYTE alpha)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->alphaRender(hdc, alphpa);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, alpha);
 }
 
-void ImageManager::alphaRender(string key, HDC hdc, int destX, int destY, BYTE alphpa)
+void ImageManager::alphaRender(string strKey, HDC hdc, int destX, int destY, BYTE alpha)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->alphaRender(hdc, destX, destY, alphpa);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, destX, destY, alpha);
 }
 
-void ImageManager::alphaRender(string key, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alphpa)
+void ImageManager::alphaRender(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->alphaRender(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight, alphpa);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight, alpha);
 }
 
-void ImageManager::alphaRender(string key, HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alphpa)
+void ImageManager::alphaRender(string strKey, HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
 {
-	GImage* image = findImage(key);
-	if (image != nullptr)
-	{
-		image->alphaRender(hdc, destX, destY, destWidth, destHeight, sourX, sourY, sourWidth, sourHeight, alphpa);
-	}
+	GImage* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, destX, destY, destWidth, destHeight, sourX, sourY, sourWidth, sourHeight, alpha);
 }
+
+void ImageManager::frameRender(string strKey, HDC hdc, int destX, int destY)
+{
+	GImage* img = findImage(strKey);
+	if (img) img->frameRender(hdc, destX, destY);
+}
+
+void ImageManager::frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
+{
+	GImage* img = findImage(strKey);
+	if (img) img->frameRender(hdc, destX, destY, currentFrameX, currentFrameY);
+}
+
+void ImageManager::frameRender(string strKey, HDC hdc, int destX, int destY, int destWidth, int destHeight, int currentFrameX, int currentFrameY)
+{
+	GImage* img = findImage(strKey);
+	if (img) img->frameRender(hdc, destX, destY, destWidth, destHeight, currentFrameX, currentFrameY);
+}
+
+void ImageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	GImage* img = findImage(strKey);
+	if (img) img->alphaFrameRender(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
+}
+

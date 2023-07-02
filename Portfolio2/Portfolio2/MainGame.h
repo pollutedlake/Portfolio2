@@ -9,7 +9,7 @@ public:
 	virtual HRESULT init(void);
 	virtual void release(void);
 	virtual void update(void);
-	virtual void render(HDC hdc);
+	virtual void render(void);
 
 	MainGame() {}
 	~MainGame() {}

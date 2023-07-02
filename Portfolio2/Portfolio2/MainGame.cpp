@@ -1,13 +1,15 @@
 #include "Stdafx.h"
 #include "MainGame.h"
 #include "TitleScene.h"
+#include "ScenarioScene.h"
 
 HRESULT MainGame::init(void)
 {
-	GameNode::init();
+	GameNode::init(true);
 	IMAGEMANAGER->init();
 	SCENEMANAGER->addScene("Title", new TitleScene);
-	SCENEMANAGER->changeScene("Title");
+	SCENEMANAGER->addScene("Scenario", new ScenarioScene);
+	SCENEMANAGER->changeScene("Scenario");
 	return S_OK;
 }
 
@@ -24,12 +26,11 @@ void MainGame::update(void)
 	SCENEMANAGER->update();
 }
 
-void MainGame::render(HDC hdc)
+void MainGame::render(void)
 {
-	HDC memDC = this->getDoubleBuffer()->getMemDC();
-	PatBlt(memDC, 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+	PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
-	SCENEMANAGER->render(memDC);
+	SCENEMANAGER->render();
 
-	this->getDoubleBuffer()->render(hdc, 0, 0);
+	this->getBackBuffer()->render(getHDC(), 0, 0);
 }

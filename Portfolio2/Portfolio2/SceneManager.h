@@ -1,21 +1,23 @@
 #pragma once
 #include "SingletonBase.h"
-#include "GameNode.h"
-#include "TitleScene.h"
-#include "ScenarioScene.h"
+class GameNode;
 
 class SceneManager : public SingletonBase<SceneManager>
 {
+public:
+	typedef map<string, GameNode*> mapSceneList;
+	typedef map<string, GameNode*>::iterator mapSceneIter;
+
 private:
 	GameNode* _currentScene;
-	map<string, GameNode*> _sceneMap;
+	mapSceneList _sceneMap;
 	
 public:
 
 	HRESULT init(void);
 	void update(void);
 	void release(void);
-	void render(HDC hdc);
+	void render(void);
 
 	void addScene(string sceneName, GameNode* scene);
 	HRESULT changeScene(string sceneName);

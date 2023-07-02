@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "SceneManager.h"
+#include "GameNode.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -35,11 +36,11 @@ void SceneManager::release(void)
     _sceneMap.clear();
 }
 
-void SceneManager::render(HDC hdc)
+void SceneManager::render(void)
 {
 	if (_currentScene != nullptr)
 	{
-		_currentScene->render(hdc);
+		_currentScene->render();
 	}
 }
 

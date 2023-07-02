@@ -25,6 +25,10 @@
 // ㄴGDI+를 사용하려면 헤더파일에서 꺼내와야 한다.
 //#include <ole2.h>
 #define WIN32_LEAN_AND_MEAN
+#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
+
+// 라이브러리 추가
+#pragma comment (lib, "msimg32.lib")
 
 // Windows 헤더 파일
 #include <windows.h>
@@ -85,6 +89,7 @@ WBCS(와이드 바이트 캐릭터 셋)
 #include <random>
 #include <vector>
 #include<map>
+#include<string.h>
 // unordered_map : Hash 자료구조
 // ㄴ 일반적 상황에서 map보다 검색속도가 더 빠르다.
 // ㄴ 검색 속도가 빠른 이유는 중복된 데이터를 허용하지 않기 때문에
@@ -95,12 +100,16 @@ WBCS(와이드 바이트 캐릭터 셋)
 // bitset : 비트 연산을 좀더 쉽게 관리해 주는 함수를 지원하는 STL
 // ㄴ reset(), set, flip(), all(), any(), size() 등등....
 #include<bitset>
-#include<string>
-using std::vector;
-using std::bitset;
-using std::map;
-using std::pair;
-using std::string;
+#define _USE_MATH_DEFINES
+#include <math.h>
+using namespace std;
+//using std::vector;
+//using std::bitset;
+//using std::pair;
+//using std::map;
+//using std::string;
+//using std::cout;
+//using std::make_pair;
 
 /*
 //! D2D/D3D 헤더파일
@@ -126,16 +135,14 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "CommonMacroFunction.h"
 #include "RandomFunction.h"
 #include "KeyManager.h"
-#include "SceneManager.h"
 #include "ImageManager.h"
-#include "AnimationManager.h"
+#include "SceneManager.h"
 
 // # 싱글톤 #
 #define RND RandomFunction::getSingleton()
 #define KEYMANAGER KeyManager::getSingleton()
-#define SCENEMANAGER SceneManager::getSingleton()
 #define IMAGEMANAGER ImageManager::getSingleton()
-#define ANIMATIONMANAGER AnimationManager::getSingleton();
+#define SCENEMANAGER SceneManager::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))
