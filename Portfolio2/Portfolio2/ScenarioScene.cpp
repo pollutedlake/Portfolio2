@@ -6,7 +6,6 @@ HRESULT ScenarioScene::init(void)
 	_background = IMAGEMANAGER->findImage("ScenarioBG");
 	_senarios = IMAGEMANAGER->findImage("Scenarios");
 	_senariosY = 0;
-	cout << (-5) % 3 << endl;
 	return S_OK;
 }
 
@@ -14,12 +13,17 @@ void ScenarioScene::update(void)
 {
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		_senariosY--;
-		cout << _senarios->getFrameHeight()<<endl;
+		if(_senariosY < _senarios->getHeight() - 450)
+		{
+			_senariosY++;
+		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		_senariosY++;
+		if(_senariosY > 0)
+		{
+			_senariosY--;
+		}
 	}
 }
 
@@ -31,11 +35,12 @@ void ScenarioScene::release(void)
 void ScenarioScene::render()
 {
 	_background->render(getMemDC());
-	for (int i = 0; i < 3; i++)
+	_senarios->render(getMemDC(), WINSIZE_X / 2 - _senarios->getWidth() / 4, 200, _senarios->getWidth() / 2, _senariosY, _senarios->getWidth() / 2, 450);
+	/*for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 27; j++)
 		{
-			_senarios->frameRender(getMemDC(), WINSIZE_X / 2 - _senarios->getFrameWidth() / 2 + 280 * (i - 1), 150 + 100 * j + _senariosY, i, j);
+			_senarios->frameRender(getMemDC(), WINSIZE_X / 2 - _senarios->getFrameWidth() / 2 + 280 * (i - 1), 150 + _senarios->getFrameHeight() * j + _senariosY, i, j);
 		}
-	}
+	}*/
 }
