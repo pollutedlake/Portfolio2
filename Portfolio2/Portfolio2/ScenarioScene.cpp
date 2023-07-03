@@ -6,6 +6,7 @@ HRESULT ScenarioScene::init(void)
 	_background = IMAGEMANAGER->findImage("ScenarioBG");
 	_senarios = IMAGEMANAGER->findImage("Scenarios");
 	_senariosY = 0;
+	cout << (-5) % 3 << endl;
 	return S_OK;
 }
 
