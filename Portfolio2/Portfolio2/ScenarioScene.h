@@ -7,6 +7,8 @@ private:
 	GImage* _senarios;
 	GImage* _scrollUp;
 	GImage* _scrollDown;
+	RECT _scrollUpRC;
+	RECT _scrollDownRC;
 	int _senariosY;
 
 public:
