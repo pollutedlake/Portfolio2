@@ -5,6 +5,8 @@ class ScenarioScene : public GameNode
 private:
 	GImage* _background;
 	GImage* _senarios;
+	GImage* _scrollUp;
+	GImage* _scrollDown;
 	int _senariosY;
 
 public:

@@ -1,14 +1,9 @@
 #include "Stdafx.h"
 #include "MainGame.h"
-#include "TitleScene.h"
-#include "ScenarioScene.h"
 
 HRESULT MainGame::init(void)
 {
 	GameNode::init(true);
-	IMAGEMANAGER->init();
-	SCENEMANAGER->addScene("Title", new TitleScene);
-	SCENEMANAGER->addScene("Scenario", new ScenarioScene);
 	SCENEMANAGER->changeScene("Scenario");
 	return S_OK;
 }
@@ -16,8 +11,6 @@ HRESULT MainGame::init(void)
 void MainGame::release(void)
 {
 	GameNode::release();
-	SCENEMANAGER->release();
-	SCENEMANAGER->releaseSingleton();
 }
 
 void MainGame::update(void)

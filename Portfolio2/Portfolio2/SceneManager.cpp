@@ -1,9 +1,13 @@
 #include "Stdafx.h"
 #include "SceneManager.h"
 #include "GameNode.h"
+#include "TitleScene.h"
+#include "ScenarioScene.h"
 
 HRESULT SceneManager::init(void)
 {
+    SCENEMANAGER->addScene("Title", new TitleScene);
+    SCENEMANAGER->addScene("Scenario", new ScenarioScene);
     _currentScene = nullptr;
     return S_OK;
 }
