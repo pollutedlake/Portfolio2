@@ -4,12 +4,14 @@
 #include "TitleScene.h"
 #include "ScenarioScene.h"
 #include "StoryScene.h"
+#include "EndingScene.h"
 
 HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
     SCENEMANAGER->addScene("Scenario", new ScenarioScene);
     SCENEMANAGER->addScene("Story", new StoryScene);
+    SCENEMANAGER->addScene("Ending", new EndingScene);
     _currentScene = nullptr;
     return S_OK;
 }

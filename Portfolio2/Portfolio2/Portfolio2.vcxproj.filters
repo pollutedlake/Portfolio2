@@ -29,6 +29,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{f8fbb3f3-a981-406a-a0f7-ce490e7d60d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{308c46f6-6052-4057-8b34-d692c54c6f4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SingletonBase.h">
@@ -42,9 +45,6 @@
     </ClInclude>
     <ClInclude Include="Stdafx.h">
       <Filter>FrameWork\PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame.h">
-      <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>ManagerClass</Filter>
@@ -77,6 +77,12 @@
     <ClInclude Include="FontManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -86,9 +92,6 @@
       <Filter>FrameWork\GImage</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="MainGame.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
@@ -115,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="FontManager.cpp">
       <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h" />
+    <ClInclude Include="EndingScene.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GImage.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GImage.cpp" />

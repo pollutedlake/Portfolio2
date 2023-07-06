@@ -30,7 +30,7 @@ void ScenarioScene::update(void)
 	{
 		if (_selectScenario == 75)
 		{
-			SCENEMANAGER->changeScene("Story");
+			SCENEMANAGER->changeScene("Ending");
 		}
 		if (PtInRect(&_scrollUpRC, _ptMouse))
 		{

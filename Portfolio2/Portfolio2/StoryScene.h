@@ -3,7 +3,8 @@
 class StoryScene : public GameNode
 {
 private:
-
+	int _frame;
+	int _typingSpeed;
 public:
 	HRESULT init(void);
 	void release(void);
