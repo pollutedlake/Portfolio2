@@ -68,6 +68,15 @@
     <ClInclude Include="ScenarioScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="StoryScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -97,6 +106,15 @@
     </ClCompile>
     <ClCompile Include="ScenarioScene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StoryScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>ManagerClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

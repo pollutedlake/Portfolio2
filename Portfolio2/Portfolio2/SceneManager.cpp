@@ -3,11 +3,13 @@
 #include "GameNode.h"
 #include "TitleScene.h"
 #include "ScenarioScene.h"
+#include "StoryScene.h"
 
 HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
     SCENEMANAGER->addScene("Scenario", new ScenarioScene);
+    SCENEMANAGER->addScene("Story", new StoryScene);
     _currentScene = nullptr;
     return S_OK;
 }

@@ -4,12 +4,23 @@ class ScenarioScene : public GameNode
 {
 private:
 	GImage* _background;
-	GImage* _senarios;
+	GImage* _scenarios;
 	GImage* _scrollUp;
 	GImage* _scrollDown;
+	GImage* _scrollNoClick;
+	GImage* _scrollClick;
+
 	RECT _scrollUpRC;
 	RECT _scrollDownRC;
-	int _senariosY;
+	RECT _scrollRC;
+	POINT _scenariosCenter[81];
+	RECT _scenarioRC[81];
+
+	float _scenariosY;
+	bool _isScrollClick;
+	float _scrollCenterY;
+	POINT _exPtMouse;
+	int _selectScenario;
 
 public:
 	HRESULT init(void);
