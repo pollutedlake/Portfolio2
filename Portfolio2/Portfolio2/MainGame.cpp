@@ -4,7 +4,7 @@
 HRESULT MainGame::init(void)
 {
 	GameNode::init(true);
-	SCENEMANAGER->changeScene("Ending");
+	SCENEMANAGER->changeScene("Title");
 	return S_OK;
 }
 

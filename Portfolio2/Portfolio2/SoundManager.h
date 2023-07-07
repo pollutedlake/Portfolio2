@@ -36,6 +36,7 @@ public:
 	void playSoundFMOD();
 	unsigned int getSoundLength();
 	unsigned int getCurrentPos();
+	bool isPlaying();
 
 	SoundManager() {};
 	~SoundManager() {};

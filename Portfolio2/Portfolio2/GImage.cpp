@@ -710,11 +710,11 @@ void GImage::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int c
 	_imageInfo->currentFrameY = currentFrameY;
 	if (currentFrameX > _imageInfo->maxFrameX)
 	{
-		_imageInfo->currentFrameX = _imageInfo->currentFrameX;
+		_imageInfo->currentFrameX = _imageInfo->maxFrameX;
 	}
 	if (currentFrameY > _imageInfo->maxFrameY)
 	{
-		_imageInfo->currentFrameY = _imageInfo->currentFrameY;
+		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
 	}
 	if (_isTrans)
 	{
@@ -759,11 +759,11 @@ void GImage::frameRender(HDC hdc, int destX, int destY, int destWidth, int destH
 	_imageInfo->currentFrameY = currentFrameY;
 	if (currentFrameX > _imageInfo->maxFrameX)
 	{
-		_imageInfo->currentFrameX = _imageInfo->currentFrameX;
+		_imageInfo->currentFrameX = _imageInfo->maxFrameX;
 	}
 	if (currentFrameY > _imageInfo->maxFrameY)
 	{
-		_imageInfo->currentFrameY = _imageInfo->currentFrameY;
+		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
 	}
 	if (_isTrans)
 	{

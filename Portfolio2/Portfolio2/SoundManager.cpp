@@ -103,3 +103,10 @@ unsigned int SoundManager::getCurrentPos()
     pChannel->getPosition(&position, FMOD_TIMEUNIT_MS);
     return position;
 }
+
+bool SoundManager::isPlaying()
+{
+    bool playing;
+    pChannel->isPlaying(&playing);
+    return playing;
+}
