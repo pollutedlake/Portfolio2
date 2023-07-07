@@ -1,6 +1,6 @@
 ﻿  EndingScene.cpp
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(72,59): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(72,27): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(71,93): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(71,78): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Portfolio2.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(185,59): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(185,27): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(184,93): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\EndingScene.cpp(184,78): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Portfolio2.vcxproj -> C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

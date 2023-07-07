@@ -3,9 +3,21 @@
 
 HRESULT SoundManager::init(void)
 {
-    //! Do Nothing
-
+    if (FMOD::System_Create(&pSystem) != FMOD_OK)
+    {
+        return E_ABORT;
+    }
+    if (pSystem->init(512, FMOD_INIT_NORMAL, 0) != FMOD_OK)
+    {
+        return E_ABORT;
+    }
+    
     return S_OK;
+}
+
+void SoundManager::release(void)
+{
+    pSystem->release();
 }
 
 void SoundManager::addMp3FileWithKey(string key, string fileName)
@@ -32,7 +44,7 @@ void SoundManager::addWaveFileWithKey(string key, string fileName)
     mciSendString(str, NULL, 0, NULL);
 }
 
-void SoundManager::playEffentSoundWave(char* fileName)
+void SoundManager::playEffectSoundWave(char* fileName)
 {
     /*
     // PlaySound() : TEXT("파일 이름.wav"),
@@ -66,4 +78,28 @@ void SoundManager::stopMp3WithKey(string key)
 
     const char* str = finalQuery.c_str();
     mciSendString(str, NULL, 0, NULL);
+}
+
+void SoundManager::addSoundFMOD(const char* fileName)
+{
+    pSystem->createSound(fileName, FMOD_DEFAULT, 0, &pSound);
+}
+
+void SoundManager::playSoundFMOD()
+{
+    pSystem->playSound(pSound, NULL, false, &pChannel);
+}
+
+unsigned int SoundManager::getSoundLength()
+{
+    unsigned int length;
+    pSound->getLength(&length, FMOD_TIMEUNIT_MS);
+    return length;
+}
+
+unsigned int SoundManager::getCurrentPos()
+{
+    unsigned int position;
+    pChannel->getPosition(&position, FMOD_TIMEUNIT_MS);
+    return position;
 }
