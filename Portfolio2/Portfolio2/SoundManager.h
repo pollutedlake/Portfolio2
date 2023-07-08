@@ -11,32 +11,25 @@ class SoundManager : public SingletonBase<SoundManager>
 {
 private:
 	FMOD::System* pSystem;
-	FMOD::Sound* pSound;
-	FMOD::Channel* pChannel;
-	//typedef map<string, FMOD::Sound*> mapSoundList;
-	//typedef map<string, FMOD::Sound*>::iterator mapSoundIter;
+	FMOD::Channel* pChannel[20];
+	typedef map<string, FMOD::Sound*> mapSoundList;
+	typedef map<string, FMOD::Sound*>::iterator mapSoundIter;
 
-	//mapSoundList _mSoundList;
+	mapSoundList _mSoundList;
 
 public:
 	HRESULT init(void);
 	void release(void);
-	// MP3
-	void addMp3FileWithKey(string key, string fileName);
-	// WAV
-	void addWaveFileWithKey(string key, string fileName);
-	// 효과음
-	void playEffectSoundWave(char* fileName);
-	// MP3 재생
-	void playSoundWithKey(string key);
-	// 정지
-	void stopMp3WithKey(string key);
 
-	void addSoundFMOD(const char* fileName);
-	void playSoundFMOD();
-	unsigned int getSoundLength();
-	unsigned int getCurrentPos();
+	FMOD::Sound* addSoundFMOD(string key, const char* fileName);
+	FMOD::Sound* findSound(string key);
+	void playSoundFMOD(string key);
+	void stopSoundFMOD(string key);
+	unsigned int getSoundLength(string key);
+	unsigned int getCurrentPos(string key);
 	bool isPlaying();
+	void stopAllSoundFMOD();
+	bool deleteAll();
 
 	SoundManager() {};
 	~SoundManager() {};

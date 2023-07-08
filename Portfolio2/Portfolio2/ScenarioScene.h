@@ -9,6 +9,7 @@ private:
 	GImage* _scrollDown;
 	GImage* _scrollNoClick;
 	GImage* _scrollClick;
+	GImage* _mouseCursor;
 
 	RECT _scrollUpRC;
 	RECT _scrollDownRC;
@@ -21,6 +22,7 @@ private:
 	float _scrollCenterY;
 	POINT _exPtMouse;
 	int _selectScenario;
+	int _frame;
 
 public:
 	HRESULT init(void);

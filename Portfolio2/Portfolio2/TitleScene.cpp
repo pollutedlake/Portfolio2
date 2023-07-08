@@ -9,6 +9,7 @@ HRESULT TitleScene::init(void)
 	_titleEFX2 = IMAGEMANAGER->findImage("TitleEFX2");
 	_titleEFX1 = IMAGEMANAGER->findImage("TitleEFX1");
 	_titleButtons = IMAGEMANAGER->findImage("TitleButtons");
+	_cursor = IMAGEMANAGER->findImage("MouseCursor");
 	_frame = 0;
 	_deltaTime = 0;
 	_activeButton = -1;
@@ -21,12 +22,16 @@ HRESULT TitleScene::init(void)
 
 void TitleScene::update(void)
 {
+	if (!SOUNDMANAGER->isPlaying())
+	{
+		SOUNDMANAGER->playSoundFMOD("TitleScene");
+	}
 	_deltaTime++;
 	_activeButton = -1;
-	if(_deltaTime <= 143)
+	if(_deltaTime <= 286)
 	{
-		_titleEFX1->setFrameX(_deltaTime % 13);
-		_titleEFX1->setFrameY(_deltaTime / 13);
+		_titleEFX1->setFrameX((_deltaTime / 2) % 13);
+		_titleEFX1->setFrameY(_deltaTime / 26);
 	}
 	else
 	{
@@ -48,6 +53,7 @@ void TitleScene::update(void)
 		switch(_activeButton)
 		{
 		case 0:
+			SOUNDMANAGER->stopSoundFMOD("TitleScene");
 			SCENEMANAGER->changeScene("Scenario");
 			break;
 		case 3:
@@ -60,24 +66,28 @@ void TitleScene::update(void)
 void TitleScene::render(void)
 {
 	_titleBG->render(getMemDC());
-	if(_deltaTime <= 143)
+	if(_deltaTime <= 286)
 	{
 		_titleEFX1->frameRender(getMemDC(), WINSIZE_X / 2 - _titleEFX1->getFrameWidth() / 2, WINSIZE_Y / 2 - _titleEFX1->getFrameHeight() / 2);
 	}
 	else
 	{
 		_titleEFX2->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - _titleEFX2->getFrameWidth() / 2, WINSIZE_Y / 2 - _titleEFX2->getFrameHeight() / 2, _frame % 6, (_frame / 6) % 6, 128);
-		_titleName->render(getMemDC(), WINSIZE_X / 2 - _titleName->getWidth() / 2, WINSIZE_Y / 2 - _titleName->getHeight() / 2, _titleName->getWidth(), _titleName->getHeight(), 0, 0, _titleName->getWidth(), _titleName->getHeight());
-		for(int i = 0; i < 4; i++)
+		_titleName->alphaRender(getMemDC(), WINSIZE_X / 2 - _titleName->getWidth() / 2, WINSIZE_Y / 2 - _titleName->getHeight() / 2, _titleName->getWidth(), _titleName->getHeight(), 0, 0, _titleName->getWidth(), _titleName->getHeight(), _frame * 40 > 255 ? 255 : _frame * 5);
+		if (_frame > 50)
 		{
-			if (_activeButton == i)
+			for (int i = 0; i < 4; i++)
 			{
-				_titleButtons->frameRender(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, _titleButtons->getFrameWidth(), _titleButtons->getFrameHeight(), 0, i);
+				if (_activeButton == i)
+				{
+					_titleButtons->frameRender(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, _titleButtons->getFrameWidth(), _titleButtons->getFrameHeight(), 0, i);
+				}
+				else
+				{
+					_titleButtons->frameRender(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, _titleButtons->getFrameWidth(), _titleButtons->getFrameHeight(), 1, i);
+				}
 			}
-			else
-			{
-				_titleButtons->frameRender(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, _titleButtons->getFrameWidth(), _titleButtons->getFrameHeight(), 1, i);
-			}
+			_cursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, _frame % 7, 1);
 		}
 	}
 }

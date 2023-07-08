@@ -77,10 +77,9 @@ void EndingScene::update(void)
 {
 	if (!SOUNDMANAGER->isPlaying())
 	{
-		SOUNDMANAGER->addSoundFMOD("Resources/Sounds/Brother.mp3");
-		SOUNDMANAGER->playSoundFMOD();
+		SOUNDMANAGER->playSoundFMOD("Brother");
 	}
-	_playTime = SOUNDMANAGER->getCurrentPos();
+	_playTime = SOUNDMANAGER->getCurrentPos("Brother");
 	_fade.reset();
 	if (_playTime < 1500)
 	{

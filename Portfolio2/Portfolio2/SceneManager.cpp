@@ -12,6 +12,8 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Scenario", new ScenarioScene);
     SCENEMANAGER->addScene("Story", new StoryScene);
     SCENEMANAGER->addScene("Ending", new EndingScene);
+    _whiteImg = IMAGEMANAGER->findImage("White");
+    _blackImg = IMAGEMANAGER->findImage("Black");
     _currentScene = nullptr;
     return S_OK;
 }
@@ -75,4 +77,24 @@ HRESULT SceneManager::changeScene(string sceneName)
         return S_OK;
     }
     return E_FAIL;
+}
+
+void SceneManager::fadeOutWhite(int start, int cur, int end)
+{
+    _whiteImg->alphaRender(_currentScene->getMemDC(), 255.0f / (float)(end - start) * (float)(cur - start));
+}
+
+void SceneManager::fadeInWhite(int start, int cur, int end)
+{
+    _whiteImg->alphaRender(_currentScene->getMemDC(), 255.0f - 255.0f / (float)(end - start) * (float)(cur - start));
+}
+
+void SceneManager::fadeOutBlack(int start, int cur, int end)
+{
+    _blackImg->alphaRender(_currentScene->getMemDC(), 255.0f / (float)(end - start) * (float)(cur - start));
+}
+
+void SceneManager::fadeInBlack(int start, int cur, int end)
+{
+    _blackImg->alphaRender(_currentScene->getMemDC(), 255.0f - 255.0f / (float)(end - start) * (float)(cur - start));
 }

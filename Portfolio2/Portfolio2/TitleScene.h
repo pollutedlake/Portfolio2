@@ -9,6 +9,7 @@ private:
 	GImage* _titleEFX2;				 
 	GImage* _titleEFX1;				
 	GImage* _titleButtons;			// 타이틀 버튼들
+	GImage* _cursor;
 
 	int _frame;
 	int _deltaTime;

@@ -9,6 +9,7 @@ HRESULT ScenarioScene::init(void)
 	_scrollDown = IMAGEMANAGER->findImage("ScrollDown");
 	_scrollClick = IMAGEMANAGER->findImage("ScrollClick");
 	_scrollNoClick = IMAGEMANAGER->findImage("ScrollNoClick");
+	_mouseCursor = IMAGEMANAGER->findImage("MouseCursor");
 	_scrollUpRC = { WINSIZE_X - 60, WINSIZE_Y / 2 - 148, (LONG)(WINSIZE_X - 60 + _scrollUp->getWidth() * 1.4), (LONG)(WINSIZE_Y / 2 - 148 + _scrollUp->getHeight() * 1.4) };
 	_scrollDownRC = { WINSIZE_X - 60, WINSIZE_Y / 2 + 213, (LONG)(WINSIZE_X - 60 + _scrollDown->getWidth() * 1.4), (LONG)(WINSIZE_Y / 2 + 213 + _scrollDown->getHeight() * 1.4) };
 	_scrollRC = { WINSIZE_X - 58, 250, (LONG)(WINSIZE_X - 58 + _scrollNoClick->getWidth() * 1.4), (LONG)(250 + _scrollNoClick->getHeight() * 1.4) };
@@ -19,17 +20,24 @@ HRESULT ScenarioScene::init(void)
 	}
 	_scenariosY = 0;
 	_selectScenario = -1;
+	_frame = 0;
 	_isScrollClick = false;
 	return S_OK;
 }
 
 void ScenarioScene::update(void)
 {
+	if (!SOUNDMANAGER->isPlaying())
+	{
+		SOUNDMANAGER->playSoundFMOD("ScenarioScene");
+	}
 	_scrollRC = RectMakeCenter(WINSIZE_X - 58 + _scrollDown->getWidth() * 1.4 / 2.0f, _scrollCenterY, _scrollNoClick->getWidth() * 1.4, _scrollNoClick->getHeight() * 1.4);
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		if (_selectScenario == 75)
 		{
+			SOUNDMANAGER->playSoundFMOD("Button");
+			SOUNDMANAGER->stopAllSoundFMOD();
 			SCENEMANAGER->changeScene("Ending");
 		}
 		if (PtInRect(&_scrollUpRC, _ptMouse))
@@ -124,6 +132,7 @@ void ScenarioScene::update(void)
 		}
 		_selectScenario = -1;
 	}
+	_frame++;
 }
 
 void ScenarioScene::release(void)
@@ -157,4 +166,6 @@ void ScenarioScene::render()
 			temp.top == 200 ? _scenarios->getFrameHeight() * (_selectScenario / 3 + 1) - (temp.bottom - temp.top) : _scenarios->getFrameHeight() * (_selectScenario / 3), 
 			_scenarios->getFrameWidth(), temp.bottom - temp.top);
 	}
+	_mouseCursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 1);
+
 }
