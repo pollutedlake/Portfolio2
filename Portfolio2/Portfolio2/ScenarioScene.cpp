@@ -22,117 +22,128 @@ HRESULT ScenarioScene::init(void)
 	_selectScenario = -1;
 	_frame = 0;
 	_isScrollClick = false;
+	_fadeOut = false;
 	return S_OK;
 }
 
 void ScenarioScene::update(void)
 {
-	if (!SOUNDMANAGER->isPlaying())
+	if(!_fadeOut)
 	{
-		SOUNDMANAGER->playSoundFMOD("ScenarioScene");
-	}
-	_scrollRC = RectMakeCenter(WINSIZE_X - 58 + _scrollDown->getWidth() * 1.4 / 2.0f, _scrollCenterY, _scrollNoClick->getWidth() * 1.4, _scrollNoClick->getHeight() * 1.4);
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
-		if (_selectScenario == 75)
+		if (!SOUNDMANAGER->isPlaying())
 		{
-			SOUNDMANAGER->playSoundFMOD("Button");
-			SOUNDMANAGER->stopAllSoundFMOD();
-			SCENEMANAGER->changeScene("Ending");
+			SOUNDMANAGER->playSoundFMOD("ScenarioScene");
 		}
-		if (PtInRect(&_scrollUpRC, _ptMouse))
-		{
-			if (_scenariosY > 0)
-			{
-				_scenariosY -= 5;
-				_scrollCenterY -= 5.0f * 350.0f/(float)(_scenarios->getHeight() - 450);
-			}
-
-		}
-		else if (PtInRect(&_scrollDownRC, _ptMouse))
-		{
-			if (_scenariosY < _scenarios->getHeight() - 450)
-			{
-				_scenariosY += 5;
-				_scrollCenterY += 5.0f * 350.0f / (float)(_scenarios->getHeight() - 450);
-			}
-		}
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		if (PtInRect(&_scrollRC, _ptMouse))
-		{
-			_isScrollClick = true;
-			_exPtMouse = _ptMouse;
-		}
-	}
-	if (_isScrollClick)
-	{
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-			_isScrollClick = false;
-		}
+		_scrollRC = RectMakeCenter(WINSIZE_X - 58 + _scrollDown->getWidth() * 1.4 / 2.0f, _scrollCenterY, _scrollNoClick->getWidth() * 1.4, _scrollNoClick->getHeight() * 1.4);
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			if (_scrollCenterY >= 250.0f + _scrollNoClick->getHeight() * 1.4f / 2.0f && _scrollCenterY <= 600 - _scrollNoClick->getHeight() * 1.4f / 2.0f)
+			if (_selectScenario == 75)
 			{
-				_scrollCenterY += _ptMouse.y - _exPtMouse.y;
-				_scenariosY += ((float)(_scenarios->getHeight() - 450) / 350.0f) * (_ptMouse.y - _exPtMouse.y);
-				if (_scenariosY < 0)
+				SOUNDMANAGER->playSoundFMOD("ScenarioSelect");
+				SOUNDMANAGER->stopSoundFMOD("ScenarioScene");
+				_fadeOut = true;
+			}
+			if (PtInRect(&_scrollUpRC, _ptMouse))
+			{
+				if (_scenariosY > 0)
 				{
-					_scenariosY = 0;
+					_scenariosY -= 5;
+					_scrollCenterY -= 5.0f * 350.0f/(float)(_scenarios->getHeight() - 450);
 				}
-				if (_scenariosY > _scenarios->getHeight() - 450)
+
+			}
+			else if (PtInRect(&_scrollDownRC, _ptMouse))
+			{
+				if (_scenariosY < _scenarios->getHeight() - 450)
 				{
-					_scenariosY = _scenarios->getHeight() - 450;
+					_scenariosY += 5;
+					_scrollCenterY += 5.0f * 350.0f / (float)(_scenarios->getHeight() - 450);
 				}
 			}
-			if (_scrollCenterY < 250.0f + _scrollNoClick->getHeight() * 1.4f / 2.0f)
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			if (PtInRect(&_scrollRC, _ptMouse))
 			{
-				_scrollCenterY = 250.0f + _scrollNoClick->getHeight() * 1.4f / 2.0f;
+				_isScrollClick = true;
+				_exPtMouse = _ptMouse;
 			}
-			if (_scrollCenterY > 600 - _scrollNoClick->getHeight() * 1.4f / 2.0f)
+		}
+		if (_isScrollClick)
+		{
+			if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 			{
-				_scrollCenterY = 600 - _scrollNoClick->getHeight() * 1.4f / 2.0f;
+				_isScrollClick = false;
 			}
+			if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+			{
+				if (_scrollCenterY >= 250.0f + _scrollNoClick->getHeight() * 1.4f / 2.0f && _scrollCenterY <= 600 - _scrollNoClick->getHeight() * 1.4f / 2.0f)
+				{
+					_scrollCenterY += _ptMouse.y - _exPtMouse.y;
+					_scenariosY += ((float)(_scenarios->getHeight() - 450) / 350.0f) * (_ptMouse.y - _exPtMouse.y);
+					if (_scenariosY < 0)
+					{
+						_scenariosY = 0;
+					}
+					if (_scenariosY > _scenarios->getHeight() - 450)
+					{
+						_scenariosY = _scenarios->getHeight() - 450;
+					}
+				}
+				if (_scrollCenterY < 250.0f + _scrollNoClick->getHeight() * 1.4f / 2.0f)
+				{
+					_scrollCenterY = 250.0f + _scrollNoClick->getHeight() * 1.4f / 2.0f;
+				}
+				if (_scrollCenterY > 600 - _scrollNoClick->getHeight() * 1.4f / 2.0f)
+				{
+					_scrollCenterY = 600 - _scrollNoClick->getHeight() * 1.4f / 2.0f;
+				}
+			}
+			_exPtMouse = _ptMouse;
 		}
-		_exPtMouse = _ptMouse;
+		for (int i = 0; i < 3; i++)
+		{
+			_scenariosCenter[i].y = 200 + _scenarios->getHeight() / 54 - _scenariosY;
+		}
+		for (int i = 3; i < 81; i++)
+		{
+			_scenariosCenter[i].y = _scenariosCenter[i - 3].y + _scenarios->getHeight() / 27;
+		}
+		for (int i = 0; i < 81; i++)
+		{
+			RECT temp = RectMakeCenter(_scenariosCenter[i].x, _scenariosCenter[i].y, _scenarios->getFrameWidth(), _scenarios->getFrameHeight());
+			if (temp.bottom < 200)
+			{
+				continue;
+			}
+			else if (temp.top > 650)
+			{
+				continue;
+			}
+			else if (temp.top < 200 && temp.bottom > 200)
+			{
+				temp.top = 200;
+			}
+			else if (temp.top < 650 && temp.bottom > 650)
+			{
+				temp.bottom = 650;
+			}
+			if (PtInRect(&temp, _ptMouse))
+			{
+				_selectScenario = i;
+				break;
+			}
+			_selectScenario = -1;
+		}
 	}
-	for (int i = 0; i < 3; i++)
+	else
 	{
-		_scenariosCenter[i].y = 200 + _scenarios->getHeight() / 54 - _scenariosY;
+		_frame++;
+		if (_frame > 50)
+		{
+			SCENEMANAGER->changeScene("Ending");
+		}
 	}
-	for (int i = 3; i < 81; i++)
-	{
-		_scenariosCenter[i].y = _scenariosCenter[i - 3].y + _scenarios->getHeight() / 27;
-	}
-	for (int i = 0; i < 81; i++)
-	{
-		RECT temp = RectMakeCenter(_scenariosCenter[i].x, _scenariosCenter[i].y, _scenarios->getFrameWidth(), _scenarios->getFrameHeight());
-		if (temp.bottom < 200)
-		{
-			continue;
-		}
-		else if (temp.top > 650)
-		{
-			continue;
-		}
-		else if (temp.top < 200 && temp.bottom > 200)
-		{
-			temp.top = 200;
-		}
-		else if (temp.top < 650 && temp.bottom > 650)
-		{
-			temp.bottom = 650;
-		}
-		if (PtInRect(&temp, _ptMouse))
-		{
-			_selectScenario = i;
-			break;
-		}
-		_selectScenario = -1;
-	}
-	_frame++;
 }
 
 void ScenarioScene::release(void)
@@ -167,5 +178,5 @@ void ScenarioScene::render()
 			_scenarios->getFrameWidth(), temp.bottom - temp.top);
 	}
 	_mouseCursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 1);
-
+	SCENEMANAGER->fadeOutBlack(0, _frame, 50);
 }

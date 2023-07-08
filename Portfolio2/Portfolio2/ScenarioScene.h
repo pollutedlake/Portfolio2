@@ -22,6 +22,7 @@ private:
 	float _scrollCenterY;
 	POINT _exPtMouse;
 	int _selectScenario;
+	bool _fadeOut;
 	int _frame;
 
 public:

@@ -43,11 +43,16 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Pipe", "Resources/Images/BackGrounds/EndingScene/Pipe.bmp", 20, 10, 2, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SlashRight", "Resources/Images/BackGrounds/EndingScene/SlashRight.bmp", 785, 150, 5, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("MouseCursor", "Resources/Images/UI/MouseCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("TitleEFX4", "Resources/Images/Effects/TitleScene/TitleEFX4.bmp", 4080, 254, 16, 1, true, RGB(4, 0, 4));
+	IMAGEMANAGER->addFrameImage("TitleEFX3", "Resources/Images/Effects/TitleScene/TitleEFX3.bmp", 20880, 240, 87, 1, true, RGB(4, 88, 4));
+	IMAGEMANAGER->addImage("BossBattleBG", "Resources/Images/BackGrounds/BossBattleScene/BossBattleBG.bmp", 1600, 1800);
+	IMAGEMANAGER->addImage("Table", "Resources/Images/BackGrounds/BossBattleScene/Table.bmp", 120, 136, true, RGB(0, 0, 0));
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3");
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3");
-	SOUNDMANAGER->addSoundFMOD("Button", "Resources/Sounds/SoundEffect/Button.mp3");
+	SOUNDMANAGER->addSoundFMOD("ScenarioSelect", "Resources/Sounds/SoundEffect/ScenarioSelect.mp3");
+	SOUNDMANAGER->addSoundFMOD("TitleButton", "Resources/Sounds/SoundEffect/TitleButton.wav");
 	return S_OK;
 }
 

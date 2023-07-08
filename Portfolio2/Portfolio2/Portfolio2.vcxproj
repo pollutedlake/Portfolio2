@@ -144,6 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BossBattleScene.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonMacroFunction.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="FontManager.h" />
@@ -164,6 +166,8 @@
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BossBattleScene.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />

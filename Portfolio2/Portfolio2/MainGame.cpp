@@ -6,7 +6,8 @@ HRESULT MainGame::init(void)
 	GameNode::init(true);
 	_resources = new Resources;
 	_resources->init();
-	SCENEMANAGER->changeScene("Title");
+	SCENEMANAGER->init();
+	SCENEMANAGER->changeScene("BossBattle");
 	ShowCursor(false);
 	return S_OK;
 }

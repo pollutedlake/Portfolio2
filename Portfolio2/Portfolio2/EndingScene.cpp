@@ -446,7 +446,7 @@ void EndingScene::update(void)
 
 void EndingScene::render(void)
 {
-	if(SOUNDMANAGER->isPlaying())
+	if(_playTime > 0)
 	{
 		_backGroundImg[_curBGIndex]->render(getMemDC());
 		switch (_curBGIndex)

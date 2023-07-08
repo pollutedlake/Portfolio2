@@ -5,6 +5,7 @@
 #include "ScenarioScene.h"
 #include "StoryScene.h"
 #include "EndingScene.h"
+#include "BossBattleScene.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -12,6 +13,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Scenario", new ScenarioScene);
     SCENEMANAGER->addScene("Story", new StoryScene);
     SCENEMANAGER->addScene("Ending", new EndingScene);
+    SCENEMANAGER->addScene("BossBattle", new BossBattleScene);
     _whiteImg = IMAGEMANAGER->findImage("White");
     _blackImg = IMAGEMANAGER->findImage("Black");
     _currentScene = nullptr;
@@ -91,7 +93,7 @@ void SceneManager::fadeInWhite(int start, int cur, int end)
 
 void SceneManager::fadeOutBlack(int start, int cur, int end)
 {
-    _blackImg->alphaRender(_currentScene->getMemDC(), 255.0f / (float)(end - start) * (float)(cur - start));
+    _blackImg->alphaRender(_currentScene->getMemDC(), cur > end ? 255 : 255.0f / (float)(end - start) * (float)(cur - start));
 }
 
 void SceneManager::fadeInBlack(int start, int cur, int end)

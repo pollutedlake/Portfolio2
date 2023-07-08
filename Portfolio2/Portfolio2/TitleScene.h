@@ -7,6 +7,8 @@ private:
 	GImage* _titleBG;				// 타이틀 화면 배경
 	GImage* _titleName;				// 타이틀 게임 제목
 	GImage* _titleEFX2;				 
+	GImage* _titleEFX4;				 
+	GImage* _titleEFX3;				 
 	GImage* _titleEFX1;				
 	GImage* _titleButtons;			// 타이틀 버튼들
 	GImage* _cursor;
@@ -15,6 +17,8 @@ private:
 	int _deltaTime;
 	int _activeButton;			// 마우스가 올라가 있는 버튼
 	RECT _buttonsRC[4];
+	int _fadeOutStartFrame;
+	bool _fadeOut;
 
 public :
 	HRESULT init(void);

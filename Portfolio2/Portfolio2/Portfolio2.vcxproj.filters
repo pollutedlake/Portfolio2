@@ -84,6 +84,10 @@
       <Filter>MainGame</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="BossBattleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -127,6 +131,10 @@
       <Filter>MainGame</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="BossBattleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">

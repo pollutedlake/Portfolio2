@@ -21,7 +21,6 @@ void SoundManager::release(void)
     for (int i = 0; i < 20; i++)
     {
         pChannel[i]->stop();
-        SAFE_DELETE(pChannel[i]);
     }
     deleteAll();
 }
@@ -56,6 +55,7 @@ void SoundManager::playSoundFMOD(string key)
     bool playing;
     for (int i = 0; i < 20; i++)
     {
+        
         pChannel[i]->isPlaying(&playing);
         if (!playing)
         {
@@ -83,7 +83,7 @@ void SoundManager::stopSoundFMOD(string key)
         sound->getName(soundName, 256);
         if (!strcmp(soundName, findName))
         {
-            pChannel[i]->stop();
+           pChannel[i]->stop();
             return;
         }
     }
@@ -153,19 +153,18 @@ void SoundManager::stopAllSoundFMOD()
 bool SoundManager::deleteAll()
 {
     auto iter = _mSoundList.begin();
-    for (; iter != _mSoundList.end();)
+    /*for (; iter != _mSoundList.end();)
     {
         if (iter->second != NULL)
         {
             iter->second->release();
-            SAFE_DELETE(iter->second);
             iter = _mSoundList.erase(iter);
         }
         else
         {
             ++iter;
         }
-    }
+    }*/
     _mSoundList.clear();
     return true;
 }
