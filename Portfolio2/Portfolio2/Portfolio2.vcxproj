@@ -144,10 +144,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="BossBattleScene.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="CommonMacroFunction.h" />
+    <ClInclude Include="DialogManager.h" />
     <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GImage.h" />
@@ -157,6 +161,7 @@
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="Saladin.h" />
     <ClInclude Include="ScenarioScene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SingletonBase.h" />
@@ -164,11 +169,16 @@
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StoryScene.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Vermont.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AStar.cpp" />
     <ClCompile Include="BossBattleScene.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GImage.cpp" />
@@ -176,6 +186,7 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Saladin.cpp" />
     <ClCompile Include="ScenarioScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -184,6 +195,7 @@
     </ClCompile>
     <ClCompile Include="StoryScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Vermont.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

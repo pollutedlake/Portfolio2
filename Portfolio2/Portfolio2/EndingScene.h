@@ -5,7 +5,6 @@ struct Dialog
 {
 	string _speaker;
 	LPCWSTR _dialog[3];
-	int _dialogTime;
 };
 
 class EndingScene : public GameNode

@@ -141,7 +141,7 @@ void ScenarioScene::update(void)
 		_frame++;
 		if (_frame > 50)
 		{
-			SCENEMANAGER->changeScene("Ending");
+			SCENEMANAGER->changeScene("Story");
 		}
 	}
 }
@@ -177,6 +177,6 @@ void ScenarioScene::render()
 			temp.top == 200 ? _scenarios->getFrameHeight() * (_selectScenario / 3 + 1) - (temp.bottom - temp.top) : _scenarios->getFrameHeight() * (_selectScenario / 3), 
 			_scenarios->getFrameWidth(), temp.bottom - temp.top);
 	}
-	_mouseCursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 1);
+	_mouseCursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	SCENEMANAGER->fadeOutBlack(0, _frame, 50);
 }

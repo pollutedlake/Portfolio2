@@ -32,6 +32,18 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{308c46f6-6052-4057-8b34-d692c54c6f4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class">
+      <UniqueIdentifier>{019e5340-7add-4eec-b997-34a175785565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{2d96d0f3-8597-49a9-a035-614ee9b33215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Character">
+      <UniqueIdentifier>{967e604e-607a-4252-b964-7d0170251f63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Character\Enemy">
+      <UniqueIdentifier>{95a9b1be-1d47-491f-9dbb-0d80b6c15fe1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SingletonBase.h">
@@ -83,10 +95,32 @@
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="BossBattleScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Class\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Vermont.h">
+      <Filter>Class\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Saladin.h">
+      <Filter>Class\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,10 +164,32 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="BossBattleScene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="AStar.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Class\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Vermont.cpp">
+      <Filter>Class\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Saladin.cpp">
+      <Filter>Class\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

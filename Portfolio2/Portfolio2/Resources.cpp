@@ -19,7 +19,8 @@ HRESULT Resources::init(void)
 
 	IMAGEMANAGER->addImage("TextBox", "Resources/Images/UI/TextBox.bmp", 230, 105);
 	IMAGEMANAGER->addImage("Vermont", "Resources/Images/UI/Vermont.bmp", 260, 480, true, RGB(0, 0, 4));
-	IMAGEMANAGER->addImage("Saladin", "Resources/Images/UI/Saladin.bmp", 400, 480, true, RGB(0, 0, 4));
+	IMAGEMANAGER->addImage("Saladin", "Resources/Images/UI/Saladin.bmp", 400, 480, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Sherazade", "Resources/Images/UI/Sherazade.bmp", 424, 480, true, RGB(255, 0, 255 ));
 	IMAGEMANAGER->addFrameImage("ForeheadKiss", "Resources/Images/BackGrounds/EndingScene/ForeheadKiss.bmp", 432, 79, 6, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("VermontEnding", "Resources/Images/BackGrounds/EndingScene/VermontEnding.bmp", 130, 78, 2, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinEnding", "Resources/Images/BackGrounds/EndingScene/SaladinEnding.bmp", 1208, 101, 8, 1, true, RGB(168, 208, 168));
@@ -47,12 +48,56 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("TitleEFX3", "Resources/Images/Effects/TitleScene/TitleEFX3.bmp", 20880, 240, 87, 1, true, RGB(4, 88, 4));
 	IMAGEMANAGER->addImage("BossBattleBG", "Resources/Images/BackGrounds/BossBattleScene/BossBattleBG.bmp", 1600, 1800);
 	IMAGEMANAGER->addImage("Table", "Resources/Images/BackGrounds/BossBattleScene/Table.bmp", 120, 136, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("SaladinIdleLeft", "Resources/Images/Characters/Saladin/SaladinIdleLeft.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SaladinIdleRight", "Resources/Images/Characters/Saladin/SaladinIdleRight.bmp", 272, 90, 4, 1, true, RGB(252, 0, 255));
+	IMAGEMANAGER->addFrameImage("SaladinIdleUp", "Resources/Images/Characters/Saladin/SaladinIdleUp.bmp", 280, 90, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SaladinIdleDown", "Resources/Images/Characters/Saladin/SaladinIdleDown.bmp", 280, 90, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("CursorTile", "Resources/Images/UI/CursorTile.bmp", 240, 32, 6, 1);
+	IMAGEMANAGER->addFrameImage("CantMoveTile", "Resources/Images/UI/CantMoveTile.bmp", 76, 42, 2, 1);
+	IMAGEMANAGER->addImage("MoveAbleTile", "Resources/Images/UI/MoveAbleTile.bmp", 40, 32);
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3");
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3");
 	SOUNDMANAGER->addSoundFMOD("ScenarioSelect", "Resources/Sounds/SoundEffect/ScenarioSelect.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleButton", "Resources/Sounds/SoundEffect/TitleButton.wav");
+
+	IMAGEMANAGER->addImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", WINSIZE_X, WINSIZE_Y);
+	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog1", "Resources/Sounds/StoryScene/1.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog2", "Resources/Sounds/StoryScene/2.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog3", "Resources/Sounds/StoryScene/3.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog4", "Resources/Sounds/StoryScene/4.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog5", "Resources/Sounds/StoryScene/5.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog6", "Resources/Sounds/StoryScene/6.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog7", "Resources/Sounds/StoryScene/7.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog8", "Resources/Sounds/StoryScene/8.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog9", "Resources/Sounds/StoryScene/9.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog10", "Resources/Sounds/StoryScene/10.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog11", "Resources/Sounds/StoryScene/11.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog12", "Resources/Sounds/StoryScene/12.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog13", "Resources/Sounds/StoryScene/13.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog14", "Resources/Sounds/StoryScene/14.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog15", "Resources/Sounds/StoryScene/15.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog16", "Resources/Sounds/StoryScene/16.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog17", "Resources/Sounds/StoryScene/17.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog18", "Resources/Sounds/StoryScene/18.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog19", "Resources/Sounds/StoryScene/19.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog20", "Resources/Sounds/StoryScene/20.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog21", "Resources/Sounds/StoryScene/21.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog22", "Resources/Sounds/StoryScene/22.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog23", "Resources/Sounds/StoryScene/23.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog24", "Resources/Sounds/StoryScene/24.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog25", "Resources/Sounds/StoryScene/25.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog26", "Resources/Sounds/StoryScene/26.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog27", "Resources/Sounds/StoryScene/27.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog28", "Resources/Sounds/StoryScene/28.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog29", "Resources/Sounds/StoryScene/29.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog30", "Resources/Sounds/StoryScene/30.mp3");
+	SOUNDMANAGER->addSoundFMOD("Dialog31", "Resources/Sounds/StoryScene/31.mp3");
+	//DIALOGMANAGER->addDialogs("StoryScene");
+	//DIALOGMANAGER->addDialogs("EndingScene");
+	//DIALOGMANAGER->addDialog("EndingScene", "Vermont", "", { L"[버몬트]", L"죽여라..." }, )
 	return S_OK;
 }
 

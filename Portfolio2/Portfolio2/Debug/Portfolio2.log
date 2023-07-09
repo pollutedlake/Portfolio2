@@ -1,6 +1,6 @@
-﻿  BossBattleScene.cpp
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BossBattleScene.cpp(26,204): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BossBattleScene.cpp(26,169): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BossBattleScene.cpp(26,137): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BossBattleScene.cpp(26,84): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  SceneManager.cpp
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(86,85): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(91,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(96,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(101,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Portfolio2.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

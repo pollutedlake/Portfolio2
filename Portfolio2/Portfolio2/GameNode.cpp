@@ -21,7 +21,20 @@ HRESULT GameNode::init(bool managerInit)
 	{
 		setlocale(LC_ALL, "korean");
 		SetTimer(_hWnd, 1, 10, NULL);
-
+		RECT rect;
+		GetClientRect(_hWnd, &rect);
+		POINT lt, rb;
+		lt.x = rect.left;
+		lt.y = rect.top;
+		rb.x = rect.right;
+		rb.y = rect.bottom;
+		ClientToScreen(_hWnd, &lt);
+		ClientToScreen(_hWnd, &rb);
+		rect.left = lt.x;
+		rect.top = lt.y;
+		rect.right = rb.x;
+		rect.bottom = rb.y;
+		ClipCursor(&rect);
 		KEYMANAGER->init();
 		RND->init();
 		IMAGEMANAGER->init();
@@ -44,6 +57,7 @@ void GameNode::release(void)
 		SCENEMANAGER->releaseSingleton();
 		SOUNDMANAGER->release();
 		SOUNDMANAGER->releaseSingleton();
+		ClipCursor(NULL);
 	}
 	ReleaseDC(_hWnd, _hdc);
 }

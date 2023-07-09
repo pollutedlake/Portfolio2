@@ -52,10 +52,10 @@ FMOD::Sound* SoundManager::findSound(string key)
 
 void SoundManager::playSoundFMOD(string key)
 {
+    if(findSound(key) == nullptr) return;
     bool playing;
     for (int i = 0; i < 20; i++)
     {
-        
         pChannel[i]->isPlaying(&playing);
         if (!playing)
         {

@@ -106,7 +106,7 @@ void TitleScene::render(void)
 						_titleButtons->frameRender(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, _titleButtons->getFrameWidth(), _titleButtons->getFrameHeight(), 1, i);
 					}
 				}
-				_cursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, _frame % 7, 1);
+				_cursor->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, _frame % 7, 0);
 			}
 		}
 	}
