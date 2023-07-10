@@ -32,12 +32,38 @@ FMOD::Sound* SoundManager::addSoundFMOD(string key, const char* fileName)
 
     if (pSystem->createSound(fileName, FMOD_DEFAULT, 0, &sound) != FMOD_OK)
     {
+        cout << pSystem->createSound(fileName, FMOD_DEFAULT, 0, &sound) << "\t" << key << endl;
         SAFE_DELETE(sound);
         return nullptr;
     }
     _mSoundList.insert(make_pair(key, sound));
 
     return sound;
+}
+
+FMOD::Sound* SoundManager::addSoundFMOD(string key, const char* fileName, bool loop)
+{
+	FMOD::Sound* sound = findSound(key);
+	if (sound) return sound;
+    if(loop)
+    {
+	    if (pSystem->createSound(fileName, FMOD_LOOP_NORMAL, 0, &sound) != FMOD_OK)
+	    {
+	    	SAFE_DELETE(sound);
+	    	return nullptr;
+	    }
+    }
+    else
+    {
+		if (pSystem->createSound(fileName, FMOD_DEFAULT, 0, &sound) != FMOD_OK)
+		{
+			SAFE_DELETE(sound);
+			return nullptr;
+		}
+    }
+	_mSoundList.insert(make_pair(key, sound));
+
+	return sound;
 }
 
 FMOD::Sound* SoundManager::findSound(string key)

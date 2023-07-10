@@ -21,17 +21,23 @@ private:
 
 	RECT _dialogRC[3];
 
-	StoryDialog _storyDialog[50];
+	StoryDialog _storyDialog[20];
 	int _frame;
 	int _typing;
 	int _vermontSherazadeIndex;
 	int _saladinIndex;
 	int _dialogIndex;
+	char* _soundList[22];
+	int _soundIndex;
+	int _backGroundIndex;
 	int _playTime;
 	int _startFadeIn;
 	bool _speakFinish;
+	bool _fadeWhite;
 	bool _fadeIn;
-	int _fadeOutRedStart;
+	int _fadeRedStart;
+	int _fadeWhiteFrame;
+	int _speakStartFrame;
 
 public:
 	HRESULT init(void);

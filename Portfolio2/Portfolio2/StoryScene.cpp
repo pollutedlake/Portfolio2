@@ -8,7 +8,31 @@ HRESULT StoryScene::init(void)
 	_vermontSherazade = IMAGEMANAGER->findImage("VermontSherazade");
 	_redImage = IMAGEMANAGER->findImage("Red");
 	_saladin = IMAGEMANAGER->findImage("SaladinStory");
-	for (int i = 0; i < 50; i++)
+
+	_soundList[0] = "Fight";
+	_soundList[1] = "Scream1";
+	_soundList[2] = "Fight";
+	_soundList[3] = "Scream2";
+	_soundList[4] = "Dialog19";
+	_soundList[5] = "Dialog20";
+	_soundList[6] = "Dialog21";
+	_soundList[7] = "Dialog22";
+	_soundList[8] = "Dialog23";
+	_soundList[9] = "Dialog24";
+	_soundList[10] = "Dialog25";
+	_soundList[11] = "Dialog26";
+	_soundList[12] = "Dialog27";
+	_soundList[13] = "Dialog28";
+	_soundList[14] = "Dialog29";
+	_soundList[15] = "Dialog30";
+	_soundList[16] = "Dialog31";
+	_soundList[17] = "Dialog32";
+	_soundList[18] = "Dialog33";
+	_soundList[19] = "Dialog34";
+	_soundList[20] = "Dialog35";
+	_soundList[21] = "Dialog36";
+
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
@@ -99,7 +123,7 @@ HRESULT StoryScene::init(void)
 	_storyDialog[12]._dialogN = 3;
 	_storyDialog[12]._dialogType = 1;
 	_storyDialog[12]._script[0] = L"[셰라자드]";
-	_storyDialog[12]._script[1] = L"살라딘님, 안되요!";
+	_storyDialog[12]._script[1] = L"살라딘님, 안돼요!";
 	_storyDialog[12]._script[2] = L"왜 자신에 대해 얘기 안하시는 거죠?";
 
 	_storyDialog[13]._speaker = "Saladin";
@@ -122,6 +146,31 @@ HRESULT StoryScene::init(void)
 	_storyDialog[15]._script[1] = L"살라딘님! 저는 언제나 당신의 짐만 되는군요.";
 	_storyDialog[15]._script[2] = L"하지만, 이젠 저도 용기를 내겠어요...";
 
+	_storyDialog[16]._speaker = "Vermont";
+	_storyDialog[16]._dialogN = 2;
+	_storyDialog[16]._dialogType = 0;
+	_storyDialog[16]._script[0] = L"[버몬트]";
+	_storyDialog[16]._script[1] = L"제길, 할수없군";
+
+	_storyDialog[17]._speaker = "Vermont";
+	_storyDialog[17]._dialogN = 2;
+	_storyDialog[17]._dialogType = 0;
+	_storyDialog[17]._script[0] = L"[버몬트]";
+	_storyDialog[17]._script[1] = L"다, 끝내셨나?";
+
+	_storyDialog[18]._speaker = "Saladin";
+	_storyDialog[18]._dialogN = 2;
+	_storyDialog[18]._dialogType = 0;
+	_storyDialog[18]._script[0] = L"[살라딘]";
+	_storyDialog[18]._script[1] = L"복수심에 붙잡혀 있는 불쌍한 인간이군.";
+
+	_storyDialog[19]._speaker = "Vermont";
+	_storyDialog[19]._dialogN = 3;
+	_storyDialog[19]._dialogType = 0;
+	_storyDialog[19]._script[0] = L"[버몬트]";
+	_storyDialog[19]._script[1] = L"너 따위가 나에 대해 뭘 안단 거냐?";
+	_storyDialog[19]._script[2] = L"뭐, 상관없지...자 각오해라!";
+
 	_frame = 0;
 	_typing = 10;
 	_dialogRC[0] = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y - 150, WINSIZE_X - 160, 200);
@@ -129,9 +178,13 @@ HRESULT StoryScene::init(void)
 	_dialogRC[2] = {50, WINSIZE_Y - 330, WINSIZE_X - 150, WINSIZE_Y - 180};
 	_startFadeIn = 0;
 	_vermontSherazadeIndex = 0;
-	_fadeOutRedStart = 0;
+	_backGroundIndex = 0;
+	_fadeRedStart = 0;
 	_speakFinish = false;
 	_fadeIn = false;
+	_fadeWhite = false;
+	_fadeWhiteFrame = 0;
+	_speakStartFrame = 0;
 	return S_OK;
 }
 
@@ -141,39 +194,269 @@ void StoryScene::release(void)
 
 void StoryScene::update(void)
 {
-	if(!_fadeIn)
+	if(_backGroundIndex < 2)
+	{
+		if(!_fadeIn)
+		{
+			_frame++;
+			if(_frame == 1)
+			{
+				SOUNDMANAGER->playSoundFMOD("Dialog0");
+			}
+			if(_frame == 100)
+			{
+				SOUNDMANAGER->playSoundFMOD("Dialog1");
+			}
+			if (_frame == 200)
+			{
+				_fadeIn = true;
+				_frame = 0;
+			}
+		}
+		else
+		{
+			if (_frame == 0)
+			{
+				SOUNDMANAGER->playSoundFMOD("Conspiracy2");
+			}
+			if (_frame == 300)
+			{
+				SOUNDMANAGER->playSoundFMOD("Dialog2");
+			}
+			_frame++;
+			if (_frame % 5 == 0)
+			{
+				if(_typing != 999)
+				{
+					_typing++;
+				}
+			}
+			if (_frame > 300)
+			{
+				char exSound[50];
+				wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
+				if (SOUNDMANAGER->getCurrentPos(exSound) == 0)
+				{
+					_speakFinish = true;
+				}
+				else
+				{
+					_speakFinish = false;
+				}
+				if(_dialogIndex < 16)
+				{
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						char sound[50];
+						if (_speakFinish)
+						{
+							_speakFinish = false;
+							if (_dialogIndex < 15)
+							{
+								wsprintf(sound, "Dialog%d", _dialogIndex + 3);
+								SOUNDMANAGER->playSoundFMOD(sound);
+								_typing = 0;
+							}
+							_dialogIndex++;
+						}
+						else
+						{
+							_speakFinish = true;
+							char exSound[50];
+							wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
+							SOUNDMANAGER->stopSoundFMOD(exSound);
+							_typing = 999;
+						}
+					}
+				}
+			}
+		}
+		if (_dialogIndex == 6)
+		{
+			if (_frame % 5 == 0 && _vermontSherazadeIndex < 2)
+			{
+				_vermontSherazadeIndex++;
+			}
+		}
+		else if (_dialogIndex == 12)
+		{
+			_vermontSherazadeIndex = 3;
+			if (_frame % 5 == 0)
+			{
+				_saladinIndex++;
+			}
+		}
+		else if (_dialogIndex == 16)
+		{
+			if (_frame % 5 == 0 && _vermontSherazadeIndex < 14)
+			{
+				_vermontSherazadeIndex++;
+			}
+		}
+		if (_vermontSherazadeIndex == 8 && _frame % 5 == 1)
+		{
+			SOUNDMANAGER->playSoundFMOD("Dialog18");
+		}
+		if (_vermontSherazadeIndex == 14 && _fadeRedStart == 0)
+		{
+			_fadeRedStart = _frame;
+			SOUNDMANAGER->stopSoundFMOD("Conspiracy2");
+		}
+		if ((_frame == _fadeRedStart + 50 && _fadeRedStart != 0) && _soundIndex == 0)
+		{
+			_backGroundIndex = 1;
+			SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+			_speakStartFrame = _frame;
+			_soundIndex++;
+		}
+		if (_backGroundIndex == 1)
+		{
+			if(_frame > _speakStartFrame + 10)
+			{
+				if(SOUNDMANAGER->getCurrentPos(_soundList[_soundIndex - 1]) == 0 && _soundIndex < 4)
+				{
+					SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+					_speakStartFrame = _frame;
+					_soundIndex++;
+					if (_soundIndex == 4)
+					{
+						_fadeRedStart = _frame;
+						_backGroundIndex = 0;
+					}
+				}
+			}
+		}
+		if (_frame < _fadeRedStart + 50 && _soundIndex == 4)
+		{
+			_typing = 0;
+		}
+		if (_frame == _fadeRedStart + 50 && _soundIndex == 4)
+		{
+			_typing = 0;
+			SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+		}
+		if (_frame > _fadeRedStart + 50 && _soundIndex == 4)
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				if (SOUNDMANAGER->getCurrentPos(_soundList[_soundIndex]) == 0)
+				{
+					_soundIndex++;
+				}
+				else
+				{
+					_typing = 999;
+					SOUNDMANAGER->stopSoundFMOD(_soundList[_soundIndex]);
+				}
+			}
+		}
+		if (_soundIndex == 5)
+		{
+			if(_frame % 5 == 0)
+			{
+				_vermontSherazadeIndex++;
+			}
+		}
+		if (_vermontSherazadeIndex > _vermontSherazade->getMaxFrameX())
+		{
+			if (250 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10 < -IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameWidth() * 1.4)
+			{
+				_vermontSherazadeIndex--;
+				_frame--;
+				_fadeWhite = true;
+				_fadeWhiteFrame++;
+				if (_fadeWhiteFrame > 100)
+				{
+					_frame = 0;
+					_fadeWhiteFrame = 0;
+					_backGroundIndex = 2;
+				}
+			}
+		}
+	}
+	else if (_backGroundIndex < 4)
 	{
 		_frame++;
-		if(_frame == 1)
+		if (_fadeWhite)
 		{
-			SOUNDMANAGER->playSoundFMOD("Dialog0");
+			if (_frame > 100 && _soundIndex != 19)
+			{
+				_fadeWhite = false;
+				SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+				_speakStartFrame = _frame;
+				_soundIndex++;
+			}
 		}
-		if(_frame == 100)
+		else
 		{
-			SOUNDMANAGER->playSoundFMOD("Dialog1");
+			if (SOUNDMANAGER->getCurrentPos(_soundList[_soundIndex - 1]) == 0 && _speakStartFrame + 10 < _frame)
+			{
+				if (_soundIndex == 19)
+				{
+					_fadeWhite = true;
+					_fadeWhiteFrame = _frame;
+				}
+				if (_soundIndex < 19)
+				{
+					SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+					_speakStartFrame = _frame;
+					if (_soundIndex == 10)
+					{
+						SOUNDMANAGER->playSoundFMOD("SherazadeDead");
+					}
+					if (_soundIndex == 18)
+					{
+						_backGroundIndex = 3;
+					}
+					_soundIndex++;
+				}
+			}
 		}
-		if (_frame == 200)
+		if (_frame > _fadeWhiteFrame + 300 && _fadeWhiteFrame != 0)
 		{
-			_fadeIn = true;
+			_backGroundIndex = 4;
+			_fadeWhiteFrame = 0;
 			_frame = 0;
 		}
 	}
-	else
+	else if(_backGroundIndex == 4)
 	{
-		if (_frame == 300)
+		if (SOUNDMANAGER->getCurrentPos("SherazadeDead") > SOUNDMANAGER->getSoundLength("SherazadeDead") + 3000);
 		{
-			SOUNDMANAGER->playSoundFMOD("Dialog2");
+			_backGroundIndex = 5;
+			_dialogIndex = 17;
+		}
+	}
+	else
+	{	
+		if (_frame == 0)
+		{
+			SOUNDMANAGER->playSoundFMOD("BeforeLastBattle");
 		}
 		_frame++;
-		if (_frame % 5 == 0)
+		if(_fadeWhite)
 		{
-			_typing++;
+			if (_frame > 100 && _dialogIndex != 20)
+			{
+				_fadeWhite = false;
+				SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+				_speakStartFrame = _frame;
+				_soundIndex++;
+				_typing = 0;
+			}
+			if (_frame > _fadeWhiteFrame + 300 && _dialogIndex == 20)
+			{
+				SOUNDMANAGER->stopAllSoundFMOD();
+				SCENEMANAGER->changeScene("BossBattle");
+			}
 		}
-		if (_frame > 300)
+		else
 		{
-			char exSound[50];
-			wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
-			if (SOUNDMANAGER->getCurrentPos(exSound) == 0)
+			if (_frame % 5 == 0)
+			{
+				_typing++;
+			}
+			if (SOUNDMANAGER->getCurrentPos(_soundList[_soundIndex - 1]) == 0 && _speakStartFrame + 10 < _frame)
 			{
 				_speakFinish = true;
 			}
@@ -181,96 +464,151 @@ void StoryScene::update(void)
 			{
 				_speakFinish = false;
 			}
-			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _dialogIndex < 16)
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 			{
-				char sound[50];
 				if (_speakFinish)
 				{
 					_speakFinish = false;
-					if (_dialogIndex < 15)
+					if (_dialogIndex == 19)
 					{
-						wsprintf(sound, "Dialog%d", _dialogIndex + 3);
-						SOUNDMANAGER->playSoundFMOD(sound);
+						_fadeWhite = true;
+						_fadeWhiteFrame = _frame;
+					}
+					else
+					{
+						SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
+						_soundIndex++;
 						_typing = 0;
 					}
-						_dialogIndex++;
+					_dialogIndex++;
 				}
 				else
 				{
 					_speakFinish = true;
-					char exSound[50];
-					wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
-					cout << exSound << endl;
-					SOUNDMANAGER->stopSoundFMOD(exSound);
+					SOUNDMANAGER->stopSoundFMOD(_soundList[_soundIndex - 1]);
 					_typing = 999;
 				}
 			}
 		}
 	}
-	if (_dialogIndex == 6)
-	{
-		if (_frame % 5 == 0 && _vermontSherazadeIndex < 2)
-		{
-			_vermontSherazadeIndex++;
-		}
-	}
-	else if (_dialogIndex == 12)
-	{
-		_vermontSherazadeIndex = 3;
-		if (_frame % 5 == 0)
-		{
-			_saladinIndex++;
-		}
-	}
-	else if (_dialogIndex == 16)
-	{
-		if (_frame % 5 == 0 && _vermontSherazadeIndex < 14)
-		{
-			_vermontSherazadeIndex++;
-		}
-	}
-	if (_vermontSherazadeIndex == 8 && _frame % 5 == 1)
-	{
-		cout << "test" << endl;
-		SOUNDMANAGER->playSoundFMOD("Dialog18");
-	}
-	if (_vermontSherazadeIndex == 14 && _fadeOutRedStart == 0)
-	{
-		_fadeOutRedStart = _frame;
-	}
 	if (KEYMANAGER->isOnceKeyDown('N'))
 	{
+		SOUNDMANAGER->stopAllSoundFMOD();
 		SCENEMANAGER->changeScene("BossBattle");
 	}
 }
 
 void StoryScene::render(void)
 {
-	if (!_fadeIn)
+	if(_backGroundIndex < 2)
 	{
-		IMAGEMANAGER->findImage("Black")->render(getMemDC());
+		if (!_fadeIn)
+		{
+			IMAGEMANAGER->findImage("Black")->render(getMemDC());
+		}
+		else
+		{
+			_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
+			if(_backGroundIndex == 0)
+			{
+				if(_soundIndex < 4)
+				{
+					_vermontSherazade->frameRender(getMemDC(), 170, 340, _vermontSherazade->getFrameWidth() * 1.4, _vermontSherazade->getFrameHeight() * 1.4, _vermontSherazadeIndex, 0);
+					if (_saladinIndex != 0)
+					{
+						IMAGEMANAGER->findImage("AbandonedSwords")->render(getMemDC(), 250, 500);
+					}
+					_saladin->frameRender(getMemDC(), 250, 500, _saladin->getFrameWidth() * 1.4, _saladin->getFrameHeight() * 1.4, _saladinIndex, 0);
+					IMAGEMANAGER->findImage("Soldier4")->render(getMemDC(), WINSIZE_X / 2 + 200, 420, IMAGEMANAGER->findImage("Soldier4")->getWidth() * 1.4, IMAGEMANAGER->findImage("Soldier4")->getHeight() * 1.4,
+					0, 0, IMAGEMANAGER->findImage("Soldier4")->getWidth(), IMAGEMANAGER->findImage("Soldier4")->getHeight());
+					IMAGEMANAGER->findImage("Soldier1")->render(getMemDC(), WINSIZE_X / 2 + 200, 500, IMAGEMANAGER->findImage("Soldier1")->getWidth() * 1.4, IMAGEMANAGER->findImage("Soldier1")->getHeight() * 1.4,
+						0, 0, IMAGEMANAGER->findImage("Soldier1")->getWidth(), IMAGEMANAGER->findImage("Soldier1")->getHeight());
+					IMAGEMANAGER->findImage("Soldier2")->render(getMemDC(), 130, 500, IMAGEMANAGER->findImage("Soldier2")->getWidth() * 1.4, IMAGEMANAGER->findImage("Soldier2")->getHeight() * 1.4,
+						0, 0, IMAGEMANAGER->findImage("Soldier2")->getWidth(), IMAGEMANAGER->findImage("Soldier2")->getHeight());
+					IMAGEMANAGER->findImage("Soldier3")->render(getMemDC(), 150, 550, IMAGEMANAGER->findImage("Soldier3")->getWidth() * 1.4, IMAGEMANAGER->findImage("Soldier3")->getHeight() * 1.4,
+						0, 0, IMAGEMANAGER->findImage("Soldier3")->getWidth(), IMAGEMANAGER->findImage("Soldier3")->getHeight());
+					SCENEMANAGER->fadeInBlack(0, _frame, 300);
+					if (_frame > 300 && _dialogIndex <= 15)
+					{
+						dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
+					}
+				}
+				else
+				{
+					_vermontSherazade->frameRender(getMemDC(), 170, 340, _vermontSherazade->getFrameWidth() * 1.4, _vermontSherazade->getFrameHeight() * 1.4, _vermontSherazadeIndex, 0);
+					if(_vermontSherazadeIndex < _vermontSherazade->getMaxFrameX())
+					{
+						IMAGEMANAGER->findImage("SaladinIdleRight")->frameRender(getMemDC(), WINSIZE_X / 2 + 150, 420, 
+							IMAGEMANAGER->findImage("SaladinIdleRight")->getFrameWidth() * 1.4, IMAGEMANAGER->findImage("SaladinIdleRight")->getFrameHeight() * 1.4, (_frame / 5) % 4, 0);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("VermontMoveLeft")->frameRender(getMemDC(), 250 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10, 
+						340 + (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10 > 420 ? 420 : 340 + (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10,
+						IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameWidth()*1.4, IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameHeight() * 1.4, (_frame / 5) % 6, 0);
+						IMAGEMANAGER->findImage("SaladinMove")->frameRender(getMemDC(), WINSIZE_X / 2 + 150 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10, 420,
+							IMAGEMANAGER->findImage("SaladinMove")->getFrameWidth() * 1.4, IMAGEMANAGER->findImage("SaladinMove")->getFrameHeight() * 1.4, (_frame / 5) % 6, 2);
+						SCENEMANAGER->fadeOutWhite(0, _fadeWhiteFrame, 100);
+					}
+					if(_soundIndex == 4)
+					{
+						dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
+					}
+				}
+			}
+			//if (_frame > 300 && _dialogIndex <= 15)
+			//{
+			//	dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
+			//}
+			if (_fadeRedStart != 0)
+			{
+				if (_soundIndex == 4)
+				{
+					_redImage->alphaRender(getMemDC(), _frame > _fadeRedStart + 50 ? 0 : 255.0f - 255.0f / (float)(50) * (float)(_frame - _fadeRedStart));
+				}
+				else if(_soundIndex < 4)
+				{
+					_redImage->alphaRender(getMemDC(), _frame > _fadeRedStart + 50 ? 255 : 255.0f / (float)(50) * (float)(_frame - _fadeRedStart));
+				}
+			}
+		}
+	}
+	else if (_backGroundIndex < 4)
+	{
+		_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
+		if (_fadeWhite)
+		{
+			if (_soundIndex == 19)
+			{
+				SCENEMANAGER->fadeOutWhite(_fadeWhiteFrame, _frame, _fadeWhiteFrame + 300);
+			}
+			else
+			{
+				SCENEMANAGER->fadeInWhite(0, _frame, 100);
+			}
+		}
+	}
+	else if(_backGroundIndex == 4)
+	{
+		_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
 	}
 	else
 	{
-		_storyBG->render(getMemDC());
-		_vermontSherazade->frameRender(getMemDC(), 170, 340, _vermontSherazade->getFrameWidth() * 1.4, _vermontSherazade->getFrameHeight() * 1.4, _vermontSherazadeIndex, 0);
-		if (_saladinIndex != 0)
+		_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
+		if(_fadeWhite)
 		{
-			IMAGEMANAGER->findImage("AbandonedSwords")->render(getMemDC(), 250, 500);
+			if(_dialogIndex != 20)
+			{
+				SCENEMANAGER->fadeInWhite(0, _frame, 100);
+			}
+			else
+			{
+				SCENEMANAGER->fadeOutBlack(_fadeWhiteFrame, _frame, _fadeWhiteFrame + 300);
+			}
 		}
-		_saladin->frameRender(getMemDC(), 250, 500, _saladin->getFrameWidth() * 1.4, _saladin->getFrameHeight() * 1.4, _saladinIndex, 0);
-		SCENEMANAGER->fadeInBlack(0, _frame, 300);
-		if (_frame > 300 && _dialogIndex <= 15)
+		else
 		{
 			dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
-		}
-		if (_fadeOutRedStart != 0)
-		{
-			_redImage->alphaRender(getMemDC(), _frame > _fadeOutRedStart + 50 ? 255 : 255.0f / (float)(50) * (float)(_frame - _fadeOutRedStart));
-			if (_frame > _fadeOutRedStart + 50)
-			{
-				_redImage->render(getMemDC());
-			}
 		}
 	}
 }

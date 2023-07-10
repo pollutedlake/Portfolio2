@@ -83,7 +83,7 @@ HRESULT SceneManager::changeScene(string sceneName)
 
 void SceneManager::fadeOutWhite(int start, int cur, int end)
 {
-    _whiteImg->alphaRender(_currentScene->getMemDC(), 255.0f / (float)(end - start) * (float)(cur - start));
+    _whiteImg->alphaRender(_currentScene->getMemDC(), cur > end ? 255 : 255.0f / (float)(end - start) * (float)(cur - start));
 }
 
 void SceneManager::fadeInWhite(int start, int cur, int end)

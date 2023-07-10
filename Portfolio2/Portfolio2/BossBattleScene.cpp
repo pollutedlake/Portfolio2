@@ -54,6 +54,7 @@ void BossBattleScene::update(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown('N'))
 	{
+		SOUNDMANAGER->stopAllSoundFMOD();
 		SCENEMANAGER->changeScene("Ending");
 	}
 }

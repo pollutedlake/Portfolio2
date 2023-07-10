@@ -22,6 +22,7 @@ public:
 	void release(void);
 
 	FMOD::Sound* addSoundFMOD(string key, const char* fileName);
+	FMOD::Sound* addSoundFMOD(string key, const char* fileName, bool loop);
 	FMOD::Sound* findSound(string key);
 	void playSoundFMOD(string key);
 	void stopSoundFMOD(string key);
