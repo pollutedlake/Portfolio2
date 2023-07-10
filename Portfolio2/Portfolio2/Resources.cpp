@@ -55,6 +55,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("CursorTile", "Resources/Images/UI/CursorTile.bmp", 240, 32, 6, 1);
 	IMAGEMANAGER->addFrameImage("CantMoveTile", "Resources/Images/UI/CantMoveTile.bmp", 76, 42, 2, 1);
 	IMAGEMANAGER->addImage("MoveAbleTile", "Resources/Images/UI/MoveAbleTile.bmp", 40, 32);
+	IMAGEMANAGER->addFrameImage("VermontSherazade", "Resources/Images/BackGrounds/StoryScene/VermontSherazade.bmp", 3816, 90, 24, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("Red", "Resources/Images/BackGrounds/StoryScene/RedBG.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("AbandonedSwords", "Resources/Images/BackGrounds/StoryScene/AbandonedSwods.bmp", 55, 45, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SherazadeDead", "Resources/Images/BackGrounds/StoryScene/AbandonedSwods.bmp", 55, 45, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("SaladinStory", "Resources/Images/BackGrounds/StoryScene/SaladinStory.bmp", 260, 75, 4, 1, true, RGB(168, 208, 168));
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3");
@@ -62,7 +67,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("ScenarioSelect", "Resources/Sounds/SoundEffect/ScenarioSelect.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleButton", "Resources/Sounds/SoundEffect/TitleButton.wav");
 
-	IMAGEMANAGER->addImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 2560, 480, 4, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog1", "Resources/Sounds/StoryScene/1.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog2", "Resources/Sounds/StoryScene/2.mp3");
@@ -95,6 +100,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Dialog29", "Resources/Sounds/StoryScene/29.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog30", "Resources/Sounds/StoryScene/30.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog31", "Resources/Sounds/StoryScene/31.mp3");
+	SOUNDMANAGER->addSoundFMOD("BossBattle", "Resources/Sounds/BossBattle/BossBattle.mp3");
 	//DIALOGMANAGER->addDialogs("StoryScene");
 	//DIALOGMANAGER->addDialogs("EndingScene");
 	//DIALOGMANAGER->addDialog("EndingScene", "Vermont", "", { L"[버몬트]", L"죽여라..." }, )

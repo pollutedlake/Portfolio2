@@ -5,6 +5,9 @@ HRESULT StoryScene::init(void)
 {
 	_storyBG = IMAGEMANAGER->findImage("StoryBG");
 	_textBoxImg = IMAGEMANAGER->findImage("TextBox");
+	_vermontSherazade = IMAGEMANAGER->findImage("VermontSherazade");
+	_redImage = IMAGEMANAGER->findImage("Red");
+	_saladin = IMAGEMANAGER->findImage("SaladinStory");
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 10; j++)
@@ -121,10 +124,12 @@ HRESULT StoryScene::init(void)
 
 	_frame = 0;
 	_typing = 10;
-	_dialogRC[0] = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y - 150, WINSIZE_X - 200, 200);
+	_dialogRC[0] = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y - 150, WINSIZE_X - 160, 200);
 	_dialogRC[1] = {150, WINSIZE_Y - 170, WINSIZE_X - 50, WINSIZE_Y - 20};
 	_dialogRC[2] = {50, WINSIZE_Y - 330, WINSIZE_X - 150, WINSIZE_Y - 180};
 	_startFadeIn = 0;
+	_vermontSherazadeIndex = 0;
+	_fadeOutRedStart = 0;
 	_speakFinish = false;
 	_fadeIn = false;
 	return S_OK;
@@ -138,64 +143,104 @@ void StoryScene::update(void)
 {
 	if(!_fadeIn)
 	{
-		if(_frame == 0)
+		_frame++;
+		if(_frame == 1)
 		{
 			SOUNDMANAGER->playSoundFMOD("Dialog0");
 		}
-		if(!SOUNDMANAGER->isPlaying() && !_speakFinish)
+		if(_frame == 100)
 		{
 			SOUNDMANAGER->playSoundFMOD("Dialog1");
-			_speakFinish = true;
 		}
-		_frame++;
-		if (!SOUNDMANAGER->isPlaying())
+		if (_frame == 200)
 		{
 			_fadeIn = true;
-			_speakFinish = false;
 			_frame = 0;
 		}
 	}
 	else
 	{
+		if (_frame == 300)
+		{
+			SOUNDMANAGER->playSoundFMOD("Dialog2");
+		}
 		_frame++;
 		if (_frame % 5 == 0)
 		{
 			_typing++;
 		}
-		char exSound[50];
-		wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
-		if (SOUNDMANAGER->getCurrentPos(exSound) == 0)
+		if (_frame > 300)
 		{
-			_speakFinish = true;
-		}
-		else
-		{
-			_speakFinish = false;
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-		{
-			char sound[50];
-			if (_speakFinish)
+			char exSound[50];
+			wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
+			if (SOUNDMANAGER->getCurrentPos(exSound) == 0)
 			{
-				_speakFinish = false;
-				wsprintf(sound, "Dialog%d", _dialogIndex + 3);
-				SOUNDMANAGER->playSoundFMOD(sound);
-				_dialogIndex++;
-				if (_dialogIndex > 15)
-				{
-					SCENEMANAGER->changeScene("BossBattle");
-				}
-				_typing = 0;
+				_speakFinish = true;
 			}
 			else
 			{
-				_speakFinish = true;
-				char exSound[50];
-				wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
-				SOUNDMANAGER->stopSoundFMOD(exSound);
-				_typing = 999;
+				_speakFinish = false;
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _dialogIndex < 16)
+			{
+				char sound[50];
+				if (_speakFinish)
+				{
+					_speakFinish = false;
+					if (_dialogIndex < 15)
+					{
+						wsprintf(sound, "Dialog%d", _dialogIndex + 3);
+						SOUNDMANAGER->playSoundFMOD(sound);
+						_typing = 0;
+					}
+						_dialogIndex++;
+				}
+				else
+				{
+					_speakFinish = true;
+					char exSound[50];
+					wsprintf(exSound, "Dialog%d", _dialogIndex + 2);
+					cout << exSound << endl;
+					SOUNDMANAGER->stopSoundFMOD(exSound);
+					_typing = 999;
+				}
 			}
 		}
+	}
+	if (_dialogIndex == 6)
+	{
+		if (_frame % 5 == 0 && _vermontSherazadeIndex < 2)
+		{
+			_vermontSherazadeIndex++;
+		}
+	}
+	else if (_dialogIndex == 12)
+	{
+		_vermontSherazadeIndex = 3;
+		if (_frame % 5 == 0)
+		{
+			_saladinIndex++;
+		}
+	}
+	else if (_dialogIndex == 16)
+	{
+		if (_frame % 5 == 0 && _vermontSherazadeIndex < 14)
+		{
+			_vermontSherazadeIndex++;
+		}
+	}
+	if (_vermontSherazadeIndex == 8 && _frame % 5 == 1)
+	{
+		cout << "test" << endl;
+		SOUNDMANAGER->playSoundFMOD("Dialog18");
+	}
+	if (_vermontSherazadeIndex == 14 && _fadeOutRedStart == 0)
+	{
+		_fadeOutRedStart = _frame;
+	}
+	if (KEYMANAGER->isOnceKeyDown('N'))
+	{
+		SCENEMANAGER->changeScene("BossBattle");
 	}
 }
 
@@ -208,8 +253,25 @@ void StoryScene::render(void)
 	else
 	{
 		_storyBG->render(getMemDC());
-		dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
+		_vermontSherazade->frameRender(getMemDC(), 170, 340, _vermontSherazade->getFrameWidth() * 1.4, _vermontSherazade->getFrameHeight() * 1.4, _vermontSherazadeIndex, 0);
+		if (_saladinIndex != 0)
+		{
+			IMAGEMANAGER->findImage("AbandonedSwords")->render(getMemDC(), 250, 500);
+		}
+		_saladin->frameRender(getMemDC(), 250, 500, _saladin->getFrameWidth() * 1.4, _saladin->getFrameHeight() * 1.4, _saladinIndex, 0);
 		SCENEMANAGER->fadeInBlack(0, _frame, 300);
+		if (_frame > 300 && _dialogIndex <= 15)
+		{
+			dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
+		}
+		if (_fadeOutRedStart != 0)
+		{
+			_redImage->alphaRender(getMemDC(), _frame > _fadeOutRedStart + 50 ? 255 : 255.0f / (float)(50) * (float)(_frame - _fadeOutRedStart));
+			if (_frame > _fadeOutRedStart + 50)
+			{
+				_redImage->render(getMemDC());
+			}
+		}
 	}
 }
 

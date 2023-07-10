@@ -32,6 +32,10 @@ void BossBattleScene::release(void)
 
 void BossBattleScene::update(void)
 {
+	if (_frame == 0)
+	{
+		SOUNDMANAGER->playSoundFMOD("BossBattle");
+	}
 	_camera->update();
 	_saladin->update();
 	_cameraPos = _camera->getPosition();
@@ -44,9 +48,9 @@ void BossBattleScene::update(void)
 	// 마우스커서가 위치한 타일 구하기
 	_cursorTile.x = (_cameraPos.x - WINSIZE_X / 2 + _ptMouse.x) / TileWidth;
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-
+		cout << _cursorTile.x << "\t" << _cursorTile.y << endl;
 	}
 	if (KEYMANAGER->isOnceKeyDown('N'))
 	{
