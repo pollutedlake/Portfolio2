@@ -7,7 +7,7 @@ HRESULT MainGame::init(void)
 	_resources = new Resources;
 	_resources->init();
 	SCENEMANAGER->init();
-	SCENEMANAGER->changeScene("Story");
+	SCENEMANAGER->changeScene("BossBattle");
 	ShowCursor(false);
 	return S_OK;
 }

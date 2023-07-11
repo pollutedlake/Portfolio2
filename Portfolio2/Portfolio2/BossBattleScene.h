@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #include "Camera.h"
 #include "Saladin.h"
+#include "AStar.h"
 
 #define TileWidth	40
 #define TileHeight	30
@@ -16,6 +17,7 @@ private:
 	GImage* _mouseCursorImg;
 	Camera* _camera;
 	Saladin* _saladin;
+	AStar _aStar;
 
 	POINT _cameraPos;
 	POINT _cursorTile;

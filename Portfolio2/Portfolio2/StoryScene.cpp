@@ -172,7 +172,7 @@ HRESULT StoryScene::init(void)
 	_storyDialog[19]._script[2] = L"뭐, 상관없지...자 각오해라!";
 
 	_frame = 0;
-	_typing = 10;
+	_typing = 0;
 	_dialogRC[0] = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y - 150, WINSIZE_X - 160, 200);
 	_dialogRC[1] = {150, WINSIZE_Y - 170, WINSIZE_X - 50, WINSIZE_Y - 20};
 	_dialogRC[2] = {50, WINSIZE_Y - 330, WINSIZE_X - 150, WINSIZE_Y - 180};
@@ -491,7 +491,7 @@ void StoryScene::update(void)
 			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('N'))
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
 		SCENEMANAGER->changeScene("BossBattle");

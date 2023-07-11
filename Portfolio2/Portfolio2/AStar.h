@@ -17,11 +17,17 @@ struct cmp {
 class AStar
 {
 private:
-	priority_queue<pair<POINT, int>, vector<pair<POINT, int>>, cmp> _route;
+	priority_queue<pair<POINT, int>, vector<pair<POINT, int>>, cmp> _closedList;
+	int _distance[90][60];
+	POINT _exNode[90][60];
+	vector<POINT> _route;
 
 public:
-	void findRoute(POINT start, POINT dest, int map[][60], int rowN, int colN);
-	int heuristic(POINT start, POINT dest);
+	vector<POINT> findRoute(POINT start, POINT dest, int map[][60], int rowN, int colN);
+	//int findRoute(POINT start, POINT dest, int map[][60], int rowN, int colN);
+	int heuristic(POINT node, POINT dest);
+	int distance(POINT start, POINT node);
+
 
 
 	AStar() {};

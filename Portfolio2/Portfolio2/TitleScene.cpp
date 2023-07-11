@@ -119,6 +119,7 @@ void TitleScene::render(void)
 		SCENEMANAGER->fadeOutBlack(_fadeOutStartFrame, _frame, _fadeOutStartFrame + _titleEFX4->getMaxFrameX() / 3);
 		_titleEFX4->frameRender(getMemDC(), WINSIZE_X / 2 - _titleEFX4->getFrameWidth() / 2, WINSIZE_Y / 2 - _titleEFX4->getFrameHeight() / 2, _frame -_fadeOutStartFrame, 0);
 	}
+	//IMAGEMANAGER->findImage("test")->render(getMemDC());
 }
 
 void TitleScene::release(void)

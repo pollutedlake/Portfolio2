@@ -14,7 +14,8 @@ HRESULT BossBattleScene::init(void)
 
 	_saladin = new Saladin();
 	_saladin->init();
-	_saladin->setState(0);
+	_saladin->setDir(LEFT);
+	_saladin->setState(IDLE);
 	_saladin->setTilePos({TileColN / 2 + 3, TileRowN / 2 - 5});
 	_frame = 0;
 	_debug = false;
@@ -50,9 +51,12 @@ void BossBattleScene::update(void)
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		cout << _cursorTile.x << "\t" << _cursorTile.y << endl;
+		if (_tileInfo[_cursorTile.y][_cursorTile.x] == 1)
+		{
+			_saladin->setRoute(_aStar.findRoute(_saladin->getTilePos(), _cursorTile, _tileInfo, 90, 60));
+		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('N'))
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
 		SCENEMANAGER->changeScene("Ending");
@@ -104,4 +108,7 @@ void BossBattleScene::render(void)
 		}
 		FillRect(getMemDC(), &saladinRect, HBRUSH(RGB(255, 0, 0)));
 	}
+	char str[258];
+	wsprintf(str, "%d, %d", _cursorTile.x, _cursorTile.y);
+	TextOut(getMemDC(), 0, 0, str, strlen(str));
 }
