@@ -76,6 +76,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontIdleRight", "Resources/Images/Characters/Vermont/VermontIdleRight.bmp", 185, 75, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontIdleUp", "Resources/Images/Characters/Vermont/VermontIdleUp.bmp", 265, 87, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontIdleDown", "Resources/Images/Characters/Vermont/VermontIdleDown.bmp", 245, 78, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(0, 0, 0));
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3", true);

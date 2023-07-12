@@ -643,21 +643,35 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, 
 	_blendFunc.SourceConstantAlpha = alpha;
 	if (_isTrans)
 	{
+		GdiAlphaBlend(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight, _blendFunc);
+
+		//GdiTransparentBlt(
+		//	hdc, 
+		//	destX, destY,
+		//	_imageInfo->frameWidth,
+		//	_imageInfo->frameHeight,
+
+		//)
 		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, hdc, destX, destY, SRCCOPY);
 		GdiTransparentBlt(
 			_blendImage->hMemDC,
 			0, 0,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_blendImage->hMemDC,
+			0,
+			0,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight,
 			_transColor);
 
-		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
-			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+		StretchBlt(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, SRCCOPY);
 	}
 	else
 	{
@@ -681,24 +695,43 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int destWidth, int 
 	}
 
 	if (!_blendImage) this->initForAlphaBlend();
-	_blendFunc.SourceConstantAlpha = alpha;
+	_blendFunc.SourceConstantAlpha = 0;
+	_blendFunc.AlphaFormat = AC_SRC_ALPHA;
 	if (_isTrans)
 	{
-		BitBlt(_blendImage->hMemDC, 0, 0, destWidth, destHeight, hdc, destX, destY, SRCCOPY);
+		GdiAlphaBlend(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight, _blendFunc);
+		GdiTransparentBlt(
+			hdc,
+			destX, destY,
+			destWidth,
+			destHeight,
+			_blendImage->hMemDC,
+			0,
+			0,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_transColor);
+
+		/*BitBlt(_blendImage->hMemDC, 0, 0, destWidth, destHeight, hdc, destX, destY, SRCCOPY);
 		GdiTransparentBlt(
 			_blendImage->hMemDC,
 			0, 0,
 			destWidth,
 			destHeight,
-			_imageInfo->hMemDC,
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_blendImage2->hMemDC,
+			0,
+			0,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight,
 			_transColor);
 
-		GdiAlphaBlend(hdc, destX, destY, destWidth, destHeight,
-			_blendImage->hMemDC, 0, 0, destWidth, destHeight, _blendFunc);
+		StretchBlt(hdc, destX, destY, destWidth, destHeight,
+			_blendImage->hMemDC, 0, 0, destWidth, destHeight, SRCCOPY);*/
 	}
 	else
 	{

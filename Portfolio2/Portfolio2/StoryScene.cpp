@@ -178,7 +178,8 @@ HRESULT StoryScene::init(void)
 	_dialogRC[2] = {50, WINSIZE_Y - 330, WINSIZE_X - 150, WINSIZE_Y - 180};
 	_startFadeIn = 0;
 	_vermontSherazadeIndex = 0;
-	_backGroundIndex = 0;
+	_backGroundIndex = 2;
+	_soundIndex = 10;
 	_fadeRedStart = 0;
 	_speakFinish = false;
 	_fadeIn = false;
@@ -359,7 +360,7 @@ void StoryScene::update(void)
 		}
 		if (_vermontSherazadeIndex > _vermontSherazade->getMaxFrameX())
 		{
-			if (250 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10 < -IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameWidth() * 1.4)
+			if (250 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 15 < -IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameWidth() * 1.4)
 			{
 				_vermontSherazadeIndex--;
 				_frame--;
@@ -543,10 +544,10 @@ void StoryScene::render(void)
 					}
 					else
 					{
-						IMAGEMANAGER->findImage("VermontMoveLeft")->frameRender(getMemDC(), 250 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10, 
+						IMAGEMANAGER->findImage("VermontMoveLeft")->frameRender(getMemDC(), 250 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 15, 
 						340 + (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10 > 420 ? 420 : 340 + (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10,
 						IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameWidth()*1.4, IMAGEMANAGER->findImage("VermontMoveLeft")->getFrameHeight() * 1.4, (_frame / 5) % 6, 0);
-						IMAGEMANAGER->findImage("SaladinMove")->frameRender(getMemDC(), WINSIZE_X / 2 + 150 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 10, 420,
+						IMAGEMANAGER->findImage("SaladinMove")->frameRender(getMemDC(), WINSIZE_X / 2 + 150 - (_vermontSherazadeIndex - _vermontSherazade->getMaxFrameX()) * 15, 420,
 							IMAGEMANAGER->findImage("SaladinMove")->getFrameWidth() * 1.4, IMAGEMANAGER->findImage("SaladinMove")->getFrameHeight() * 1.4, (_frame / 5) % 6, 2);
 						SCENEMANAGER->fadeOutWhite(0, _fadeWhiteFrame, 100);
 					}
@@ -556,10 +557,6 @@ void StoryScene::render(void)
 					}
 				}
 			}
-			//if (_frame > 300 && _dialogIndex <= 15)
-			//{
-			//	dialog(_storyDialog[_dialogIndex]._speaker, _storyDialog[_dialogIndex]._script, _typing, _storyDialog[_dialogIndex]._dialogN, _storyDialog[_dialogIndex]._dialogType);
-			//}
 			if (_fadeRedStart != 0)
 			{
 				if (_soundIndex == 4)
@@ -576,6 +573,14 @@ void StoryScene::render(void)
 	else if (_backGroundIndex < 4)
 	{
 		_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
+		if (_soundIndex >= 11)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				IMAGEMANAGER->findImage("FireFly")->alphaFrameRender(getMemDC(), (float)WINSIZE_X / 4.f * i, WINSIZE_Y - IMAGEMANAGER->findImage("FireFly")->getFrameHeight() + 50, 
+				(float)WINSIZE_X / 4.f, IMAGEMANAGER->findImage("FireFly")->getFrameHeight(), (_frame / 5) % 31, 0, 255/2);
+			}
+		}
 		if (_fadeWhite)
 		{
 			if (_soundIndex == 19)
