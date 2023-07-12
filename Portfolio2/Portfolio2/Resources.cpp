@@ -54,7 +54,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinIdleUp", "Resources/Images/Characters/Saladin/SaladinIdleUp.bmp", 280, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinIdleDown", "Resources/Images/Characters/Saladin/SaladinIdleDown.bmp", 280, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUp", "Resources/Images/Characters/Saladin/SaladinAttackUp.bmp", 648, 138, 6, 1, true, RGB(168, 208, 168));
-	IMAGEMANAGER->addFrameImage("SaladinAttackSide", "Resources/Images/Characters/Saladin/SaladinAttackSide.bmp", 790, 176, 5, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("SaladinAttackSide", "Resources/Images/Characters/Saladin/SaladinAttackSide.bmp", 790, 176, 5, 2, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDown", "Resources/Images/Characters/Saladin/SaladinAttackDown.bmp", 505, 116, 5, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SaladinMove", "Resources/Images/Characters/Saladin/SaladinMove.bmp", 720, 480, 6, 4, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("CursorTile", "Resources/Images/UI/CursorTile.bmp", 240, 32, 6, 1);
@@ -69,6 +69,13 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Soldier4", "Resources/Images/BackGrounds/StoryScene/Soldier4.bmp", 47, 76, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinStory", "Resources/Images/BackGrounds/StoryScene/SaladinStory.bmp", 260, 75, 4, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("VermontMoveLeft", "Resources/Images/Characters/Vermont/VermontMoveLeft.bmp", 462, 76, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontMoveRight", "Resources/Images/Characters/Vermont/VermontMoveRight.bmp", 462, 76, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontMoveUp", "Resources/Images/Characters/Vermont/VermontMoveUp.bmp", 228, 80, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontMoveDown", "Resources/Images/Characters/Vermont/VermontMoveDown.bmp", 372, 91, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontIdleLeft", "Resources/Images/Characters/Vermont/VermontIdleLeft.bmp", 185, 75, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontIdleRight", "Resources/Images/Characters/Vermont/VermontIdleRight.bmp", 185, 75, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontIdleUp", "Resources/Images/Characters/Vermont/VermontIdleUp.bmp", 265, 87, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontIdleDown", "Resources/Images/Characters/Vermont/VermontIdleDown.bmp", 245, 78, 5, 1, true, RGB(255, 0, 255));
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3", true);

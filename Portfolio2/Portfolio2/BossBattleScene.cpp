@@ -47,6 +47,7 @@ void BossBattleScene::update(void)
 	}
 	_camera->update();
 	_saladin->update();
+	_vermont->update();
 	_cameraPos = _camera->getPosition();
 	_frame++;
 	if (KEYMANAGER->isOnceKeyDown('B'))
@@ -64,6 +65,32 @@ void BossBattleScene::update(void)
 			_saladin->setRoute(_aStar.findRoute(_saladin->getTilePos(), _cursorTile, _tileInfo, 90, 60));
 			_saladin->setState(MOVE);
 			_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = MOVABLE;
+			//_vermont->setRoute(_aStar.findRoute(_vermont->getTilePos(), _cursorTile, _tileInfo, 90, 60));
+			//_vermont->setState(MOVE);
+			//_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = MOVABLE;
+		}
+		if (_tileInfo[_cursorTile.y][_cursorTile.x] == VERMONT)
+		{
+			if (_cursorTile.y - _saladin->getTilePos().y > 0)
+			{
+				_saladin->setDir(DOWN);
+			}
+			else if (_cursorTile.y - _saladin->getTilePos().y < 0)
+			{
+				_saladin->setDir(UP);
+			}
+			else
+			{
+				if (_cursorTile.x - _saladin->getTilePos().x > 0)
+				{
+					_saladin->setDir(RIGHT);
+				}
+				else if (_cursorTile.x - _saladin->getTilePos().x < 0)
+				{
+					_saladin->setDir(LEFT);
+				}
+			}
+			_saladin->setState(ATTACK);
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
@@ -78,6 +105,8 @@ void BossBattleScene::render(void)
 	_backGroundImg->render(getMemDC(), WINSIZE_X / 2 - _cameraPos.x, WINSIZE_Y / 2 - _cameraPos.y, _backGroundImg->getWidth() * 1.5, _backGroundImg->getHeight() * 1.5, 0, 0, _backGroundImg->getWidth(), _backGroundImg->getHeight());
 	IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
 	WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 128);
+	_vermont->render(getMemDC(), { WINSIZE_X / 2 - (_cameraPos.x - _vermont->getTilePos().x * TileWidth),
+	WINSIZE_Y / 2 - (_cameraPos.y - _vermont->getTilePos().y * TileHeight + TileHeight / 2 * 3) });
 	_saladin->render(getMemDC(), {WINSIZE_X / 2 - (_cameraPos.x - _saladin->getTilePos().x * TileWidth),
 	WINSIZE_Y / 2 - (_cameraPos.y - _saladin->getTilePos().y * TileHeight + TileHeight / 2 * 3)});
 	_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());

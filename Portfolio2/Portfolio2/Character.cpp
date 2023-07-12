@@ -3,7 +3,7 @@
 
 HRESULT Character::init(void)
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void Character::release(void)
@@ -12,6 +12,7 @@ void Character::release(void)
 
 void Character::update(void)
 {
+
 }
 
 void Character::render(HDC hdc, POINT position)
@@ -22,6 +23,7 @@ void Character::setState(int state)
 {
 	_state.reset();
 	_state.set(state, true);
+	_frame = 0;
 }
 
 void Character::setDir(int dir)
@@ -60,7 +62,6 @@ void Character::move()
 	}
 	else
 	{
-		_state.reset();
-		_state.set(IDLE, true);
+		setState(IDLE);
 	}
 }
