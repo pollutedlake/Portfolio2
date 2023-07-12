@@ -16,7 +16,15 @@ HRESULT BossBattleScene::init(void)
 	_saladin->init();
 	_saladin->setDir(LEFT);
 	_saladin->setState(IDLE);
-	_saladin->setTilePos({TileColN / 2 + 3, TileRowN / 2 - 5});
+	_saladin->setTilePos({33, 40});
+	_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = SALADIN;
+
+	_vermont = new Vermont();
+	_vermont->init();
+	_vermont->setDir(RIGHT);
+	_vermont->setState(IDLE);
+	_vermont->setTilePos({24, 40});
+	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = VERMONT;
 	_frame = 0;
 	_debug = false;
 
@@ -51,9 +59,11 @@ void BossBattleScene::update(void)
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (_tileInfo[_cursorTile.y][_cursorTile.x] == 1)
+		if (_tileInfo[_cursorTile.y][_cursorTile.x] == MOVABLE)
 		{
 			_saladin->setRoute(_aStar.findRoute(_saladin->getTilePos(), _cursorTile, _tileInfo, 90, 60));
+			_saladin->setState(MOVE);
+			_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = MOVABLE;
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))

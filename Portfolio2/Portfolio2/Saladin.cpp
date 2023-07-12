@@ -61,58 +61,77 @@ void Saladin::render(HDC hdc, POINT position)
 			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 1);
 		}
 	}
-}
-
-void Saladin::setState(int state)
-{
-	_state.reset(); 
-	_state.set(state, true);
-}
-
-void Saladin::setDir(int dir)
-{
-	_dir.reset();
-	_dir.set(dir, true);
-}
-
-void Saladin::move()
-{
-	if (_route.size() > 0)
+	if (_state.test(ATTACK))
 	{
-		_state.reset();
-		_state.set(MOVE, true);
-		if (_tilePos.x - _route.back().x == 1)
+		if (_dir.test(LEFT))
 		{
-			_dir.reset();
-			_dir.set(LEFT, true);
+			IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 40, position.y - 30, 0, LEFT);
 		}
-		else if (_tilePos.x - _route.back().x == -1)
+		else if (_dir.test(RIGHT))
 		{
-			_dir.reset();
-			_dir.set(RIGHT, true);
+			IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, RIGHT);
 		}
-		else if (_tilePos.y - _route.back().y == 1)
+		else if (_dir.test(UP))
 		{
-			_dir.reset();
-			_dir.set(UP, true);
+			IMAGEMANAGER->findImage("SaladinAttackUP")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 0);
 		}
-		else if (_tilePos.y - _route.back().y == -1)
+		else if (_dir.test(DOWN))
 		{
-			_dir.reset();
-			_dir.set(DOWN, true);
+			IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 0);
 		}
-		else
-		{
-			_state.reset();
-			_state.set(IDLE, true);
-		}
-		_tilePos.x = _route.back().x;
-		_tilePos.y = _route.back().y;
-		_route.pop_back();
-	}
-	else
-	{
-		_state.reset();
-		_state.set(IDLE, true);
 	}
 }
+
+//void Saladin::setState(int state)
+//{
+//	_state.reset(); 
+//	_state.set(state, true);
+//}
+//
+//void Saladin::setDir(int dir)
+//{
+//	_dir.reset();
+//	_dir.set(dir, true);
+//}
+//
+//void Saladin::move()
+//{
+//	if (_route.size() > 0)
+//	{
+//		_state.reset();
+//		_state.set(MOVE, true);
+//		if (_tilePos.x - _route.back().x == 1)
+//		{
+//			_dir.reset();
+//			_dir.set(LEFT, true);
+//		}
+//		else if (_tilePos.x - _route.back().x == -1)
+//		{
+//			_dir.reset();
+//			_dir.set(RIGHT, true);
+//		}
+//		else if (_tilePos.y - _route.back().y == 1)
+//		{
+//			_dir.reset();
+//			_dir.set(UP, true);
+//		}
+//		else if (_tilePos.y - _route.back().y == -1)
+//		{
+//			_dir.reset();
+//			_dir.set(DOWN, true);
+//		}
+//		else
+//		{
+//			_state.reset();
+//			_state.set(IDLE, true);
+//		}
+//		_tilePos.x = _route.back().x;
+//		_tilePos.y = _route.back().y;
+//		_route.pop_back();
+//	}
+//	else
+//	{
+//		_state.reset();
+//		_state.set(IDLE, true);
+//	}
+//}

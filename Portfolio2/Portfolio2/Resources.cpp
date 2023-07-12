@@ -53,6 +53,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinIdleRight", "Resources/Images/Characters/Saladin/SaladinIdleRight.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinIdleUp", "Resources/Images/Characters/Saladin/SaladinIdleUp.bmp", 280, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinIdleDown", "Resources/Images/Characters/Saladin/SaladinIdleDown.bmp", 280, 90, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SaladinAttackUp", "Resources/Images/Characters/Saladin/SaladinAttackUp.bmp", 648, 138, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("SaladinAttackSide", "Resources/Images/Characters/Saladin/SaladinAttackSide.bmp", 790, 176, 5, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("SaladinAttackDown", "Resources/Images/Characters/Saladin/SaladinAttackDown.bmp", 505, 116, 5, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SaladinMove", "Resources/Images/Characters/Saladin/SaladinMove.bmp", 720, 480, 6, 4, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("CursorTile", "Resources/Images/UI/CursorTile.bmp", 240, 32, 6, 1);
 	IMAGEMANAGER->addFrameImage("CantMoveTile", "Resources/Images/UI/CantMoveTile.bmp", 76, 42, 2, 1);

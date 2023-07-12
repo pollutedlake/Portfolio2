@@ -2,12 +2,17 @@
 #include "GameNode.h"
 #include "Camera.h"
 #include "Saladin.h"
+#include "Vermont.h"
 #include "AStar.h"
 
 #define TileWidth	40
 #define TileHeight	30
 #define TileRowN	90
 #define TileColN	60
+#define CANTMOVE	0
+#define MOVABLE		1
+#define SALADIN		2
+#define VERMONT		3
 
 class BossBattleScene : public GameNode
 {
@@ -16,7 +21,8 @@ private:
 	GImage* _tableImg;
 	GImage* _mouseCursorImg;
 	Camera* _camera;
-	Saladin* _saladin;
+	Character* _saladin;
+	Character* _vermont;
 	AStar _aStar;
 
 	POINT _cameraPos;

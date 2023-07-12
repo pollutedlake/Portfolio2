@@ -104,6 +104,10 @@ vector<POINT> AStar::findRoute(POINT start, POINT dest, int map[][60], int rowN,
 	{
 		temp = _exNode[temp.y][temp.x];
 		_route.push_back(temp);
+		if (distance(temp, start) == 0)
+		{
+			_route.pop_back();
+		}
 	}
 	return _route;
 }
