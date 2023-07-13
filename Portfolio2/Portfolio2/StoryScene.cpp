@@ -178,8 +178,8 @@ HRESULT StoryScene::init(void)
 	_dialogRC[2] = {50, WINSIZE_Y - 330, WINSIZE_X - 150, WINSIZE_Y - 180};
 	_startFadeIn = 0;
 	_vermontSherazadeIndex = 0;
-	_backGroundIndex = 2;
-	_soundIndex = 10;
+	_backGroundIndex = 0;
+	_soundIndex = 0;
 	_fadeRedStart = 0;
 	_speakFinish = false;
 	_fadeIn = false;
@@ -575,11 +575,11 @@ void StoryScene::render(void)
 		_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
 		if (_soundIndex >= 11)
 		{
-			for (int i = 0; i < 4; i++)
+			/*for (int i = 0; i < 4; i++)
 			{
 				IMAGEMANAGER->findImage("FireFly")->alphaFrameRender(getMemDC(), (float)WINSIZE_X / 4.f * i, WINSIZE_Y - IMAGEMANAGER->findImage("FireFly")->getFrameHeight() + 50, 
-				(float)WINSIZE_X / 4.f, IMAGEMANAGER->findImage("FireFly")->getFrameHeight(), (_frame / 5) % 31, 0, 255/2);
-			}
+				(float)WINSIZE_X / 4.f, IMAGEMANAGER->findImage("FireFly")->getFrameHeight(), (_frame / 5) % 31, 0, 50);
+			}*/
 		}
 		if (_fadeWhite)
 		{

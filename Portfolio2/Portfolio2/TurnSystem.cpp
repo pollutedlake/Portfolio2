@@ -109,25 +109,25 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 					{
 						if (tileInfo[cursorTile.y][cursorTile.x] == ENEMY)
 						{
-							if (cursorTile.x - _curChar->getTilePos().x == 2)
+							if ((cursorTile.x - _curChar->getTilePos().x == 2) && (cursorTile.y == _curChar->getTilePos().y))
 							{
 								_curChar->setDir(RIGHT);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
-							if (cursorTile.x - _curChar->getTilePos().x == -2)
+							if ((cursorTile.x - _curChar->getTilePos().x == -2) && (cursorTile.y == _curChar->getTilePos().y))
 							{
 								_curChar->setDir(LEFT);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
-							if (cursorTile.y - _curChar->getTilePos().y == 2)
+							if ((cursorTile.y - _curChar->getTilePos().y == 2) && (cursorTile.x == _curChar->getTilePos().x))
 							{
 								_curChar->setDir(DOWN);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
-							if (cursorTile.y - _curChar->getTilePos().y == -2)
+							if ((cursorTile.y - _curChar->getTilePos().y == -2) && (cursorTile.x == _curChar->getTilePos().x))
 							{
 								_curChar->setDir(UP);
 								_curChar->setState(2);

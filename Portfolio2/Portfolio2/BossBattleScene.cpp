@@ -95,9 +95,7 @@ void BossBattleScene::render(void)
 	{
 		case CANTMOVE:
 			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
-				WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1, 0, 128);
-		break;
-		case ENEMY:
+				WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 128);
 		break;
 		case MOVABLE:
 			IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
@@ -105,12 +103,16 @@ void BossBattleScene::render(void)
 		break;
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
-	/*_vermont->render(getMemDC(), { WINSIZE_X / 2 - (_cameraPos.x - _vermont->getTilePos().x * TileWidth),
-	WINSIZE_Y / 2 - (_cameraPos.y - _vermont->getTilePos().y * TileHeight + TileHeight / 2 * 3) });
-	_saladin->render(getMemDC(), {WINSIZE_X / 2 - (_cameraPos.x - _saladin->getTilePos().x * TileWidth),
-	WINSIZE_Y / 2 - (_cameraPos.y - _saladin->getTilePos().y * TileHeight + TileHeight / 2 * 3)});*/
+	switch (_tileInfo[_cursorTile.y][_cursorTile.x])
+	{
+		case SALADIN:
+			_mouseCursorImg->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+		break;
+		case ENEMY:
+			IMAGEMANAGER->findImage("AttackMouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+		break;
+	}
 	_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
-	_mouseCursorImg->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	if (_debug)
 	{
 		HPEN hPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
