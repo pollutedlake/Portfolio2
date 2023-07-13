@@ -15,16 +15,25 @@ HRESULT BossBattleScene::init(void)
 	_saladin = new Saladin();
 	_saladin->init();
 	_saladin->setDir(LEFT);
-	_saladin->setState(IDLE);
+	//_saladin->setState(IDLE);
 	_saladin->setTilePos({33, 40});
+	_saladin->setTurnOder(0);
 	_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = SALADIN;
 
 	_vermont = new Vermont();
 	_vermont->init();
 	_vermont->setDir(RIGHT);
-	_vermont->setState(IDLE);
+	//_vermont->setDir(DOWN);
+	//_vermont->setState(2);
 	_vermont->setTilePos({24, 40});
-	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = VERMONT;
+	_vermont->setTurnOder(1);
+	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = ENEMY;
+
+	_turnSystem = new TurnSystem();
+	_turnSystem->addCharacter(_saladin);
+	_turnSystem->addCharacter(_vermont);
+	_turnSystem->init();
+
 	_frame = 0;
 	_debug = false;
 
@@ -35,8 +44,10 @@ void BossBattleScene::release(void)
 {
 	_camera->release();
 	_saladin->release();
+	_turnSystem->release();
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_saladin);
+	SAFE_DELETE(_turnSystem);
 }
 
 void BossBattleScene::update(void)
@@ -46,8 +57,8 @@ void BossBattleScene::update(void)
 		SOUNDMANAGER->playSoundFMOD("BossBattle");
 	}
 	_camera->update();
-	_saladin->update();
-	_vermont->update();
+	/*_saladin->update();
+	_vermont->update();*/
 	_cameraPos = _camera->getPosition();
 	_frame++;
 	if (KEYMANAGER->isOnceKeyDown('B'))
@@ -58,41 +69,9 @@ void BossBattleScene::update(void)
 	// 마우스커서가 위치한 타일 구하기
 	_cursorTile.x = (_cameraPos.x - WINSIZE_X / 2 + _ptMouse.x) / TileWidth;
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		if (_tileInfo[_cursorTile.y][_cursorTile.x] == MOVABLE)
-		{
-			_saladin->setRoute(_aStar.findRoute(_saladin->getTilePos(), _cursorTile, _tileInfo, 90, 60));
-			_saladin->setState(MOVE);
-			_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = MOVABLE;
-			//_vermont->setRoute(_aStar.findRoute(_vermont->getTilePos(), _cursorTile, _tileInfo, 90, 60));
-			//_vermont->setState(MOVE);
-			//_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = MOVABLE;
-		}
-		if (_tileInfo[_cursorTile.y][_cursorTile.x] == VERMONT)
-		{
-			if (_cursorTile.y - _saladin->getTilePos().y > 0)
-			{
-				_saladin->setDir(DOWN);
-			}
-			else if (_cursorTile.y - _saladin->getTilePos().y < 0)
-			{
-				_saladin->setDir(UP);
-			}
-			else
-			{
-				if (_cursorTile.x - _saladin->getTilePos().x > 0)
-				{
-					_saladin->setDir(RIGHT);
-				}
-				else if (_cursorTile.x - _saladin->getTilePos().x < 0)
-				{
-					_saladin->setDir(LEFT);
-				}
-			}
-			_saladin->setState(ATTACK);
-		}
-	}
+	_turnSystem->update(_tileInfo, TileRowN, TileColN, _cursorTile);
+	
+	_movableTiles = _saladin->searchMovable(_tileInfo, TileRowN, TileColN);
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
@@ -103,12 +82,33 @@ void BossBattleScene::update(void)
 void BossBattleScene::render(void)
 {
 	_backGroundImg->render(getMemDC(), WINSIZE_X / 2 - _cameraPos.x, WINSIZE_Y / 2 - _cameraPos.y, _backGroundImg->getWidth() * 1.5, _backGroundImg->getHeight() * 1.5, 0, 0, _backGroundImg->getWidth(), _backGroundImg->getHeight());
-	IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
-	WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 128);
-	_vermont->render(getMemDC(), { WINSIZE_X / 2 - (_cameraPos.x - _vermont->getTilePos().x * TileWidth),
+	if(!_saladin->isDoing())
+	{
+		for(auto it = _movableTiles.begin(); it != _movableTiles.end(); ++it)
+		{
+			IMAGEMANAGER->findImage("MovableTile")->alphaRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - (*it).x * TileWidth),
+			WINSIZE_Y / 2 - (_cameraPos.y - (*it).y * TileHeight), TileWidth, TileHeight, 0, 0,
+			IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
+		}
+	}
+	switch (_tileInfo[_cursorTile.y][_cursorTile.x])
+	{
+		case CANTMOVE:
+			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
+				WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1, 0, 128);
+		break;
+		case ENEMY:
+		break;
+		case MOVABLE:
+			IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
+				WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 128);
+		break;
+	}
+	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
+	/*_vermont->render(getMemDC(), { WINSIZE_X / 2 - (_cameraPos.x - _vermont->getTilePos().x * TileWidth),
 	WINSIZE_Y / 2 - (_cameraPos.y - _vermont->getTilePos().y * TileHeight + TileHeight / 2 * 3) });
 	_saladin->render(getMemDC(), {WINSIZE_X / 2 - (_cameraPos.x - _saladin->getTilePos().x * TileWidth),
-	WINSIZE_Y / 2 - (_cameraPos.y - _saladin->getTilePos().y * TileHeight + TileHeight / 2 * 3)});
+	WINSIZE_Y / 2 - (_cameraPos.y - _saladin->getTilePos().y * TileHeight + TileHeight / 2 * 3)});*/
 	_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
 	_mouseCursorImg->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	if (_debug)

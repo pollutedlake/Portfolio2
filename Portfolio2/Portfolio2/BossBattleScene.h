@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "Camera.h"
+#include "TurnSystem.h"
 #include "Saladin.h"
 #include "Vermont.h"
 #include "AStar.h"
@@ -12,7 +13,7 @@
 #define CANTMOVE	0
 #define MOVABLE		1
 #define SALADIN		2
-#define VERMONT		3
+#define ENEMY		3
 
 class BossBattleScene : public GameNode
 {
@@ -23,10 +24,11 @@ private:
 	Camera* _camera;
 	Character* _saladin;
 	Character* _vermont;
-	AStar _aStar;
+	TurnSystem* _turnSystem;
 
 	POINT _cameraPos;
 	POINT _cursorTile;
+	vector<POINT> _movableTiles;
 	int _frame;
 	bool _debug;
 

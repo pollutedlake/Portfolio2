@@ -35,7 +35,8 @@ GImage* ImageManager::addImage(string strKey, const char* fileName, int width, i
 
 	img = new GImage;
 	if (FAILED(img->init(fileName, width, height, isTrans, transColor)))
-	{
+	{	
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 		return NULL;
 	}

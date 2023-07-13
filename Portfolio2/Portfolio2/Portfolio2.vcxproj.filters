@@ -122,6 +122,9 @@
     <ClInclude Include="Character.h">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="TurnSystem.h">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -189,6 +192,9 @@
       <Filter>Class\Character</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnSystem.cpp">
       <Filter>Class</Filter>
     </ClCompile>
   </ItemGroup>

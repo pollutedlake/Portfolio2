@@ -4,6 +4,10 @@
 HRESULT Saladin::init(void)
 {
 	_frame = 0;
+	_wtp = 10;
+	_mobility = 10;
+	_type = 0;
+	Character::init();
 	return S_OK;
 }
 
@@ -22,30 +26,42 @@ void Saladin::update(void)
 			move();
 		}
 	}
-	if (_state.test(ATTACK))
+	else if (_state.test(ATTACK))
 	{
 		if (_dir.test(LEFT) && _frame / 10 > IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX())
 		{
-			setState(IDLE);
+			_state.reset();
+			//setState(IDLE);
+			setDoing(false);
+			_turn.flip(1);
 		}
 		else if (_dir.test(RIGHT) && _frame / 10 > IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX())
 		{
-			setState(IDLE);
+			_state.reset();
+			//setState(IDLE);
+			setDoing(false);
+			_turn.flip(1);
 		}
 		else if (_dir.test(UP) && _frame / 10 > IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX())
 		{
-			setState(IDLE);
+			_state.reset();
+			//setState(IDLE);
+			setDoing(false);
+			_turn.flip(1);
 		}
 		else if (_dir.test(DOWN) && _frame / 10 > IMAGEMANAGER->findImage("SaladinAttackDown")->getMaxFrameX())
 		{
-			setState(IDLE);
+			_state.reset();
+			//setState(IDLE);
+			setDoing(false);
+			_turn.flip(1);
 		}
 	}
 }
 
 void Saladin::render(HDC hdc, POINT position)
 {
-	if (_state.test(IDLE))
+	if (_state.none())
 	{
 		if (_dir.test(LEFT))
 		{
@@ -83,7 +99,7 @@ void Saladin::render(HDC hdc, POINT position)
 			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 1);
 		}
 	}
-	if (_state.test(ATTACK))
+	else if (_state.test(ATTACK))
 	{
 		if (_dir.test(LEFT))
 		{

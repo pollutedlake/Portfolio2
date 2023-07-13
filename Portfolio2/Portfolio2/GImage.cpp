@@ -695,11 +695,25 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int destWidth, int 
 	}
 
 	if (!_blendImage) this->initForAlphaBlend();
-	_blendFunc.SourceConstantAlpha = 0;
-	_blendFunc.AlphaFormat = AC_SRC_ALPHA;
+	_blendFunc.SourceConstantAlpha = alpha;
 	if (_isTrans)
 	{
-		GdiAlphaBlend(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight,
+		BitBlt(_blendImage->hMemDC, 0, 0, destWidth, destHeight, hdc, destX, destY, SRCCOPY);
+		GdiTransparentBlt(
+			_blendImage->hMemDC,
+			0, 0,
+			destWidth,
+			destHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_transColor);
+
+		GdiAlphaBlend(hdc, destX, destY, destWidth, destHeight,
+			_blendImage->hMemDC, 0, 0, destWidth, destHeight, _blendFunc);
+		/*GdiAlphaBlend(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight,
 			_imageInfo->hMemDC,
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
 			_imageInfo->currentFrameY * _imageInfo->frameHeight,
@@ -717,7 +731,7 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int destWidth, int 
 			_imageInfo->frameHeight,
 			_transColor);
 
-		/*BitBlt(_blendImage->hMemDC, 0, 0, destWidth, destHeight, hdc, destX, destY, SRCCOPY);
+		BitBlt(_blendImage->hMemDC, 0, 0, destWidth, destHeight, hdc, destX, destY, SRCCOPY);
 		GdiTransparentBlt(
 			_blendImage->hMemDC,
 			0, 0,

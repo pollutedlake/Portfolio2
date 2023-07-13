@@ -59,7 +59,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinMove", "Resources/Images/Characters/Saladin/SaladinMove.bmp", 720, 480, 6, 4, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("CursorTile", "Resources/Images/UI/CursorTile.bmp", 240, 32, 6, 1);
 	IMAGEMANAGER->addFrameImage("CantMoveTile", "Resources/Images/UI/CantMoveTile.bmp", 76, 42, 2, 1);
-	IMAGEMANAGER->addImage("MoveAbleTile", "Resources/Images/UI/MoveAbleTile.bmp", 40, 32);
+	IMAGEMANAGER->addImage("MovableTile", "Resources/Images/UI/MovableTile.bmp", 40, 32);
 	IMAGEMANAGER->addFrameImage("VermontSherazade", "Resources/Images/BackGrounds/StoryScene/VermontSherazade.bmp", 3816, 90, 24, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("Red", "Resources/Images/BackGrounds/StoryScene/RedBG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("AbandonedSwords", "Resources/Images/BackGrounds/StoryScene/AbandonedSwods.bmp", 55, 45, true, RGB(168, 208, 168));
@@ -76,6 +76,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontIdleRight", "Resources/Images/Characters/Vermont/VermontIdleRight.bmp", 185, 75, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontIdleUp", "Resources/Images/Characters/Vermont/VermontIdleUp.bmp", 265, 87, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontIdleDown", "Resources/Images/Characters/Vermont/VermontIdleDown.bmp", 245, 78, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontAttackLeft", "Resources/Images/Characters/Vermont/VermontAttackLeft.bmp", 452, 118, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontAttackRight", "Resources/Images/Characters/Vermont/VermontAttackRight.bmp", 452, 118, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(0, 0, 0));
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
