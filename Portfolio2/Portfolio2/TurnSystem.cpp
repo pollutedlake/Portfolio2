@@ -3,6 +3,7 @@
 
 HRESULT TurnSystem::init(void)
 {
+	_actionChoice = false;
 	_aStar = new AStar();
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
@@ -28,7 +29,6 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 
 	if (!_curChar->isDoing())
 	{	
-		//cout << _curChar->getTilePos().x << "\t" <<_curChar->getTilePos().y<<endl;
 		if(_curChar->getType() == 0)
 		{
 			tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = SALADIN;
@@ -43,6 +43,32 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		}
 		if(_curChar->getType() == 0)
 		{
+			if (_curChar->canMove())
+			{
+				_player = (Saladin*)_curChar;
+				_player->searchMovable(tileInfo, rowN, colN);
+			}
+			else
+			{
+				POINT curPos = _curChar->getTilePos();
+				_attackTiles.clear();
+				if (tileInfo[curPos.y][curPos.x - 2] == MOVABLE || tileInfo[curPos.y][curPos.x - 2] == ENEMY)
+				{
+					_attackTiles.push_back({curPos.x - 2, curPos.y});
+				}
+				if (tileInfo[curPos.y][curPos.x + 2] == MOVABLE || tileInfo[curPos.y][curPos.x + 2] == ENEMY)
+				{
+					_attackTiles.push_back({ curPos.x + 2, curPos.y });
+				}
+				if (tileInfo[curPos.y - 2][curPos.x] == MOVABLE || tileInfo[curPos.y - 2][curPos.x] == ENEMY)
+				{
+					_attackTiles.push_back({ curPos.x, curPos.y - 2 });
+				}
+				if (tileInfo[curPos.y + 2][curPos.x - 2] == MOVABLE || tileInfo[curPos.y + 2][curPos.x] == ENEMY)
+				{
+					_attackTiles.push_back({ curPos.x, curPos.y + 2 });
+				}
+			}
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				if (_curChar->canMove())
@@ -51,46 +77,68 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 					{
 						if (tileInfo[cursorTile.y][cursorTile.x] == ENEMY)
 						{
-							_curChar->setState(3);
-							_curChar->setDoing(true);
+							vector<vector<POINT>> routes;
 							vector<POINT> route;
-							vector<POINT> temp;
-							//POINT dest;
 							if (cursorTile.x > 1 && (tileInfo[cursorTile.y][cursorTile.x - 2] == MOVABLE || tileInfo[cursorTile.y][cursorTile.x - 2] == SALADIN))
 							{
-								route = _aStar->findRoute(_curChar->getTilePos(), { cursorTile.x - 2, cursorTile.y }, tileInfo, rowN, colN);
-								//dest = { cursorTile.x - 2, cursorTile.y };
+								routes.push_back( _aStar->findRoute(_curChar->getTilePos(), { cursorTile.x - 2, cursorTile.y }, tileInfo, rowN, colN));
 							}
 							if (cursorTile.x < colN - 2 && (tileInfo[cursorTile.y][cursorTile.x + 2] == MOVABLE || tileInfo[cursorTile.y][cursorTile.x + 2] == SALADIN))
 							{
-								temp = _aStar->findRoute(_curChar->getTilePos(), { cursorTile.x + 2, cursorTile.y }, tileInfo, rowN, colN);
-								if (route.size() > 0 && route.size() > temp.size())
-								{
-									route = temp;
-									//dest = { cursorTile.x + 2, cursorTile.y };
-								}
+								routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { cursorTile.x + 2, cursorTile.y }, tileInfo, rowN, colN));
+								//if ((route.size() > 0 && route.size() > temp.size()) || route.size() == 0)
+								//{
+								//	route = temp;
+								//}
 							}
 							if (cursorTile.y > 1 && (tileInfo[cursorTile.y - 2][cursorTile.x] == MOVABLE || tileInfo[cursorTile.y - 2][cursorTile.x] == SALADIN))
 							{
-								temp = _aStar->findRoute(_curChar->getTilePos(), { cursorTile.x, cursorTile.y - 2 }, tileInfo, rowN, colN);
-								if (route.size() > 0 && route.size() > temp.size())
-								{
-									route = temp;
-									//dest = { cursorTile.x, cursorTile.y - 2 };
-								}
+								routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { cursorTile.x, cursorTile.y - 2 }, tileInfo, rowN, colN));
+								//if ((route.size() > 0 && route.size() > temp.size()) || route.size() == 0)
+								//{
+								//	route = temp;
+								//}
 							}
 							if (cursorTile.y < rowN - 2 && (tileInfo[cursorTile.y + 2][cursorTile.x] == MOVABLE || tileInfo[cursorTile.y + 2][cursorTile.x] == SALADIN))
 							{
-								temp = _aStar->findRoute(_curChar->getTilePos(), { cursorTile.x, cursorTile.y + 2 }, tileInfo, rowN, colN);
-								if (route.size() > 0 && route.size() > temp.size())
+								routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { cursorTile.x, cursorTile.y + 2 }, tileInfo, rowN, colN));
+								//if ((route.size() > 0 && route.size() > temp.size()) || route.size() == 0)
+								//{
+								//	route = temp;
+								//}
+							}
+							route = routes[0];
+							for (auto it = routes.begin(); it != routes.end(); ++it)
+							{
+								if (route.size() > (*it).size())
 								{
-									route = temp;
-									//dest = { cursorTile.x, cursorTile.y + 2 };
+									route = (*it);
 								}
 							}
+							if(route.size() > 0)
+							{
+								_curChar->setState(3);
+							}
+							else
+							{
+								_curChar->setState(2);
+							}
+							_curChar->setDoing(true);
 							_curChar->setRoute(route);
 							_curChar->setdestTilePos(cursorTile);
 							tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
+						}
+						if (tileInfo[cursorTile.y][cursorTile.x] == SALADIN)
+						{
+							_actionChoice = true;
+						}
+						if (_actionChoice)
+						{
+							if (PtInRect(&_actionButtons[2], _ptMouse))
+							{
+								_actionChoice = false;
+								nextTurn();
+							}
 						}
 						
 					}
@@ -111,32 +159,44 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 						{
 							if ((cursorTile.x - _curChar->getTilePos().x == 2) && (cursorTile.y == _curChar->getTilePos().y))
 							{
-								_curChar->setDir(RIGHT);
+								_curChar->setdestTilePos(cursorTile);
+								//_curChar->setDir(RIGHT);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 							if ((cursorTile.x - _curChar->getTilePos().x == -2) && (cursorTile.y == _curChar->getTilePos().y))
 							{
-								_curChar->setDir(LEFT);
+								_curChar->setdestTilePos(cursorTile);
+								//_curChar->setDir(LEFT);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 							if ((cursorTile.y - _curChar->getTilePos().y == 2) && (cursorTile.x == _curChar->getTilePos().x))
 							{
-								_curChar->setDir(DOWN);
+								_curChar->setdestTilePos(cursorTile);
+								//_curChar->setDir(DOWN);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 							if ((cursorTile.y - _curChar->getTilePos().y == -2) && (cursorTile.x == _curChar->getTilePos().x))
 							{
-								_curChar->setDir(UP);
+								_curChar->setdestTilePos(cursorTile);
+								//_curChar->setDir(UP);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 						}
-						else
+						if (tileInfo[cursorTile.y][cursorTile.x] == SALADIN)
 						{
-							nextTurn();
+							_actionChoice = true;
+						}
+						if (_actionChoice)
+						{
+							if (PtInRect(&_actionButtons[2], _ptMouse))
+							{
+								_actionChoice = false;
+								nextTurn();
+							}
 						}
 					}
 				}
@@ -148,38 +208,30 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 			_enemy->setState(3);
 			_enemy->setDoing(true);
 			POINT player = _enemy->findPlayer(tileInfo, rowN, colN);
+			vector<vector<POINT>> routes;
 			vector<POINT> route;
-			vector<POINT> temp;
 			if (player.x > 1 && (tileInfo[player.y][player.x - 2] == MOVABLE || (_enemy->getTilePos().x == player.x - 2 && _enemy->getTilePos().y == player.y)))
 			{
-				route = _aStar->findRoute(_curChar->getTilePos(), { player.x - 2, player.y }, tileInfo, rowN, colN);
-				//dest = { player.x - 2, player.y };
+				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x - 2, player.y }, tileInfo, rowN, colN));
 			}
 			if (player.x < colN - 2 && (tileInfo[player.y][player.x + 2] == MOVABLE || (_enemy->getTilePos().x == player.x + 2 && _enemy->getTilePos().y == player.y)))
 			{
-				temp = _aStar->findRoute(_curChar->getTilePos(), { player.x + 2, player.y }, tileInfo, rowN, colN);
-				if (route.size() > temp.size() || route.size() == 0)
-				{
-					route = temp;
-					//dest = { player.x + 2, player.y };
-				}
+				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x + 2, player.y }, tileInfo, rowN, colN));
 			}
 			if (player.y > 1 && (tileInfo[player.y - 2][player.x] == MOVABLE || (_enemy->getTilePos().x == player.x && _enemy->getTilePos().y == player.y - 2)))
 			{
-				temp = _aStar->findRoute(_curChar->getTilePos(), { player.x, player.y - 2 }, tileInfo, rowN, colN);
-				if (route.size() > temp.size() || route.size() == 0)
-				{
-					route = temp;
-					//dest = { player.x, player.y - 2 };
-				}
+				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x, player.y - 2 }, tileInfo, rowN, colN));
 			}
 			if (player.y < rowN - 2 && (tileInfo[player.y + 2][player.x] == MOVABLE || (_enemy->getTilePos().x == player.x && _enemy->getTilePos().y == player.y + 2)))
 			{
-				temp = _aStar->findRoute(_curChar->getTilePos(), { player.x, player.y + 2 }, tileInfo, rowN, colN);
-				if (route.size() > temp.size() || route.size() == 0)
+				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x, player.y + 2 }, tileInfo, rowN, colN));
+			}
+			route = routes[0];
+			for (auto it = routes.begin(); it != routes.end(); ++it)
+			{
+				if (route.size() > (*it).size())
 				{
-					route = temp;
-					//dest = { player.x, player.y + 2 };
+					route = (*it);
 				}
 			}
 			_curChar->setRoute(route);
@@ -187,7 +239,6 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 			tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
 		}
 	}
-	//_movableTiles = _curChar->searchMovable(tileInfo, rowN, colN);
 }
 
 void TurnSystem::release(void)
@@ -197,10 +248,58 @@ void TurnSystem::release(void)
 
 void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 {
+	if (_curChar->getType() == 0)
+	{
+		if (!_curChar->isDoing() && _curChar->canMove())
+		{
+			_player = (Saladin*)_curChar;
+			vector<POINT> tiles = _player->getMovableTiles();
+			for (auto it = tiles.begin(); it != tiles.end(); ++it)
+			{
+				IMAGEMANAGER->findImage("MovableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
+					WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
+					IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
+			}
+			tiles = _player->getAttackableTiles();
+			for (auto it = tiles.begin(); it != tiles.end(); ++it)
+			{
+				IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
+					WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
+					IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
+			}
+		}
+		if (!_curChar->isDoing() && !_curChar->canMove())
+		{
+			if (_curChar->canAction())
+			{
+				for (auto it = _attackTiles.begin(); it != _attackTiles.end(); ++it)
+				{
+					IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
+						WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
+						IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
+				}
+			}
+		}
+	}
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
 		(*it)->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - (*it)->getTilePos().x * tileWidth),
 	WINSIZE_Y / 2 - (cameraPos.y - (*it)->getTilePos().y * tileHeight + tileHeight / 2 * 3) });
+	}
+	if (_actionChoice)
+	{
+		POINT curPos = _curChar->getTilePos();
+		_actionButtons[0] = RectMakeCenter(WINSIZE_X / 2 - (cameraPos.x - curPos.x * tileWidth) - 80, WINSIZE_Y / 2 - (cameraPos.y - curPos.y * tileHeight) - 30, 100, 30);
+		_actionButtons[1] = RectMakeCenter(WINSIZE_X / 2 - (cameraPos.x - curPos.x * tileWidth) - 80, WINSIZE_Y / 2 - (cameraPos.y - curPos.y * tileHeight) + 15, 100, 30);
+		_actionButtons[2] = RectMakeCenter(WINSIZE_X / 2 - (cameraPos.x - curPos.x * tileWidth) + 120, WINSIZE_Y / 2 - (cameraPos.y - curPos.y * tileHeight) - 30, 100, 30);
+		_actionButtons[3] = RectMakeCenter(WINSIZE_X / 2 - (cameraPos.x - curPos.x * tileWidth) + 120, WINSIZE_Y / 2 - (cameraPos.y - curPos.y * tileHeight) + 15, 100, 30);
+		char* actionStr[4] = {"어빌리티", "아이템", "휴 식", "상 태"};
+		for (int i = 0; i < 4; i++)
+		{
+			IMAGEMANAGER->findImage("ActionButton")->render(hdc, _actionButtons[i].left, _actionButtons[i].top);
+			IMAGEMANAGER->findImage("ActionIcon")->frameRender(hdc, _actionButtons[i].left + 10, _actionButtons[i].top, i, 0);
+			FONTMANAGER->textOut(hdc, _actionButtons[i].left + 35, _actionButtons[i].top + 5, "가을체", 15, 100, actionStr[i], strlen(actionStr[i]), RGB(255, 255, 255));
+		}
 	}
 }
 

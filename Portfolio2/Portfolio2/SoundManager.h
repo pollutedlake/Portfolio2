@@ -21,6 +21,10 @@ public:
 	HRESULT init(void);
 	void release(void);
 
+	void addMp3FileWithKey(string key, string fileName);
+	void addWaveFileWithKey(string key, string fileName);
+	void playEffectSoundWave(char* fileName);
+	void playSoundWithKey(string key);
 	FMOD::Sound* addSoundFMOD(string key, const char* fileName);
 	FMOD::Sound* addSoundFMOD(string key, const char* fileName, bool loop);
 	FMOD::Sound* findSound(string key);

@@ -3,12 +3,8 @@
 
 class Saladin : public Character
 {
-//private:
-//	bitset<3> _state;
-//	POINT _tilePos;
-//	int _frame;
-//	vector<POINT> _route;
-//	bitset<4> _dir;
+	vector<POINT> _movableTiles;
+	vector<POINT> _attackableTiles;
 
 public:
 	HRESULT init(void);
@@ -16,13 +12,10 @@ public:
 	void update(void);
 	void render(HDC hdc, POINT position);
 
-	//void setState(int state);
-	//void setDir(int dir);
-	//void setTilePos(POINT tilePos) {_tilePos = tilePos;}
-	//void setRoute(vector<POINT> route) { _route = route; }
-	/*void move();
+	void searchMovable(int map[][60], int rowN, int colN);
 
-	POINT getTilePos() {return _tilePos;}*/
+	vector<POINT> getMovableTiles() {return _movableTiles;}
+	vector<POINT> getAttackableTiles() {return _attackableTiles;}
 
 	Saladin() {}
 	~Saladin() {}

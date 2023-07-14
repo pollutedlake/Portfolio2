@@ -15,7 +15,6 @@ HRESULT BossBattleScene::init(void)
 	_saladin = new Saladin();
 	_saladin->init();
 	_saladin->setDir(LEFT);
-	//_saladin->setState(IDLE);
 	_saladin->setTilePos({33, 40});
 	_saladin->setTurnOder(0);
 	_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = SALADIN;
@@ -23,15 +22,13 @@ HRESULT BossBattleScene::init(void)
 	_vermont = new Vermont();
 	_vermont->init();
 	_vermont->setDir(RIGHT);
-	//_vermont->setDir(DOWN);
-	//_vermont->setState(2);
 	_vermont->setTilePos({24, 40});
 	_vermont->setTurnOder(1);
 	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = ENEMY;
 
 	_turnSystem = new TurnSystem();
-	_turnSystem->addCharacter(_saladin);
 	_turnSystem->addCharacter(_vermont);
+	_turnSystem->addCharacter(_saladin);
 	_turnSystem->init();
 
 	_frame = 0;
@@ -57,8 +54,6 @@ void BossBattleScene::update(void)
 		SOUNDMANAGER->playSoundFMOD("BossBattle");
 	}
 	_camera->update();
-	/*_saladin->update();
-	_vermont->update();*/
 	_cameraPos = _camera->getPosition();
 	_frame++;
 	if (KEYMANAGER->isOnceKeyDown('B'))
@@ -71,7 +66,6 @@ void BossBattleScene::update(void)
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
 	_turnSystem->update(_tileInfo, TileRowN, TileColN, _cursorTile);
 	
-	_movableTiles = _saladin->searchMovable(_tileInfo, TileRowN, TileColN);
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
@@ -82,37 +76,23 @@ void BossBattleScene::update(void)
 void BossBattleScene::render(void)
 {
 	_backGroundImg->render(getMemDC(), WINSIZE_X / 2 - _cameraPos.x, WINSIZE_Y / 2 - _cameraPos.y, _backGroundImg->getWidth() * 1.5, _backGroundImg->getHeight() * 1.5, 0, 0, _backGroundImg->getWidth(), _backGroundImg->getHeight());
-	if(!_saladin->isDoing())
+	IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
+		WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);
+	if (_tileInfo[_cursorTile.y][_cursorTile.x] == CANTMOVE)
 	{
-		for(auto it = _movableTiles.begin(); it != _movableTiles.end(); ++it)
-		{
-			IMAGEMANAGER->findImage("MovableTile")->alphaRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - (*it).x * TileWidth),
-			WINSIZE_Y / 2 - (_cameraPos.y - (*it).y * TileHeight), TileWidth, TileHeight, 0, 0,
-			IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
-		}
-	}
-	switch (_tileInfo[_cursorTile.y][_cursorTile.x])
-	{
-		case CANTMOVE:
-			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
-				WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 128);
-		break;
-		case MOVABLE:
-			IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
-				WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 128);
-		break;
+		IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
+			WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
-	switch (_tileInfo[_cursorTile.y][_cursorTile.x])
-	{
-		case SALADIN:
-			_mouseCursorImg->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
-		break;
-		case ENEMY:
-			IMAGEMANAGER->findImage("AttackMouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
-		break;
-	}
 	_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
+	if (_tileInfo[_cursorTile.y][_cursorTile.x] == ENEMY)
+	{
+		IMAGEMANAGER->findImage("AttackMouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+	}
+	else
+	{
+		_mouseCursorImg->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+	}
 	if (_debug)
 	{
 		HPEN hPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));

@@ -1,6 +1,7 @@
 #pragma once
-#include "Character.h"
+//#include "Character.h"
 #include "Enemy.h"
+#include "Saladin.h"
 #include "AStar.h"
 
 #define CANTMOVE	0
@@ -15,8 +16,12 @@ class TurnSystem
 private:
 	Character* _curChar;
 	Enemy* _enemy;
+	Saladin* _player;
 	AStar* _aStar;
 	vector<Character*> _charList;
+	bool _actionChoice;
+	RECT _actionButtons[4];
+	vector<POINT> _attackTiles;
 
 public:
 	HRESULT init(void);

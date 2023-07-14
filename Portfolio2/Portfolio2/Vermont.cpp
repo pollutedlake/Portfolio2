@@ -27,7 +27,12 @@ void Vermont::update(void)
 		}
 	}
 	else if (_state.test(ATTACK))
-	{
+	{	
+		if (_frame == 3)
+		{
+			SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/VermontAttack.wav");
+			//SOUNDMANAGER->playSoundFMOD("VermontAttack");
+		}
 		if (_dir.test(LEFT) && _frame / 10 > IMAGEMANAGER->findImage("VermontAttackLeft")->getMaxFrameX())
 		{
 			_state.reset();
@@ -37,21 +42,18 @@ void Vermont::update(void)
 		else if (_dir.test(RIGHT) && _frame / 10 > IMAGEMANAGER->findImage("VermontAttackRight")->getMaxFrameX())
 		{
 			_state.reset();
-			//setState(IDLE);
 			setDoing(false);
 			endTurn();
 		}
 		else if (_dir.test(UP) && _frame / 10 > IMAGEMANAGER->findImage("VermontAttackUp")->getMaxFrameX())
 		{
 			_state.reset();
-			//setState(IDLE);
 			setDoing(false);
 			endTurn();
 		}
 		else if (_dir.test(DOWN) && _frame / 10 > IMAGEMANAGER->findImage("VermontAttackDown")->getMaxFrameX())
 		{
 			_state.reset();
-			//setState(IDLE);
 			setDoing(false);
 			endTurn();
 		}
@@ -60,6 +62,8 @@ void Vermont::update(void)
 
 void Vermont::render(HDC hdc, POINT position)
 {
+	//IMAGEMANAGER->findImage("VermontAttackDown")->frameRender(hdc, position.x - 35, position.y - 30, 2, 0);
+	//IMAGEMANAGER->findImage("VermontAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 25, 0, 0, 200);
 	if (_state.none())
 	{
 		if (_dir.test(LEFT))
@@ -103,18 +107,34 @@ void Vermont::render(HDC hdc, POINT position)
 		if (_dir.test(LEFT))
 		{
 			IMAGEMANAGER->findImage("VermontAttackLeft")->frameRender(hdc, position.x - 30, position.y - 40, (_frame / 10) % 4, 0);
+			if((_frame / 10) % 4 > 1)
+			{
+				IMAGEMANAGER->findImage("VermontAttackSideEffect")->alphaFrameRender(hdc, position.x - 60, position.y - 40, (_frame / 5) % 4, 0, 200);
+			}
 		}
 		else if (_dir.test(RIGHT))
 		{
 			IMAGEMANAGER->findImage("VermontAttackRight")->frameRender(hdc, position.x - 45, position.y - 40, 3 - (_frame / 10) % 4, 0);
+			if ((_frame / 10) % 4 > 1)
+			{
+				IMAGEMANAGER->findImage("VermontAttackSideEffect")->alphaFrameRender(hdc, position.x - 60, position.y - 40, 3 - (_frame / 5) % 4, 1, 200);
+			}
 		}
 		else if (_dir.test(UP))
 		{
 			IMAGEMANAGER->findImage("VermontAttackUp")->frameRender(hdc, position.x - 20, position.y, (_frame / 10) % 4, 0);
+			if ((_frame / 10) % 4 > 1)
+			{
+				IMAGEMANAGER->findImage("VermontAttackUpEffect")->alphaFrameRender(hdc, position.x - 45, position.y - 35, (_frame / 5) % 4, 0, 200);
+			}
 		}
 		else if (_dir.test(DOWN))
 		{
 			IMAGEMANAGER->findImage("VermontAttackDown")->frameRender(hdc, position.x - 35, position.y - 30, (_frame / 10) % 4, 0);
+			if ((_frame / 10) % 4 > 1)
+			{
+				IMAGEMANAGER->findImage("VermontAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 25, (_frame / 5) % 4, 0, 200);
+			}
 		}
 	}
 }

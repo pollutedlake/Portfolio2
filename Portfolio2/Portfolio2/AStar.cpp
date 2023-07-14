@@ -3,6 +3,11 @@
 
 vector<POINT> AStar::findRoute(POINT start, POINT dest, int map[][60], int rowN, int colN)
 {
+	if ((start.x == dest.x) && (start.y == dest.y))
+	{
+		_route.clear();
+		return _route;
+	}
 	for (int i = 0; i < rowN; i++)
 	{
 		for (int j = 0; j < colN; j++)
