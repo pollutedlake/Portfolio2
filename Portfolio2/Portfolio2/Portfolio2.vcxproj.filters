@@ -38,10 +38,13 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{2d96d0f3-8597-49a9-a035-614ee9b33215}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Class\Character">
+    <Filter Include="Class\Object">
+      <UniqueIdentifier>{b85ea5ee-b921-4524-b1d0-889f6bc28e8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Character">
       <UniqueIdentifier>{967e604e-607a-4252-b964-7d0170251f63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Class\Character\Enemy">
+    <Filter Include="Class\Object\Character\Enemy">
       <UniqueIdentifier>{95a9b1be-1d47-491f-9dbb-0d80b6c15fe1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -110,23 +113,30 @@
     <ClInclude Include="Resources.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Class\Character\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Vermont.h">
-      <Filter>Class\Character\Enemy</Filter>
+      <Filter>Class\Object\Character\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Saladin.h">
-      <Filter>Class\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Class</Filter>
+      <Filter>Class\Object\Character</Filter>
     </ClInclude>
     <ClInclude Include="TurnSystem.h">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Object.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Class\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Class\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Class\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -184,23 +194,30 @@
     <ClCompile Include="Resources.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Class\Character\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Vermont.cpp">
-      <Filter>Class\Character\Enemy</Filter>
+      <Filter>Class\Object\Character\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Saladin.cpp">
-      <Filter>Class\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Class</Filter>
+      <Filter>Class\Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="TurnSystem.cpp">
       <Filter>Class</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Object.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Class\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">

@@ -13,15 +13,15 @@
 #define TURNMOVE	0
 #define TURNACTION	1
 
-class Character// : public Object
+class Character : public Object
 {
 protected:
 	bitset<2> _turn;
 	bitset<4> _state;
 	bitset<20> _turnOrder;
-	POINT _tilePos;
+	//POINT _tilePos;
 	POINT _destTilePos;
-	int _type;
+	//int _type;
 	int _frame;
 	vector<POINT> _route;
 	bitset<4> _dir;
@@ -50,7 +50,7 @@ public:
 	void setdestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
 	void setDamage(int damage) {_damage = damage;}
 
-	POINT getTilePos() { return _tilePos; }
+	//POINT getTilePos() { return _tilePos; }
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
 	int getCurWait() {return _curWait;}
@@ -58,7 +58,7 @@ public:
 	bool isDoing() {return _doing;}
 	bool canMove() {return _turn.test(TURNMOVE);}
 	bool canAction() {return _turn.test(TURNACTION);}
-	int getType() {return _type;}
+	//int getType() {return _type;}
 	bool isAttack() {return _isAttack;}
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
@@ -68,6 +68,6 @@ public:
 
 public:
 	Character() {}
-	~Character() {}
+	virtual ~Character() {}
 };
 

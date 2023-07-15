@@ -29,6 +29,9 @@ HRESULT BossBattleScene::init(void)
 	_turnSystem = new TurnSystem();
 	_turnSystem->addCharacter(_vermont);
 	_turnSystem->addCharacter(_saladin);
+	_turnSystem->addObject(_vermont);
+	_turnSystem->addObject(_saladin);
+	_turnSystem->addObject(new Obstacle("Table", {1110, 1180}, 1, 1.5, {29, 40}));
 	_turnSystem->init();
 
 	_frame = 0;

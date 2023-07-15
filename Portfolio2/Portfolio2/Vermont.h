@@ -7,5 +7,8 @@ public:
 	void release(void);
 	void update(void);
 	void render(HDC hdc, POINT position);
+
+	Vermont() {}
+	virtual ~Vermont() {}
 };
 

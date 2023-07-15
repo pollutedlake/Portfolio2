@@ -6,6 +6,7 @@
 #include "StoryScene.h"
 #include "EndingScene.h"
 #include "BossBattleScene.h"
+#include "WorldMapScene.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -14,6 +15,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Story", new StoryScene);
     SCENEMANAGER->addScene("Ending", new EndingScene);
     SCENEMANAGER->addScene("BossBattle", new BossBattleScene);
+    SCENEMANAGER->addScene("WorldMap", new WorldMapScene);
     _whiteImg = IMAGEMANAGER->findImage("White");
     _blackImg = IMAGEMANAGER->findImage("Black");
     _currentScene = nullptr;

@@ -10,7 +10,7 @@ HRESULT TurnSystem::init(void)
 	{
 		if ((*it)->getTurnOrder(_charList.size()) == 0)
 		{
-			_curChar = *it;
+			_curChar = (*it);
 			break;
 		}
 	}
@@ -252,8 +252,8 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 			for (auto it = _charList.begin(); it != _charList.end(); ++it)
 			{
 				if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
-				{
-					targetChar = *it;
+				{	
+					targetChar = (*it);
 					break;
 				}
 			}
@@ -306,11 +306,20 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 			}
 		}
 	}
-	sortCharList();
-	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	sortObjectList();
+	for (auto it = _objectList.begin(); it != _objectList.end(); ++it)
 	{
-		(*it)->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - (*it)->getTilePos().x * tileWidth),
-	WINSIZE_Y / 2 - (cameraPos.y - (*it)->getTilePos().y * tileHeight + tileHeight / 2 * 3) });
+		if ((*it)->getType() == 2)
+		{
+			Obstacle* obstacle = (Obstacle*)(*it);
+			obstacle->render(hdc, cameraPos);
+		}
+		else
+		{
+			Character* temp = (Character*)(*it);
+			temp->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - temp->getTilePos().x * tileWidth),
+				WINSIZE_Y / 2 - (cameraPos.y - temp->getTilePos().y * tileHeight + tileHeight / 2 * 3) });
+		}
 	}
 	if (!_curChar->isDoing())
 	{
@@ -345,6 +354,11 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 void TurnSystem::addCharacter(Character* character)
 {
 	_charList.push_back(character);
+}
+
+void TurnSystem::addObject(Object* object)
+{
+	_objectList.push_back(object);
 }
 
 void TurnSystem::nextTurn()
@@ -383,28 +397,32 @@ void TurnSystem::nextTurn()
 	_curChar->resetTurn();
 }
 
-void TurnSystem::sortCharList()
+void TurnSystem::sortObjectList()
 {
-	for (int i = 0; i < _charList.size() - 1; i++)
+	for (int i = 0; i < _objectList.size() - 1; i++)
 	{
-		int y = _charList[i]->getTilePos().y;
-		for (int j = i + 1; j < _charList.size(); j++)
+		int y = _objectList[i]->getTilePos().y;
+		for (int j = i + 1; j < _objectList.size(); j++)
 		{
-			if (y > _charList[j]->getTilePos().y)
+			if (y > _objectList[j]->getTilePos().y)
 			{
-				Character* temp;
-				temp = _charList[j];
-				_charList[j] = _charList[i];
-				_charList[i] = temp;
+				Object* temp;
+				temp = _objectList[j];
+				_objectList[j] = _objectList[i];
+				_objectList[i] = temp;
 			}
-			else if (y == _charList[j]->getTilePos().y)
+			else if (y == _objectList[j]->getTilePos().y)
 			{
-				if (!_charList[j]->isDoing())
+				if (_objectList[j]->getType() != 2)
 				{
-					Character* temp;
-					temp = _charList[j];
-					_charList[j] = _charList[i];
-					_charList[i] = temp;
+					Character* character = (Character*)_objectList[j];
+					if (!character->isDoing())
+					{
+						Object* temp;
+						temp = _objectList[j];
+						_objectList[j] = _objectList[i];
+						_objectList[i] = temp;
+					}
 				}
 			}
 		}

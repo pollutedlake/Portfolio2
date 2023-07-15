@@ -5,14 +5,14 @@ class Obstacle : public Object
 private:
 	string _key;
 	POINT _position;
-	int _magnificationX;
-	int _magnificationY;
+	float _magnificationX;
+	float _magnificationY;
 
 public:
-	void render(HDC hdc);
+	void render(HDC hdc, POINT cameraPos);
 
-	Obstacle(string key, POINT position, int magnificationX, int magnificationY) : _key(key), _position(position), 
-	_magnificationX(magnificationX), _magnificationY(magnificationY) { _type = 2; }
+	Obstacle(string key, POINT position, float magnificationX, float magnificationY, POINT tilePos) : _key(key), _position(position), 
+	_magnificationX(magnificationX), _magnificationY(magnificationY) { _type = 2; _tilePos = tilePos; }
 	~Obstacle() {};
 };
 

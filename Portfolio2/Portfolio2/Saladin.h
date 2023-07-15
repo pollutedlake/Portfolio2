@@ -19,6 +19,6 @@ public:
 	vector<POINT> getAttackableTiles() {return _attackableTiles;}
 
 	Saladin() {}
-	~Saladin() {}
+	virtual ~Saladin() {}
 };
 

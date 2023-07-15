@@ -16,6 +16,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("ScrollDown", "Resources/Images/BackGrounds/ScenarioScene/ScrollDown.bmp", 19, 45, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("ScrollNoClick", "Resources/Images/BackGrounds/ScenarioScene/ScrollNoClick.bmp", 15, 43, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("ScrollClick", "Resources/Images/BackGrounds/ScenarioScene/ScrollClick.bmp", 15, 43, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("WorldMap", "Resources/Images/BackGrounds/WorldMapScene/WorldMap.bmp", 1347, 839);
 
 	IMAGEMANAGER->addImage("TextBox", "Resources/Images/UI/TextBox.bmp", 230, 105);
 	IMAGEMANAGER->addImage("MapCoordination", "Resources/Images/UI/MapCoordination.bmp", 70, 38);
@@ -67,10 +68,16 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("MovableTile", "Resources/Images/UI/MovableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("AttackableTile", "Resources/Images/UI/AttackableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ActionButton", "Resources/Images/UI/ActionButton.bmp", 102, 28, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WorldMapInfo", "Resources/Images/UI/WorldMapInfo.bmp", 241, 111, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WorldMapFlag", "Resources/Images/UI/WorldMapFlag.bmp", 61, 91, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("WorldMapSaladin", "Resources/Images/UI/WorldMapSaladin.bmp", 50, 50);
 	IMAGEMANAGER->addFrameImage("ActionIcon", "Resources/Images/UI/ActionIcon.bmp", 96, 25, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("MiniStatusWindow", "Resources/Images/UI/MiniStatusWindow.bmp", 900, 49, 15, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("WorldMapMarker", "Resources/Images/UI/WorldMapMarker.bmp", 1120, 120, 10, 1, true, RGB(0, 252, 0));
+	IMAGEMANAGER->addFrameImage("SaladinMark", "Resources/Images/UI/SaladinMark2.bmp", 41, 54, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addFrameImage("EnemyMarker", "Resources/Images/UI/EnemyMarker.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("PlayerMarker", "Resources/Images/UI/PlayerMarker.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("WorldMapTeam", "Resources/Images/UI/WorldMapTeam.bmp", 195, 18, 5, 1);
 	IMAGEMANAGER->addFrameImage("VermontSherazade", "Resources/Images/BackGrounds/StoryScene/VermontSherazade.bmp", 3816, 90, 24, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("Red", "Resources/Images/BackGrounds/StoryScene/RedBG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("AbandonedSwords", "Resources/Images/BackGrounds/StoryScene/AbandonedSwods.bmp", 55, 45, true, RGB(168, 208, 168));

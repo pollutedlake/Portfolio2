@@ -2,6 +2,7 @@
 //#include "Character.h"
 #include "Enemy.h"
 #include "Saladin.h"
+#include "Obstacle.h"
 #include "AStar.h"
 
 #define CANTMOVE	0
@@ -19,6 +20,7 @@ private:
 	Saladin* _player;
 	AStar* _aStar;
 	vector<Character*> _charList;
+	vector<Object*> _objectList;
 	bool _actionChoice;
 	RECT _actionButtons[4];
 	vector<POINT> _attackTiles;
@@ -33,8 +35,9 @@ public:
 	Character* getCurChar() {return _curChar;}
 
 	void addCharacter(Character* character);
+	void addObject(Object* object);
 	void nextTurn();
-	void sortCharList();
+	void sortObjectList();
 
 	TurnSystem() {}
 	~TurnSystem() {}

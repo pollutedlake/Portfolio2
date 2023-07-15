@@ -173,6 +173,7 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TurnSystem.h" />
     <ClInclude Include="Vermont.h" />
+    <ClInclude Include="WorldMapScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="TurnSystem.cpp" />
     <ClCompile Include="Vermont.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="WorldMapScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc" />
