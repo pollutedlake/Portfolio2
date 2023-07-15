@@ -84,7 +84,7 @@ void BossBattleScene::render(void)
 			WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
-	_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
+	//_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
 	if (_tileInfo[_cursorTile.y][_cursorTile.x] == ENEMY)
 	{
 		IMAGEMANAGER->findImage("AttackMouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
@@ -129,7 +129,34 @@ void BossBattleScene::render(void)
 		}
 		FillRect(getMemDC(), &saladinRect, HBRUSH(RGB(255, 0, 0)));
 	}
-	char str[258];
-	wsprintf(str, "%d, %d", _cursorTile.x, _cursorTile.y);
-	TextOut(getMemDC(), 0, 0, str, strlen(str));
+	IMAGEMANAGER->findImage("TextBox")->alphaRender(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 - 10, 10, 
+		IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7, IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7, 
+		0, 0, IMAGEMANAGER->findImage("TextBox")->getWidth(), IMAGEMANAGER->findImage("TextBox")->getHeight(), 200);
+	IMAGEMANAGER->findImage("MapCoordination")->render(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 - 5,
+		5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - IMAGEMANAGER->findImage("MapCoordination")->getHeight());
+	int eldBarX = WINSIZE_X - (IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 - IMAGEMANAGER->findImage("MapCoordination")->getWidth() - 5 + IMAGEMANAGER->findImage("EldBar")->getWidth()) / 2 - 10;
+	int eldBarY = 5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - (IMAGEMANAGER->findImage("MapCoordination")->getHeight() + IMAGEMANAGER->findImage("EldBar")->getHeight()) / 2;
+	IMAGEMANAGER->findImage("EldBar")->render(getMemDC(), eldBarX, eldBarY);
+	IMAGEMANAGER->findImage("EldIcon")->render(getMemDC(), eldBarX, eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight());
+	int eld = 0;
+	IMAGEMANAGER->findImage("CurEld")->render(getMemDC(), eldBarX + eld/10000 * IMAGEMANAGER->findImage("EldBar")->getWidth() - IMAGEMANAGER->findImage("CurEld")->getWidth() / 2,
+		eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight() / 2 - IMAGEMANAGER->findImage("CurEld")->getHeight());
+	char mapInfo[50];
+	wsprintf(mapInfo, "형제여!");
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 32 - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 / 2, 15, "가을체", 15, 0, mapInfo, strlen(mapInfo), RGB(255, 255, 255));
+	wsprintf(mapInfo, "평 지");
+	FONTMANAGER->textOut(getMemDC(), eldBarX + IMAGEMANAGER->findImage("EldBar")->getWidth() / 2 - 22,
+		5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - IMAGEMANAGER->findImage("MapCoordination")->getHeight(), "가을체", 15, 0, mapInfo, strlen(mapInfo), RGB(255, 255, 255));
+	wsprintf(mapInfo, "%deld", eld);
+	FONTMANAGER->textOut(getMemDC(), eldBarX + IMAGEMANAGER->findImage("EldIcon")->getWidth(), eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight() + 5, "가을체", 15, 0,
+		mapInfo, strlen(mapInfo), RGB(255, 255, 255));
+	wsprintf(mapInfo, "%d", _tileInfo[_cursorTile.y][_cursorTile.x] == CANTMOVE ? 1 : 0);
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 - 5 + IMAGEMANAGER->findImage("MapCoordination")->getWidth() / 2 + 5,
+		5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - IMAGEMANAGER->findImage("MapCoordination")->getHeight() + 2, "가을체", 13, 0, mapInfo, strlen(mapInfo), RGB(255, 255, 255));
+	wsprintf(mapInfo, "%d", _cursorTile.x);
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 - 5 + IMAGEMANAGER->findImage("MapCoordination")->getWidth() - 15,
+		5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - IMAGEMANAGER->findImage("MapCoordination")->getHeight() / 2 - 5, "가을체", 13, 0, mapInfo, strlen(mapInfo), RGB(255, 255, 255));
+	wsprintf(mapInfo, "%d", _cursorTile.y);
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 + 2,
+		5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - 13, "가을체", 13, 0, mapInfo, strlen(mapInfo), RGB(255, 255, 255));
 }

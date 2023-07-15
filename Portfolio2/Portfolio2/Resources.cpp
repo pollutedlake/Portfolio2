@@ -18,6 +18,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("ScrollClick", "Resources/Images/BackGrounds/ScenarioScene/ScrollClick.bmp", 15, 43, true, RGB(0, 0, 0));
 
 	IMAGEMANAGER->addImage("TextBox", "Resources/Images/UI/TextBox.bmp", 230, 105);
+	IMAGEMANAGER->addImage("MapCoordination", "Resources/Images/UI/MapCoordination.bmp", 70, 38);
+	IMAGEMANAGER->addImage("EldBar", "Resources/Images/UI/EldBar.bmp", 62, 4);
+	IMAGEMANAGER->addImage("EldIcon", "Resources/Images/UI/EldIcon.bmp", 12, 15, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("CurEld", "Resources/Images/UI/CurEld.bmp", 7, 6, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("Vermont", "Resources/Images/UI/Vermont.bmp", 260, 480, true, RGB(0, 0, 4));
 	IMAGEMANAGER->addImage("Saladin", "Resources/Images/UI/Saladin.bmp", 400, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Sherazade", "Resources/Images/UI/Sherazade.bmp", 424, 480, true, RGB(255, 0, 255 ));
@@ -64,6 +68,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("AttackableTile", "Resources/Images/UI/AttackableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ActionButton", "Resources/Images/UI/ActionButton.bmp", 102, 28, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ActionIcon", "Resources/Images/UI/ActionIcon.bmp", 96, 25, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("MiniStatusWindow", "Resources/Images/UI/MiniStatusWindow.bmp", 900, 49, 15, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("EnemyMarker", "Resources/Images/UI/EnemyMarker.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("PlayerMarker", "Resources/Images/UI/PlayerMarker.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("VermontSherazade", "Resources/Images/BackGrounds/StoryScene/VermontSherazade.bmp", 3816, 90, 24, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("Red", "Resources/Images/BackGrounds/StoryScene/RedBG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("AbandonedSwords", "Resources/Images/BackGrounds/StoryScene/AbandonedSwods.bmp", 55, 45, true, RGB(168, 208, 168));
@@ -85,6 +92,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontAttackSideEffect", "Resources/Images/Effects/SkillEffect/VermontAttackSideEffect.bmp", 636, 166, 4, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUpEffect", "Resources/Images/Effects/SkillEffect/VermontAttackUpEffect.bmp", 548, 119, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackDownEffect", "Resources/Images/Effects/SkillEffect/VermontAttackDownEffect.bmp", 512, 132, 4, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("VermontDamagedLeft", "Resources/Images/Characters/Vermont/VermontDamagedLeft.bmp", 65, 69, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("VermontDamagedRight", "Resources/Images/Characters/Vermont/VermontDamagedRight.bmp", 65, 69, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("VermontDamagedUp", "Resources/Images/Characters/Vermont/VermontDamagedUp.bmp", 47, 82, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("VermontDamagedDown", "Resources/Images/Characters/Vermont/VermontDamagedDown.bmp", 50, 68, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("SaladinDamagedLeft", "Resources/Images/Characters/Saladin/SaladinDamagedLeft.bmp", 67, 69, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDamagedRight", "Resources/Images/Characters/Saladin/SaladinDamagedRight.bmp", 67, 69, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDamagedUp", "Resources/Images/Characters/Saladin/SaladinDamagedUp.bmp", 47, 78, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDamagedDown", "Resources/Images/Characters/Saladin/SaladinDamagedDown.bmp", 79, 80, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUpEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackUpEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDownEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackDownEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));

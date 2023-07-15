@@ -3,6 +3,7 @@
 
 class Saladin : public Character
 {
+private:
 	vector<POINT> _movableTiles;
 	vector<POINT> _attackableTiles;
 

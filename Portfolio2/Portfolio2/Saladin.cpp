@@ -31,7 +31,15 @@ void Saladin::update(void)
 		if (_frame == 2)
 		{
 			SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/SaladinAttack.wav");
-			//SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/test.wav");
+		}
+		if ((_frame / 10 == 1) || (_frame / 10 == 3))
+		{
+			_isAttack = true;
+		}
+		else
+		{
+			_isAttack = false;
+			_damage = 0;
 		}
 		if (_destTilePos.x - _tilePos.x > 0)
 		{
@@ -81,18 +89,19 @@ void Saladin::update(void)
 			_turn.flip(1);
 		}
 	}
+	if (_state.test(DAMAGED))
+	{
+		if (_frame / 5 > 0)
+		{
+			_state.reset();
+		}
+	}
 }
 
 void Saladin::render(HDC hdc, POINT position)
 {
 	if (_state.none())
 	{
-		//IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 3, 0);
-		//IMAGEMANAGER->findImage("SaladinAttackDownEffect")->alphaFrameRender(hdc, position.x - 45, position.y - 40, 4, 0, 200);
-		//if (_turn.test(0))
-		//{
-
-		//}
 		if (_dir.test(LEFT))
 		{
 			IMAGEMANAGER->findImage("SaladinIdleLeft")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 4, 0);
@@ -180,6 +189,28 @@ void Saladin::render(HDC hdc, POINT position)
 			}
 		}
 	}
+	if (_state.test(DAMAGED))
+	{
+		if (_dir.test(LEFT))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedLeft")->render(hdc, position.x, position.y);
+		}
+		else if (_dir.test(RIGHT))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedRight")->render(hdc, position.x - 20, position.y);
+		}
+		else if (_dir.test(UP))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedUp")->render(hdc, position.x, position.y);
+		}
+		else if (_dir.test(DOWN))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedDown")->render(hdc, position.x - 5, position.y - 10);
+		}
+		char damageStr[50];
+		wsprintf(damageStr, "%d", _damage);
+		FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "°¡À»Ã¼", 20, 500, damageStr, strlen(damageStr), RGB(255, 0, 0));
+	}
 }
 void Saladin::searchMovable(int map[][60], int rowN, int colN)
 {
@@ -187,7 +218,6 @@ void Saladin::searchMovable(int map[][60], int rowN, int colN)
 	_attackableTiles.clear();
 	int mobility = _mobility;
 	POINT node = _tilePos;
-//	_movableTiles.push_back(node);
 	queue<POINT> closedList;
 	closedList.push(node);
 	bitset<60> tileCheck[90];

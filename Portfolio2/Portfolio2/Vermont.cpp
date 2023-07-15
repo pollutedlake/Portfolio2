@@ -33,6 +33,15 @@ void Vermont::update(void)
 			SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/VermontAttack.wav");
 			//SOUNDMANAGER->playSoundFMOD("VermontAttack");
 		}
+		if ((_frame / 10) % 4 == 2)
+		{
+			_isAttack = true;
+		}
+		else
+		{
+			_isAttack = false;
+			_damage = 0;
+		}
 		if (_dir.test(LEFT) && _frame / 10 > IMAGEMANAGER->findImage("VermontAttackLeft")->getMaxFrameX())
 		{
 			_state.reset();
@@ -58,12 +67,17 @@ void Vermont::update(void)
 			endTurn();
 		}
 	}
+	else if (_state.test(DAMAGED))
+	{
+		if (_frame / 5 > 0)
+		{
+			_state.reset();
+		}
+	}
 }
 
 void Vermont::render(HDC hdc, POINT position)
 {
-	//IMAGEMANAGER->findImage("VermontAttackDown")->frameRender(hdc, position.x - 35, position.y - 30, 2, 0);
-	//IMAGEMANAGER->findImage("VermontAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 25, 0, 0, 200);
 	if (_state.none())
 	{
 		if (_dir.test(LEFT))
@@ -136,5 +150,27 @@ void Vermont::render(HDC hdc, POINT position)
 				IMAGEMANAGER->findImage("VermontAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 25, (_frame / 5) % 4, 0, 200);
 			}
 		}
+	}
+	else if (_state.test(DAMAGED))
+	{
+		if (_dir.test(LEFT))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedLeft")->render(hdc, position.x, position.y);
+		}
+		else if (_dir.test(RIGHT))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedRight")->render(hdc, position.x - 20, position.y);
+		}
+		else if (_dir.test(UP))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedUp")->render(hdc, position.x - 10, position.y);
+		}
+		else if (_dir.test(DOWN))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedDown")->render(hdc, position.x - 5, position.y);
+		}
+		char damageStr[50];
+		wsprintf(damageStr, "%d", _damage);
+		FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "°¡À»Ã¼", 20, 50, damageStr, strlen(damageStr), RGB(255, 0, 0));
 	}
 }

@@ -5,6 +5,7 @@ HRESULT TurnSystem::init(void)
 {
 	_actionChoice = false;
 	_aStar = new AStar();
+	_frame = 0;
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
 		if ((*it)->getTurnOrder(_charList.size()) == 0)
@@ -22,6 +23,7 @@ HRESULT TurnSystem::init(void)
 
 void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile)
 {
+	_frame++;
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
 		(*it)->update();
@@ -33,7 +35,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		{
 			tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = SALADIN;
 		}
-		else
+		else if (_curChar->getType() == 1)
 		{
 			tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = ENEMY;
 		}
@@ -64,7 +66,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 				{
 					_attackTiles.push_back({ curPos.x, curPos.y - 2 });
 				}
-				if (tileInfo[curPos.y + 2][curPos.x - 2] == MOVABLE || tileInfo[curPos.y + 2][curPos.x] == ENEMY)
+				if (tileInfo[curPos.y + 2][curPos.x] == MOVABLE || tileInfo[curPos.y + 2][curPos.x] == ENEMY)
 				{
 					_attackTiles.push_back({ curPos.x, curPos.y + 2 });
 				}
@@ -202,41 +204,61 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 				}
 			}
 		}
-		else
-		{
-			_enemy = (Enemy*)_curChar;
-			_enemy->setState(3);
-			_enemy->setDoing(true);
-			POINT player = _enemy->findPlayer(tileInfo, rowN, colN);
-			vector<vector<POINT>> routes;
-			vector<POINT> route;
-			if (player.x > 1 && (tileInfo[player.y][player.x - 2] == MOVABLE || (_enemy->getTilePos().x == player.x - 2 && _enemy->getTilePos().y == player.y)))
+		else if(_curChar->getType() == 1)
+		{	
+			if(_frame / 10 == 8)
 			{
-				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x - 2, player.y }, tileInfo, rowN, colN));
-			}
-			if (player.x < colN - 2 && (tileInfo[player.y][player.x + 2] == MOVABLE || (_enemy->getTilePos().x == player.x + 2 && _enemy->getTilePos().y == player.y)))
-			{
-				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x + 2, player.y }, tileInfo, rowN, colN));
-			}
-			if (player.y > 1 && (tileInfo[player.y - 2][player.x] == MOVABLE || (_enemy->getTilePos().x == player.x && _enemy->getTilePos().y == player.y - 2)))
-			{
-				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x, player.y - 2 }, tileInfo, rowN, colN));
-			}
-			if (player.y < rowN - 2 && (tileInfo[player.y + 2][player.x] == MOVABLE || (_enemy->getTilePos().x == player.x && _enemy->getTilePos().y == player.y + 2)))
-			{
-				routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x, player.y + 2 }, tileInfo, rowN, colN));
-			}
-			route = routes[0];
-			for (auto it = routes.begin(); it != routes.end(); ++it)
-			{
-				if (route.size() > (*it).size())
+				_enemy = (Enemy*)_curChar;
+				_enemy->setState(3);
+				_enemy->setDoing(true);
+				POINT player = _enemy->findPlayer(tileInfo, rowN, colN);
+				vector<vector<POINT>> routes;
+				vector<POINT> route;
+				if (player.x > 1 && (tileInfo[player.y][player.x - 2] == MOVABLE || (_enemy->getTilePos().x == player.x - 2 && _enemy->getTilePos().y == player.y)))
 				{
-					route = (*it);
+					routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x - 2, player.y }, tileInfo, rowN, colN));
+				}
+				if (player.x < colN - 2 && (tileInfo[player.y][player.x + 2] == MOVABLE || (_enemy->getTilePos().x == player.x + 2 && _enemy->getTilePos().y == player.y)))
+				{
+					routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x + 2, player.y }, tileInfo, rowN, colN));
+				}
+				if (player.y > 1 && (tileInfo[player.y - 2][player.x] == MOVABLE || (_enemy->getTilePos().x == player.x && _enemy->getTilePos().y == player.y - 2)))
+				{
+					routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x, player.y - 2 }, tileInfo, rowN, colN));
+				}
+				if (player.y < rowN - 2 && (tileInfo[player.y + 2][player.x] == MOVABLE || (_enemy->getTilePos().x == player.x && _enemy->getTilePos().y == player.y + 2)))
+				{
+					routes.push_back(_aStar->findRoute(_curChar->getTilePos(), { player.x, player.y + 2 }, tileInfo, rowN, colN));
+				}
+				route = routes[0];
+				for (auto it = routes.begin(); it != routes.end(); ++it)
+				{
+					if (route.size() > (*it).size())
+					{
+						route = (*it);
+					}
+				}
+				_curChar->setRoute(route);
+				_curChar->setdestTilePos(player);
+				tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
+			}
+		}
+	}
+	else
+	{
+		if (_curChar->isAttack())
+		{
+			Character* targetChar = nullptr;
+			for (auto it = _charList.begin(); it != _charList.end(); ++it)
+			{
+				if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+				{
+					targetChar = *it;
+					break;
 				}
 			}
-			_curChar->setRoute(route);
-			_curChar->setdestTilePos(player);
-			tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
+			targetChar->setState(4);
+			targetChar->setDamage(_curChar->getDamage());
 		}
 	}
 }
@@ -250,41 +272,58 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 {
 	if (_curChar->getType() == 0)
 	{
-		if (!_curChar->isDoing() && _curChar->canMove())
+		if(!_curChar->isDoing())
 		{
-			_player = (Saladin*)_curChar;
-			vector<POINT> tiles = _player->getMovableTiles();
-			for (auto it = tiles.begin(); it != tiles.end(); ++it)
+			if (_curChar->canMove())
 			{
-				IMAGEMANAGER->findImage("MovableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
-					WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
-					IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
-			}
-			tiles = _player->getAttackableTiles();
-			for (auto it = tiles.begin(); it != tiles.end(); ++it)
-			{
-				IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
-					WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
-					IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
-			}
-		}
-		if (!_curChar->isDoing() && !_curChar->canMove())
-		{
-			if (_curChar->canAction())
-			{
-				for (auto it = _attackTiles.begin(); it != _attackTiles.end(); ++it)
+				_player = (Saladin*)_curChar;
+				vector<POINT> tiles = _player->getMovableTiles();
+				for (auto it = tiles.begin(); it != tiles.end(); ++it)
+				{
+					IMAGEMANAGER->findImage("MovableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
+						WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
+						IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
+				}
+				tiles = _player->getAttackableTiles();
+				for (auto it = tiles.begin(); it != tiles.end(); ++it)
 				{
 					IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
 						WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
 						IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
 				}
 			}
+			else 
+			{
+				if (_curChar->canAction())
+				{
+					for (auto it = _attackTiles.begin(); it != _attackTiles.end(); ++it)
+					{
+						IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).x * tileWidth),
+							WINSIZE_Y / 2 - (cameraPos.y - (*it).y * tileHeight), tileWidth, tileHeight, 0, 0,
+							IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
+					}
+				}
+			}
 		}
 	}
+	sortCharList();
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
 		(*it)->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - (*it)->getTilePos().x * tileWidth),
 	WINSIZE_Y / 2 - (cameraPos.y - (*it)->getTilePos().y * tileHeight + tileHeight / 2 * 3) });
+	}
+	if (!_curChar->isDoing())
+	{
+		if (_curChar->getType() == 0)
+		{
+			IMAGEMANAGER->findImage("PlayerMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
+				WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
+		}
+		else if (_curChar->getType() == 1)
+		{
+			IMAGEMANAGER->findImage("EnemyMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
+				WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
+		}
 	}
 	if (_actionChoice)
 	{
@@ -310,6 +349,7 @@ void TurnSystem::addCharacter(Character* character)
 
 void TurnSystem::nextTurn()
 {
+	_frame = 0;
 	_curChar->setCurWait(_curChar->getWTP());
 	int turnOrder = _charList.size() - 1;
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
@@ -341,4 +381,32 @@ void TurnSystem::nextTurn()
 		(*it)->setCurWait((*it)->getCurWait() - _curChar->getCurWait());
 	}
 	_curChar->resetTurn();
+}
+
+void TurnSystem::sortCharList()
+{
+	for (int i = 0; i < _charList.size() - 1; i++)
+	{
+		int y = _charList[i]->getTilePos().y;
+		for (int j = i + 1; j < _charList.size(); j++)
+		{
+			if (y > _charList[j]->getTilePos().y)
+			{
+				Character* temp;
+				temp = _charList[j];
+				_charList[j] = _charList[i];
+				_charList[i] = temp;
+			}
+			else if (y == _charList[j]->getTilePos().y)
+			{
+				if (!_charList[j]->isDoing())
+				{
+					Character* temp;
+					temp = _charList[j];
+					_charList[j] = _charList[i];
+					_charList[i] = temp;
+				}
+			}
+		}
+	}
 }

@@ -10,6 +10,8 @@ HRESULT Character::init(void)
 	_state.reset();
 	_turnOrder.reset();
 	_curMobility = _mobility;
+	_damage = 0;
+	_isAttack = false;
 	return S_OK;
 }
 
@@ -123,3 +125,11 @@ void Character::move()
 	}
 }
 
+int Character::getDamage()
+{
+	if (_damage == 0)
+	{
+		_damage = RND->getFromIntTo(30, 40);
+	}
+	return _damage;
+}

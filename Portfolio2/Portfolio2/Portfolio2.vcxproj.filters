@@ -125,6 +125,8 @@
     <ClInclude Include="TurnSystem.h">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Obstacle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -197,6 +199,8 @@
     <ClCompile Include="TurnSystem.cpp">
       <Filter>Class</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">

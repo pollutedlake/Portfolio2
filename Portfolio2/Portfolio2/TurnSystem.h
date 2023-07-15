@@ -22,6 +22,7 @@ private:
 	bool _actionChoice;
 	RECT _actionButtons[4];
 	vector<POINT> _attackTiles;
+	int _frame;
 
 public:
 	HRESULT init(void);
@@ -33,6 +34,7 @@ public:
 
 	void addCharacter(Character* character);
 	void nextTurn();
+	void sortCharList();
 
 	TurnSystem() {}
 	~TurnSystem() {}

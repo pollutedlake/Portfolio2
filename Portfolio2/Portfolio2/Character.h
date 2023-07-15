@@ -1,4 +1,5 @@
 #pragma once
+#include "Object.h"
 
 #define LEFT	0
 #define RIGHT	1
@@ -7,15 +8,16 @@
 
 #define MOVE	0
 #define ATTACK	1
+#define DAMAGED	2
 
 #define TURNMOVE	0
 #define TURNACTION	1
 
-class Character
+class Character// : public Object
 {
 protected:
 	bitset<2> _turn;
-	bitset<3> _state;
+	bitset<4> _state;
 	bitset<20> _turnOrder;
 	POINT _tilePos;
 	POINT _destTilePos;
@@ -28,6 +30,8 @@ protected:
 	int _mobility;
 	int _curMobility;
 	bool _doing;
+	int _damage;
+	bool _isAttack;
 
 public:
 	virtual HRESULT init(void);
@@ -44,8 +48,10 @@ public:
 	void setDoing(bool doing) {_doing = doing;}
 	void resetTurn() {_turn.reset(); _turn.flip();}
 	void setdestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
+	void setDamage(int damage) {_damage = damage;}
 
 	POINT getTilePos() { return _tilePos; }
+	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
 	int getCurWait() {return _curWait;}
 	int getTurnOrder(int charN);
@@ -53,12 +59,13 @@ public:
 	bool canMove() {return _turn.test(TURNMOVE);}
 	bool canAction() {return _turn.test(TURNACTION);}
 	int getType() {return _type;}
+	bool isAttack() {return _isAttack;}
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
-	vector<POINT> searchMovable(int map[][60], int rowN, int colN);
 	void endTurn() {_turn.reset();}
 	void move();
-	//void moveAndAttack(POINT cursorTile, vector<POINT> route);
+	virtual int getDamage();
+
 public:
 	Character() {}
 	~Character() {}
