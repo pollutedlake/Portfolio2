@@ -8,6 +8,8 @@ private:
 	int _frame;
 	Camera* _camera;
 	POINT _cameraPos;
+	RECT _buttons[5];
+	char* _buttonStr[5];
 
 public:
 	HRESULT init(void);

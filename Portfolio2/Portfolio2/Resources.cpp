@@ -68,13 +68,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("MovableTile", "Resources/Images/UI/MovableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("AttackableTile", "Resources/Images/UI/AttackableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ActionButton", "Resources/Images/UI/ActionButton.bmp", 102, 28, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ActionButtonActive", "Resources/Images/UI/ActionButtonActive.bmp", 102, 28, true, RGB(255, 45, 254));
 	IMAGEMANAGER->addImage("WorldMapInfo", "Resources/Images/UI/WorldMapInfo.bmp", 241, 111, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("WorldMapFlag", "Resources/Images/UI/WorldMapFlag.bmp", 61, 91, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("WorldMapSaladin", "Resources/Images/UI/WorldMapSaladin.bmp", 50, 50);
 	IMAGEMANAGER->addFrameImage("ActionIcon", "Resources/Images/UI/ActionIcon.bmp", 96, 25, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("MiniStatusWindow", "Resources/Images/UI/MiniStatusWindow.bmp", 900, 49, 15, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("WorldMapMarker", "Resources/Images/UI/WorldMapMarker.bmp", 1120, 120, 10, 1, true, RGB(0, 252, 0));
-	IMAGEMANAGER->addFrameImage("SaladinMark", "Resources/Images/UI/SaladinMark2.bmp", 41, 54, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("SaladinMark", "Resources/Images/UI/SaladinMark3.bmp", 41, 54, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("EnemyMarker", "Resources/Images/UI/EnemyMarker.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("PlayerMarker", "Resources/Images/UI/PlayerMarker.bmp", 72, 11, 8, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("WorldMapTeam", "Resources/Images/UI/WorldMapTeam.bmp", 195, 18, 5, 1);
@@ -169,6 +170,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Conspiracy2", "Resources/Sounds/StoryScene/Conspiracy2.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("BeforeLastBattle", "Resources/Sounds/StoryScene/BeforeLastBattle.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("SherazadeDead", "Resources/Sounds/StoryScene/SherazadeDead.mp3");
+	SOUNDMANAGER->addSoundFMOD("WorldMapBG", "Resources/Sounds/WorldMapScene/WorldMapBG.mp3", true);
 	//DIALOGMANAGER->addDialogs("StoryScene");
 	//DIALOGMANAGER->addDialogs("EndingScene");
 	//DIALOGMANAGER->addDialog("EndingScene", "Vermont", "", { L"[버몬트]", L"죽여라..." }, )

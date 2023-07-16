@@ -141,7 +141,7 @@ void ScenarioScene::update(void)
 		_frame++;
 		if (_frame > 50)
 		{
-			SCENEMANAGER->changeScene("Story");
+			SCENEMANAGER->changeScene("WorldMap");
 		}
 	}
 }
