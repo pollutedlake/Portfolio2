@@ -38,6 +38,8 @@ public:
 	void frameRender(string strKey, HDC hdc, int destX, int destY, int destWidth, int destHeight, int currentFrameX, int currentFrameY);
 	void alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
+	void alphaFrameRenderEFX(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
+
 	ImageManager() {}
 	~ImageManager() {}
 };

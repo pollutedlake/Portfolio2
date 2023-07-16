@@ -12,11 +12,11 @@ HRESULT WorldMapScene::init(void)
 
 	for (int i = 0; i < 4; i++)
 	{
-		_buttons[i] = RectMakeCenter(WINSIZE_X - IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5 / 2 - 30, 
+		_buttonsRC[i] = RectMakeCenter(WINSIZE_X - IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5 / 2 - 30,
 			20 + IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5 / 2 + (IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5 + 10) * i,
 			IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5);
 	}
-	_buttons[4] = RectMakeCenter(WINSIZE_X - IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5 / 2 - 30,
+	_buttonsRC[4] = RectMakeCenter(WINSIZE_X - IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5 / 2 - 30,
 		20 + IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5 / 2 + (IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5 + 10) * 4 + 30,
 		IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5);
 	_buttonStr[0] = "이 동";
@@ -24,6 +24,8 @@ HRESULT WorldMapScene::init(void)
 	_buttonStr[2] = "상 태";
 	_buttonStr[3] = "교 환";
 	_buttonStr[4] = "턴종료";
+
+	_state.reset();
 	return S_OK;
 }
 
@@ -36,13 +38,20 @@ void WorldMapScene::update(void)
 	_camera->update();
 	_cameraPos = _camera->getPosition();
 	_frame++;
+	_nextMoveRC = RectMakeCenter(WINSIZE_X / 2 - (_cameraPos.x - 200) + IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameWidth() / 4,
+		WINSIZE_Y / 2 - (_cameraPos.y - 320) + IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameHeight() / 4,
+		IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameWidth() / 2, IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameHeight() / 2);
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (PtInRect(&_buttons[0], _ptMouse))
+		if (PtInRect(&_buttonsRC[0], _ptMouse))
+		{
+			_state.set(0);
+		}
+		if (PtInRect(&_buttonsRC[1], _ptMouse))
 		{
 
 		}
-		if (PtInRect(&_buttons[1], _ptMouse))
+		if (_state.test(0) && PtInRect(&_nextMoveRC, _ptMouse))
 		{
 			SOUNDMANAGER->stopAllSoundFMOD();
 			SCENEMANAGER->changeScene("Story");
@@ -69,18 +78,29 @@ void WorldMapScene::render(void)
 	FONTMANAGER->textOut(getMemDC(), 140, 85, "가을체", 15, 50, str, strlen(str), RGB(255, 255, 255));
 	for (int i = 0; i < 5; i++)
 	{
-		if(PtInRect(&_buttons[i], _ptMouse))
+		if(PtInRect(&_buttonsRC[i], _ptMouse))
 		{
-			IMAGEMANAGER->findImage("ActionButtonActive")->render(getMemDC(), _buttons[i].left, _buttons[i].top, IMAGEMANAGER->findImage("ActionButtonActive")->getWidth()*1.5, IMAGEMANAGER->findImage("ActionButtonActive")->getHeight()*1.5,
+			IMAGEMANAGER->findImage("ActionButtonActive")->render(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, IMAGEMANAGER->findImage("ActionButtonActive")->getWidth()*1.5, IMAGEMANAGER->findImage("ActionButtonActive")->getHeight()*1.5,
 			0, 0, IMAGEMANAGER->findImage("ActionButtonActive")->getWidth(), IMAGEMANAGER->findImage("ActionButtonActive")->getHeight());
 		}
 		else
 		{
-			IMAGEMANAGER->findImage("ActionButton")->render(getMemDC(), _buttons[i].left, _buttons[i].top, IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5,
+			IMAGEMANAGER->findImage("ActionButton")->render(getMemDC(), _buttonsRC[i].left, _buttonsRC[i].top, IMAGEMANAGER->findImage("ActionButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("ActionButton")->getHeight() * 1.5,
 				0, 0, IMAGEMANAGER->findImage("ActionButton")->getWidth(), IMAGEMANAGER->findImage("ActionButton")->getHeight());
 		}
-		FONTMANAGER->textOut(getMemDC(), (_buttons[i].right + _buttons[i].left) / 2 - 30, (_buttons[i].bottom + _buttons[i].top) / 2 - 25 / 2,
+		FONTMANAGER->textOut(getMemDC(), (_buttonsRC[i].right + _buttonsRC[i].left) / 2 - 30, (_buttonsRC[i].bottom + _buttonsRC[i].top) / 2 - 25 / 2,
 			"가을체", 25, 50, _buttonStr[i], strlen(_buttonStr[i]), RGB(255, 255, 255));
+	}
+	if (_state.test(0))
+	{
+		IMAGEMANAGER->findImage("WorldMapMoveMarker")->frameRender(getMemDC(), _nextMoveRC.left, _nextMoveRC.top, 
+			IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameWidth() / 2, IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameHeight() / 2, _frame % 28, 0);
+		HPEN hPen = CreatePen(PS_SOLID, 5, RGB(56, 196, 140));
+		HPEN hOldPen = (HPEN)SelectObject(getMemDC(), hPen);
+		LineMake(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 310), WINSIZE_Y / 2 - (_cameraPos.y - 170) + IMAGEMANAGER->findImage("WorldMapFlag")->getHeight(), 
+			(_nextMoveRC.left + _nextMoveRC.right) / 2, (_nextMoveRC.top + _nextMoveRC.bottom) / 2);
+		SelectObject(getMemDC(), hOldPen);
+		DeleteObject(hPen);
 	}
 
 	IMAGEMANAGER->findImage("MouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);

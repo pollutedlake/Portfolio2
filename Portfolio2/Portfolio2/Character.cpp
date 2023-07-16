@@ -12,19 +12,21 @@ HRESULT Character::init(void)
 	_curMobility = _mobility;
 	_damage = 0;
 	_isAttack = false;
+	_skillOrder.reset();
 	return S_OK;
 }
 
 void Character::release(void)
 {
+
 }
 
 void Character::update(void)
 {
-
+	
 }
 
-void Character::render(HDC hdc, POINT position)
+void Character::render(HDC hdc, POINT position, POINT cameraPos)
 {
 }
 
@@ -32,6 +34,11 @@ void Character::setState(int state)
 {
 	_state.reset();
 	_state |= state;
+	if (_state.test(0))
+	{
+		x = _tilePos.x * 40 + 20;
+		y  = _tilePos.y * 30 + 15;
+	}
 	_frame = 0;
 }
 
@@ -56,6 +63,8 @@ void Character::move()
 {
 	if (_route.size() > 0 && _curMobility > 0)
 	{
+		x = (_route.back().x * 40 + 20) * ((_frame % 11) / 10.f) + (_tilePos.x * 40 + 20) * ((10 - (_frame % 11)) / 10.f);
+		y = (_route.back().y * 30 + 15) * ((_frame % 11) / 10.f) + (_tilePos.y * 30 + 15) * ((10 - (_frame % 11)) / 10.f);
 		if (_tilePos.x - _route.back().x == 1)
 		{
 			_dir.reset();
@@ -76,10 +85,17 @@ void Character::move()
 			_dir.reset();
 			_dir.set(DOWN, true);
 		}
-		_tilePos.x = _route.back().x;
-		_tilePos.y = _route.back().y;
-		_route.pop_back();
-		_curMobility--;
+		if (x == (_route.back().x * 40 + 20))
+		{
+			if (y == (_route.back().y * 30 + 15))
+			{
+
+				_tilePos.x = _route.back().x;
+				_tilePos.y = _route.back().y;
+				_route.pop_back();
+				_curMobility--;
+			}
+		}
 	}
 	else
 	{

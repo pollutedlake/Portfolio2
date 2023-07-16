@@ -264,6 +264,30 @@ HRESULT GImage::initForAlphaBlend(void)
 	return S_OK;
 }
 
+HRESULT GImage::initForAlphaBlend2(void)
+{
+	HDC hdc = GetDC(_hWnd);
+
+	// 알파블렌드 옵션
+	_blendFunc.BlendFlags = 0;
+	_blendFunc.AlphaFormat = 0;
+	_blendFunc.BlendOp = AC_SRC_OVER;
+	//_blendFunc.SourceConstantAlpha = 0;
+
+	_blendImage2 = new IMAGE_INFO;
+	_blendImage2->loadType = LOAD_FILE;
+	_blendImage2->resID = 0;
+	_blendImage2->hMemDC = CreateCompatibleDC(hdc);
+	_blendImage2->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, _imageInfo->width, _imageInfo->height);
+	_blendImage2->hOBit = (HBITMAP)SelectObject(_blendImage2->hMemDC, _blendImage2->hBit);
+	_blendImage2->width = WINSIZE_X;
+	_blendImage2->height = WINSIZE_Y;
+
+	ReleaseDC(_hWnd, hdc);
+
+	return S_OK;
+}
+
 void GImage::setTransColor(bool isTrans, COLORREF transColor)
 {
 	_isTrans = isTrans;
@@ -737,6 +761,56 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int destWidth, int 
 		GdiAlphaBlend(hdc, destX, destY, destWidth, destHeight,
 			_imageInfo->hMemDC, _imageInfo->currentFrameX * _imageInfo->frameWidth, _imageInfo->currentFrameY * _imageInfo->frameHeight, 
 			_imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+}
+
+void GImage::alphaFrameRenderEFX(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+	if (currentFrameX > _imageInfo->maxFrameX)
+	{
+		_imageInfo->currentFrameX = _imageInfo->maxFrameX;
+	}
+	if (currentFrameY > _imageInfo->maxFrameY)
+	{
+		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
+	}
+	this->initForAlphaBlend();
+	this->initForAlphaBlend2();
+	_blendFunc.SourceConstantAlpha = alpha;
+	//HBRUSH hBrush = CreateSolidBrush(RGB(8, 8, 16));
+	//FillRect(_blendImage2->hMemDC, &RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y), hBrush);
+	if (_isTrans)
+	{
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, hdc, destX, destY, SRCCOPY);
+		GdiTransparentBlt(_blendImage2->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, 
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_transColor);
+		GdiTransparentBlt(
+			_blendImage->hMemDC,
+			0, 0,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_blendImage2->hMemDC,
+			0,
+			0,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			RGB(0, 0, 0));
+			//RGB(8, 8, 16));
+
+		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+	else
+	{
+		GdiAlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
 	}
 }
 

@@ -212,3 +212,9 @@ void ImageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY
 	if (img) img->alphaFrameRender(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
 }
 
+void ImageManager::alphaFrameRenderEFX(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	GImage* img = findImage(strKey);
+	if (img) img->alphaFrameRenderEFX(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
+}
+

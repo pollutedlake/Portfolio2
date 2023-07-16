@@ -13,7 +13,7 @@ HRESULT Saladin::init(void)
 
 void Saladin::release(void)
 {
-
+	Character::release();
 }
 
 void Saladin::update(void)
@@ -21,10 +21,7 @@ void Saladin::update(void)
 	_frame++;
 	if(_state.test(MOVE))
 	{
-		if (_frame % 5 == 0)
-		{
-			move();
-		}
+		move();
 	}
 	else if (_state.test(ATTACK))
 	{
@@ -98,7 +95,7 @@ void Saladin::update(void)
 	}
 }
 
-void Saladin::render(HDC hdc, POINT position)
+void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 {
 	if (_state.none())
 	{
@@ -123,19 +120,19 @@ void Saladin::render(HDC hdc, POINT position)
 	{
 		if (_dir.test(LEFT))
 		{
-			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 2);
+			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 90, (_frame / 5) % 6, 2);
 		}
 		else if (_dir.test(RIGHT))
 		{
-			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 3);
+			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 90, (_frame / 5) % 6, 3);
 		}
 		else if (_dir.test(UP))
 		{
-			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 0);
+			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 90, (_frame / 5) % 6, 0);
 		}
 		else if (_dir.test(DOWN))
 		{
-			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, position.x - 40, position.y - 30, (_frame / 5) % 6, 1);
+			IMAGEMANAGER->findImage("SaladinMove")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 90, (_frame / 5) % 6, 1);
 		}
 	}
 	else if (_state.test(ATTACK))

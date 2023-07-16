@@ -78,6 +78,8 @@ void BossBattleScene::update(void)
 
 void BossBattleScene::render(void)
 {
+	//IMAGEMANAGER->findImage("SkillCasting")->frameRender(getMemDC(), 0, 0, (_frame / 2 % IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX() + 1), 0);
+	//IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRenderEFX(getMemDC(), 200, 0, _frame / 2 % (IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX() + 1), 0, 255);
 	_backGroundImg->render(getMemDC(), WINSIZE_X / 2 - _cameraPos.x, WINSIZE_Y / 2 - _cameraPos.y, _backGroundImg->getWidth() * 1.5, _backGroundImg->getHeight() * 1.5, 0, 0, _backGroundImg->getWidth(), _backGroundImg->getHeight());
 	IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
 		WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);

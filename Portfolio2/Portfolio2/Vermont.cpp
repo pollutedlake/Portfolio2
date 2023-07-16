@@ -14,6 +14,7 @@ HRESULT Vermont::init(void)
 
 void Vermont::release(void)
 {
+	Enemy::release();
 }
 
 void Vermont::update(void)
@@ -21,10 +22,7 @@ void Vermont::update(void)
 	_frame++;
 	if (_state.test(MOVE))
 	{
-		if (_frame % 5 == 0)
-		{
-			move();
-		}
+		move();
 	}
 	else if (_state.test(ATTACK))
 	{	
@@ -74,9 +72,13 @@ void Vermont::update(void)
 			_state.reset();
 		}
 	}
+	else if (_state.test(SKILL))
+	{
+		
+	}
 }
 
-void Vermont::render(HDC hdc, POINT position)
+void Vermont::render(HDC hdc, POINT position, POINT cameraPos)
 {
 	if (_state.none())
 	{
@@ -101,19 +103,19 @@ void Vermont::render(HDC hdc, POINT position)
 	{
 		if (_dir.test(LEFT))
 		{
-			IMAGEMANAGER->findImage("VermontMoveLeft")->frameRender(hdc, position.x - 35, position.y - 10, (_frame / 5) % 6, 2);
+			IMAGEMANAGER->findImage("VermontMoveLeft")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 42, WINSIZE_Y / 2 - (cameraPos.y - y) - 70, (_frame / 5) % 6, 2);
 		}
 		else if (_dir.test(RIGHT))
 		{
-			IMAGEMANAGER->findImage("VermontMoveRight")->frameRender(hdc, position.x, position.y - 10, (_frame / 5) % 6, 3);
+			IMAGEMANAGER->findImage("VermontMoveRight")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_Y / 2 - (cameraPos.y - y) - 70, (_frame / 5) % 6, 3);
 		}
 		else if (_dir.test(UP))
 		{
-			IMAGEMANAGER->findImage("VermontMoveUp")->frameRender(hdc, position.x, position.y - 10, (_frame / 5) % 6, 0);
+			IMAGEMANAGER->findImage("VermontMoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_Y / 2 - (cameraPos.y - y) - 70, (_frame / 5) % 6, 0);
 		}
 		else if (_dir.test(DOWN))
 		{
-			IMAGEMANAGER->findImage("VermontMoveDown")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 6, 1);
+			IMAGEMANAGER->findImage("VermontMoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 30, WINSIZE_Y / 2 - (cameraPos.y - y) - 70, (_frame / 5) % 6, 1);
 		}
 	}
 	else if (_state.test(ATTACK))
@@ -172,5 +174,35 @@ void Vermont::render(HDC hdc, POINT position)
 		char damageStr[50];
 		wsprintf(damageStr, "%d", _damage);
 		FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "°¡À»Ã¼", 20, 50, damageStr, strlen(damageStr), RGB(255, 0, 0));
+	}
+	else if (_state.test(SKILL))
+	{
+		if(_skillOrder.test(0))
+		{
+			IMAGEMANAGER->findImage("VermontSkillCasting")->render(hdc, position.x - 15, position.y - 5);
+		}
+		else if (_skillOrder.test(1))
+		{
+			IMAGEMANAGER->findImage("VermontIdleDown")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 5, 0);
+		}
+		else if (_skillOrder.test(2))
+		{
+			if (_dir.test(LEFT))
+			{
+				IMAGEMANAGER->findImage("VermontSkillLeft")->render(hdc, position.x - 75, position.y);
+			}
+			else if (_dir.test(RIGHT))
+			{
+				IMAGEMANAGER->findImage("VermontSkillRight")->render(hdc, position.x, position.y);
+			}
+			else  if (_dir.test(UP))
+			{
+				IMAGEMANAGER->findImage("VermontSkillUp")->render(hdc, position.x + 10, position.y - 60);
+			}
+			else if (_dir.test(DOWN))
+			{
+				IMAGEMANAGER->findImage("VermontSkillDown")->render(hdc, position.x + 5, position.y);
+			}
+		}
 	}
 }

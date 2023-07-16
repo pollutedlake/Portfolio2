@@ -5,10 +5,12 @@
 class WorldMapScene	: public GameNode
 {
 private:
+	bitset<4> _state;
 	int _frame;
 	Camera* _camera;
 	POINT _cameraPos;
-	RECT _buttons[5];
+	RECT _buttonsRC[5];
+	RECT _nextMoveRC;
 	char* _buttonStr[5];
 
 public:

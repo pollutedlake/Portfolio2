@@ -60,6 +60,7 @@ private:
 
 	BLENDFUNCTION	_blendFunc;			// 알파블렌드 기능
 	LPIMAGE_INFO	_blendImage;		// 알파블렌드 이미지
+	LPIMAGE_INFO	_blendImage2;		// 알파블렌드 이미지
 
 public:
 	HRESULT init(int width, int height);
@@ -76,6 +77,7 @@ public:
 	HRESULT init(const char* fileName, float x, float y, int width, int height, int maxFrameX, int maxFrameY, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
 
 	HRESULT initForAlphaBlend(void);
+	HRESULT initForAlphaBlend2(void);
 
 	// 투명 Color키 세팅
 	void setTransColor(bool isTrans, COLORREF transColor);
@@ -98,6 +100,7 @@ public:
 	// 프레임 렌더
 	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 	void alphaFrameRender(HDC hdc, int destX, int destY, int destWidth, int destHeight, int currentFrameX, int currentFrameY, BYTE alpha);
+	void alphaFrameRenderEFX(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 	void frameRender(HDC hdc, int destX, int destY);
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
 	void frameRender(HDC hdc, int destX, int destY, int destWidth, int destHeight, int currentFrameX, int currentFrameY);

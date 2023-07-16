@@ -4,6 +4,7 @@
 #include "Saladin.h"
 #include "Obstacle.h"
 #include "AStar.h"
+#include "Skill.h"
 
 #define CANTMOVE	0
 #define MOVABLE		1
@@ -25,6 +26,7 @@ private:
 	RECT _actionButtons[4];
 	vector<POINT> _attackTiles;
 	int _frame;
+	Skill* _skill;
 
 public:
 	HRESULT init(void);

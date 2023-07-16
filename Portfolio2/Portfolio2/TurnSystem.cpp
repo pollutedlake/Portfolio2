@@ -5,6 +5,8 @@ HRESULT TurnSystem::init(void)
 {
 	_actionChoice = false;
 	_aStar = new AStar();
+	_skill = new Skill();
+	_skill->init();
 	_frame = 0;
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
@@ -208,6 +210,10 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		{	
 			if(_frame / 10 == 8)
 			{
+				//_enemy = (Enemy*)_curChar;
+				//_enemy->setState(8);
+				//_enemy->setDoing(true);
+				//_skill->start(_charList);
 				_enemy = (Enemy*)_curChar;
 				_enemy->setState(3);
 				_enemy->setDoing(true);
@@ -260,12 +266,19 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 			targetChar->setState(4);
 			targetChar->setDamage(_curChar->getDamage());
 		}
+		else if (_curChar->isSkill())
+		{
+			_skill->update();
+			_curChar->setSkillOrder(_skill->getOrder());
+		}
 	}
 }
 
 void TurnSystem::release(void)
 {
 	SAFE_DELETE(_aStar);
+	_skill->release();
+	SAFE_DELETE(_skill);
 }
 
 void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
@@ -318,7 +331,7 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 		{
 			Character* temp = (Character*)(*it);
 			temp->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - temp->getTilePos().x * tileWidth),
-				WINSIZE_Y / 2 - (cameraPos.y - temp->getTilePos().y * tileHeight + tileHeight / 2 * 3) });
+				WINSIZE_Y / 2 - (cameraPos.y - temp->getTilePos().y * tileHeight + tileHeight / 2 * 3) }, cameraPos);
 		}
 	}
 	if (!_curChar->isDoing())
@@ -332,6 +345,14 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 		{
 			IMAGEMANAGER->findImage("EnemyMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
 				WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
+		}
+	}
+	else
+	{
+		if (!_skill->isFinish())
+		{
+			_skill->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth),
+				WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight + tileHeight / 2 * 3) }, cameraPos, tileWidth, tileHeight);
 		}
 	}
 	if (_actionChoice)

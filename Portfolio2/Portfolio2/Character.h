@@ -9,6 +9,7 @@
 #define MOVE	0
 #define ATTACK	1
 #define DAMAGED	2
+#define SKILL	3
 
 #define TURNMOVE	0
 #define TURNACTION	1
@@ -18,10 +19,9 @@ class Character : public Object
 protected:
 	bitset<2> _turn;
 	bitset<4> _state;
+	bitset<3> _skillOrder;
 	bitset<20> _turnOrder;
-	//POINT _tilePos;
 	POINT _destTilePos;
-	//int _type;
 	int _frame;
 	vector<POINT> _route;
 	bitset<4> _dir;
@@ -32,12 +32,13 @@ protected:
 	bool _doing;
 	int _damage;
 	bool _isAttack;
+	float x, y;
 
 public:
 	virtual HRESULT init(void);
 	virtual void release(void);
 	virtual void update(void);
-	virtual void render(HDC hdc, POINT position);
+	virtual void render(HDC hdc, POINT position, POINT cameraPos);
 
 	void setState(int state);
 	void setDir(int dir);
@@ -49,6 +50,7 @@ public:
 	void resetTurn() {_turn.reset(); _turn.flip();}
 	void setdestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
 	void setDamage(int damage) {_damage = damage;}
+	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i);}
 
 	//POINT getTilePos() { return _tilePos; }
 	POINT getDestTilePos() {return _destTilePos;}
@@ -60,6 +62,7 @@ public:
 	bool canAction() {return _turn.test(TURNACTION);}
 	//int getType() {return _type;}
 	bool isAttack() {return _isAttack;}
+	bool isSkill() {return _state[SKILL]; }
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
 	void endTurn() {_turn.reset();}

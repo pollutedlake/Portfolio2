@@ -137,6 +137,9 @@
     <ClInclude Include="WorldMapScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -217,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="WorldMapScene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

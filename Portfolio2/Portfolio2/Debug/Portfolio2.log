@@ -1,2 +1,10 @@
-﻿  MainGame.cpp
-  Portfolio2.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+﻿  Vermont.cpp
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(106,139): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(106,99): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(110,140): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(110,100): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(114,137): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(114,97): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(118,139): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\Vermont.cpp(118,99): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Portfolio2.vcxproj -> C:\Users\psh95\Desktop\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

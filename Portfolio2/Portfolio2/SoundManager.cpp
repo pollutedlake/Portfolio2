@@ -99,7 +99,8 @@ FMOD::Sound* SoundManager::addSoundFMOD(string key, const char* fileName, bool l
     {
 	    if (pSystem->createSound(fileName, FMOD_LOOP_NORMAL, 0, &sound) != FMOD_OK)
 	    {
-	    	SAFE_DELETE(sound);
+			cout << pSystem->createSound(fileName, FMOD_DEFAULT, 0, &sound) << "\t" << key << endl;
+			SAFE_DELETE(sound);
 	    	return nullptr;
 	    }
     }
@@ -107,6 +108,7 @@ FMOD::Sound* SoundManager::addSoundFMOD(string key, const char* fileName, bool l
     {
 		if (pSystem->createSound(fileName, FMOD_DEFAULT, 0, &sound) != FMOD_OK)
 		{
+			cout << pSystem->createSound(fileName, FMOD_DEFAULT, 0, &sound) << "\t" << key << endl;
 			SAFE_DELETE(sound);
 			return nullptr;
 		}
