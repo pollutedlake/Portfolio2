@@ -74,6 +74,7 @@ HRESULT BossBattleScene::init(void)
 	_debug = false;
 	_fade = false;
 	_fadeStartFrame = 0;
+	_showMiniStatusFrame = 0;
 
 	return S_OK;
 }
@@ -132,6 +133,18 @@ void BossBattleScene::update(void)
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
 	_turnSystem->update(_tileInfo, TileRowN, TileColN, _cursorTile);
 	
+	if (_tileInfo[_cursorTile.y][_cursorTile.x] == SALADIN || _tileInfo[_cursorTile.y][_cursorTile.x] == ENEMY)
+	{
+		if (_showMiniStatusFrame == 0)
+		{
+			_showMiniStatusFrame = _frame;
+		}
+	}
+	else
+	{
+		_showMiniStatusFrame = 0;
+	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
@@ -167,9 +180,22 @@ void BossBattleScene::render(void)
 	//_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
 	if (_tileInfo[_cursorTile.y][_cursorTile.x] == ENEMY)
 	{
+		if(!_turnSystem->getCurChar()->isDoing())
+		{
+			POINT pt = { (_cursorTile.x + 1) * TileWidth + TileWidth / 2, (_cursorTile.y - 2) * TileHeight + TileHeight / 2 };
+			IMAGEMANAGER->findImage("EnemyMiniStatus")->frameRender(getMemDC(), _camera->worldToCamera(pt).x, _camera->worldToCamera(pt).y, (_frame - _showMiniStatusFrame) / 5, 0);
+		}
 		IMAGEMANAGER->findImage("AttackMouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	}
-	else
+	else if (_tileInfo[_cursorTile.y][_cursorTile.x] == SALADIN)
+	{
+		if (!_turnSystem->getCurChar()->isDoing())
+		{
+			POINT pt = { (_cursorTile.x + 1) * TileWidth + TileWidth / 2, (_cursorTile.y - 2) * TileHeight + TileHeight / 2 };
+			IMAGEMANAGER->findImage("PlayerMiniStatus")->frameRender(getMemDC(), _camera->worldToCamera(pt).x, _camera->worldToCamera(pt).y, (_frame - _showMiniStatusFrame) / 5, 0);
+		}
+	}
+	if(_tileInfo[_cursorTile.y][_cursorTile.x] != ENEMY)
 	{
 		_mouseCursorImg->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	}

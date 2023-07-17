@@ -31,6 +31,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		(*it)->update();
 	}
 
+	// 현재 캐릭터가 행동중이 아닐 때
 	if (!_curChar->isDoing())
 	{	
 		if(_curChar->getType() == 0)
@@ -252,6 +253,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 			}
 		}
 	}
+	// 현재 캐릭터가 행동중일 때
 	else
 	{
 		if (_curChar->isAttack())
@@ -285,6 +287,7 @@ void TurnSystem::release(void)
 
 void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 {
+	// 현재 캐릭터가 플레이어일 때
 	if (_curChar->getType() == 0)
 	{
 		if(!_curChar->isDoing())
@@ -321,6 +324,7 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 			}
 		}
 	}
+	// y좌표에 따라 캐릭터들 정렬
 	sortObjectList();
 	for (auto it = _objectList.begin(); it != _objectList.end(); ++it)
 	{
@@ -376,7 +380,7 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 				IMAGEMANAGER->findImage("ActionButton")->render(hdc, _actionButtons[i].left, _actionButtons[i].top);
 			}
 			IMAGEMANAGER->findImage("ActionIcon")->frameRender(hdc, _actionButtons[i].left + 10, _actionButtons[i].top, i, 0);
-			FONTMANAGER->textOut(hdc, _actionButtons[i].left + 35, _actionButtons[i].top + 5, "가을체", 15, 100, actionStr[i], strlen(actionStr[i]), RGB(255, 255, 255));
+			FONTMANAGER->textOut(hdc, _actionButtons[i].left + 35 + 3 * (strlen(actionStr[0]) - strlen(actionStr[i])), _actionButtons[i].top + 5, "가을체", 15, 100, actionStr[i], strlen(actionStr[i]), RGB(255, 255, 255));
 		}
 	}
 }
@@ -455,6 +459,17 @@ void TurnSystem::sortObjectList()
 					}
 				}
 			}
+		}
+	}
+}
+
+Character* TurnSystem::findCharacter(POINT cursorPoint)
+{
+	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	{
+		if (SamePoint(cursorPoint, (*it)->getTilePos()))
+		{
+			return (*it);
 		}
 	}
 }

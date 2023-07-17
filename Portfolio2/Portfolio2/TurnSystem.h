@@ -10,6 +10,7 @@
 #define MOVABLE		1
 #define SALADIN		2
 #define ENEMY		3
+
 #define ACTION		0
 #define MOVE		1
 
@@ -40,6 +41,7 @@ public:
 	void addObject(Object* object);
 	void nextTurn();
 	void sortObjectList();
+	Character* findCharacter(POINT cursorPoint);
 
 	TurnSystem() {}
 	~TurnSystem() {}

@@ -89,6 +89,10 @@ void Vermont::update(void)
 				}
 				moveDist = 0;
 			}
+			if (moveDist > dist / 10 && moveDist < dist / 10 + 10.f)
+			{
+				SOUNDMANAGER->playSoundFMOD("VermontSkillAttack");
+			}
 			if (abs((float)_destTilePos.y * 30.f + 15.f - y) > abs((float)_destTilePos.x * 40.f + 20.f - x))
 			{
 				if (sin(angle) < 0)

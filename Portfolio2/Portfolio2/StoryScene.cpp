@@ -318,12 +318,12 @@ void StoryScene::update(void)
 			{
 				if(SOUNDMANAGER->getCurrentPos(_soundList[_soundIndex - 1]) == 0 && _soundIndex < 4)
 				{	
-					if(_frame == _speakStartFrame + 11)
-					{
-						//SOUNDMANAGER->playSoundWithKey("Fight");
-						//SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/StoryScene/0005.wav");
-						SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/SaladinAttack.wav");
-					}
+					//if(_frame == _speakStartFrame + 11)
+					//{
+					//	//SOUNDMANAGER->playSoundWithKey("Fight");
+					//	//SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/StoryScene/0005.wav");
+					//	SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/SaladinAttack.wav");
+					//}
 					SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
 					_speakStartFrame = _frame;
 					_soundIndex++;

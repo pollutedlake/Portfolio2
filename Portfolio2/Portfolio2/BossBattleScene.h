@@ -30,6 +30,7 @@ private:
 	POINT _cursorTile;
 	vector<POINT> _movableTiles;
 	int _fadeStartFrame;
+	int _showMiniStatusFrame;
 	bitset<3> _fade;
 	int _frame;
 	bool _debug;

@@ -51,6 +51,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SlashRight", "Resources/Images/BackGrounds/EndingScene/SlashRight.bmp", 785, 150, 5, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("MouseCursor", "Resources/Images/UI/MouseCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("AttackMouseCursor", "Resources/Images/UI/AttackMouseCursor.bmp", 217, 32, 7, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("EnemyMiniStatus", "Resources/Images/UI/EnemyMiniStatus.bmp", 900, 49, 15, 1, true, RGB(0, 44, 0));
+	IMAGEMANAGER->addFrameImage("PlayerMiniStatus", "Resources/Images/UI/PlayerMiniStatus.bmp", 900, 49, 15, 1, true, RGB(0, 44, 0));
 	IMAGEMANAGER->addFrameImage("TitleEFX4", "Resources/Images/Effects/TitleScene/TitleEFX4.bmp", 4080, 254, 16, 1, true, RGB(4, 0, 4));
 	IMAGEMANAGER->addImage("test", "Resources/Images/Effects/StoryScene/test2.bmp", 201, 242, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("TitleEFX3", "Resources/Images/Effects/TitleScene/TitleEFX3.bmp", 20880, 240, 87, 1, true, RGB(4, 88, 4));
@@ -130,11 +132,9 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ScenarioSelect", "Resources/Sounds/SoundEffect/ScenarioSelect.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleButton", "Resources/Sounds/SoundEffect/TitleButton.wav");
-	SOUNDMANAGER->addSoundFMOD("BreakIce", "Resources/Sounds/SoundEffect/0071.mp3");
-	//SOUNDMANAGER->addWaveFileWithKey("BreakIce", "Resources/Sounds/SoundEffect/0071.wav");
-	//SOUNDMANAGER->addMp3FileWithKey("BreakIce", "Resources/Sounds/SoundEffect/0071.mp3");
-	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/2031.wav");
-	SOUNDMANAGER->addSoundFMOD("SkillCasting", "Resources/Sounds/SoundEffect/0083.wav");
+	SOUNDMANAGER->addSoundFMOD("BreakIce", "Resources/Sounds/SoundEffect/BreakIce.wav");
+	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/VermontSkillAttack.wav");
+	SOUNDMANAGER->addSoundFMOD("SkillCasting", "Resources/Sounds/SoundEffect/SkillCasting.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");
@@ -174,7 +174,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Dialog34", "Resources/Sounds/StoryScene/34.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog35", "Resources/Sounds/StoryScene/35.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog36", "Resources/Sounds/StoryScene/36.mp3");
-	//SOUNDMANAGER->addSoundFMOD("Fight", "Resources/Sounds/StoryScene/0005.wav");
+	SOUNDMANAGER->addSoundFMOD("Fight", "Resources/Sounds/StoryScene/Fight.wav");
 	//SOUNDMANAGER->addWaveFileWithKey("Fight", "Resources/Sounds/StoryScene/0005.wav");
 	SOUNDMANAGER->addMp3FileWithKey("Fight", "Resources/Sounds/StoryScene/test.mp3");
 	SOUNDMANAGER->addSoundFMOD("Scream1", "Resources/Sounds/StoryScene/Scream1.wav");

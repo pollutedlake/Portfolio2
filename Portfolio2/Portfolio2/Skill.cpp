@@ -15,7 +15,7 @@ void Skill::update(void)
 	static Character* target;
 	if(_order.test(0))
 	{
-		if (_frame == 0)
+		if (_frame == 1)
 		{
 			SOUNDMANAGER->playSoundFMOD("SkillCasting");
 		}
@@ -137,7 +137,6 @@ void Skill::update(void)
 						target->setState(4);
 						target = (*it);
 						_curChar->setDestTilePos((*it)->getTilePos());
-						SOUNDMANAGER->playSoundFMOD("VermontSkillAttack");
 						_curChar->setSkillOrder(2);
 						endFrame = 0;
 						angle = atan2((float)_curChar->getDestTilePos().x * 40 + 20 - _curChar->getX(), (float)_curChar->getDestTilePos().y * 30 + 20 - _curChar->getY());
@@ -146,9 +145,7 @@ void Skill::update(void)
 						{
 							if (!(*it2)._broken)
 							{
-								SOUNDMANAGER->playSoundWithKey("BreakIce");
-								//SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/0071.wav");
-								//SOUNDMANAGER->playSoundFMOD("BreakIce");
+								SOUNDMANAGER->playSoundFMOD("BreakIce");
 								(*it2)._broken = true;
 								break;
 							}
@@ -164,12 +161,11 @@ void Skill::update(void)
 						_curChar->setDestTilePos(_curChar->getTilePos());
 						target->setDamage(100);
 						target->setState(4);
-						SOUNDMANAGER->playSoundFMOD("VermontSkillAttack");
 						_curChar->setSkillOrder(2);
 						angle = atan2((float)_curChar->getDestTilePos().x * 40 + 20 - _curChar->getX(), (float)_curChar->getDestTilePos().y * 30 + 20 - _curChar->getY());
 						if(_icePillars.size() > 0)
 						{
-							_icePillars[0]._broken = true;
+							SOUNDMANAGER->playSoundFMOD("BreakIce");
 						}
 					}
 				}
