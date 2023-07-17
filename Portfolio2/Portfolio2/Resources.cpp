@@ -118,6 +118,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDownEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackDownEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX1", "Resources/Images/Effects/SkillEffect/VermontSkillEFX1.bmp", 3069, 126, 31, 1, true, RGB(0, 92, 0));
+	IMAGEMANAGER->addFrameImage("VermontSkillEFX2", "Resources/Images/Effects/SkillEffect/VermontSkillEFX2.bmp", 2755, 144, 19, 1, true, RGB(4, 176, 236));
 	IMAGEMANAGER->addFrameImage("SkillCasting", "Resources/Images/Effects/SkillEffect/SkillCasting.bmp", 6325, 192, 25, 1, true, RGB(80, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));

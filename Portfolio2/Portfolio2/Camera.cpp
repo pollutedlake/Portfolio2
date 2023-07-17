@@ -52,3 +52,8 @@ void Camera::update(void)
 void Camera::render(void)
 {
 }
+
+POINT Camera::worldToCamera(POINT point)
+{
+	return PointMake(WINSIZE_X / 2 - (_position.x - point.x), WINSIZE_Y / 2 - (_position.y - point.y));
+}

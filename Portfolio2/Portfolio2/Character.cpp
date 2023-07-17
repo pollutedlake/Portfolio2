@@ -141,6 +141,12 @@ void Character::move()
 	}
 }
 
+void Character::setXY(int tileWidth, int tileHeight)
+{
+	x = _tilePos.x * tileWidth + tileWidth / 2;
+	y = _tilePos.y * tileHeight + tileHeight / 2;
+}
+
 int Character::getDamage()
 {
 	if (_damage == 0)

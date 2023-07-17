@@ -7,8 +7,10 @@ class Skill
 private:
 	int _frame;
 	bool _isFinish;
+	Character* _curChar;
 	vector<Character*> _charList;
 	bitset<3> _order;
+	vector<pair<POINT, POINT>> _efxPos;
 
 public:
 	HRESULT init(void);
@@ -18,6 +20,6 @@ public:
 	int getOrder();
 
 	bool isFinish() {return _isFinish;}
-	void start(vector<Character*> charList);
+	void start(vector<Character*> charList, Character* curChar);
 };
 

@@ -25,7 +25,7 @@ void Vermont::update(void)
 		move();
 	}
 	else if (_state.test(ATTACK))
-	{	
+	{
 		if (_frame == 3)
 		{
 			SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/VermontAttack.wav");
@@ -74,7 +74,38 @@ void Vermont::update(void)
 	}
 	else if (_state.test(SKILL))
 	{
-		
+		if (_skillOrder.test(2))
+		{
+			float angle;
+			if(_frame == 1)
+			{ 
+				angle = atan2((float)_destTilePos.y * 30.f + 15.f - y, (float)_destTilePos.x * 40.f + 20.f - x);
+			}
+			if (abs((float)_destTilePos.y * 30.f + 15.f - y) > abs((float)_destTilePos.x * 40.f + 20.f - x))
+			{
+				if (sin(angle) < 0)
+				{
+					setDir(UP);
+				}
+				else
+				{
+					setDir(DOWN);
+				}
+			}
+			else
+			{
+				if (cos(angle) < 0)
+				{
+					setDir(LEFT);
+				}
+				else
+				{
+					setDir(RIGHT);
+				}
+			}
+			x += 10.f * cos(angle);
+			y += 10.f * sin(angle);
+		}
 	}
 }
 
@@ -189,19 +220,19 @@ void Vermont::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-				IMAGEMANAGER->findImage("VermontSkillLeft")->render(hdc, position.x - 75, position.y);
+				IMAGEMANAGER->findImage("VermontSkillLeft")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - (x - 20)) - 75, WINSIZE_Y / 2 - (cameraPos.y - (y - 60)));
 			}
 			else if (_dir.test(RIGHT))
 			{
-				IMAGEMANAGER->findImage("VermontSkillRight")->render(hdc, position.x, position.y);
+				IMAGEMANAGER->findImage("VermontSkillRight")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - (x - 20)), WINSIZE_Y / 2 - (cameraPos.y - (y - 60 )));
 			}
 			else  if (_dir.test(UP))
 			{
-				IMAGEMANAGER->findImage("VermontSkillUp")->render(hdc, position.x + 10, position.y - 60);
+				IMAGEMANAGER->findImage("VermontSkillUp")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - (x - 20)) + 10, WINSIZE_Y / 2 - (cameraPos.y - (y - 60)) - 60);
 			}
 			else if (_dir.test(DOWN))
 			{
-				IMAGEMANAGER->findImage("VermontSkillDown")->render(hdc, position.x + 5, position.y);
+				IMAGEMANAGER->findImage("VermontSkillDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - (x - 20)) + 5, WINSIZE_Y / 2 - (cameraPos.y - (y - 60)));
 			}
 		}
 	}

@@ -48,15 +48,17 @@ public:
 	void setCurWait(int curWait) {_curWait = curWait;}
 	void setDoing(bool doing) {_doing = doing;}
 	void resetTurn() {_turn.reset(); _turn.flip();}
-	void setdestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
+	void setDestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
 	void setDamage(int damage) {_damage = damage;}
-	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i);}
+	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i); _frame = 0; }
 
 	//POINT getTilePos() { return _tilePos; }
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
 	int getCurWait() {return _curWait;}
 	int getTurnOrder(int charN);
+	float getX() {return x;}
+	float getY() {return y;}
 	bool isDoing() {return _doing;}
 	bool canMove() {return _turn.test(TURNMOVE);}
 	bool canAction() {return _turn.test(TURNACTION);}
@@ -67,6 +69,7 @@ public:
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
 	void endTurn() {_turn.reset();}
 	void move();
+	void setXY(int tileWidth, int tileHeight);
 	virtual int getDamage();
 
 public:

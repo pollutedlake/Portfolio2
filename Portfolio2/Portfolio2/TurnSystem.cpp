@@ -129,7 +129,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 							}
 							_curChar->setDoing(true);
 							_curChar->setRoute(route);
-							_curChar->setdestTilePos(cursorTile);
+							_curChar->setDestTilePos(cursorTile);
 							tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
 						}
 						if (tileInfo[cursorTile.y][cursorTile.x] == SALADIN)
@@ -149,6 +149,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 					if (tileInfo[cursorTile.y][cursorTile.x] == MOVABLE)
 					{
 						_curChar->setState(1);
+						//_curChar->setXY(TILEWI)
 						_curChar->setDoing(true);
 						_curChar->setRoute(_aStar->findRoute(_curChar->getTilePos(), { cursorTile.x, cursorTile.y }, tileInfo, rowN, colN));
 						tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
@@ -163,28 +164,28 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 						{
 							if ((cursorTile.x - _curChar->getTilePos().x == 2) && (cursorTile.y == _curChar->getTilePos().y))
 							{
-								_curChar->setdestTilePos(cursorTile);
+								_curChar->setDestTilePos(cursorTile);
 								//_curChar->setDir(RIGHT);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 							if ((cursorTile.x - _curChar->getTilePos().x == -2) && (cursorTile.y == _curChar->getTilePos().y))
 							{
-								_curChar->setdestTilePos(cursorTile);
+								_curChar->setDestTilePos(cursorTile);
 								//_curChar->setDir(LEFT);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 							if ((cursorTile.y - _curChar->getTilePos().y == 2) && (cursorTile.x == _curChar->getTilePos().x))
 							{
-								_curChar->setdestTilePos(cursorTile);
+								_curChar->setDestTilePos(cursorTile);
 								//_curChar->setDir(DOWN);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
 							}
 							if ((cursorTile.y - _curChar->getTilePos().y == -2) && (cursorTile.x == _curChar->getTilePos().x))
 							{
-								_curChar->setdestTilePos(cursorTile);
+								_curChar->setDestTilePos(cursorTile);
 								//_curChar->setDir(UP);
 								_curChar->setState(2);
 								_curChar->setDoing(true);
@@ -210,11 +211,12 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		{	
 			if(_frame / 10 == 8)
 			{
-				//_enemy = (Enemy*)_curChar;
-				//_enemy->setState(8);
-				//_enemy->setDoing(true);
-				//_skill->start(_charList);
 				_enemy = (Enemy*)_curChar;
+				_enemy->setState(8);
+				_enemy->setXY(40, 30);
+				_enemy->setDoing(true);
+				_skill->start(_charList, _curChar);
+				/*_enemy = (Enemy*)_curChar;
 				_enemy->setState(3);
 				_enemy->setDoing(true);
 				POINT player = _enemy->findPlayer(tileInfo, rowN, colN);
@@ -246,7 +248,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 				}
 				_curChar->setRoute(route);
 				_curChar->setdestTilePos(player);
-				tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
+				tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;*/
 			}
 		}
 	}
@@ -269,7 +271,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		else if (_curChar->isSkill())
 		{
 			_skill->update();
-			_curChar->setSkillOrder(_skill->getOrder());
+			//_curChar->setSkillOrder(_skill->getOrder());
 		}
 	}
 }
@@ -365,7 +367,14 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 		char* actionStr[4] = {"어빌리티", "아이템", "휴 식", "상 태"};
 		for (int i = 0; i < 4; i++)
 		{
-			IMAGEMANAGER->findImage("ActionButton")->render(hdc, _actionButtons[i].left, _actionButtons[i].top);
+			if (PtInRect(&_actionButtons[i], _ptMouse))
+			{
+				IMAGEMANAGER->findImage("ActionButtonActive")->render(hdc, _actionButtons[i].left, _actionButtons[i].top);
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("ActionButton")->render(hdc, _actionButtons[i].left, _actionButtons[i].top);
+			}
 			IMAGEMANAGER->findImage("ActionIcon")->frameRender(hdc, _actionButtons[i].left + 10, _actionButtons[i].top, i, 0);
 			FONTMANAGER->textOut(hdc, _actionButtons[i].left + 35, _actionButtons[i].top + 5, "가을체", 15, 100, actionStr[i], strlen(actionStr[i]), RGB(255, 255, 255));
 		}
