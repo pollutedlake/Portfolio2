@@ -29,6 +29,8 @@ private:
 	POINT _cameraPos;
 	POINT _cursorTile;
 	vector<POINT> _movableTiles;
+	int _fadeStartFrame;
+	bitset<3> _fade;
 	int _frame;
 	bool _debug;
 

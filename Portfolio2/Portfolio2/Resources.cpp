@@ -46,6 +46,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("PlaySong", "Resources/Images/BackGrounds/EndingScene/PlaySong.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("Black", "Resources/Images/BackGrounds/EndingScene/Black.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("White", "Resources/Images/BackGrounds/EndingScene/White.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("Blue", "Resources/Images/Effects/SkillEffect/Blue.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addFrameImage("Pipe", "Resources/Images/BackGrounds/EndingScene/Pipe.bmp", 20, 10, 2, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SlashRight", "Resources/Images/BackGrounds/EndingScene/SlashRight.bmp", 785, 150, 5, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("MouseCursor", "Resources/Images/UI/MouseCursor.bmp", 112, 24, 7, 1, true, RGB(80, 120, 116));
@@ -129,6 +130,11 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ScenarioSelect", "Resources/Sounds/SoundEffect/ScenarioSelect.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleButton", "Resources/Sounds/SoundEffect/TitleButton.wav");
+	SOUNDMANAGER->addSoundFMOD("BreakIce", "Resources/Sounds/SoundEffect/0071.mp3");
+	//SOUNDMANAGER->addWaveFileWithKey("BreakIce", "Resources/Sounds/SoundEffect/0071.wav");
+	//SOUNDMANAGER->addMp3FileWithKey("BreakIce", "Resources/Sounds/SoundEffect/0071.mp3");
+	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/2031.wav");
+	SOUNDMANAGER->addSoundFMOD("SkillCasting", "Resources/Sounds/SoundEffect/0083.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");

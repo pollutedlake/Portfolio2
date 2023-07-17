@@ -19,7 +19,7 @@ class Character : public Object
 protected:
 	bitset<2> _turn;
 	bitset<4> _state;
-	bitset<3> _skillOrder;
+	bitset<4> _skillOrder;
 	bitset<20> _turnOrder;
 	POINT _destTilePos;
 	int _frame;

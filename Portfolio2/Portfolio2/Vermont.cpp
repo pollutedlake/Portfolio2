@@ -76,10 +76,18 @@ void Vermont::update(void)
 	{
 		if (_skillOrder.test(2))
 		{
-			float angle;
+			static float angle;
+			static float dist;
+			static float moveDist;
 			if(_frame == 1)
 			{ 
 				angle = atan2((float)_destTilePos.y * 30.f + 15.f - y, (float)_destTilePos.x * 40.f + 20.f - x);
+				dist = sqrt(pow(((float)_destTilePos.x * 40.f + 20.f - x) * 1.1f, 2) + pow(((float)_destTilePos.y * 30.f + 15.f - y) * 1.1f, 2));
+				if (SamePoint(_destTilePos, _tilePos))
+				{
+					dist = sqrt(pow(((float)_destTilePos.x * 40.f + 20.f - x), 2) + pow(((float)_destTilePos.y * 30.f + 15.f - y), 2));
+				}
+				moveDist = 0;
 			}
 			if (abs((float)_destTilePos.y * 30.f + 15.f - y) > abs((float)_destTilePos.x * 40.f + 20.f - x))
 			{
@@ -105,6 +113,24 @@ void Vermont::update(void)
 			}
 			x += 10.f * cos(angle);
 			y += 10.f * sin(angle);
+			moveDist += 10.f;
+			if (moveDist >= dist)
+			{
+				if (SamePoint(_destTilePos, _tilePos))
+				{
+					x = (float)_destTilePos.x * 40.f + 20.f;
+					y = (float)_destTilePos.y * 30.f + 15.f;
+				}
+				else
+				{
+					x -= 10.f * cos(angle);
+					y -= 10.f * sin(angle);
+				}
+			}
+		}
+		else if (_skillOrder.test(3))
+		{
+			
 		}
 	}
 }
@@ -210,7 +236,7 @@ void Vermont::render(HDC hdc, POINT position, POINT cameraPos)
 	{
 		if(_skillOrder.test(0))
 		{
-			IMAGEMANAGER->findImage("VermontSkillCasting")->render(hdc, position.x - 15, position.y - 5);
+			IMAGEMANAGER->findImage("VermontSkillCasting")->render(hdc, position.x - 12, position.y - 5);
 		}
 		else if (_skillOrder.test(1))
 		{
@@ -234,6 +260,10 @@ void Vermont::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("VermontSkillDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - (x - 20)) + 5, WINSIZE_Y / 2 - (cameraPos.y - (y - 60)));
 			}
+		}
+		else if (_skillOrder.test(3))
+		{
+			IMAGEMANAGER->findImage("VermontIdleDown")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 5, 0);
 		}
 	}
 }

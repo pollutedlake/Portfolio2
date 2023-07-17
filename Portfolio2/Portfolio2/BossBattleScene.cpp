@@ -19,6 +19,34 @@ HRESULT BossBattleScene::init(void)
 	_saladin->setTurnOder(0);
 	_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = SALADIN;
 
+	Character* _saladin2 = new Saladin();
+	_saladin2->init();
+	_saladin2->setDir(UP);
+	_saladin2->setTilePos({ 24, 45 });
+	_saladin2->setTurnOder(2);
+	_tileInfo[_saladin2->getTilePos().y][_saladin2->getTilePos().x] = SALADIN;
+
+	Character * _saladin3 = new Saladin();
+	_saladin3->init();
+	_saladin3->setDir(DOWN);
+	_saladin3->setTilePos({ 20, 35 });
+	_saladin3->setTurnOder(3);
+	_tileInfo[_saladin3->getTilePos().y][_saladin3->getTilePos().x] = SALADIN;
+
+	Character* _saladin4 = new Saladin();
+	_saladin4->init();
+	_saladin4->setDir(LEFT);
+	_saladin4->setTilePos({ 43, 52 });
+	_saladin4->setTurnOder(4);
+	_tileInfo[_saladin4->getTilePos().y][_saladin4->getTilePos().x] = SALADIN;
+
+	Character* _saladin5 = new Saladin();
+	_saladin5->init();
+	_saladin5->setDir(RIGHT);
+	_saladin5->setTilePos({ 15, 40 });
+	_saladin5->setTurnOder(5);
+	_tileInfo[_saladin5->getTilePos().y][_saladin5->getTilePos().x] = SALADIN;
+	
 	_vermont = new Vermont();
 	_vermont->init();
 	_vermont->setDir(RIGHT);
@@ -29,13 +57,23 @@ HRESULT BossBattleScene::init(void)
 	_turnSystem = new TurnSystem();
 	_turnSystem->addCharacter(_vermont);
 	_turnSystem->addCharacter(_saladin);
+	_turnSystem->addCharacter(_saladin2);
+	_turnSystem->addCharacter(_saladin3);
+	_turnSystem->addCharacter(_saladin4);
+	_turnSystem->addCharacter(_saladin5);
 	_turnSystem->addObject(_vermont);
 	_turnSystem->addObject(_saladin);
+	_turnSystem->addObject(_saladin2);
+	_turnSystem->addObject(_saladin3);
+	_turnSystem->addObject(_saladin4);
+	_turnSystem->addObject(_saladin5);
 	_turnSystem->addObject(new Obstacle("Table", {1110, 1180}, 1, 1.5, {29, 40}));
 	_turnSystem->init();
 
 	_frame = 0;
 	_debug = false;
+	_fade = false;
+	_fadeStartFrame = 0;
 
 	return S_OK;
 }
@@ -64,6 +102,31 @@ void BossBattleScene::update(void)
 		_debug = !_debug;
 	}
 
+	if (_fade.none() && _vermont->isSkill())
+	{
+		_fade.set(0);
+		_fadeStartFrame = _frame;
+	}
+	else if (_fade.test(0))
+	{
+		if ((_frame - _fadeStartFrame) * 2 > 80)
+		{
+			_fade = _fade << 1;
+		}
+	}
+	else if (_fade.test(1) && !_vermont->isSkill())
+	{
+		_fade = _fade << 1;
+	}
+	else if (_fade.test(2))
+	{
+		if ((_frame - _fadeStartFrame) * 2 > 80)
+		{
+			_fade.reset();
+		}
+	}
+	
+
 	// 마우스커서가 위치한 타일 구하기
 	_cursorTile.x = (_cameraPos.x - WINSIZE_X / 2 + _ptMouse.x) / TileWidth;
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TileHeight;
@@ -87,6 +150,18 @@ void BossBattleScene::render(void)
 	{
 		IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
 			WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
+	}
+	if (_fade.test(0))
+	{
+		IMAGEMANAGER->findImage("Blue")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 2 > 80 ? 80 : (_frame - _fadeStartFrame) * 2);
+	}
+	if (_fade.test(1))
+	{
+		IMAGEMANAGER->findImage("Blue")->alphaRender(getMemDC(), 80);
+	}
+	if (_fade.test(2))
+	{
+		IMAGEMANAGER->findImage("Blue")->alphaRender(getMemDC(), 80 - (_frame - _fadeStartFrame) * 2 < 0 ? 0 : 80 - (_frame - _fadeStartFrame) * 2);
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
 	//_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());

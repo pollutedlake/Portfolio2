@@ -28,6 +28,8 @@ public:
 	void fadeInWhite(int start, int cur, int end);
 	void fadeOutBlack(int start, int cur, int end);
 	void fadeInBlack(int start, int cur, int end);
+	void fadeOutImage(int start, int cur, int end, string key);
+	void fadeInImage(int start, int cur, int end, string key);
 	
 	SceneManager() {}
 	~SceneManager() {}

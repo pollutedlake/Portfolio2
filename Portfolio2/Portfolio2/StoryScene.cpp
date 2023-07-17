@@ -322,7 +322,7 @@ void StoryScene::update(void)
 					{
 						//SOUNDMANAGER->playSoundWithKey("Fight");
 						//SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/StoryScene/0005.wav");
-						//SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/SaladinAttack.wav");
+						SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/SaladinAttack.wav");
 					}
 					SOUNDMANAGER->playSoundFMOD(_soundList[_soundIndex]);
 					_speakStartFrame = _frame;

@@ -102,3 +102,13 @@ void SceneManager::fadeInBlack(int start, int cur, int end)
 {
     _blackImg->alphaRender(_currentScene->getMemDC(), cur > end ? 0 : 255.0f - 255.0f / (float)(end - start) * (float)(cur - start));
 }
+
+void SceneManager::fadeOutImage(int start, int cur, int end, string key)
+{
+    IMAGEMANAGER->findImage(key)->alphaRender(_currentScene->getMemDC(), cur > end ? 255 : 255.0f / (float)(end - start) * (float)(cur - start));
+}
+
+void SceneManager::fadeInImage(int start, int cur, int end, string key)
+{  
+    IMAGEMANAGER->findImage(key)->alphaRender(_currentScene->getMemDC(), cur > end ? 0 : 255.0f - 255.0f / (float)(end - start) * (float)(cur - start));
+}
