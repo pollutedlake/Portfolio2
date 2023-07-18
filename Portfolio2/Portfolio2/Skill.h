@@ -18,6 +18,8 @@ private:
 	vector<Character*> _charList;
 	bitset<4> _order;
 	vector<pair<POINT, POINT>> _efxPos;
+	vector<pair<pair<float, float>, float>> _dust1Pos;
+	vector<pair<pair<float, float>, float>> _dust2;
 	vector<IcePillar> _icePillars;
 
 public:

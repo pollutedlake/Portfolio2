@@ -110,7 +110,7 @@ void BossBattleScene::update(void)
 	}
 	else if (_fade.test(0))
 	{
-		if ((_frame - _fadeStartFrame) * 10 > 255)
+		if ((_frame - _fadeStartFrame) * 10 > 220)
 		{
 			_fade = _fade << 1;
 		}
@@ -121,7 +121,7 @@ void BossBattleScene::update(void)
 	}
 	else if (_fade.test(2))
 	{
-		if ((_frame - _fadeStartFrame) * 10 > 255)
+		if ((_frame - _fadeStartFrame) * 10 > 220)
 		{
 			_fade.reset();
 		}
@@ -166,15 +166,15 @@ void BossBattleScene::render(void)
 	}
 	if (_fade.test(0))
 	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 255 ? 255 : (_frame - _fadeStartFrame) * 10);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 220 ? 220 : (_frame - _fadeStartFrame) * 10);
 	}
 	if (_fade.test(1))
 	{
-		//IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 255);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 220);
 	}
 	if (_fade.test(2))
 	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 255 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 255 - (_frame - _fadeStartFrame) * 10);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 220 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 220 - (_frame - _fadeStartFrame) * 10);
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
 	char str[50];

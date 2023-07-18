@@ -110,7 +110,7 @@ void Saladin::update(void)
 			else
 			{
 				_state.reset();
-				_doing = false;
+				setDoing(false);
 			}
 		}
 	}

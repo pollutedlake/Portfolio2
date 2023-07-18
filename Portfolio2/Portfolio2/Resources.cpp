@@ -127,6 +127,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX1", "Resources/Images/Effects/SkillEffect/VermontSkillEFX1.bmp", 3069, 126, 31, 1, true, RGB(0, 92, 0));
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX2", "Resources/Images/Effects/SkillEffect/VermontSkillEFX2.bmp", 2755, 144, 19, 1, true, RGB(4, 176, 236));
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX3", "Resources/Images/Effects/SkillEffect/VermontSkillEFX3.bmp", 1768, 65, 26, 1, true, RGB(192, 196, 244));
+	IMAGEMANAGER->addFrameImage("VermontSkillEFX4", "Resources/Images/Effects/SkillEffect/VermontSkillEFX4.bmp", 408, 32, 12, 1, true, RGB(232, 224, 176));
+	IMAGEMANAGER->addFrameImage("VermontSkillEFX5", "Resources/Images/Effects/SkillEffect/VermontSkillEFX5.bmp", 480, 40, 12, 1, true, RGB(168, 168, 172));
 	IMAGEMANAGER->addFrameImage("SkillCasting", "Resources/Images/Effects/SkillEffect/SkillCasting.bmp", 6325, 192, 25, 1, true, RGB(80, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));

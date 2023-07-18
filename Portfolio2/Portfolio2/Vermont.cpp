@@ -81,6 +81,7 @@ void Vermont::update(void)
 			else
 			{
 				_state.reset();
+				setDoing(false);
 			}
 		}
 	}
