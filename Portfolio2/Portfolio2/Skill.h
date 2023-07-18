@@ -12,6 +12,7 @@ class Skill
 {
 private:
 	int _frame;
+	int _startFrame;
 	bool _isFinish;
 	Character* _curChar;
 	vector<Character*> _charList;

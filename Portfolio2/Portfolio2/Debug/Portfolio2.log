@@ -1,5 +1,17 @@
-﻿  TurnSystem.cpp
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\TurnSystem.cpp(436,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\TurnSystem.cpp(439,25): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\TurnSystem.cpp(475): warning C4715: 'TurnSystem::findCharacter': 모든 제어 경로에서 값을 반환하지는 않습니다.
-  Portfolio2.vcxproj -> C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+﻿  Skill.cpp
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(43,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(43,57): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(43,122): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(43,104): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(89,122): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(89,104): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(187,122): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(187,104): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(240,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(263,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(278,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(280,77): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(280,59): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(303,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\Skill.cpp(310): warning C4715: 'Skill::getOrder': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  Portfolio2.vcxproj -> C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

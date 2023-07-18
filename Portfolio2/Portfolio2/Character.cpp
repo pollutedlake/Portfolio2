@@ -13,6 +13,7 @@ HRESULT Character::init(void)
 	_damage = 0;
 	_isAttack = false;
 	_skillOrder.reset();
+	_isDie = false;
 	return S_OK;
 }
 
@@ -145,6 +146,11 @@ void Character::setXY(int tileWidth, int tileHeight)
 {
 	x = _tilePos.x * tileWidth + tileWidth / 2;
 	y = _tilePos.y * tileHeight + tileHeight / 2;
+}
+
+bool Character::isDie()
+{
+	return _isDie;
 }
 
 int Character::getDamage()

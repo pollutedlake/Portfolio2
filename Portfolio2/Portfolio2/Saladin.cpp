@@ -7,6 +7,11 @@ HRESULT Saladin::init(void)
 	_wtp = 10;
 	_mobility = 7;
 	_type = 0;
+	_maxHP = 500.f;
+	_curHP = _maxHP;
+	//_curHP = 10;
+	_maxMP = 100.f;
+	_curMP = _maxMP;
 	Character::init();
 	return S_OK;
 }
@@ -86,11 +91,27 @@ void Saladin::update(void)
 			_turn.flip(1);
 		}
 	}
-	if (_state.test(DAMAGED))
+	else if (_state.test(DIE))
+	{
+		if (255 - 255 / 30 * _frame < 0)
+		{
+			_isDie = true;
+		}
+	}
+	else if (_state.test(DAMAGED))
 	{
 		if (_frame / 5 > 0)
 		{
-			_state.reset();
+			_curHP -= _damage;
+			if (_curHP <= 0)
+			{
+				setState(pow(2, DIE));
+			}
+			else
+			{
+				_state.reset();
+				_doing = false;
+			}
 		}
 	}
 }
@@ -186,7 +207,7 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 			}
 		}
 	}
-	if (_state.test(DAMAGED))
+	else if (_state.test(DAMAGED))
 	{
 		if (_dir.test(LEFT))
 		{
@@ -207,6 +228,25 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 		char damageStr[50];
 		wsprintf(damageStr, "%d", _damage);
 		FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "°¡À»Ã¼", 20, 500, damageStr, strlen(damageStr), RGB(255, 0, 0));
+	}
+	else if (_state.test(DIE))
+	{
+		if (_dir.test(LEFT))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedLeft")->alphaRender(hdc, position.x, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+		else if (_dir.test(RIGHT))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedRight")->alphaRender(hdc, position.x - 20, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+		else if (_dir.test(UP))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedUp")->alphaRender(hdc, position.x, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+		else if (_dir.test(DOWN))
+		{
+			IMAGEMANAGER->findImage("SaladinDamagedDown")->alphaRender(hdc, position.x - 5, position.y - 10, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
 	}
 }
 void Saladin::searchMovable(int map[][60], int rowN, int colN)

@@ -5,9 +5,13 @@ HRESULT Vermont::init(void)
 {
 	_frame = 0;
 	_wtp = 10;
-	_curWait = _wtp;
 	_mobility = 5;
 	_type = 1;
+	_maxHP = 200.f;
+	_curHP = _maxHP;
+	//_curHP = 10;
+	_maxMP = 100.f;
+	_curMP = _maxMP;
 	Character::init();
 	return S_OK;
 }
@@ -69,7 +73,15 @@ void Vermont::update(void)
 	{
 		if (_frame / 5 > 0)
 		{
-			_state.reset();
+			_curHP -= _damage;
+			if (_curHP < 0)
+			{
+				setState(pow(2, DIE));
+			}
+			else
+			{
+				_state.reset();
+			}
 		}
 	}
 	else if (_state.test(SKILL))
@@ -81,6 +93,7 @@ void Vermont::update(void)
 			static float moveDist;
 			if(_frame == 1)
 			{ 
+				_curMP -= 50;
 				angle = atan2((float)_destTilePos.y * 30.f + 15.f - y, (float)_destTilePos.x * 40.f + 20.f - x);
 				dist = sqrt(pow(((float)_destTilePos.x * 40.f + 20.f - x) * 1.1f, 2) + pow(((float)_destTilePos.y * 30.f + 15.f - y) * 1.1f, 2));
 				if (SamePoint(_destTilePos, _tilePos))
@@ -135,6 +148,13 @@ void Vermont::update(void)
 		else if (_skillOrder.test(3))
 		{
 			
+		}
+	}
+	else if (_state.test(DIE))
+	{
+		if (255 - 255 / 30 * _frame < 0)
+		{
+			_isDie = true;
 		}
 	}
 }
@@ -268,6 +288,25 @@ void Vermont::render(HDC hdc, POINT position, POINT cameraPos)
 		else if (_skillOrder.test(3))
 		{
 			IMAGEMANAGER->findImage("VermontIdleDown")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 5, 0);
+		}
+	}
+	else if (_state.test(DIE))
+	{
+		if (_dir.test(LEFT))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedLeft")->alphaRender(hdc, position.x, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+		else if (_dir.test(RIGHT))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedRight")->alphaRender(hdc, position.x - 20, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+		else if (_dir.test(UP))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedUp")->alphaRender(hdc, position.x - 10, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+		else if (_dir.test(DOWN))
+		{
+			IMAGEMANAGER->findImage("VermontDamagedDown")->alphaRender(hdc, position.x - 5, position.y, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 		}
 	}
 }

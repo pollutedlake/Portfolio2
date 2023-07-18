@@ -776,8 +776,8 @@ void GImage::alphaFrameRenderEFX(HDC hdc, int destX, int destY, int currentFrame
 	{
 		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
 	}
-	this->initForAlphaBlend();
-	this->initForAlphaBlend2();
+	if(!_blendImage)this->initForAlphaBlend();
+	if (!_blendImage2)this->initForAlphaBlend2();
 	_blendFunc.SourceConstantAlpha = alpha;
 	//HBRUSH hBrush = CreateSolidBrush(RGB(8, 8, 16));
 	//FillRect(_blendImage2->hMemDC, &RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y), hBrush);

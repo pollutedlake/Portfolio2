@@ -10,6 +10,7 @@
 #define ATTACK	1
 #define DAMAGED	2
 #define SKILL	3
+#define DIE		4
 
 #define TURNMOVE	0
 #define TURNACTION	1
@@ -18,7 +19,7 @@ class Character : public Object
 {
 protected:
 	bitset<2> _turn;
-	bitset<4> _state;
+	bitset<5> _state;
 	bitset<4> _skillOrder;
 	bitset<20> _turnOrder;
 	POINT _destTilePos;
@@ -32,7 +33,13 @@ protected:
 	bool _doing;
 	int _damage;
 	bool _isAttack;
+	bool _isDie;
 	float x, y;
+
+	float _curHP;
+	float _maxHP;
+	float _maxMP;
+	float _curMP;
 
 public:
 	virtual HRESULT init(void);
@@ -64,12 +71,17 @@ public:
 	bool canAction() {return _turn.test(TURNACTION);}
 	//int getType() {return _type;}
 	bool isAttack() {return _isAttack;}
-	bool isSkill() {return _state[SKILL]; }
+	bool isSkill() { return _state[SKILL]; }
+	float getCurHP() { return _curHP; }
+	float getMaxHP() { return _maxHP; }
+	float getMaxMP() { return _maxMP; }
+	float getCurMP() { return _curMP; }
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
 	void endTurn() {_turn.reset();}
 	void move();
 	void setXY(int tileWidth, int tileHeight);
+	bool isDie();
 	virtual int getDamage();
 
 public:

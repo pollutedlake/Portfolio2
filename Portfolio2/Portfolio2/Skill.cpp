@@ -17,9 +17,17 @@ void Skill::update(void)
 	{
 		if (_frame == 1)
 		{
+			_startFrame = 0;
+		}
+		if (_frame * 10 > 255)
+		{
+			_startFrame++;
+		}
+		if (_startFrame == 1)
+		{
 			SOUNDMANAGER->playSoundFMOD("SkillCasting");
 		}
-		if ((_frame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
+		if ((_startFrame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
 		{
 			_order = _order << 1;
 			_frame = 0;
@@ -56,7 +64,7 @@ void Skill::update(void)
 		}
 		if ((_frame - 1) / 3 > 17)
 		{
-			_order = _order << 1;
+			/*_order = _order << 1;
 			_curChar->setSkillOrder(2);
 			_frame = 0;
 			for (auto it = _charList.begin(); it != _charList.end();)
@@ -72,7 +80,7 @@ void Skill::update(void)
 				{
 					++it;
 				}
-			}
+			}*/
 		}
 	}
 	else if (_order.test(2))
@@ -135,6 +143,7 @@ void Skill::update(void)
 					{
 						target->setDamage(100);
 						target->setState(4);
+						target->setDoing(true);
 						target = (*it);
 						_curChar->setDestTilePos((*it)->getTilePos());
 						_curChar->setSkillOrder(2);
@@ -166,6 +175,7 @@ void Skill::update(void)
 						if(_icePillars.size() > 0)
 						{
 							SOUNDMANAGER->playSoundFMOD("BreakIce");
+							_icePillars[0]._broken = true;
 						}
 					}
 				}
@@ -219,8 +229,11 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 {
 	if(_order.test(0))
 	{
-		IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10, 
-		position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2 % (IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX() +  1), 0, 200);
+		if (_startFrame > 0)
+		{
+			IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
+				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 128); //% (IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX() + 1), 0, 128);
+		}
 	}
 	else if (_order.test(1))
 	{
@@ -229,12 +242,34 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 			IMAGEMANAGER->findImage("VermontSkillEFX2")->alphaFrameRender(hdc, 
 			WINSIZE_X / 2 - (cameraPos.x - (_efxPos[i].first.x - IMAGEMANAGER->findImage("VermontSkillEFX2")->getFrameWidth() / 2)),
 			WINSIZE_Y / 2 - (cameraPos.y - (_efxPos[i].first.y - IMAGEMANAGER->findImage("VermontSkillEFX2")->getFrameHeight() / 2 - 30)), 
-			IMAGEMANAGER->findImage("VermontSkillEFX2")->getMaxFrameX() - i, 0, 20);
+			IMAGEMANAGER->findImage("VermontSkillEFX2")->getMaxFrameX() - i, 0, 30);
 		}
 		for (auto it = _icePillars.begin(); it != _icePillars.end(); ++it)
 		{
 			IMAGEMANAGER->findImage("VermontSkillEFX1")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it)._position.x) - 25,
 				WINSIZE_Y / 2 - (cameraPos.y - (*it)._position.y) - 85, (*it)._frame, 0, 150);
+		}
+		for (auto it = _charList.begin(); it != _charList.end(); ++it)
+		{
+			if ((*it)->getType() == 0)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					for (int j = 0; j <  2 * i + 1; j++)
+					{
+						IMAGEMANAGER->findImage("VermontSkillEFX3")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (((*it)->getTilePos().x - 2 + i) * 40 + 20)) - 30, WINSIZE_Y / 2 - (cameraPos.y - (((*it)->getTilePos().y - i + j) * 30 + 15)) - 30,
+							_frame, 0, 255);
+					}
+				}
+				for (int i = 3; i < 5; i++)
+				{
+					for (int j = 0; j < i % 4; i++)
+					{
+						IMAGEMANAGER->findImage("VermontSkillEFX3")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (((*it)->getTilePos().x - 2 + i) * 40 + 20)) - 30, WINSIZE_Y / 2 - (cameraPos.y - (((*it)->getTilePos().y - i + j) * 30 + 15)) - 30,
+							_frame, 0, 255);
+					}
+				}
+			}
 		}
 	}
 	else if (_order.test(2))
@@ -244,7 +279,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 			IMAGEMANAGER->findImage("VermontSkillEFX2")->alphaFrameRender(hdc,
 				WINSIZE_X / 2 - (cameraPos.x - (_efxPos[i].first.x - IMAGEMANAGER->findImage("VermontSkillEFX2")->getFrameWidth() / 2)),
 				WINSIZE_Y / 2 - (cameraPos.y - (_efxPos[i].first.y - IMAGEMANAGER->findImage("VermontSkillEFX2")->getFrameHeight() / 2 - 30)),
-				IMAGEMANAGER->findImage("VermontSkillEFX2")->getMaxFrameX() - i, 0, 20);
+				IMAGEMANAGER->findImage("VermontSkillEFX2")->getMaxFrameX() - i, 0, 30);
 		}
 		for (auto it = _icePillars.begin(); it != _icePillars.end(); ++it)
 		{
@@ -263,7 +298,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 			IMAGEMANAGER->findImage("VermontSkillEFX2")->alphaFrameRender(hdc,
 				WINSIZE_X / 2 - (cameraPos.x - (_efxPos[i].first.x - IMAGEMANAGER->findImage("VermontSkillEFX2")->getFrameWidth() / 2)),
 				WINSIZE_Y / 2 - (cameraPos.y - (_efxPos[i].first.y - IMAGEMANAGER->findImage("VermontSkillEFX2")->getFrameHeight() / 2 - 30)),
-				IMAGEMANAGER->findImage("VermontSkillEFX2")->getMaxFrameX() - i, 0, 20);
+				IMAGEMANAGER->findImage("VermontSkillEFX2")->getMaxFrameX() - i, 0, 30);
 		}
 		for (auto it = _icePillars.begin(); it != _icePillars.end(); ++it)
 		{

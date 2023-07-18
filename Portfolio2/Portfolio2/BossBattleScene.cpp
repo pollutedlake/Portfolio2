@@ -110,7 +110,7 @@ void BossBattleScene::update(void)
 	}
 	else if (_fade.test(0))
 	{
-		if ((_frame - _fadeStartFrame) * 2 > 80)
+		if ((_frame - _fadeStartFrame) * 10 > 255)
 		{
 			_fade = _fade << 1;
 		}
@@ -121,7 +121,7 @@ void BossBattleScene::update(void)
 	}
 	else if (_fade.test(2))
 	{
-		if ((_frame - _fadeStartFrame) * 2 > 80)
+		if ((_frame - _fadeStartFrame) * 10 > 255)
 		{
 			_fade.reset();
 		}
@@ -166,24 +166,32 @@ void BossBattleScene::render(void)
 	}
 	if (_fade.test(0))
 	{
-		IMAGEMANAGER->findImage("Blue")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 2 > 80 ? 80 : (_frame - _fadeStartFrame) * 2);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 255 ? 255 : (_frame - _fadeStartFrame) * 10);
 	}
 	if (_fade.test(1))
 	{
-		IMAGEMANAGER->findImage("Blue")->alphaRender(getMemDC(), 80);
+		//IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 255);
 	}
 	if (_fade.test(2))
 	{
-		IMAGEMANAGER->findImage("Blue")->alphaRender(getMemDC(), 80 - (_frame - _fadeStartFrame) * 2 < 0 ? 0 : 80 - (_frame - _fadeStartFrame) * 2);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 255 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 255 - (_frame - _fadeStartFrame) * 10);
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
-	//_tableImg->render(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - 1110), WINSIZE_Y / 2 - (_cameraPos.y - 1180), _tableImg->getWidth(), _tableImg->getHeight() * 1.5, 0, 0, _tableImg->getWidth(), _tableImg->getHeight());
+	char str[50];
 	if (_tileInfo[_cursorTile.y][_cursorTile.x] == ENEMY)
 	{
 		if(!_turnSystem->getCurChar()->isDoing())
 		{
-			POINT pt = { (_cursorTile.x + 1) * TileWidth + TileWidth / 2, (_cursorTile.y - 2) * TileHeight + TileHeight / 2 };
+			POINT pt = { (_cursorTile.x) * TileWidth, (_cursorTile.y - 2) * TileHeight + TileHeight / 2 };
+			wsprintf(str, "%d/%d", (int)_turnSystem->findCharacter(_cursorTile)->getCurHP(), (int)_turnSystem->findCharacter(_cursorTile)->getMaxHP());
+			FONTMANAGER->textOut(getMemDC(), _camera->worldToCamera(pt).x + 36, _camera->worldToCamera(pt).y, "가을체", 7, 500, str, strlen(str), RGB(255, 255, 255));
 			IMAGEMANAGER->findImage("EnemyMiniStatus")->frameRender(getMemDC(), _camera->worldToCamera(pt).x, _camera->worldToCamera(pt).y, (_frame - _showMiniStatusFrame) / 5, 0);
+			IMAGEMANAGER->findImage("HpBar")->render(getMemDC(), _camera->worldToCamera(pt).x + 32, _camera->worldToCamera(pt).y + 7, 27.f * _turnSystem->findCharacter(_cursorTile)->getCurHP() / _turnSystem->findCharacter(_cursorTile)->getMaxHP(), IMAGEMANAGER->findImage("HpBar")->getHeight() / 4,
+				0, 0, IMAGEMANAGER->findImage("HpBar")->getWidth(), IMAGEMANAGER->findImage("HpBar")->getHeight());
+			IMAGEMANAGER->findImage("MpBar")->render(getMemDC(), _camera->worldToCamera(pt).x + 32, _camera->worldToCamera(pt).y + 18, 27.f * _turnSystem->findCharacter(_cursorTile)->getCurMP() / _turnSystem->findCharacter(_cursorTile)->getMaxMP(), 4,
+				0, 0, IMAGEMANAGER->findImage("MpBar")->getWidth(), IMAGEMANAGER->findImage("MpBar")->getHeight());
+			wsprintf(str, "%d/%d", (int)_turnSystem->findCharacter(_cursorTile)->getCurMP(), (int)_turnSystem->findCharacter(_cursorTile)->getMaxMP());
+			FONTMANAGER->textOut(getMemDC(), _camera->worldToCamera(pt).x + 36, _camera->worldToCamera(pt).y + 12, "가을체", 7, 500, str, strlen(str), RGB(255, 255, 255));
 		}
 		IMAGEMANAGER->findImage("AttackMouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	}
@@ -191,8 +199,16 @@ void BossBattleScene::render(void)
 	{
 		if (!_turnSystem->getCurChar()->isDoing())
 		{
-			POINT pt = { (_cursorTile.x + 1) * TileWidth + TileWidth / 2, (_cursorTile.y - 2) * TileHeight + TileHeight / 2 };
+			POINT pt = { (_cursorTile.x) * TileWidth, (_cursorTile.y - 2) * TileHeight + TileHeight / 2 };
+			wsprintf(str, "%d/%d", (int)_turnSystem->findCharacter(_cursorTile)->getCurHP(), (int)_turnSystem->findCharacter(_cursorTile)->getMaxHP());
+			FONTMANAGER->textOut(getMemDC(), _camera->worldToCamera(pt).x + 36, _camera->worldToCamera(pt).y, "가을체", 7, 500, str, strlen(str), RGB(255, 255, 255));
 			IMAGEMANAGER->findImage("PlayerMiniStatus")->frameRender(getMemDC(), _camera->worldToCamera(pt).x, _camera->worldToCamera(pt).y, (_frame - _showMiniStatusFrame) / 5, 0);
+			IMAGEMANAGER->findImage("HpBar")->render(getMemDC(), _camera->worldToCamera(pt).x + 32, _camera->worldToCamera(pt).y + 7, 27.f * _turnSystem->findCharacter(_cursorTile)->getCurHP() / _turnSystem->findCharacter(_cursorTile)->getMaxHP(), 4,
+				0, 0, IMAGEMANAGER->findImage("HpBar")->getWidth(), IMAGEMANAGER->findImage("HpBar")->getHeight());
+			IMAGEMANAGER->findImage("MpBar")->render(getMemDC(), _camera->worldToCamera(pt).x + 32, _camera->worldToCamera(pt).y + 18, 27.f * _turnSystem->findCharacter(_cursorTile)->getCurMP() / _turnSystem->findCharacter(_cursorTile)->getMaxMP(), 4,
+				0, 0, IMAGEMANAGER->findImage("MpBar")->getWidth(), IMAGEMANAGER->findImage("MpBar")->getHeight());
+			wsprintf(str, "%d/%d", (int)_turnSystem->findCharacter(_cursorTile)->getCurMP(), (int)_turnSystem->findCharacter(_cursorTile)->getMaxMP());
+			FONTMANAGER->textOut(getMemDC(), _camera->worldToCamera(pt).x + 36, _camera->worldToCamera(pt).y + 12, "가을체", 7, 500, str, strlen(str), RGB(255, 255, 255));
 		}
 	}
 	if(_tileInfo[_cursorTile.y][_cursorTile.x] != ENEMY)

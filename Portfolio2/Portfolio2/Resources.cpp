@@ -26,6 +26,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Vermont", "Resources/Images/UI/Vermont.bmp", 260, 480, true, RGB(0, 0, 4));
 	IMAGEMANAGER->addImage("Saladin", "Resources/Images/UI/Saladin.bmp", 400, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Sherazade", "Resources/Images/UI/Sherazade.bmp", 424, 480, true, RGB(255, 0, 255 ));
+	IMAGEMANAGER->addImage("HpBar", "Resources/Images/UI/HpBar.bmp", 2, 12);
+	IMAGEMANAGER->addImage("MpBar", "Resources/Images/UI/MpBar.bmp", 2, 12);
 	IMAGEMANAGER->addFrameImage("ForeheadKiss", "Resources/Images/BackGrounds/EndingScene/ForeheadKiss.bmp", 432, 79, 6, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("VermontEnding", "Resources/Images/BackGrounds/EndingScene/VermontEnding.bmp", 130, 78, 2, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinEnding", "Resources/Images/BackGrounds/EndingScene/SaladinEnding.bmp", 1208, 101, 8, 1, true, RGB(168, 208, 168));
@@ -117,11 +119,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("VermontSkillDown", "Resources/Images/Characters/Vermont/VermontSkillDown.bmp", 32, 122, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontSkillLeft", "Resources/Images/Characters/Vermont/VermontSkillLeft.bmp", 117, 63, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontSkillRight", "Resources/Images/Characters/Vermont/VermontSkillRight.bmp", 117, 64, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("BattleEnd", "Resources/Images/UI/BattleEnd.bmp", WINSIZE_X, 90, true, RGB(0, 4, 4));
+	//IMAGEMANAGER->addImage("BattleEnd", "Resources/Images/UI/BattleEnd.bmp", 142, 90, true, RGB(0, 4, 4));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUpEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackUpEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDownEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackDownEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX1", "Resources/Images/Effects/SkillEffect/VermontSkillEFX1.bmp", 3069, 126, 31, 1, true, RGB(0, 92, 0));
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX2", "Resources/Images/Effects/SkillEffect/VermontSkillEFX2.bmp", 2755, 144, 19, 1, true, RGB(4, 176, 236));
+	IMAGEMANAGER->addFrameImage("VermontSkillEFX3", "Resources/Images/Effects/SkillEffect/VermontSkillEFX3.bmp", 1768, 65, 26, 1, true, RGB(192, 196, 244));
 	IMAGEMANAGER->addFrameImage("SkillCasting", "Resources/Images/Effects/SkillEffect/SkillCasting.bmp", 6325, 192, 25, 1, true, RGB(80, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));
@@ -182,6 +187,7 @@ HRESULT Resources::init(void)
 	//SOUNDMANAGER->addSoundFMOD("SaladinAttack", "Resources/Sounds/SoundEffect/SaladinAttack.wav");
 	//SOUNDMANAGER->addSoundFMOD("VermontAttack", "Resources/Sounds/SoundEffect/VermontAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("BossBattle", "Resources/Sounds/BossBattle/BossBattle.mp3", true);
+	SOUNDMANAGER->addSoundFMOD("StageClear", "Resources/Sounds/BossBattle/StageClear.mp3");
 	SOUNDMANAGER->addSoundFMOD("Conspiracy2", "Resources/Sounds/StoryScene/Conspiracy2.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("BeforeLastBattle", "Resources/Sounds/StoryScene/BeforeLastBattle.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("SherazadeDead", "Resources/Sounds/StoryScene/SherazadeDead.mp3");

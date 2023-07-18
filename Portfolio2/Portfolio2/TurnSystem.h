@@ -27,6 +27,8 @@ private:
 	RECT _actionButtons[4];
 	vector<POINT> _attackTiles;
 	int _frame;
+	bool _isClear;
+	bool _isFail;
 	Skill* _skill;
 
 public:
@@ -42,6 +44,7 @@ public:
 	void nextTurn();
 	void sortObjectList();
 	Character* findCharacter(POINT cursorPoint);
+	bool checkAllDoingNot();
 
 	TurnSystem() {}
 	~TurnSystem() {}
