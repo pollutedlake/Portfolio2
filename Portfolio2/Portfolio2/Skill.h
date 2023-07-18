@@ -21,6 +21,7 @@ private:
 	vector<pair<pair<float, float>, float>> _dust1Pos;
 	vector<pair<pair<float, float>, float>> _dust2;
 	vector<IcePillar> _icePillars;
+	int _crackedEarth[4][12];
 
 public:
 	HRESULT init(void);

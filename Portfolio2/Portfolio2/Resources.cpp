@@ -130,8 +130,16 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX4", "Resources/Images/Effects/SkillEffect/VermontSkillEFX4.bmp", 408, 32, 12, 1, true, RGB(232, 224, 176));
 	IMAGEMANAGER->addFrameImage("VermontSkillEFX5", "Resources/Images/Effects/SkillEffect/VermontSkillEFX5.bmp", 480, 40, 12, 1, true, RGB(168, 168, 172));
 	IMAGEMANAGER->addFrameImage("SkillCasting", "Resources/Images/Effects/SkillEffect/SkillCasting.bmp", 6325, 192, 25, 1, true, RGB(80, 0, 0));
+	IMAGEMANAGER->addFrameImage("Volcano", "Resources/Images/Effects/SkillEffect/Saladin/Volcano.bmp", 696, 45, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("CrackedEarth1RU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth1RU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("CrackedEarth2RU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth2RU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("CrackedEarth3RU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth3RU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("CrackedEarth1LU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth1LU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("CrackedEarth2LU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth2LU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("CrackedEarth3LU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth3LU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SaladinSkill", "Resources/Images/Characters/Saladin/SaladinSkill.bmp", 1100, 101, 11, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(4, 0, 4));
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
@@ -142,6 +150,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("BreakIce", "Resources/Sounds/SoundEffect/BreakIce.wav");
 	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/VermontSkillAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("SkillCasting", "Resources/Sounds/SoundEffect/SkillCasting.wav");
+	SOUNDMANAGER->addSoundFMOD("Blizzard","Resources/Sounds/SoundEffect/Blizzard.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");

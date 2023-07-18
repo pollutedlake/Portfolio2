@@ -103,7 +103,7 @@ void BossBattleScene::update(void)
 		_debug = !_debug;
 	}
 
-	if (_fade.none() && _vermont->isSkill())
+	if (_fade.none() && (_vermont->isSkill() || _saladin->isSkill()))
 	{
 		_fade.set(0);
 		_fadeStartFrame = _frame;
@@ -115,7 +115,7 @@ void BossBattleScene::update(void)
 			_fade = _fade << 1;
 		}
 	}
-	else if (_fade.test(1) && !_vermont->isSkill())
+	else if (_fade.test(1) && (!_vermont->isSkill() && !_saladin->isSkill()))
 	{
 		_fade = _fade << 1;
 	}
@@ -125,6 +125,11 @@ void BossBattleScene::update(void)
 		{
 			_fade.reset();
 		}
+	}
+
+	if (_saladin->isSkill() || _vermont->isSkill())
+	{
+		_camera->setPosition({(LONG)(_turnSystem->getCurChar()->getX()), (LONG)(_turnSystem->getCurChar()->getY())});
 	}
 	
 

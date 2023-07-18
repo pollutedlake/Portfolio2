@@ -114,6 +114,10 @@ void Saladin::update(void)
 			}
 		}
 	}
+	else if (_state.test(SKILL))
+	{
+
+	}
 }
 
 void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
@@ -246,6 +250,17 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 		else if (_dir.test(DOWN))
 		{
 			IMAGEMANAGER->findImage("SaladinDamagedDown")->alphaRender(hdc, position.x - 5, position.y - 10, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+		}
+	}
+	else if (_state.test(SKILL))
+	{
+		if (_skillOrder.test(0))
+		{
+			IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 0, 0);
+		}
+		else if (_skillOrder.test(1))
+		{
+			IMAGEMANAGER->findImage("SaladinSkill")->frameRender(hdc, position.x - 29, position.y - 31, _frame / 4, 0);
 		}
 	}
 }

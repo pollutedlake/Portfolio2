@@ -243,6 +243,17 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 				{
 					_actionChoice = false;
 				}
+				if (KEYMANAGER->isOnceKeyDown('A'))
+				{
+					_player = (Saladin*)_curChar;
+					if (_player->getCurMP() == _player->getMaxMP())
+					{
+						_player->setState(8);
+						_player->setXY(40, 30);
+						_player->setDoing(true);
+						_skill->start(_charList, _curChar);
+					}
+				}
 			}
 			else if (_curChar->getType() == 1)
 			{
