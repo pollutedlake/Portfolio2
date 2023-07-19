@@ -54,6 +54,20 @@ HRESULT BossBattleScene::init(void)
 	_vermont->setTurnOder(1);
 	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = ENEMY;
 
+	Character* _vermont2 = new Vermont();
+	_vermont2->init();
+	_vermont2->setDir(RIGHT);
+	_vermont2->setTilePos({ 25, 38 });
+	_vermont2->setTurnOder(6);
+	_tileInfo[_vermont2->getTilePos().y][_vermont2->getTilePos().x] = ENEMY;
+
+	Character* _vermont3 = new Vermont();
+	_vermont3->init();
+	_vermont3->setDir(DOWN);
+	_vermont3->setTilePos({ 33, 35 });
+	_vermont3->setTurnOder(7);
+	_tileInfo[_vermont3->getTilePos().y][_vermont3->getTilePos().x] = ENEMY;
+
 	_turnSystem = new TurnSystem();
 	_turnSystem->addCharacter(_vermont);
 	_turnSystem->addCharacter(_saladin);
@@ -61,7 +75,11 @@ HRESULT BossBattleScene::init(void)
 	_turnSystem->addCharacter(_saladin3);
 	_turnSystem->addCharacter(_saladin4);
 	_turnSystem->addCharacter(_saladin5);
+	_turnSystem->addCharacter(_vermont2);
+	_turnSystem->addCharacter(_vermont3);
 	_turnSystem->addObject(_vermont);
+	_turnSystem->addObject(_vermont2);
+	_turnSystem->addObject(_vermont3);
 	_turnSystem->addObject(_saladin);
 	_turnSystem->addObject(_saladin2);
 	_turnSystem->addObject(_saladin3);
