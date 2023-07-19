@@ -913,6 +913,10 @@ void GImage::frameRender(HDC hdc, int destX, int destY, int destWidth, int destH
 	{
 		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
 	}
+	if (currentFrameX < 0)
+	{
+		_imageInfo->currentFrameX = 0;
+	}
 	if (_isTrans)
 	{
 		// GdiTransparentBlt() : 비트맵을 불러올 때 특정 색상을 제외하고 복사한다.
