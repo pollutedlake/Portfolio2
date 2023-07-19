@@ -23,6 +23,8 @@ private:
 	vector<pair<pair<float, float>, float>> _dust2;
 	vector<IcePillar> _icePillars;
 	pair<int, bool> _crackedEarth[4][12];
+	POINT _stonePos[4][12][5];
+	vector<pair<int, int>> _volcano;
 
 public:
 	HRESULT init(void);

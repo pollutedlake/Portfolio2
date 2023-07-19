@@ -150,8 +150,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Magma2RU", "Resources/Images/Effects/SkillEffect/Saladin/Magma2RU.bmp", 480, 226, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("Magma3RU", "Resources/Images/Effects/SkillEffect/Saladin/Magma3RU.bmp", 492, 93, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("Explosion", "Resources/Images/Effects/SkillEffect/Saladin/Explosion.bmp", 3432, 130, 24, 1, true, RGB(4, 72, 4));
+	IMAGEMANAGER->addFrameImage("Explosion2", "Resources/Images/Effects/SkillEffect/Saladin/Explosion2.bmp", 872, 131, 8, 1, true, RGB(252, 252, 236));
+	IMAGEMANAGER->addFrameImage("Stone1", "Resources/Images/Effects/SkillEffect/Saladin/Stone1.bmp", 210, 14, 15, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Stone2", "Resources/Images/Effects/SkillEffect/Saladin/Stone2.bmp", 465, 30, 15, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinSkill", "Resources/Images/Characters/Saladin/SaladinSkill.bmp", 1100, 101, 11, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(4, 0, 4));
 
@@ -164,6 +167,8 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/VermontSkillAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("SkillCasting", "Resources/Sounds/SoundEffect/SkillCasting.wav");
 	SOUNDMANAGER->addSoundFMOD("Blizzard","Resources/Sounds/SoundEffect/Blizzard.wav");
+	SOUNDMANAGER->addSoundFMOD("Magma","Resources/Sounds/SoundEffect/Magma.wav");
+	SOUNDMANAGER->addSoundFMOD("CrackedEarth","Resources/Sounds/SoundEffect/CrackedEarth.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");

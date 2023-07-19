@@ -262,6 +262,10 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			IMAGEMANAGER->findImage("SaladinSkill")->frameRender(hdc, position.x - 29, position.y - 31, _frame / 4, 0);
 		}
+		else if (_skillOrder.test(2))
+		{
+			IMAGEMANAGER->findImage("SaladinIdleDown")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 5) % 4, 0);
+		}
 	}
 }
 void Saladin::searchMovable(int map[][60], int rowN, int colN)
