@@ -17,6 +17,7 @@ private:
 	Character* _curChar;
 	vector<Character*> _charList;
 	bitset<4> _order;
+	bitset<20> _orderOrder;
 	vector<pair<POINT, POINT>> _efxPos;
 	vector<pair<pair<float, float>, float>> _dust1Pos;
 	vector<pair<pair<float, float>, float>> _dust2;
