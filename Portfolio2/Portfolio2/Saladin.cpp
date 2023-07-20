@@ -116,12 +116,19 @@ void Saladin::update(void)
 	}
 	else if (_state.test(SKILL))
 	{
-
+		if (_skillOrder.test(1))
+		{
+			if (_frame == 43)
+			{
+				SOUNDMANAGER->playSoundFMOD("SaladinSkillStart");
+			}
+		}
 	}
 }
 
 void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 {
+	//IMAGEMANAGER->findImage("Explosion2")->frameRender(hdc, position.x - 35, position.y - 50, (_frame / 5) % IMAGEMANAGER->findImage("Explosion2")->getMaxFrameX(), 0);
 	if (_state.none())
 	{
 		if (_dir.test(LEFT))

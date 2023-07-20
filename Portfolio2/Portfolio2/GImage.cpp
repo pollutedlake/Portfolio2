@@ -664,7 +664,18 @@ void GImage::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, 
 	}
 
 	if (!_blendImage) this->initForAlphaBlend();
-	_blendFunc.SourceConstantAlpha = alpha;
+	if (alpha < 0)
+	{
+		_blendFunc.SourceConstantAlpha = 0;
+	}
+	else if (alpha > 255)
+	{
+		_blendFunc.SourceConstantAlpha = 255;
+	}
+	else
+	{
+		_blendFunc.SourceConstantAlpha = alpha;
+	}
 	if (_isTrans)
 	{
 		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, hdc, destX, destY, SRCCOPY);

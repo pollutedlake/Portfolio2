@@ -41,6 +41,34 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 			++it;
 		}
 	}
+	for (auto it = _charList.begin(); it != _charList.end();)
+	{
+		if ((*it)->getType() == 1)
+		{
+			break;
+		}
+		++it;
+		if (it == _charList.end())
+		{
+			_isClear = true;
+			_frame = 0;
+			return;
+		}
+	}
+	for (auto it = _charList.begin(); it != _charList.end();)
+	{
+		if ((*it)->getType() == 0)
+		{
+			break;
+		}
+		++it;
+		if (it == _charList.end())
+		{
+			_isFail = true;
+			_frame = 0;
+			return;
+		}
+	}
 	if (_isClear || _isFail)
 	{
 		if (_frame == 1)
@@ -56,34 +84,6 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 	}
 	else
 	{
-		for (auto it = _charList.begin(); it != _charList.end();)
-		{
-			if ((*it)->getType() == 1)
-			{
-				break;
-			}
-			++it;
-			if (it == _charList.end())
-			{
-				_isClear = true;
-				_frame = 0;
-				return;
-			}
-		}
-		for (auto it = _charList.begin(); it != _charList.end();)
-		{
-			if ((*it)->getType() == 0)
-			{
-				break;
-			}
-			++it;
-			if (it == _charList.end())
-			{
-				_isFail = true;
-				_frame = 0;
-				return;
-			}
-		}
 		// 현재 캐릭터가 행동중이 아닐 때
 		if (!_curChar->isDoing())
 		{

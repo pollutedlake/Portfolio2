@@ -137,6 +137,12 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("CrackedEarth1LU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth1LU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("CrackedEarth2LU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth2LU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("CrackedEarth3LU", "Resources/Images/Effects/SkillEffect/Saladin/CrackedEarth3LU.bmp", 480, 32, 12, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("RestoreEarth1RU", "Resources/Images/Effects/SkillEffect/Saladin/RestoreEarth1RU.bmp", 320, 32, 8, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("RestoreEarth2RU", "Resources/Images/Effects/SkillEffect/Saladin/RestoreEarth2RU.bmp", 320, 32, 8, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("RestoreEarth3RU", "Resources/Images/Effects/SkillEffect/Saladin/RestoreEarth3RU.bmp", 320, 32, 8, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("RestoreEarth1LU", "Resources/Images/Effects/SkillEffect/Saladin/RestoreEarth1LU.bmp", 320, 32, 8, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("RestoreEarth2LU", "Resources/Images/Effects/SkillEffect/Saladin/RestoreEarth2LU.bmp", 320, 32, 8, 1, true, RGB(8, 88, 8));
+	IMAGEMANAGER->addFrameImage("RestoreEarth3LU", "Resources/Images/Effects/SkillEffect/Saladin/RestoreEarth3LU.bmp", 320, 32, 8, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("Eruption1RU", "Resources/Images/Effects/SkillEffect/Saladin/Eruption1RU.bmp", 1280, 252, 32, 1, true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("Eruption2RU", "Resources/Images/Effects/SkillEffect/Saladin/Eruption2RU.bmp", 1280, 252, 32, 1, true, RGB(252, 236, 212));
 	IMAGEMANAGER->addFrameImage("Eruption3RU", "Resources/Images/Effects/SkillEffect/Saladin/Eruption3RU.bmp", 1200, 252, 30, 1, true, RGB(252, 236, 212));
@@ -150,9 +156,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Magma2RU", "Resources/Images/Effects/SkillEffect/Saladin/Magma2RU.bmp", 480, 226, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("Magma3RU", "Resources/Images/Effects/SkillEffect/Saladin/Magma3RU.bmp", 492, 93, 12, 1, true, RGB(8, 88, 8));
 	IMAGEMANAGER->addFrameImage("Explosion", "Resources/Images/Effects/SkillEffect/Saladin/Explosion.bmp", 3432, 130, 24, 1, true, RGB(4, 72, 4));
-	IMAGEMANAGER->addFrameImage("Explosion2", "Resources/Images/Effects/SkillEffect/Saladin/Explosion2.bmp", 872, 131, 8, 1, true, RGB(252, 252, 236));
+	IMAGEMANAGER->addFrameImage("Explosion2", "Resources/Images/Effects/SkillEffect/Saladin/Explosion2.bmp", 872, 131, 8, 1, true, RGB(4, 108, 0));
+	IMAGEMANAGER->addFrameImage("Explosion3", "Resources/Images/Effects/SkillEffect/Saladin/Explosion3.bmp", 6804, 252, 28, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Stone1", "Resources/Images/Effects/SkillEffect/Saladin/Stone1.bmp", 210, 14, 15, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Stone2", "Resources/Images/Effects/SkillEffect/Saladin/Stone2.bmp", 465, 30, 15, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("ShockWave", "Resources/Images/Effects/SkillEffect/Saladin/ShockWave.bmp", 6368, 157, 32, 1, true, RGB(4, 108, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinSkill", "Resources/Images/Characters/Saladin/SaladinSkill.bmp", 1100, 101, 11, 1, true, RGB(168, 208, 168));
@@ -169,6 +177,8 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Blizzard","Resources/Sounds/SoundEffect/Blizzard.wav");
 	SOUNDMANAGER->addSoundFMOD("Magma","Resources/Sounds/SoundEffect/Magma.wav");
 	SOUNDMANAGER->addSoundFMOD("CrackedEarth","Resources/Sounds/SoundEffect/CrackedEarth.wav");
+	SOUNDMANAGER->addSoundFMOD("Explosion","Resources/Sounds/SoundEffect/Explosion.wav");
+	SOUNDMANAGER->addSoundFMOD("SaladinSkillStart","Resources/Sounds/SoundEffect/SaladinSkillStart.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");
@@ -210,7 +220,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Dialog36", "Resources/Sounds/StoryScene/36.mp3");
 	SOUNDMANAGER->addSoundFMOD("Fight", "Resources/Sounds/StoryScene/Fight.wav");
 	//SOUNDMANAGER->addWaveFileWithKey("Fight", "Resources/Sounds/StoryScene/0005.wav");
-	SOUNDMANAGER->addMp3FileWithKey("Fight", "Resources/Sounds/StoryScene/test.mp3");
+	//SOUNDMANAGER->addMp3FileWithKey("Fight", "Resources/Sounds/StoryScene/test.mp3");
 	SOUNDMANAGER->addSoundFMOD("Scream1", "Resources/Sounds/StoryScene/Scream1.wav");
 	SOUNDMANAGER->addSoundFMOD("Scream2", "Resources/Sounds/StoryScene/Scream2.wav");
 	//SOUNDMANAGER->addSoundFMOD("SaladinAttack", "Resources/Sounds/SoundEffect/SaladinAttack.wav");

@@ -129,9 +129,9 @@ void Vermont::update(void)
 					setDir(RIGHT);
 				}
 			}
-			x += 10.f * cos(angle);
-			y += 10.f * sin(angle);
-			moveDist += 10.f;
+			x += 15.f * cos(angle);
+			y += 15.f * sin(angle);
+			moveDist += 15.f;
 			if (moveDist >= dist)
 			{
 				if (SamePoint(_destTilePos, _tilePos))

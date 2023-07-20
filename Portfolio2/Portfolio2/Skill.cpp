@@ -410,6 +410,10 @@ void Skill::update(void)
 			}
 			else if(_orderOrder.test(1))
 			{
+				if (_frame == 1)
+				{
+					((Saladin*)_curChar)->setCameraShake(true);
+				}
 				if ((_frame == 1 || _frame == 25) || _frame == 50)
 				{
 					SOUNDMANAGER->playSoundFMOD("Magma");
@@ -458,12 +462,65 @@ void Skill::update(void)
 					_order = _order << 1;
 					_curChar->setSkillOrder(2);
 					_frame = 0;
+					((Saladin*)_curChar)->setCameraShake(false);
 				}
 			}
 		}
 		else if (_order.test(2))
 		{
-			
+			if (_frame == 1)//3 * 2 - 8 + (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5)
+			{
+				for (auto it = _charList.begin(); it != _charList.end(); ++it)
+				{
+					if ((*it)->getType() == 1)
+					{
+						vector<pair<int, int>> stones;
+						for (int i = 0; i < 20; i++)
+						{
+							pair<int, int> stone;
+							stone.first = (*it)->getTilePos().x * 40 + 20 + 40 - RND->getInt(80);
+							stone.second = (*it)->getTilePos().y * 30 + 15 - 100 - RND->getInt(100);
+							stones.push_back(stone);
+						}
+						_bigStones.push_back(stones);
+					}
+				}
+			}
+			if (_frame == (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() - 7) * 5)
+			{
+				SOUNDMANAGER->playSoundFMOD("Explosion");
+			}
+			if ((_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 5 == 3)
+			{
+				((Saladin*)_curChar)->setCameraShake(true);
+				for (auto it = _charList.begin(); it != _charList.end(); ++it)
+				{
+					if ((*it)->getType() == 1)
+					{
+						(*it)->setDamage(1000);
+						(*it)->setState(4);
+					}
+				}
+			}
+			if ((_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 5 > IMAGEMANAGER->findImage("Explosion3")->getMaxFrameX())
+			{
+				_order = _order << 1;
+				_frame = 0;
+			}
+		}
+		else if (_order.test(3))
+		{
+			if ((_frame - 45) / 5 - 4 > 4)
+			{
+				if (IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 == -1)
+				{
+					((Saladin*)_curChar)->setCameraShake(false);
+				}
+			}
+			if (IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX() - (_frame - 90) / 5 + 11 < 0)
+			{
+				//_curChar->setDoing(false);
+			}
 		}
 	}
 }
@@ -574,6 +631,8 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 						tempFrame = 0;
 					}
 					tempFrame++;
+					IMAGEMANAGER->findImage("ShockWave")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x * tileWidth + tileWidth / 2 - IMAGEMANAGER->findImage("ShockWave")->getFrameWidth() / 2)),
+						WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y * tileHeight + tileHeight / 2 - IMAGEMANAGER->findImage("ShockWave")->getFrameHeight() / 2)), tempFrame / 5, 0, 255 - tempFrame * 3);
 					for (int i = 0; i < 4; i++)
 					{
 						for (int j = 0; j < 12; j++)
@@ -835,7 +894,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 							if((_frame - (20 + (i + 1) * 10)) / 3 < IMAGEMANAGER->findImage("Explosion2")->getMaxFrameX() + 1)
 							{
 								IMAGEMANAGER->findImage("Explosion2")->frameRender(hdc,
-									WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth) - 60, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight) - IMAGEMANAGER->findImage("Explosion2")->getFrameHeight() + 60,
+									WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth) - 35, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight) - 50,
 									IMAGEMANAGER->findImage("Explosion2")->getFrameWidth(), IMAGEMANAGER->findImage("Explosion2")->getFrameHeight(), (_frame - (20 + (i + 1) * 10)) / 3, 0);
 							}
 						}
@@ -843,8 +902,9 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 						{
 							for(int j = 0; j < 5; j++)
 							{
-								IMAGEMANAGER->findImage("Stone1")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth - _stonePos[1][i][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight - _stonePos[1][i][j].y + 60) - (_frame - (20 + (i + 1) * 10)) * 2,
-									IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), (_frame / 5 - i) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
+								IMAGEMANAGER->findImage("Stone1")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth - _stonePos[1][i][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight - _stonePos[1][i][j].y + 60) - (_frame - (20 + (i + 1) * 10)) * 2,
+									IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), ((_frame / 5 - i - j) * 19 % 17) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0, 
+									255 - 0);
 							}
 						}
 					}
@@ -905,7 +965,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								if ((_frame - (20 + (i + 5) * 10)) / 3 < IMAGEMANAGER->findImage("Explosion2")->getMaxFrameX() + 1)
 								{
 									IMAGEMANAGER->findImage("Explosion2")->frameRender(hdc,
-										WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth) - 60, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight) - IMAGEMANAGER->findImage("Explosion2")->getFrameHeight() + 60,
+										WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth) - 35, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight) - 50,
 										IMAGEMANAGER->findImage("Explosion2")->getFrameWidth(), IMAGEMANAGER->findImage("Explosion2")->getFrameHeight(), (_frame - (20 + (i + 5) * 10)) / 3, 0);
 								}
 							}
@@ -914,7 +974,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								for (int j = 0; j < 5; j++)
 								{
 									IMAGEMANAGER->findImage("Stone1")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth - _stonePos[2][i][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight - _stonePos[2][i][j].y + 60) - (_frame - (20 + (i + 5) * 10)) * 2,
-										IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), (_frame / 5 - i) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
+										IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), ((_frame / 5 - i - j) * 19 % 17) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
 								}
 							}
 						}
@@ -1012,7 +1072,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								if (_frame - 15 - ((i + 9) * 10) < IMAGEMANAGER->findImage("Explosion2")->getMaxFrameX() + 1)
 								{
 									IMAGEMANAGER->findImage("Explosion2")->frameRender(hdc,
-										WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth) - 60, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight) - IMAGEMANAGER->findImage("Explosion2")->getFrameHeight() + 60,
+										WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth) - 35, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight) - 50,
 										IMAGEMANAGER->findImage("Explosion2")->getFrameWidth(), IMAGEMANAGER->findImage("Explosion2")->getFrameHeight(), _frame - 15 - ((i + 9) * 10), 0);
 								}
 							}
@@ -1039,9 +1099,9 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								for (int j = 0; j < 5; j++)
 								{
 									IMAGEMANAGER->findImage("Stone1")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth - _stonePos[3][i][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight - _stonePos[3][i][j].y + 60) - (_frame - 15 - (i + 9) * 10) * 2,
-										IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), (_frame / 5 - i) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
+										IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), ((_frame / 5 - i - j) * 19 % 17) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
 									IMAGEMANAGER->findImage("Stone1")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth - _stonePos[0][i][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight - _stonePos[0][i][j].y + 60) - (_frame - 15 - (i + 9) * 10) * 2,
-										IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), (_frame / 5 - i) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
+										IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), ((_frame / 5 - i - j) * 19 % 17) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0);
 								}
 							}
 						}
@@ -1140,7 +1200,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 							if(_frame / 5 < IMAGEMANAGER->findImage("Magma1RU")->getMaxFrameX() + 1)
 							{
 								IMAGEMANAGER->findImage("Magma1RU")->alphaFrameRender(hdc,
-									WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth) + 1, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma1RU")->getFrameHeight() + 34,
+									WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth) + 1, WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma1RU")->getFrameHeight() + 34,
 									tileWidth, IMAGEMANAGER->findImage("Magma1RU")->getFrameHeight(), _frame / 5, 0, 128);
 							}
 						}
@@ -1149,7 +1209,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 							if (_frame / 5 < IMAGEMANAGER->findImage("Magma2RU")->getMaxFrameX() + 1)
 							{
 								IMAGEMANAGER->findImage("Magma2RU")->alphaFrameRender(hdc,
-									WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth) + 1, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma2RU")->getFrameHeight() + 63,
+									WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth) + 1, WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma2RU")->getFrameHeight() + 63,
 									tileWidth, IMAGEMANAGER->findImage("Magma2RU")->getFrameHeight(), _frame / 5, 0, 128);
 							}
 						}
@@ -1158,7 +1218,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 							if (_frame / 5 < IMAGEMANAGER->findImage("Magma3RU")->getMaxFrameX() + 1)
 							{
 								IMAGEMANAGER->findImage("Magma3RU")->alphaFrameRender(hdc,
-									WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth) + 1, WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma3RU")->getFrameHeight() + 31,
+									WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth) + 1, WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma3RU")->getFrameHeight() + 31,
 									tileWidth, IMAGEMANAGER->findImage("Magma3RU")->getFrameHeight(), _frame / 5, 0, 128);
 							}
 						}
@@ -1169,7 +1229,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								if (IMAGEMANAGER->findImage("Magma1LU")->getMaxFrameX() + 1 - (_frame - 20) / 5 > -1)
 								{
 									IMAGEMANAGER->findImage("Magma1LU")->alphaFrameRender(hdc,
-										WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma1LU")->getFrameHeight() + 34,
+										WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma1LU")->getFrameHeight() + 34,
 										tileWidth, IMAGEMANAGER->findImage("Magma1LU")->getFrameHeight(), IMAGEMANAGER->findImage("Magma1LU")->getMaxFrameX() + 1 - (_frame - 20) / 5, 0, 128);
 								}
 							}
@@ -1178,7 +1238,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								if (IMAGEMANAGER->findImage("Magma2LU")->getMaxFrameX() + 1 - (_frame - 20) / 5 > -1)
 								{
 									IMAGEMANAGER->findImage("Magma2LU")->alphaFrameRender(hdc,
-										WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma2LU")->getFrameHeight() + 64,
+										WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma2LU")->getFrameHeight() + 64,
 										tileWidth, IMAGEMANAGER->findImage("Magma2LU")->getFrameHeight(), IMAGEMANAGER->findImage("Magma2LU")->getMaxFrameX() + 1 - (_frame - 20) / 5, 0, 128);
 								}
 							}
@@ -1187,7 +1247,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								if (IMAGEMANAGER->findImage("Magma3LU")->getMaxFrameX() + 1 - (_frame - 20) / 5 > -1)
 								{
 									IMAGEMANAGER->findImage("Magma3LU")->alphaFrameRender(hdc,
-										WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma3LU")->getFrameHeight() + 31,
+										WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y) * tileHeight) - IMAGEMANAGER->findImage("Magma3LU")->getFrameHeight() + 31,
 										tileWidth, IMAGEMANAGER->findImage("Magma3LU")->getFrameHeight(), IMAGEMANAGER->findImage("Magma3LU")->getMaxFrameX() + 1 - (_frame - 20) / 5, 0, 128);
 								}
 							}
@@ -1333,14 +1393,172 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 								tileWidth, IMAGEMANAGER->findImage("Eruption3RU")->getHeight(), 8 + (_frame ) / 5, 0, 200);
 						}
 					}
-					IMAGEMANAGER->findImage("Volcano")->frameRender(hdc,
-						WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x * tileWidth + tileWidth / 2)) - IMAGEMANAGER->findImage("Volcano")->getFrameWidth() / 2,
-						WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y * tileHeight + tileHeight / 2)) - IMAGEMANAGER->findImage("Volcano")->getFrameHeight() / 2,
-						(_frame / 10) % 4, 0);
+					if ((_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 4 > 2)
+					{
+						for (auto it = _bigStones.begin(); it != _bigStones.end(); ++it)
+						{
+							for (int i = 0; i < 20; i++)
+							{
+								if ((_frame - (3 * 2 - 8 + (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5)) * 2 < 50)
+								{
+									IMAGEMANAGER->findImage("Stone2")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it)[i].first),
+										WINSIZE_Y / 2 - (cameraPos.y - (*it)[i].second) - (_frame - (3 * 2 - 8 + (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5)) * 2,
+										((_frame - 3 * 2 - 8 + (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 3) / 5 - i * 19 / 3 % 17) % IMAGEMANAGER->findImage("Stone2")->getMaxFrameX(), 0, 255);
+								}
+							}
+						}
+						IMAGEMANAGER->findImage("Volcano")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x * tileWidth + tileWidth / 2)) - IMAGEMANAGER->findImage("Volcano")->getFrameWidth() / 2,
+							WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y * tileHeight + tileHeight / 2)) - IMAGEMANAGER->findImage("Volcano")->getFrameHeight() / 2,
+							((_frame - 3 * 2 - 8 + (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5) / 10) % 4, 0);
+					}
+					if (8 + _frame / 5 > IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX())
+					{
+						if ((_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 5 < IMAGEMANAGER->findImage("Explosion3")->getMaxFrameX() + 1)
+						{
+							IMAGEMANAGER->findImage("Explosion3")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it)->getTilePos().x * tileWidth) - 105, WINSIZE_Y / 2 - (cameraPos.y - (*it)->getTilePos().y * tileHeight) - 150,
+								(_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 5, 0, 
+								255 - 255 / (IMAGEMANAGER->findImage("Explosion3")->getMaxFrameX() + 1) * ((_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 5));
+						}
+					}
 					index++;
 				}
 			}
 			index = 0;
+		}
+		// ¶¥ º¹±¸
+		else if (_order.test(3))
+		{
+			for (int i = 0; i < 12; i++)
+			{
+				if (_crackedEarth[1][i].first == 0)
+				{
+					if (_frame / 5 - i < IMAGEMANAGER->findImage("RestoreEarth1RU")->getMaxFrameX() + 1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth1RU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight),
+							tileWidth, tileHeight, _frame / 5 - i, 0);
+					}
+				}
+				else if (_crackedEarth[1][i].first == 1)
+				{
+					if (_frame / 5 - i < IMAGEMANAGER->findImage("RestoreEarth2RU")->getMaxFrameX() + 1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth2RU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight),
+							tileWidth, tileHeight, _frame / 5 - i, 0);
+					}
+				}
+				else if (_crackedEarth[1][i].first == 2)
+				{
+					if (_frame / 5 - i < IMAGEMANAGER->findImage("RestoreEarth2RU")->getMaxFrameX() + 1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth3RU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight),
+							tileWidth, tileHeight, _frame / 5 - i, 0);
+					}
+				}
+			}
+			for (int i = 0; i < 12; i++)
+			{
+				if (_crackedEarth[2][i].first == 0)
+				{
+					if ((_frame - 45) / 5 - i < IMAGEMANAGER->findImage("RestoreEarth1RU")->getMaxFrameX() + 1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth1RU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight),
+							tileWidth, tileHeight, _frame / 5 - 4 > 4 ? (_frame - 45) / 5 - i : 0, 0);
+					}
+				}
+				else if (_crackedEarth[2][i].first == 1)
+				{
+					if ((_frame - 45) / 5 - i < IMAGEMANAGER->findImage("RestoreEarth2RU")->getMaxFrameX() + 1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth2RU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight),
+							tileWidth, tileHeight, _frame / 5 - 4 > 4 ? (_frame - 45) / 5 - i : 0, 0);
+					}
+				}
+				else if (_crackedEarth[2][i].first == 2)
+				{
+					if ((_frame - 45) / 5 - i < IMAGEMANAGER->findImage("RestoreEarth3RU")->getMaxFrameX() + 1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth3RU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight),
+							tileWidth, tileHeight, _frame / 5 - 4 > 4 ? (_frame - 45) / 5 - i : 0, 0);
+					}
+				}
+			}
+			for (int i = 0; i < 12; i++)
+			{
+				if (_crackedEarth[0][i].first == 0)
+				{
+					if (IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 + i > -1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth1LU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight),
+							tileWidth, tileHeight, (_frame - 45) / 5 - 4 > 4 ? IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 + i : IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX(), 0);
+					}
+				}
+				else if (_crackedEarth[0][i].first == 1)
+				{
+					if (IMAGEMANAGER->findImage("RestoreEarth2LU")->getMaxFrameX() - (_frame - 90) / 5 + i > -1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth2LU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight),
+							tileWidth, tileHeight, (_frame - 45) / 5 - 4 > 4 ? IMAGEMANAGER->findImage("RestoreEarth2LU")->getMaxFrameX() - (_frame - 90) / 5 + i : IMAGEMANAGER->findImage("RestoreEarth2LU")->getMaxFrameX(), 0);
+					}
+				}
+				else if (_crackedEarth[0][i].first == 2)
+				{
+					if (IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX() - (_frame - 90) / 5 + i > -1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth3LU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 1 - i) * tileHeight),
+							tileWidth, tileHeight, (_frame - 45) / 5 - 4 > 4 ? IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX() - (_frame - 90) / 5 + i : IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX(), 0);
+					}
+				}
+				if (_crackedEarth[3][i].first == 0)
+				{
+					if (IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 + i > -1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth1LU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight),
+							tileWidth, tileHeight, (_frame - 45) / 5 - 4 > 4 ? IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 + i : IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX(), 0);
+					}
+				}
+				else if (_crackedEarth[3][i].first == 1)
+				{
+					if (IMAGEMANAGER->findImage("RestoreEarth2LU")->getMaxFrameX() - (_frame - 90) / 5 + i > -1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth2LU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight),
+							tileWidth, tileHeight, (_frame - 45) / 5 - 4 > 4 ? IMAGEMANAGER->findImage("RestoreEarth2LU")->getMaxFrameX() - (_frame - 90) / 5 + i : IMAGEMANAGER->findImage("RestoreEarth2LU")->getMaxFrameX(), 0);
+					}
+				}
+				else if (_crackedEarth[3][i].first == 2)
+				{
+					if (IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX() - (_frame - 90) / 5 + i > -1)
+					{
+						IMAGEMANAGER->findImage("RestoreEarth3LU")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 1 + i) * tileWidth), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight),
+							tileWidth, tileHeight, (_frame - 45) / 5 - 4 > 4 ? IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX() - (_frame - 90) / 5 + i : IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX(), 0);
+					}
+				}
+			}
+			for (auto it = _charList.begin(); it != _charList.end(); ++it)
+			{
+				if ((*it)->getType() == 1)
+				{
+					if (_frame / 10 < IMAGEMANAGER->findImage("Volcano")->getMaxFrameX())
+					{
+						IMAGEMANAGER->findImage("Volcano")->frameRender(hdc,
+							WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x * tileWidth + tileWidth / 2)) - IMAGEMANAGER->findImage("Volcano")->getFrameWidth() / 2,
+							WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y * tileHeight + tileHeight / 2)) - IMAGEMANAGER->findImage("Volcano")->getFrameHeight() / 2,
+							_frame / 10, 0);
+					}
+				}
+			}
 		}
 	}
 }
@@ -1358,14 +1576,24 @@ int Skill::getOrder()
 			return i;
 		}
 	}
+	return  -1;
 }
 
 void Skill::start(vector<Character*> charList, Character* curChar)
 {
 	_frame = 0;
 	_charList = charList;
+	_order.reset();
 	_order.set(0);
+	_orderOrder.reset();
 	_isFinish = false;
 	_curChar = curChar;
 	_curChar->setSkillOrder(0);
+	_efxPos.clear();
+	_icePillars.clear();
+	_dust1Pos.clear();
+	_dust2.clear();
+	_volcano.clear();
+	_bigStones.clear();
+	_startFrame = 0;
 }

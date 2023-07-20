@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "Saladin.h"
 
 struct IcePillar
 {
@@ -25,6 +26,7 @@ private:
 	pair<int, bool> _crackedEarth[4][12];
 	POINT _stonePos[4][12][5];
 	vector<pair<int, int>> _volcano;
+	vector<vector<pair<int, int>>> _bigStones;
 
 public:
 	HRESULT init(void);

@@ -68,6 +68,27 @@ HRESULT BossBattleScene::init(void)
 	_vermont3->setTurnOder(7);
 	_tileInfo[_vermont3->getTilePos().y][_vermont3->getTilePos().x] = ENEMY;
 
+	Character* _vermont5 = new Vermont();
+	_vermont5->init();
+	_vermont5->setDir(LEFT);
+	_vermont5->setTilePos({ 37, 42 });
+	_vermont5->setTurnOder(9);
+	_tileInfo[_vermont5->getTilePos().y][_vermont5->getTilePos().x] = ENEMY;
+
+	Character* _vermont4 = new Vermont();
+	_vermont4->init();
+	_vermont4->setDir(LEFT);
+	_vermont4->setTilePos({ 37, 40 });
+	_vermont4->setTurnOder(8);
+	_tileInfo[_vermont4->getTilePos().y][_vermont4->getTilePos().x] = ENEMY;
+
+	Character* _vermont6 = new Vermont();
+	_vermont6->init();
+	_vermont6->setDir(UP);
+	_vermont6->setTilePos({ 33, 45 });
+	_vermont6->setTurnOder(8);
+	_tileInfo[_vermont6->getTilePos().y][_vermont6->getTilePos().x] = ENEMY;
+
 	_turnSystem = new TurnSystem();
 	_turnSystem->addCharacter(_vermont);
 	_turnSystem->addCharacter(_saladin);
@@ -77,9 +98,15 @@ HRESULT BossBattleScene::init(void)
 	_turnSystem->addCharacter(_saladin5);
 	_turnSystem->addCharacter(_vermont2);
 	_turnSystem->addCharacter(_vermont3);
+	_turnSystem->addCharacter(_vermont4);
+	_turnSystem->addCharacter(_vermont5);
+	_turnSystem->addCharacter(_vermont6);
 	_turnSystem->addObject(_vermont);
 	_turnSystem->addObject(_vermont2);
 	_turnSystem->addObject(_vermont3);
+	_turnSystem->addObject(_vermont4);
+	_turnSystem->addObject(_vermont5);
+	_turnSystem->addObject(_vermont6);
 	_turnSystem->addObject(_saladin);
 	_turnSystem->addObject(_saladin2);
 	_turnSystem->addObject(_saladin3);
@@ -128,7 +155,7 @@ void BossBattleScene::update(void)
 	}
 	else if (_fade.test(0))
 	{
-		if ((_frame - _fadeStartFrame) * 10 > 220)
+		if ((_frame - _fadeStartFrame) * 10 > 230)
 		{
 			_fade = _fade << 1;
 		}
@@ -139,7 +166,7 @@ void BossBattleScene::update(void)
 	}
 	else if (_fade.test(2))
 	{
-		if ((_frame - _fadeStartFrame) * 10 > 220)
+		if ((_frame - _fadeStartFrame) * 10 > 230)
 		{
 			_fade.reset();
 		}
@@ -148,6 +175,11 @@ void BossBattleScene::update(void)
 	if (_saladin->isSkill() || _vermont->isSkill())
 	{
 		_camera->setPosition({(LONG)(_turnSystem->getCurChar()->getX()), (LONG)(_turnSystem->getCurChar()->getY())});
+		Saladin* saladin = (Saladin*)_saladin;
+		if (saladin->isCameraShake())
+		{
+			_camera->setPosition({ _camera->getPosition().x - RND->getInt(20), _camera->getPosition().y - RND->getInt(20) });
+		}
 	}
 	
 
@@ -177,8 +209,6 @@ void BossBattleScene::update(void)
 
 void BossBattleScene::render(void)
 {
-	//IMAGEMANAGER->findImage("SkillCasting")->frameRender(getMemDC(), 0, 0, (_frame / 2 % IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX() + 1), 0);
-	//IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRenderEFX(getMemDC(), 200, 0, _frame / 2 % (IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX() + 1), 0, 255);
 	_backGroundImg->render(getMemDC(), WINSIZE_X / 2 - _cameraPos.x, WINSIZE_Y / 2 - _cameraPos.y, _backGroundImg->getWidth() * 1.5, _backGroundImg->getHeight() * 1.5, 0, 0, _backGroundImg->getWidth(), _backGroundImg->getHeight());
 	IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), WINSIZE_X / 2 - (_cameraPos.x - _cursorTile.x * TileWidth),
 		WINSIZE_Y / 2 - (_cameraPos.y - _cursorTile.y * TileHeight), TileWidth, TileHeight, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);
@@ -189,15 +219,15 @@ void BossBattleScene::render(void)
 	}
 	if (_fade.test(0))
 	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 220 ? 220 : (_frame - _fadeStartFrame) * 10);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 230 ? 230 : (_frame - _fadeStartFrame) * 10);
 	}
 	if (_fade.test(1))
 	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 220);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 230);
 	}
 	if (_fade.test(2))
 	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 220 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 220 - (_frame - _fadeStartFrame) * 10);
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 230 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 230 - (_frame - _fadeStartFrame) * 10);
 	}
 	_turnSystem->render(getMemDC(), TileHeight, TileWidth, _cameraPos);
 	char str[50];
