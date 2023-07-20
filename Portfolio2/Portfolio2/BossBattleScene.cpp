@@ -19,33 +19,61 @@ HRESULT BossBattleScene::init(void)
 	_saladin->setTurnOder(0);
 	_tileInfo[_saladin->getTilePos().y][_saladin->getTilePos().x] = SALADIN;
 
-	Character* _saladin2 = new Saladin();
-	_saladin2->init();
-	_saladin2->setDir(UP);
-	_saladin2->setTilePos({ 24, 45 });
-	_saladin2->setTurnOder(2);
-	_tileInfo[_saladin2->getTilePos().y][_saladin2->getTilePos().x] = SALADIN;
+	Character* _nakama = new PlayerSoldier();
+	_nakama->init();
+	_nakama->setDir(UP);
+	_nakama->setTilePos({ 24, 45 });
+	_nakama->setTurnOder(2);
+	_tileInfo[_nakama->getTilePos().y][_nakama->getTilePos().x] = SALADIN;
 
-	Character * _saladin3 = new Saladin();
-	_saladin3->init();
-	_saladin3->setDir(DOWN);
-	_saladin3->setTilePos({ 20, 35 });
-	_saladin3->setTurnOder(3);
-	_tileInfo[_saladin3->getTilePos().y][_saladin3->getTilePos().x] = SALADIN;
+	Character * _nakama2 = new PlayerSoldier();
+	_nakama2->init();
+	_nakama2->setDir(DOWN);
+	_nakama2->setTilePos({ 20, 35 });
+	_nakama2->setTurnOder(3);
+	_tileInfo[_nakama2->getTilePos().y][_nakama2->getTilePos().x] = SALADIN;
 
-	Character* _saladin4 = new Saladin();
-	_saladin4->init();
-	_saladin4->setDir(LEFT);
-	_saladin4->setTilePos({ 43, 52 });
-	_saladin4->setTurnOder(4);
-	_tileInfo[_saladin4->getTilePos().y][_saladin4->getTilePos().x] = SALADIN;
+	Character* _nakama3 = new PlayerSoldier();
+	_nakama3->init();
+	_nakama3->setDir(LEFT);
+	_nakama3->setTilePos({ 43, 52 });
+	_nakama3->setTurnOder(4);
+	_tileInfo[_nakama3->getTilePos().y][_nakama3->getTilePos().x] = SALADIN;
 
-	Character* _saladin5 = new Saladin();
-	_saladin5->init();
-	_saladin5->setDir(RIGHT);
-	_saladin5->setTilePos({ 15, 40 });
-	_saladin5->setTurnOder(5);
-	_tileInfo[_saladin5->getTilePos().y][_saladin5->getTilePos().x] = SALADIN;
+	Character* _nakama4 = new PlayerSoldier();
+	_nakama4->init();
+	_nakama4->setDir(RIGHT);
+	_nakama4->setTilePos({ 15, 40 });
+	_nakama4->setTurnOder(5);
+	_tileInfo[_nakama4->getTilePos().y][_nakama4->getTilePos().x] = SALADIN;
+
+	Character* _nakama5 = new PlayerSoldier();
+	_nakama5->init();
+	_nakama5->setDir(DOWN);
+	_nakama5->setTilePos({ 24, 36 });
+	_nakama5->setTurnOder(23);
+	_tileInfo[_nakama5->getTilePos().y][_nakama5->getTilePos().x] = SALADIN;
+
+	Character* _nakama6 = new PlayerSoldier();
+	_nakama6->init();
+	_nakama6->setDir(DOWN);
+	_nakama6->setTilePos({ 24, 38 });
+	_nakama6->setTurnOder(24);
+	_tileInfo[_nakama6->getTilePos().y][_nakama6->getTilePos().x] = SALADIN;
+
+	Character* _nakama7 = new PlayerSoldier();
+	_nakama7->init();
+	_nakama7->setDir(LEFT);
+	_nakama7->setTilePos({ 32, 50 });
+	_nakama7->setTurnOder(25);
+	_tileInfo[_nakama7->getTilePos().y][_nakama7->getTilePos().x] = SALADIN;
+
+	Character* _nakama8 = new PlayerSoldier();
+	_nakama8->init();
+	_nakama8->setDir(UP);
+	_nakama8->setTilePos({ 15, 53 });
+	_nakama8->setTurnOder(26);
+	_tileInfo[_nakama8->getTilePos().y][_nakama8->getTilePos().x] = SALADIN;
 	
 	_vermont = new Vermont();
 	_vermont->init();
@@ -54,64 +82,207 @@ HRESULT BossBattleScene::init(void)
 	_vermont->setTurnOder(1);
 	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = ENEMY;
 
-	Character* _vermont2 = new Vermont();
-	_vermont2->init();
-	_vermont2->setDir(RIGHT);
-	_vermont2->setTilePos({ 25, 38 });
-	_vermont2->setTurnOder(6);
-	_tileInfo[_vermont2->getTilePos().y][_vermont2->getTilePos().x] = ENEMY;
+	Character* _enemySoldier = new Soldier();
+	_enemySoldier->init();
+	_enemySoldier->setDir(UP);
+	_enemySoldier->setTilePos({ 32, 42 });
+	_enemySoldier->setTurnOder(6);
+	_tileInfo[_enemySoldier->getTilePos().y][_enemySoldier->getTilePos().x] = ENEMY;
 
-	Character* _vermont3 = new Vermont();
-	_vermont3->init();
-	_vermont3->setDir(DOWN);
-	_vermont3->setTilePos({ 33, 35 });
-	_vermont3->setTurnOder(7);
-	_tileInfo[_vermont3->getTilePos().y][_vermont3->getTilePos().x] = ENEMY;
+	Character* _enemySoldier2 = new Soldier();
+	_enemySoldier2->init();
+	_enemySoldier2->setDir(UP);
+	_enemySoldier2->setTilePos({ 32, 43 });
+	_enemySoldier2->setTurnOder(7);
+	_tileInfo[_enemySoldier2->getTilePos().y][_enemySoldier2->getTilePos().x] = ENEMY;
 
-	Character* _vermont5 = new Vermont();
+	Character* _vermont5 = new Soldier();
 	_vermont5->init();
-	_vermont5->setDir(LEFT);
-	_vermont5->setTilePos({ 37, 42 });
+	_vermont5->setDir(UP);
+	_vermont5->setTilePos({ 32, 45 });
 	_vermont5->setTurnOder(9);
 	_tileInfo[_vermont5->getTilePos().y][_vermont5->getTilePos().x] = ENEMY;
 
-	Character* _vermont4 = new Vermont();
+	Character* _vermont4 = new Soldier();
 	_vermont4->init();
-	_vermont4->setDir(LEFT);
-	_vermont4->setTilePos({ 37, 40 });
+	_vermont4->setDir(UP);
+	_vermont4->setTilePos({ 32, 44 });
 	_vermont4->setTurnOder(8);
 	_tileInfo[_vermont4->getTilePos().y][_vermont4->getTilePos().x] = ENEMY;
 
-	Character* _vermont6 = new Vermont();
+	Character* _vermont6 = new Soldier();
 	_vermont6->init();
-	_vermont6->setDir(UP);
-	_vermont6->setTilePos({ 33, 45 });
+	_vermont6->setDir(DOWN);
+	_vermont6->setTilePos({ 31, 46 });
 	_vermont6->setTurnOder(8);
 	_tileInfo[_vermont6->getTilePos().y][_vermont6->getTilePos().x] = ENEMY;
 
+	Character* _vermont7 = new Soldier();
+	_vermont7->init();
+	_vermont7->setDir(RIGHT);
+	_vermont7->setTilePos({ 30, 47 });
+	_vermont7->setTurnOder(10);
+	_tileInfo[_vermont7->getTilePos().y][_vermont7->getTilePos().x] = ENEMY;
+
+	Character* _vermont8 = new Soldier();
+	_vermont8->init();
+	_vermont8->setDir(RIGHT);
+	_vermont8->setTilePos({ 31, 40 });
+	_vermont8->setTurnOder(11);
+	_tileInfo[_vermont8->getTilePos().y][_vermont8->getTilePos().x] = ENEMY;
+
+	Character* _vermont9 = new Soldier();
+	_vermont9->init();
+	_vermont9->setDir(RIGHT);
+	_vermont9->setTilePos({ 30, 41 });
+	_vermont9->setTurnOder(12);
+	_tileInfo[_vermont9->getTilePos().y][_vermont9->getTilePos().x] = ENEMY;
+
+	Character* _vermont10 = new Soldier();
+	_vermont10->init();
+	_vermont10->setDir(RIGHT);
+	_vermont10->setTilePos({ 30, 42 });
+	_vermont10->setTurnOder(13);
+	_tileInfo[_vermont10->getTilePos().y][_vermont10->getTilePos().x] = ENEMY;
+
+	Character* _vermont11 = new Soldier();
+	_vermont11->init();
+	_vermont11->setDir(DOWN);
+	_vermont11->setTilePos({ 37, 42 });
+	_vermont11->setTurnOder(14);
+	_tileInfo[_vermont11->getTilePos().y][_vermont11->getTilePos().x] = ENEMY;
+
+	Character* _vermont12 = new Soldier();
+	_vermont12->init();
+	_vermont12->setDir(LEFT);
+	_vermont12->setTilePos({ 34, 39 });
+	_vermont12->setTurnOder(15);
+	_tileInfo[_vermont12->getTilePos().y][_vermont12->getTilePos().x] = ENEMY;
+
+	Character* _vermont13 = new Soldier();
+	_vermont13->init();
+	_vermont13->setDir(DOWN);
+	_vermont13->setTilePos({ 34, 38 });
+	_vermont13->setTurnOder(16);
+	_tileInfo[_vermont13->getTilePos().y][_vermont13->getTilePos().x] = ENEMY;
+
+	Character* _vermont14 = new Soldier();
+	_vermont14->init();
+	_vermont14->setDir(DOWN);
+	_vermont14->setTilePos({ 33, 38 });
+	_vermont14->setTurnOder(17);
+	_tileInfo[_vermont14->getTilePos().y][_vermont14->getTilePos().x] = ENEMY;
+
+	Character* _vermont15 = new Soldier();
+	_vermont15->init();
+	_vermont15->setDir(DOWN);
+	_vermont15->setTilePos({ 32, 38 });
+	_vermont15->setTurnOder(18);
+	_tileInfo[_vermont15->getTilePos().y][_vermont15->getTilePos().x] = ENEMY;
+
+	Character* _vermont16 = new Soldier();
+	_vermont16->init();
+	_vermont16->setDir(DOWN);
+	_vermont16->setTilePos({ 32, 37 });
+	_vermont16->setTurnOder(19);
+	_tileInfo[_vermont16->getTilePos().y][_vermont16->getTilePos().x] = ENEMY;
+
+	Character* _vermont17 = new Soldier();
+	_vermont17->init();
+	_vermont17->setDir(DOWN);
+	_vermont17->setTilePos({ 32, 36 });
+	_vermont17->setTurnOder(20);
+	_tileInfo[_vermont17->getTilePos().y][_vermont17->getTilePos().x] = ENEMY;
+
+	Character* _vermont18 = new Soldier();
+	_vermont18->init();
+	_vermont18->setDir(DOWN);
+	_vermont18->setTilePos({ 33, 36 });
+	_vermont18->setTurnOder(21);
+	_tileInfo[_vermont18->getTilePos().y][_vermont18->getTilePos().x] = ENEMY;
+
+	Character* _vermont19 = new Soldier();
+	_vermont19->init();
+	_vermont19->setDir(DOWN);
+	_vermont19->setTilePos({ 32, 34 });
+	_vermont19->setTurnOder(22);
+	_tileInfo[_vermont19->getTilePos().y][_vermont19->getTilePos().x] = ENEMY;
+
+	Character* _vermont20 = new Soldier();
+	_vermont20->init();
+	_vermont20->setDir(LEFT);
+	_vermont20->setTilePos({ 37, 43 });
+	_vermont20->setTurnOder(22);
+	_tileInfo[_vermont20->getTilePos().y][_vermont20->getTilePos().x] = ENEMY;
+
+	Character* _vermont21 = new Soldier();
+	_vermont21->init();
+	_vermont21->setDir(LEFT);
+	_vermont21->setTilePos({ 37, 41 });
+	_vermont21->setTurnOder(22);
+	_tileInfo[_vermont21->getTilePos().y][_vermont21->getTilePos().x] = ENEMY;
+
 	_turnSystem = new TurnSystem();
-	_turnSystem->addCharacter(_vermont);
 	_turnSystem->addCharacter(_saladin);
-	_turnSystem->addCharacter(_saladin2);
-	_turnSystem->addCharacter(_saladin3);
-	_turnSystem->addCharacter(_saladin4);
-	_turnSystem->addCharacter(_saladin5);
-	_turnSystem->addCharacter(_vermont2);
-	_turnSystem->addCharacter(_vermont3);
+	_turnSystem->addCharacter(_vermont);
+	_turnSystem->addCharacter(_nakama);
+	_turnSystem->addCharacter(_nakama2);
+	_turnSystem->addCharacter(_nakama3);
+	_turnSystem->addCharacter(_nakama4);
+	_turnSystem->addCharacter(_nakama5);
+	_turnSystem->addCharacter(_nakama6);
+	_turnSystem->addCharacter(_nakama7);
+	_turnSystem->addCharacter(_nakama8);
+	_turnSystem->addCharacter(_enemySoldier);
+	_turnSystem->addCharacter(_enemySoldier2);
 	_turnSystem->addCharacter(_vermont4);
 	_turnSystem->addCharacter(_vermont5);
 	_turnSystem->addCharacter(_vermont6);
+	_turnSystem->addCharacter(_vermont7);
+	_turnSystem->addCharacter(_vermont8);
+	_turnSystem->addCharacter(_vermont9);
+	_turnSystem->addCharacter(_vermont10);
+	_turnSystem->addCharacter(_vermont11);
+	_turnSystem->addCharacter(_vermont12);
+	_turnSystem->addCharacter(_vermont13);
+	_turnSystem->addCharacter(_vermont14);
+	_turnSystem->addCharacter(_vermont15);
+	_turnSystem->addCharacter(_vermont16);
+	_turnSystem->addCharacter(_vermont17);
+	_turnSystem->addCharacter(_vermont18);
+	_turnSystem->addCharacter(_vermont19);
+	_turnSystem->addCharacter(_vermont20);
+	_turnSystem->addCharacter(_vermont21);
 	_turnSystem->addObject(_vermont);
-	_turnSystem->addObject(_vermont2);
-	_turnSystem->addObject(_vermont3);
+	_turnSystem->addObject(_enemySoldier);
+	_turnSystem->addObject(_enemySoldier2);
 	_turnSystem->addObject(_vermont4);
 	_turnSystem->addObject(_vermont5);
 	_turnSystem->addObject(_vermont6);
+	_turnSystem->addObject(_vermont7);
+	_turnSystem->addObject(_vermont8);
+	_turnSystem->addObject(_vermont9);
+	_turnSystem->addObject(_vermont10);
+	_turnSystem->addObject(_vermont11);
+	_turnSystem->addObject(_vermont12);
+	_turnSystem->addObject(_vermont13);
+	_turnSystem->addObject(_vermont14);
+	_turnSystem->addObject(_vermont15);
+	_turnSystem->addObject(_vermont16);
+	_turnSystem->addObject(_vermont17);
+	_turnSystem->addObject(_vermont18);
+	_turnSystem->addObject(_vermont19);
+	_turnSystem->addObject(_vermont20);
+	_turnSystem->addObject(_vermont21);
 	_turnSystem->addObject(_saladin);
-	_turnSystem->addObject(_saladin2);
-	_turnSystem->addObject(_saladin3);
-	_turnSystem->addObject(_saladin4);
-	_turnSystem->addObject(_saladin5);
+	_turnSystem->addObject(_nakama);
+	_turnSystem->addObject(_nakama2);
+	_turnSystem->addObject(_nakama3);
+	_turnSystem->addObject(_nakama4);
+	_turnSystem->addObject(_nakama5);
+	_turnSystem->addObject(_nakama6);
+	_turnSystem->addObject(_nakama7);
+	_turnSystem->addObject(_nakama8);
 	_turnSystem->addObject(new Obstacle("Table", {1110, 1180}, 1, 1.5, {29, 40}));
 	_turnSystem->init();
 

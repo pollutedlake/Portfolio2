@@ -4,6 +4,8 @@
 #include "TurnSystem.h"
 #include "Saladin.h"
 #include "Vermont.h"
+#include "Soldier.h"
+#include "PlayerSoldier.h"
 #include "AStar.h"
 
 #define TileWidth	40

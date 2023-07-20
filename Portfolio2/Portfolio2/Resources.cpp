@@ -74,6 +74,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("AttackableTile", "Resources/Images/UI/AttackableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ActionButton", "Resources/Images/UI/ActionButton.bmp", 102, 28, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ActionButtonActive", "Resources/Images/UI/ActionButtonActive.bmp", 102, 28, true, RGB(255, 45, 254));
+	IMAGEMANAGER->addImage("SkillIcon", "Resources/Images/UI/SkillIcon.bmp", 17, 17, true, RGB(252, 236, 248));
+	IMAGEMANAGER->addImage("SkillButtonActive", "Resources/Images/UI/SkillButtonActive.bmp", 80, 22);
 	IMAGEMANAGER->addImage("WorldMapInfo", "Resources/Images/UI/WorldMapInfo.bmp", 241, 111, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("WorldMapFlag", "Resources/Images/UI/WorldMapFlag.bmp", 61, 91, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("WorldMapSaladin", "Resources/Images/UI/WorldMapSaladin.bmp", 50, 50);
@@ -93,6 +95,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Soldier3", "Resources/Images/BackGrounds/StoryScene/Soldier3.bmp", 55, 65, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Soldier4", "Resources/Images/BackGrounds/StoryScene/Soldier4.bmp", 47, 76, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinStory", "Resources/Images/BackGrounds/StoryScene/SaladinStory.bmp", 260, 75, 4, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Enemy", "Resources/Images/Characters/Enemy.bmp", 516, 848, 6, 8, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Nakama", "Resources/Images/Characters/Nakama.bmp", 516, 752, 6, 8, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("VermontMoveLeft", "Resources/Images/Characters/Vermont/VermontMoveLeft.bmp", 462, 76, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontMoveRight", "Resources/Images/Characters/Vermont/VermontMoveRight.bmp", 462, 76, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("VermontMoveUp", "Resources/Images/Characters/Vermont/VermontMoveUp.bmp", 228, 80, 6, 1, true, RGB(255, 0, 255));
@@ -120,6 +124,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("VermontSkillLeft", "Resources/Images/Characters/Vermont/VermontSkillLeft.bmp", 117, 63, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontSkillRight", "Resources/Images/Characters/Vermont/VermontSkillRight.bmp", 117, 64, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("BattleEnd", "Resources/Images/UI/BattleEnd.bmp", WINSIZE_X, 90, true, RGB(0, 4, 4));
+	IMAGEMANAGER->addImage("Scenario", "Resources/Images/UI/Scenario.bmp", 189, 35, true, RGB(8, 36, 44));
+	IMAGEMANAGER->addImage("Clear", "Resources/Images/UI/Clear.bmp", 119, 36, true, RGB(8, 36, 44));
+	IMAGEMANAGER->addImage("Snow", "Resources/Images/UI/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
 	//IMAGEMANAGER->addImage("BattleEnd", "Resources/Images/UI/BattleEnd.bmp", 142, 90, true, RGB(0, 4, 4));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUpEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackUpEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));

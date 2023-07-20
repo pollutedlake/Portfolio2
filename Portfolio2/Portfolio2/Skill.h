@@ -17,6 +17,7 @@ private:
 	bool _isFinish;
 	Character* _curChar;
 	vector<Character*> _charList;
+	vector<POINT> _snow;
 	bitset<4> _order;
 	bitset<20> _orderOrder;
 	vector<pair<POINT, POINT>> _efxPos;

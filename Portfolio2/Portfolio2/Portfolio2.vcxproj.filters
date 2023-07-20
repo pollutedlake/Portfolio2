@@ -140,6 +140,12 @@
     <ClInclude Include="Skill.h">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Class\Object\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSoldier.h">
+      <Filter>Class\Object\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -223,6 +229,12 @@
     </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Class\Object\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSoldier.cpp">
+      <Filter>Class\Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

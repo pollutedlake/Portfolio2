@@ -160,6 +160,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="PlayerSoldier.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resources.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StoryScene.h" />
@@ -192,11 +194,13 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="PlayerSoldier.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Saladin.cpp" />
     <ClCompile Include="ScenarioScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -21,7 +21,7 @@ protected:
 	bitset<2> _turn;
 	bitset<5> _state;
 	bitset<4> _skillOrder;
-	bitset<20> _turnOrder;
+	bitset<50> _turnOrder;
 	POINT _destTilePos;
 	int _frame;
 	vector<POINT> _route;
@@ -51,10 +51,11 @@ public:
 	void setDir(int dir);
 	void setTilePos(POINT tilePos) { _tilePos = tilePos; }
 	void setRoute(vector<POINT> route) { _route = route; }
-	void setTurnOder(int order) { _turnOrder.set(order, true); }
+	void setTurnOder(int order) { _turnOrder.reset(); _turnOrder.set(order, true); }
 	void setCurWait(int curWait) {_curWait = curWait;}
 	void setDoing(bool doing) {_doing = doing;}
 	void resetTurn() {_turn.reset(); _turn.flip();}
+	void setTurn(int index, bool active) {_turn.set(index, active);}
 	void setDestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
 	void setDamage(int damage) {_damage = damage;}
 	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i); _frame = 0; }

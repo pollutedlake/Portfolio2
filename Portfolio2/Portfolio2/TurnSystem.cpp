@@ -4,6 +4,7 @@
 HRESULT TurnSystem::init(void)
 {
 	_actionChoice = false;
+	_skillChoice = false;
 	_aStar = new AStar();
 	_skill = new Skill();
 	_skill->init();
@@ -33,40 +34,19 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		if ((*it)->isDie())
 		{
 			tileInfo[(*it)->getTilePos().y][(*it)->getTilePos().x] = MOVABLE;
+			for (auto it2 = _charList.begin(); it2 != _charList.end(); ++it2)
+			{
+				if ((*it)->getTurnOrder(_charList.size()) < (*it2)->getTurnOrder(_charList.size()))
+				{
+					(*it2)->moveTurnOrder();
+				}
+			}
 			it = _charList.erase(it);
 		}
 		else
 		{
 			(*it)->update();
 			++it;
-		}
-	}
-	for (auto it = _charList.begin(); it != _charList.end();)
-	{
-		if ((*it)->getType() == 1)
-		{
-			break;
-		}
-		++it;
-		if (it == _charList.end())
-		{
-			_isClear = true;
-			_frame = 0;
-			return;
-		}
-	}
-	for (auto it = _charList.begin(); it != _charList.end();)
-	{
-		if ((*it)->getType() == 0)
-		{
-			break;
-		}
-		++it;
-		if (it == _charList.end())
-		{
-			_isFail = true;
-			_frame = 0;
-			return;
 		}
 	}
 	if (_isClear || _isFail)
@@ -84,8 +64,36 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 	}
 	else
 	{
+		for (auto it = _charList.begin(); it != _charList.end();)
+		{
+			if ((*it)->getType() == 1)
+			{
+				break;
+			}
+			++it;
+			if (it == _charList.end())
+			{
+				_isClear = true;
+				_frame = 0;
+				return;
+			}
+		}
+		for (auto it = _charList.begin(); it != _charList.end();)
+		{
+			if ((*it)->getType() == 0)
+			{
+				break;
+			}
+			++it;
+			if (it == _charList.end())
+			{
+				_isFail = true;
+				_frame = 0;
+				return;
+			}
+		}
 		// 현재 캐릭터가 행동중이 아닐 때
-		if (!_curChar->isDoing())
+		if (checkAllDoingNot())
 		{
 			if (_curChar->getType() == 0)
 			{
@@ -132,12 +140,20 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 				}
 				if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 				{
-					if (_actionChoice)
+					if (_actionChoice || _skillChoice)
 					{
-						if (PtInRect(&_actionButtons[2], _ptMouse))
+						if(!_skillChoice)
 						{
-							_actionChoice = false;
-							nextTurn();
+							if (PtInRect(&_actionButtons[0], _ptMouse))
+							{
+								_skillChoice = true;
+								_actionChoice = false;
+							}
+							if (PtInRect(&_actionButtons[2], _ptMouse))
+							{
+								_actionChoice = false;
+								nextTurn();
+							}
 						}
 					}
 					else
@@ -241,7 +257,15 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 				}
 				if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 				{
-					_actionChoice = false;
+					if(_actionChoice)
+					{
+						_actionChoice = false;
+					}
+					if (_skillChoice)
+					{
+						_skillChoice = false;
+						_actionChoice = true;
+					}
 				}
 				if (KEYMANAGER->isOnceKeyDown('A'))
 				{
@@ -394,29 +418,31 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 				WINSIZE_Y / 2 - (cameraPos.y - temp->getTilePos().y * tileHeight + tileHeight / 2 * 3) }, cameraPos);
 		}
 	}
-	if (!_curChar->isDoing())
-	{
-		if (_curChar->getType() == 0)
-		{
-			IMAGEMANAGER->findImage("PlayerMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
-				WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
-		}
-		else if (_curChar->getType() == 1)
-		{
-			IMAGEMANAGER->findImage("EnemyMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
-				WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
-		}
-	}
 	if (_isClear || _isFail)
 	{
 		IMAGEMANAGER->findImage("Black")->alphaRender(hdc, _frame * 10 > 128 ? 128 : _frame * 10);
 		if (_frame * 10 > 128)
 		{
 			IMAGEMANAGER->findImage("BattleEnd")->alphaRender(hdc, 0, WINSIZE_Y / 2 - IMAGEMANAGER->findImage("BattleEnd")->getHeight() / 2, 128);
+			IMAGEMANAGER->findImage("Scenario")->render(hdc, WINSIZE_X / 2 - IMAGEMANAGER->findImage("Scenario")->getWidth() - 20, WINSIZE_Y / 2 - IMAGEMANAGER->findImage("Scenario")->getHeight() / 2);
+			IMAGEMANAGER->findImage("Clear")->render(hdc, WINSIZE_X / 2 + 20, WINSIZE_Y / 2 - IMAGEMANAGER->findImage("Clear")->getHeight() / 2);
 		}
 	}
 	else
 	{
+		if (!_curChar->isDoing())
+		{
+			if (_curChar->getType() == 0)
+			{
+				IMAGEMANAGER->findImage("PlayerMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
+					WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
+			}
+			else if (_curChar->getType() == 1)
+			{
+				IMAGEMANAGER->findImage("EnemyMarker")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth) + 15,
+					WINSIZE_Y / 2 - (cameraPos.y - _curChar->getTilePos().y * tileHeight) - 70, (_frame / 5) % 8, 0);
+			}
+		}
 		if (!_skill->isFinish())
 		{
 			_skill->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - _curChar->getTilePos().x * tileWidth),
@@ -444,6 +470,32 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 			IMAGEMANAGER->findImage("ActionIcon")->frameRender(hdc, _actionButtons[i].left + 10, _actionButtons[i].top, i, 0);
 			FONTMANAGER->textOut(hdc, _actionButtons[i].left + 35 + 3 * (strlen(actionStr[0]) - strlen(actionStr[i])), _actionButtons[i].top + 5, "가을체", 15, 100, actionStr[i], strlen(actionStr[i]), RGB(255, 255, 255));
 		}
+	}
+	if (_skillChoice)
+	{
+		_skillButtons[0].left = WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 2) * tileWidth) + 5;
+		_skillButtons[0].right = _skillButtons[0].left + 155;
+		_skillButtons[1].left = (_curChar->getTilePos().x + 2) * tileWidth + 5;
+		_skillButtons[0].top = WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 2) * tileHeight) + 5;
+		_skillButtons[0].bottom = _skillButtons[0].top + 20;
+		_skillButtons[1].top = (_curChar->getTilePos().y - 2) * tileHeight + 5;
+		IMAGEMANAGER->findImage("TextBox")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 2) * tileWidth), 
+			WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 2) * tileHeight), 160, 100, 0, 0, 
+			IMAGEMANAGER->findImage("TextBox")->getWidth(), IMAGEMANAGER->findImage("TextBox")->getHeight(), 128);
+		for (int i = 0; i < 2; i++)
+		{
+			if (PtInRect(&_skillButtons[i], _ptMouse))
+			{
+				IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc,_skillButtons[i].left, 
+					_skillButtons[i].top, 150, 20, 0, 0, 
+					IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 128);
+			}
+		}
+		IMAGEMANAGER->findImage("SkillIcon")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x + 2) * tileWidth) + 5,
+			WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y - 2) * tileHeight) + 5);
+		char skillStr[258];
+		wsprintf(skillStr, "천지파열무");
+		FONTMANAGER->textOut(hdc, _skillButtons[0].left + 22, _skillButtons[0].top, "가을체", 18, 100, skillStr, strlen(skillStr), RGB(255, 255, 255));
 	}
 }
 
@@ -498,17 +550,16 @@ void TurnSystem::sortObjectList()
 {
 	for (int i = 0; i < _objectList.size() - 1; i++)
 	{
-		int y = _objectList[i]->getTilePos().y;
 		for (int j = i + 1; j < _objectList.size(); j++)
 		{
-			if (y > _objectList[j]->getTilePos().y)
+			if (_objectList[i]->getTilePos().y > _objectList[j]->getTilePos().y)
 			{
 				Object* temp;
 				temp = _objectList[j];
 				_objectList[j] = _objectList[i];
 				_objectList[i] = temp;
 			}
-			else if (y == _objectList[j]->getTilePos().y)
+			else if (_objectList[i]->getTilePos().y == _objectList[j]->getTilePos().y)
 			{
 				if (_objectList[j]->getType() != 2)
 				{

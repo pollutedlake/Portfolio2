@@ -9,7 +9,6 @@ HRESULT Saladin::init(void)
 	_type = 0;
 	_maxHP = 500.f;
 	_curHP = _maxHP;
-	//_curHP = 10;
 	_maxMP = 100.f;
 	_curMP = _maxMP;
 	Character::init();
@@ -105,6 +104,7 @@ void Saladin::update(void)
 			_curHP -= _damage;
 			if (_curHP <= 0)
 			{
+				_curHP = 0;
 				setState(pow(2, DIE));
 			}
 			else
@@ -122,6 +122,12 @@ void Saladin::update(void)
 			{
 				SOUNDMANAGER->playSoundFMOD("SaladinSkillStart");
 			}
+		}
+		if (!_doing)
+		{
+			_state.reset();
+			_turn.set(TURNACTION, false);
+			
 		}
 	}
 }

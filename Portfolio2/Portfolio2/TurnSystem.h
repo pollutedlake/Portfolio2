@@ -24,7 +24,9 @@ private:
 	vector<Character*> _charList;
 	vector<Object*> _objectList;
 	bool _actionChoice;
+	bool _skillChoice;
 	RECT _actionButtons[4];
+	RECT _skillButtons[2];
 	vector<POINT> _attackTiles;
 	int _frame;
 	bool _isClear;

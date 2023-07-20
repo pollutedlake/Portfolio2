@@ -7,9 +7,8 @@ HRESULT Vermont::init(void)
 	_wtp = 10;
 	_mobility = 5;
 	_type = 1;
-	_maxHP = 200.f;
+	_maxHP = 400.f;
 	_curHP = _maxHP;
-	//_curHP = 10;
 	_maxMP = 100.f;
 	_curMP = _maxMP;
 	Character::init();
@@ -76,6 +75,7 @@ void Vermont::update(void)
 			_curHP -= _damage;
 			if (_curHP < 0)
 			{
+				_curHP = 0;
 				setState(pow(2, DIE));
 			}
 			else
@@ -87,14 +87,20 @@ void Vermont::update(void)
 	}
 	else if (_state.test(SKILL))
 	{
-		if (_skillOrder.test(2))
+		if (_skillOrder.test(0))
+		{
+			if(_frame == 1)
+			{
+				_curMP -= 50;
+			}
+		}
+		else if (_skillOrder.test(2))
 		{
 			static float angle;
 			static float dist;
 			static float moveDist;
 			if(_frame == 1)
 			{ 
-				_curMP -= 50;
 				angle = atan2((float)_destTilePos.y * 30.f + 15.f - y, (float)_destTilePos.x * 40.f + 20.f - x);
 				dist = sqrt(pow(((float)_destTilePos.x * 40.f + 20.f - x) * 1.1f, 2) + pow(((float)_destTilePos.y * 30.f + 15.f - y) * 1.1f, 2));
 				if (SamePoint(_destTilePos, _tilePos))
@@ -156,6 +162,7 @@ void Vermont::update(void)
 		if (255 - 255 / 30 * _frame < 0)
 		{
 			_isDie = true;
+			setDoing(false);
 		}
 	}
 }
