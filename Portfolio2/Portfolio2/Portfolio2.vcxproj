@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AStar.h" />
+    <ClInclude Include="BattleScene.h" />
     <ClInclude Include="BossBattleScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSoldier.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
@@ -180,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="BossBattleScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -194,6 +197,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSoldier.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Saladin.cpp" />

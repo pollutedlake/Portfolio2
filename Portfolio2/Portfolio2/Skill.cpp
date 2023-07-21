@@ -373,7 +373,7 @@ void Skill::update(void)
 		}
 	}
 	// 살라딘 스킬 천지파열무
-	else if (_curChar->getType() == 0)
+	else if (!strcmp(_skillName, "천지파열무"))
 	{
 		if (_order.test(0))
 		{
@@ -555,7 +555,7 @@ void Skill::update(void)
 	{
 		if (_order.test(0))
 		{
-
+			
 		}
 		else if (_order.test(1))
 		{
@@ -648,7 +648,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 		}
 	}
 	// 살라딘 스킬 천지파열무
-	else if (_curChar->getType() == 0)
+	else if (!strcmp(_skillName, "천지파열무"))
 	{
 		// 스킬 시전
 		if (_order.test(0))
@@ -1612,7 +1612,8 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 	{
 		if (_order.test(0))
 		{
-
+			IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
+				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 128);
 		}
 		else if (_order.test(1))
 		{
@@ -1637,7 +1638,7 @@ int Skill::getOrder()
 	return  -1;
 }
 
-void Skill::start(vector<Character*> charList, Character* curChar)
+void Skill::start(vector<Character*> charList, Character* curChar, char* skillName)
 {
 	_frame = 0;
 	_charList = charList;
@@ -1655,4 +1656,5 @@ void Skill::start(vector<Character*> charList, Character* curChar)
 	_bigStones.clear();
 	_startFrame = 0;
 	_snow.clear();
+	_skillName = skillName;
 }

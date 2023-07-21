@@ -38,6 +38,6 @@ public:
 	int getOrder();
 
 	bool isFinish() {return _isFinish;}
-	void start(vector<Character*> charList, Character* curChar);
+	void start(vector<Character*> charList, Character* curChar, char* skillName);
 };
 

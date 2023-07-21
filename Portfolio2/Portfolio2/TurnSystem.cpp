@@ -185,7 +185,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 								_player->setState(8);
 								_player->setXY(40, 30);
 								_player->setDoing(true);
-								_skill->start(_charList, _curChar);
+								_skill->start(_charList, _curChar, "풍아열공참");
 								_actionChoice.reset();
 								_actionChoice.set(0);
 							}
@@ -308,7 +308,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 						_enemy->setState(8);
 						_enemy->setXY(40, 30);
 						_enemy->setDoing(true);
-						_skill->start(_charList, _curChar);
+						_skill->start(_charList, _curChar, "설화난영참");
 					}
 					else
 					{

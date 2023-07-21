@@ -47,6 +47,9 @@
     <Filter Include="Class\Object\Character\Enemy">
       <UniqueIdentifier>{95a9b1be-1d47-491f-9dbb-0d80b6c15fe1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Object\Character\Player">
+      <UniqueIdentifier>{14b436ac-60c5-4cad-8027-3c4a384cc737}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SingletonBase.h">
@@ -116,9 +119,6 @@
     <ClInclude Include="Vermont.h">
       <Filter>Class\Object\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Saladin.h">
-      <Filter>Class\Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="TurnSystem.h">
       <Filter>Class</Filter>
     </ClInclude>
@@ -143,8 +143,17 @@
     <ClInclude Include="Soldier.h">
       <Filter>Class\Object\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerSoldier.h">
+    <ClInclude Include="BattleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>Class\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Saladin.h">
+      <Filter>Class\Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSoldier.h">
+      <Filter>Class\Object\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,9 +215,6 @@
     <ClCompile Include="Vermont.cpp">
       <Filter>Class\Object\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Saladin.cpp">
-      <Filter>Class\Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="TurnSystem.cpp">
       <Filter>Class</Filter>
     </ClCompile>
@@ -233,8 +239,17 @@
     <ClCompile Include="Soldier.cpp">
       <Filter>Class\Object\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerSoldier.cpp">
+    <ClCompile Include="BattleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Class\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Saladin.cpp">
+      <Filter>Class\Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSoldier.cpp">
+      <Filter>Class\Object\Character\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
