@@ -35,6 +35,7 @@ protected:
 	bool _isAttack;
 	bool _isDie;
 	float x, y;
+	char* _skillName;
 
 	float _curHP;
 	float _maxHP;
@@ -60,6 +61,7 @@ public:
 	void setDestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
 	void setDamage(int damage) {_damage = damage;}
 	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i); _frame = 0; }
+	void setSkillName(char* skillName) {_skillName = skillName;}
 
 	//POINT getTilePos() { return _tilePos; }
 	POINT getDestTilePos() {return _destTilePos;}

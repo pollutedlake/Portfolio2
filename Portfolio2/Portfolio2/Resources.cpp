@@ -129,6 +129,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Clear", "Resources/Images/UI/Clear.bmp", 119, 36, true, RGB(8, 36, 44));
 	IMAGEMANAGER->addImage("Snow", "Resources/Images/UI/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Cham", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/Cham.bmp", 6780, 235, 30, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("SlashLight", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/SlashLight.bmp", 3441, 109, 31, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUpEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackUpEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDownEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackDownEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
@@ -187,6 +188,8 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("CrackedEarth","Resources/Sounds/SoundEffect/CrackedEarth.wav");
 	SOUNDMANAGER->addSoundFMOD("Explosion","Resources/Sounds/SoundEffect/Explosion.wav");
 	SOUNDMANAGER->addSoundFMOD("SaladinSkillStart","Resources/Sounds/SoundEffect/SaladinSkillStart.wav");
+	SOUNDMANAGER->addSoundFMOD("FourAttack","Resources/Sounds/SoundEffect/FourAttack.wav");
+	SOUNDMANAGER->addSoundFMOD("FinalAttack","Resources/Sounds/SoundEffect/FinalAttack.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");

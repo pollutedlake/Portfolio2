@@ -556,10 +556,67 @@ void Skill::update(void)
 		if (_order.test(0))
 		{
 			
+			if (_frame == 1)
+			{
+				SOUNDMANAGER->playSoundFMOD("SkillCasting");
+			}
+			if ((_frame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
+			{
+				_order = _order << 1;
+				_frame = 0;
+				_curChar->setSkillOrder(1);
+				_orderOrder.reset();
+				_startFrame = 0;
+				_orderOrder.set(0);
+			}
 		}
 		else if (_order.test(1))
 		{
-
+			_startFrame++;
+			if ((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10 == 8)
+			{
+				_order = _order << 1;
+				_frame = 0;
+				_curChar->setSkillOrder(2);
+				_orderOrder.reset();
+				_orderOrder.set(0);
+			}
+			if (_frame  == 10 || _frame == 30)
+			{
+				_startFrame = 0;
+			}
+			if ((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10 < 8)
+			{
+				if (((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10) % 2 == 1)
+				{
+					_startFrame = 0;
+				}
+			}
+		}
+		else if (_order.test(2))
+		{
+			_startFrame++;
+			if (_frame == 51)
+			{
+				SOUNDMANAGER->playSoundFMOD("FinalAttack");
+			}
+			if ((_frame - 50) / 5 > 5)
+			{
+				_order = _order << 1;
+				_frame = 0;
+				_curChar->setSkillOrder(3);
+				_orderOrder.reset();
+				_orderOrder.set(0);
+			}
+		}
+		else if (_order.test(3))
+		{
+			if (_frame / 5 + 6 > IMAGEMANAGER->findImage("Cham")->getMaxFrameX())
+			{
+				_curChar->setDir(LEFT);
+				_curChar->setDoing(false);
+				_isFinish = true;
+			}
 		}
 	}
 }
@@ -1613,11 +1670,31 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 		if (_order.test(0))
 		{
 			IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
-				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 128);
+				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2, 0, 128);
 		}
 		else if (_order.test(1))
 		{
-
+			if(_startFrame - 1 < IMAGEMANAGER->findImage("SlashLight")->getMaxFrameX() + 1)
+			{
+				IMAGEMANAGER->findImage("SlashLight")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SlashLight")->getFrameWidth() / 2 - 60,
+					position.y - IMAGEMANAGER->findImage("SlashLight")->getFrameHeight() / 2 + 30, _startFrame - 1, 0, 200);
+			}
+		}
+		else if (_order.test(2))
+		{
+			if(_frame > 50)
+			{
+				IMAGEMANAGER->findImage("Cham")->frameRender(hdc, position.x - 170, position.y - 120, (_frame - 50) / 5, 0);
+			}
+			if (_startFrame - 1 < IMAGEMANAGER->findImage("SlashLight")->getMaxFrameX() + 1)
+			{
+				IMAGEMANAGER->findImage("SlashLight")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SlashLight")->getFrameWidth() / 2 - 60,
+					position.y - IMAGEMANAGER->findImage("SlashLight")->getFrameHeight() / 2 + 30, _startFrame - 1, 0, 200);
+			}
+		}
+		else if (_order.test(3))
+		{
+			IMAGEMANAGER->findImage("Cham")->frameRender(hdc, position.x - 170, position.y - 120, _frame / 5 + 6, 0);
 		}
 	}
 }
@@ -1657,4 +1734,5 @@ void Skill::start(vector<Character*> charList, Character* curChar, char* skillNa
 	_startFrame = 0;
 	_snow.clear();
 	_skillName = skillName;
+	_curChar->setSkillName(_skillName);
 }

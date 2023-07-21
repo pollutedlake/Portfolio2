@@ -12,6 +12,7 @@ HRESULT TurnSystem::init(void)
 	_frame = 0;
 	_actionChoice.reset();
 	_actionChoice.set(0);
+	_skillName = "";
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
 		if ((*it)->getTurnOrder(_charList.size()) == 0)
@@ -164,14 +165,14 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 								if (PtInRect(&_skillButtons[i], _ptMouse))
 								{
 									_actionChoice = _actionChoice << 1;
-									char* skillName = "";
+									static char* skillName = "";
 									if (i == 0)
 									{
-										skillName = "천지파열무";
+										_skillName = "천지파열무";
 									}
 									else if (i == 1)
 									{
-										skillName = "풍아열공참";
+										_skillName = "풍아열공참";
 									}
 									_skillableTiles = ((Saladin*)(_curChar))->getSkillableTiles(tileInfo, 90, 60, skillName);
 								}
@@ -185,7 +186,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 								_player->setState(8);
 								_player->setXY(40, 30);
 								_player->setDoing(true);
-								_skill->start(_charList, _curChar, "풍아열공참");
+								_skill->start(_charList, _curChar, _skillName);
 								_actionChoice.reset();
 								_actionChoice.set(0);
 							}

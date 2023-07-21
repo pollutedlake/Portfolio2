@@ -34,6 +34,7 @@ private:
 	bool _isClear;
 	bool _isFail;
 	Skill* _skill;
+	char* _skillName;
 
 public:
 	HRESULT init(void);
