@@ -72,6 +72,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("CantMoveTile", "Resources/Images/UI/CantMoveTile.bmp", 76, 42, 2, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("MovableTile", "Resources/Images/UI/MovableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("AttackableTile", "Resources/Images/UI/AttackableTile.bmp", 40, 32);
+	IMAGEMANAGER->addImage("SkillableTile", "Resources/Images/UI/SkillableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("ActionButton", "Resources/Images/UI/ActionButton.bmp", 102, 28, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ActionButtonActive", "Resources/Images/UI/ActionButtonActive.bmp", 102, 28, true, RGB(255, 45, 254));
 	IMAGEMANAGER->addImage("SkillIcon", "Resources/Images/UI/SkillIcon.bmp", 17, 17, true, RGB(252, 236, 248));
@@ -127,7 +128,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Scenario", "Resources/Images/UI/Scenario.bmp", 189, 35, true, RGB(8, 36, 44));
 	IMAGEMANAGER->addImage("Clear", "Resources/Images/UI/Clear.bmp", 119, 36, true, RGB(8, 36, 44));
 	IMAGEMANAGER->addImage("Snow", "Resources/Images/UI/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
-	//IMAGEMANAGER->addImage("BattleEnd", "Resources/Images/UI/BattleEnd.bmp", 142, 90, true, RGB(0, 4, 4));
+	IMAGEMANAGER->addFrameImage("Cham", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/Cham.bmp", 6780, 235, 30, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUpEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackUpEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDownEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackDownEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
@@ -169,7 +170,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Stone2", "Resources/Images/Effects/SkillEffect/Saladin/Stone2.bmp", 465, 30, 15, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("ShockWave", "Resources/Images/Effects/SkillEffect/Saladin/ShockWave.bmp", 6368, 157, 32, 1, true, RGB(4, 108, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUp", "Resources/Images/Characters/Vermont/VermontAttackUp.bmp", 464, 85, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("VermontAttackDown", "Resources/Images/Characters/Vermont/VermontAttackDown.bmp", 420, 104, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinSkill", "Resources/Images/Characters/Saladin/SaladinSkill.bmp", 1100, 101, 11, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(4, 0, 4));
 

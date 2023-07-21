@@ -412,3 +412,66 @@ void Saladin::searchMovable(int map[][60], int rowN, int colN)
 		_attackableTiles.push_back(node);
 	}
 }
+
+vector<POINT> Saladin::getSkillableTiles(int map[][60], int rowN, int cloN, char skillName[])
+{
+	_skillableTiles.clear();
+	if (!strcmp(skillName, "천지파열무"))
+	{
+		for (int i = 0; i <= 10; i++)
+		{
+			for (int j = 0; j <= 10 - i; j++)
+			{
+				if (map[_tilePos.y - j][_tilePos.x - i] != 0)
+				{
+					_skillableTiles.push_back({ _tilePos.x - i, _tilePos.y - j });
+				}
+				if (i == 0 && j == 0)
+				{
+					continue;
+				}
+				else if (j != 0)
+				{
+					if (map[_tilePos.y + j][_tilePos.x - i] != 0)
+					{
+						_skillableTiles.push_back({ _tilePos.x - i, _tilePos.y + j });
+					}
+				}
+				if (i != 0)
+				{
+					if (map[_tilePos.y - j][_tilePos.x + i] != 0)
+					{
+						_skillableTiles.push_back({ _tilePos.x + i, _tilePos.y - j });
+					}
+				}
+				if(i != 0 && j != 0)
+				{
+					if (map[_tilePos.y + j][_tilePos.x + i] != 0)
+					{
+						_skillableTiles.push_back({ _tilePos.x + i, _tilePos.y + j });
+					}
+				}
+			}
+		}
+	}
+	else if (!strcmp(skillName, "풍아열공참"))
+	{
+		if (map[_tilePos.y - 2][_tilePos.x] != 0)
+		{
+			_skillableTiles.push_back({ _tilePos.x, _tilePos.y - 2 });
+		}
+		if (map[_tilePos.y + 2][_tilePos.x] != 0)
+		{
+			_skillableTiles.push_back({ _tilePos.x, _tilePos.y + 2 });
+		}
+		if (map[_tilePos.y][_tilePos.x - 2] != 0)
+		{
+			_skillableTiles.push_back({ _tilePos.x - 2, _tilePos.y});
+		}
+		if (map[_tilePos.y][_tilePos.x + 2] != 0)
+		{
+			_skillableTiles.push_back({ _tilePos.x + 2, _tilePos.y});
+		}
+	}
+	return _skillableTiles;
+}

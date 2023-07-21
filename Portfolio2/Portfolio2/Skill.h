@@ -12,6 +12,7 @@ struct IcePillar
 class Skill
 {
 private:
+	char* _skillName;
 	int _frame;
 	int _startFrame;
 	bool _isFinish;

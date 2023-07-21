@@ -23,11 +23,13 @@ private:
 	AStar* _aStar;
 	vector<Character*> _charList;
 	vector<Object*> _objectList;
-	bool _actionChoice;
+	bitset<4> _actionChoice;
 	bool _skillChoice;
+	bool _skillRangeChoice;
 	RECT _actionButtons[4];
 	RECT _skillButtons[2];
 	vector<POINT> _attackTiles;
+	vector<POINT> _skillableTiles;
 	int _frame;
 	bool _isClear;
 	bool _isFail;

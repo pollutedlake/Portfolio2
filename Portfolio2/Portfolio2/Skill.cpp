@@ -551,6 +551,17 @@ void Skill::update(void)
 			}
 		}
 	}
+	else if (!strcmp(_skillName, "풍아열공참"))
+	{
+		if (_order.test(0))
+		{
+
+		}
+		else if (_order.test(1))
+		{
+
+		}
+	}
 }
 
 void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int tileHeight)
@@ -1595,6 +1606,17 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 					}
 				}
 			}
+		}
+	}
+	else if (!strcmp(_skillName, "풍아열공참"))
+	{
+		if (_order.test(0))
+		{
+
+		}
+		else if (_order.test(1))
+		{
+
 		}
 	}
 }

@@ -6,6 +6,7 @@ class Saladin : public Character
 private:
 	vector<POINT> _movableTiles;
 	vector<POINT> _attackableTiles;
+	vector<POINT> _skillableTiles;
 	bool _cameraShake;
 
 public:
@@ -20,6 +21,7 @@ public:
 
 	vector<POINT> getMovableTiles() {return _movableTiles;}
 	vector<POINT> getAttackableTiles() {return _attackableTiles;}
+	vector<POINT> getSkillableTiles(int map[][60], int rowN, int colN, char skillName[]);
 	bool isCameraShake() { return _cameraShake; }
 
 	Saladin() {}

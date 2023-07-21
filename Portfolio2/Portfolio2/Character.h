@@ -40,6 +40,7 @@ protected:
 	float _maxHP;
 	float _maxMP;
 	float _curMP;
+	
 
 public:
 	virtual HRESULT init(void);
