@@ -123,6 +123,29 @@ void Saladin::update(void)
 				if (_frame == 1)
 				{
 					SOUNDMANAGER->playSoundFMOD("SaladinSkillStart");
+					if (_destTilePos.x - _tilePos.x > 0)
+					{
+						_dir.reset();
+						_dir.set(RIGHT);
+					}
+					else if (_destTilePos.x - _tilePos.x < 0)
+					{
+						_dir.reset();
+						_dir.set(LEFT);
+					}
+					else
+					{
+						if (_destTilePos.y - _tilePos.y > 0)
+						{
+							_dir.reset();
+							_dir.set(DOWN);
+						}
+						else if (_destTilePos.y - _tilePos.y < 0)
+						{
+							_dir.reset();
+							_dir.set(UP);
+						}
+					}
 				}
 			}
 			else if (_skillOrder.test(1))
@@ -155,6 +178,73 @@ void Saladin::update(void)
 				}
 			}
 		}
+		else if (!strcmp(_skillName, "Ç÷¶û¸¶È¥"))
+		{
+			if(_skillOrder.test(0))
+			{
+				if (_frame == 1)
+				{
+					if (_destTilePos.x - _tilePos.x > 0)
+				{
+					_dir.reset();
+					_dir.set(RIGHT);
+				}
+					else if (_destTilePos.x - _tilePos.x < 0)
+				{
+					_dir.reset();
+					_dir.set(LEFT);
+				}
+					else
+				{
+					if (_destTilePos.y - _tilePos.y > 0)
+					{
+						_dir.reset();
+						_dir.set(DOWN);
+					}
+					else if (_destTilePos.y - _tilePos.y < 0)
+					{
+						_dir.reset();
+						_dir.set(UP);
+					}
+				}
+				}
+			}
+			else if (_skillOrder.test(1))
+			{
+
+			}
+			else if (_skillOrder.test(2))
+			{
+				if (_dir.test(LEFT))
+				{
+					if(x > _destTilePos.x * 40 + 20)
+					{
+						x-=10;
+					}
+				}
+				else if (_dir.test(RIGHT))
+				{
+					if(x < _destTilePos.x * 40 + 20)
+					{
+						x+=10;
+					}
+				}
+				else if (_dir.test(UP))
+				{
+					if(y > _destTilePos.y * 30 + 15)
+					{
+						y-=10;
+					}
+				}
+				else if (_dir.test(DOWN))
+				{
+					if(y < _destTilePos.y * 30 + 15)
+					{
+						y+=10;
+					}
+				}
+			}
+		}
 		if (!_doing)
 		{
 			_state.reset();
@@ -166,7 +256,6 @@ void Saladin::update(void)
 
 void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 {
-	//IMAGEMANAGER->findImage("Explosion2")->frameRender(hdc, position.x - 35, position.y - 50, (_frame / 5) % IMAGEMANAGER->findImage("Explosion2")->getMaxFrameX(), 0);
 	if (_state.none())
 	{
 		if (_dir.test(LEFT))
@@ -316,15 +405,17 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 		}
 		else if (!strcmp(_skillName, "Ç³¾Æ¿­°øÂü"))
 		{
-			if (_skillOrder.test(0))
+			if(_dir.test(LEFT))
+			{
+				if (_skillOrder.test(0))
 			{
 				IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 70, position.y - 20, 0, LEFT);
 			}
-			else if (_skillOrder.test(1))
+				else if (_skillOrder.test(1))
 			{
 				if (_frame / 10 <= IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX())
 				{
-					IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 70, position.y - 20, _frame / 10 ,LEFT);
+					IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 70, position.y - 20, _frame / 10, LEFT);
 
 					if (_frame / 10 == 1)
 					{
@@ -350,7 +441,7 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 					}
 				}
 			}
-			else if (_skillOrder.test(2))
+				else if (_skillOrder.test(2))
 			{
 				if(_frame < 50)
 				{
@@ -366,9 +457,214 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 					}
 				}
 			}
-			else if (_skillOrder.test(3))
+				else if (_skillOrder.test(3))
 			{
 				IMAGEMANAGER->findImage("SaladinIdleLeft")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 4, 0);
+			}
+			}
+			else if (_dir.test(RIGHT))
+			{
+				if (_skillOrder.test(0))
+				{
+					IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 45, position.y - 20, IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - 0, RIGHT);
+				}
+				else if (_skillOrder.test(1))
+				{
+					if (_frame / 10 <= IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX())
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 45, position.y - 20, IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - _frame / 10, RIGHT);
+
+						if (_frame / 10 == 1)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackSideEffect")->alphaFrameRender(hdc, position.x - 40, position.y - 60, IMAGEMANAGER->findImage("SaladinAttackSideEffect")->getMaxFrameX() - (_frame / 4 - 2), 1, 200);
+						}
+						if (_frame / 10 > 2)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackSideEffect")->alphaFrameRender(hdc, position.x - 40, position.y - 60, IMAGEMANAGER->findImage("SaladinAttackSideEffect")->getMaxFrameX() - (_frame / 5 - 3), 1, 200);
+						}
+					}
+					else if (_frame / 10 > IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() && _frame / 10 < IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 45, position.y - 20, IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - 0, RIGHT);
+					}
+					else if ((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10 < 8)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 45, position.y - 20,
+							IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - (((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10) % 2), RIGHT);
+						if (((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10) % 2 == 1)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackSideEffect")->alphaFrameRender(hdc, position.x - 40, position.y - 60,
+								IMAGEMANAGER->findImage("SaladinAttackSideEffect")->getMaxFrameX() - ((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 4 - 2), 1, 200);
+						}
+					}
+				}
+				else if (_skillOrder.test(2))
+				{
+					if (_frame < 50)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 45, position.y - 20, IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - 0, RIGHT);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 45, position.y - 20, IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - 1, RIGHT);
+						if (_frame < 58)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackSideEffect")->alphaFrameRender(hdc, position.x - 40, position.y - 60,
+								IMAGEMANAGER->findImage("SaladinAttackSideEffect")->getMaxFrameX() - (_frame - 50), 0, 200);
+						}
+					}
+				}
+				else if (_skillOrder.test(3))
+				{
+					IMAGEMANAGER->findImage("SaladinIdleRight")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 5) % 4, 0);
+				}
+			}
+			else if (_dir.test(UP))
+			{
+				if (_skillOrder.test(0))
+				{
+					IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 40, position.y - 60, 0, 0);
+				}
+				else if (_skillOrder.test(1))
+				{
+					// ÇÑ¹ø »çÀÌÅ¬ °ø°Ý
+					if (_frame / 10 <= IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX())
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 40, position.y - 60, _frame / 10, 0);
+
+						if (_frame / 10 == 1)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackUpEffect")->alphaFrameRender(hdc, position.x - 50, position.y - 100, _frame / 4 - 2, 0, 200);
+						}
+						if (_frame / 10 > 2)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackUpEffect")->alphaFrameRender(hdc, position.x - 50, position.y - 100, _frame / 5 - 3, 0, 200);
+						}
+					}
+					// ´ë±â
+					else if (_frame / 10 > IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX() && _frame / 10 < IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 40, position.y - 60, 0, 0);
+					}
+					// ½´½´½´½µ
+					else if ((_frame - (IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX() + 10) * 10) / 10 < 8)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 40, position.y - 60,
+							((_frame - (IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX() + 10) * 10) / 10) % 2, 0);
+						if (((_frame - (IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX() + 10) * 10) / 10) % 2 == 1)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackUpEffect")->alphaFrameRender(hdc, position.x - 50, position.y - 100,
+								(_frame - (IMAGEMANAGER->findImage("SaladinAttackUp")->getMaxFrameX() + 10) * 10) / 4 - 2, 0, 200);
+						}
+					}
+				}
+				else if (_skillOrder.test(2))
+				{
+					if (_frame < 50)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 40, position.y - 60, 0, 0);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 40, position.y - 60, 1, 0);
+						if (_frame < 58)
+						{
+							IMAGEMANAGER->findImage("SaladinAttackUpEffect")->alphaFrameRender(hdc, position.x - 50, position.y - 100,
+								_frame - 50, 0, 200);
+						}
+					}
+				}
+				else if (_skillOrder.test(3))
+				{
+					IMAGEMANAGER->findImage("SaladinIdleUp")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 4, 0);
+				}
+			}
+			else if (_dir.test(DOWN))
+			{
+			if (_skillOrder.test(0))
+			{
+				IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 0, 0);
+			}
+			else if (_skillOrder.test(1))
+			{
+				if (_frame / 10 <= IMAGEMANAGER->findImage("SaladinAttackDown")->getMaxFrameX())
+				{
+					IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, _frame / 10, 0);
+
+					if (_frame / 10 == 1)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 50, _frame / 4 - 2, 0, 200);
+					}
+					if (_frame / 10 > 2)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 50, _frame / 5 - 3, 0, 200);
+					}
+				}
+				else if (_frame / 10 > IMAGEMANAGER->findImage("SaladinAttackDown")->getMaxFrameX() && _frame / 10 < IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10)
+				{
+					IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 0, 0);
+				}
+				else if ((_frame - (IMAGEMANAGER->findImage("SaladinAttackDown")->getMaxFrameX() + 10) * 10) / 10 < 8)
+				{
+					IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20,
+						((_frame - (IMAGEMANAGER->findImage("SaladinAttackDown")->getMaxFrameX() + 10) * 10) / 10) % 2, 0);
+					if (((_frame - (IMAGEMANAGER->findImage("SaladinAttackDown")->getMaxFrameX() + 10) * 10) / 10) % 2 == 1)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 50,
+							(_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 4 - 2, 0, 200);
+					}
+				}
+			}
+			else if (_skillOrder.test(2))
+			{
+				if (_frame < 50)
+				{
+					IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 0, 0);
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 1, 0);
+					if (_frame < 58)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackDownEffect")->alphaFrameRender(hdc, position.x - 35, position.y - 50,
+							_frame - 50, 0, 200);
+					}
+				}
+			}
+			else if (_skillOrder.test(3))
+			{
+				IMAGEMANAGER->findImage("SaladinIdleDown")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 5) % 4, 0);
+			}
+			}
+		}
+		else if (!strcmp(_skillName, "Ç÷¶û¸¶È¥"))
+		{
+			if (_skillOrder.test(0))
+			{
+				IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 0, 0);
+			}
+			else if (_skillOrder.test(1))
+			{
+				IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 35, position.y - 20, 0, 0);
+			}
+			else if (_skillOrder.test(2))
+			{
+				if (_dir.test(LEFT))
+				{
+					IMAGEMANAGER->findImage("SaladinDashLeft")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 60);
+				}
+				else if (_dir.test(RIGHT))
+				{
+					IMAGEMANAGER->findImage("SaladinDashRight")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_Y / 2 - (cameraPos.y - y) - 60);
+				}
+				else if (_dir.test(UP))
+				{
+					IMAGEMANAGER->findImage("SaladinDashUp")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 40, WINSIZE_Y / 2 - (cameraPos.y - y) - 80);
+				}
+				else if (_dir.test(DOWN))
+				{
+					IMAGEMANAGER->findImage("SaladinDashDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 30, WINSIZE_Y / 2 - (cameraPos.y - y) - 75);
+				}
 			}
 		}
 	}
@@ -563,6 +859,28 @@ vector<POINT> Saladin::getSkillableTiles(int map[][60], int rowN, int cloN, char
 		if (map[_tilePos.y][_tilePos.x + 2] != 0)
 		{
 			_skillableTiles.push_back({ _tilePos.x + 2, _tilePos.y});
+		}
+	}
+	else if (!strcmp(skillName, "Ç÷¶û¸¶È¥"))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			if (map[_tilePos.y - 2 - i][_tilePos.x] != 0)
+			{
+				_skillableTiles.push_back({ _tilePos.x, _tilePos.y - 2 - i });
+			}
+			if (map[_tilePos.y + 2 + i][_tilePos.x] != 0)
+			{
+				_skillableTiles.push_back({ _tilePos.x, _tilePos.y + 2 + i});
+			}
+			if (map[_tilePos.y][_tilePos.x - 2 - i] != 0)
+			{
+				_skillableTiles.push_back({ _tilePos.x - 2 - i, _tilePos.y });
+			}
+			if (map[_tilePos.y][_tilePos.x + 2 + i] != 0)
+			{
+				_skillableTiles.push_back({ _tilePos.x + 2 + i, _tilePos.y });
+			}
 		}
 	}
 	return _skillableTiles;

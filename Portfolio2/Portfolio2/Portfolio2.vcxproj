@@ -161,6 +161,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="PartyManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSoldier.h" />
     <ClInclude Include="RandomFunction.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Saladin.h" />
     <ClInclude Include="ScenarioScene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ShopScene.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Soldier.h" />
@@ -197,12 +199,14 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="PartyManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSoldier.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Saladin.cpp" />
     <ClCompile Include="ScenarioScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoundManager.cpp" />

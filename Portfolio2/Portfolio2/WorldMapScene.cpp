@@ -49,7 +49,8 @@ void WorldMapScene::update(void)
 		}
 		if (PtInRect(&_buttonsRC[1], _ptMouse))
 		{
-
+			SOUNDMANAGER->stopAllSoundFMOD();
+			SCENEMANAGER->changeScene("Shop");
 		}
 		if (_state.test(0) && PtInRect(&_nextMoveRC, _ptMouse))
 		{

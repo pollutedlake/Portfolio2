@@ -19,6 +19,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("WorldMap", "Resources/Images/BackGrounds/WorldMapScene/WorldMap.bmp", 1347, 839);
 
 	IMAGEMANAGER->addImage("TextBox", "Resources/Images/UI/TextBox.bmp", 230, 105);
+	IMAGEMANAGER->addImage("ShopTitle", "Resources/Images/UI/ShopTitle.bmp", 620, 49);
+	IMAGEMANAGER->addImage("ShopTitleLT", "Resources/Images/UI/ShopTitleLT.bmp", 80, 13, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("ShopTitleRB", "Resources/Images/UI/ShopTitleRB.bmp", 80, 13, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("ShopButton", "Resources/Images/UI/ShopButton.bmp", 140, 36);
+	IMAGEMANAGER->addImage("Empty", "Resources/Images/UI/Empty.bmp", 50, 50);
+	IMAGEMANAGER->addImage("PressButton", "Resources/Images/UI/PressButton.bmp", 140, 36);
+	IMAGEMANAGER->addFrameImage("ShopIcon", "Resources/Images/UI/ShopIcon.bmp", 140, 35, 4, 1, true, RGB(236, 208, 208));
+	IMAGEMANAGER->addImage("ShopButtonActive", "Resources/Images/UI/ShopButtonActive.bmp", 140, 36);
 	IMAGEMANAGER->addImage("MapCoordination", "Resources/Images/UI/MapCoordination.bmp", 70, 38);
 	IMAGEMANAGER->addImage("EldBar", "Resources/Images/UI/EldBar.bmp", 62, 4);
 	IMAGEMANAGER->addImage("EldIcon", "Resources/Images/UI/EldIcon.bmp", 12, 15, true, RGB(252, 252, 252));
@@ -80,6 +88,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("WorldMapInfo", "Resources/Images/UI/WorldMapInfo.bmp", 241, 111, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("WorldMapFlag", "Resources/Images/UI/WorldMapFlag.bmp", 61, 91, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("WorldMapSaladin", "Resources/Images/UI/WorldMapSaladin.bmp", 50, 50);
+	IMAGEMANAGER->addImage("ShopSaladin", "Resources/Images/UI/ShopSaladin.bmp", 50, 50);
 	IMAGEMANAGER->addFrameImage("ActionIcon", "Resources/Images/UI/ActionIcon.bmp", 96, 25, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("WorldMapMoveMarker", "Resources/Images/UI/WorldMapMoveMarker.bmp", 3360, 120, 28, 1, true, RGB(255, 45, 254));
 	IMAGEMANAGER->addFrameImage("MiniStatusWindow", "Resources/Images/UI/MiniStatusWindow.bmp", 900, 49, 15, 1, true, RGB(255, 0, 255));
@@ -90,6 +99,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("WorldMapTeam", "Resources/Images/UI/WorldMapTeam.bmp", 195, 18, 5, 1);
 	IMAGEMANAGER->addFrameImage("VermontSherazade", "Resources/Images/BackGrounds/StoryScene/VermontSherazade.bmp", 3816, 90, 24, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("Red", "Resources/Images/BackGrounds/StoryScene/RedBG.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("ShopSceneBG", "Resources/Images/BackGrounds/ShopScene/ShopSceneBG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("AbandonedSwords", "Resources/Images/BackGrounds/StoryScene/AbandonedSwods.bmp", 55, 45, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("Soldier1", "Resources/Images/BackGrounds/StoryScene/Soldier1.bmp", 58, 67, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Soldier2", "Resources/Images/BackGrounds/StoryScene/Soldier2.bmp", 54, 69, true, RGB(0, 0, 0));
@@ -111,6 +121,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontAttackSideEffect", "Resources/Images/Effects/SkillEffect/VermontAttackSideEffect.bmp", 636, 166, 4, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackUpEffect", "Resources/Images/Effects/SkillEffect/VermontAttackUpEffect.bmp", 548, 119, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackDownEffect", "Resources/Images/Effects/SkillEffect/VermontAttackDownEffect.bmp", 512, 132, 4, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Wolf", "Resources/Images/Effects/SkillEffect/Ç÷¶û¸¶È¥/Wolf.bmp", 5278, 199, 26, 1, true, RGB(100, 0, 4));
 	IMAGEMANAGER->addImage("VermontDamagedLeft", "Resources/Images/Characters/Vermont/VermontDamagedLeft.bmp", 65, 69, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontDamagedRight", "Resources/Images/Characters/Vermont/VermontDamagedRight.bmp", 65, 69, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontDamagedUp", "Resources/Images/Characters/Vermont/VermontDamagedUp.bmp", 47, 82, true, RGB(0, 0, 0));
@@ -119,6 +130,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("SaladinDamagedRight", "Resources/Images/Characters/Saladin/SaladinDamagedRight.bmp", 67, 69, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("SaladinDamagedUp", "Resources/Images/Characters/Saladin/SaladinDamagedUp.bmp", 47, 78, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("SaladinDamagedDown", "Resources/Images/Characters/Saladin/SaladinDamagedDown.bmp", 79, 80, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDashLeft", "Resources/Images/Characters/Saladin/SaladinDashLeft.bmp", 83, 74, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDashRight", "Resources/Images/Characters/Saladin/SaladinDashRight.bmp", 83, 74, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDashUp", "Resources/Images/Characters/Saladin/SaladinDashUp.bmp", 79, 84, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("SaladinDashDown", "Resources/Images/Characters/Saladin/SaladinDashDown.bmp", 67, 80, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("VermontSkillCasting", "Resources/Images/Characters/Vermont/VermontSkillCasting.bmp", 53, 73, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontSkillUp", "Resources/Images/Characters/Vermont/VermontSkillUp.bmp", 26, 131, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontSkillDown", "Resources/Images/Characters/Vermont/VermontSkillDown.bmp", 32, 122, true, RGB(0, 0, 0));
@@ -130,6 +145,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Snow", "Resources/Images/UI/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Cham", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/Cham.bmp", 6780, 235, 30, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SlashLight", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/SlashLight.bmp", 3441, 109, 31, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Charging", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/Charging.bmp", 12, 12, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackUpEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackUpEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackSideEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackSideEffect.bmp", 1274, 288, 7, 2, true, RGB(0, 68, 0));
 	IMAGEMANAGER->addFrameImage("SaladinAttackDownEffect", "Resources/Images/Effects/SkillEffect/SaladinAttackDownEffect.bmp", 945, 163, 7, 1, true, RGB(0, 68, 0));
@@ -190,6 +206,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("SaladinSkillStart","Resources/Sounds/SoundEffect/SaladinSkillStart.wav");
 	SOUNDMANAGER->addSoundFMOD("FourAttack","Resources/Sounds/SoundEffect/FourAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("FinalAttack","Resources/Sounds/SoundEffect/FinalAttack.wav");
+	SOUNDMANAGER->addSoundFMOD("Ç÷¶û¸¶È¥","Resources/Sounds/SoundEffect/Wolf.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");
@@ -242,6 +259,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("BeforeLastBattle", "Resources/Sounds/StoryScene/BeforeLastBattle.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("SherazadeDead", "Resources/Sounds/StoryScene/SherazadeDead.mp3");
 	SOUNDMANAGER->addSoundFMOD("WorldMapBG", "Resources/Sounds/WorldMapScene/WorldMapBG.mp3", true);
+	SOUNDMANAGER->addSoundFMOD("ShopSceneBG", "Resources/Sounds/ShopScene/ShopSceneBG.mp3", true);
 	//DIALOGMANAGER->addDialogs("StoryScene");
 	//DIALOGMANAGER->addDialogs("EndingScene");
 	//DIALOGMANAGER->addDialog("EndingScene", "Vermont", "", { L"[¹ö¸óÆ®]", L"Á×¿©¶ó..." }, )

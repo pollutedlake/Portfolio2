@@ -4,7 +4,7 @@
 HRESULT PlayerSoldier::init(void)
 {
 	_frame = 0;
-	_wtp = 10;
+	_wtp = 999999;
 	_mobility = 7;
 	_type = 0;
 	_maxHP = 10.f;

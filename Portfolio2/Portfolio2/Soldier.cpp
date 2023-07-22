@@ -4,10 +4,10 @@
 HRESULT Soldier::init(void)
 {
 	_frame = 0;
-	_wtp = 10;
+	_wtp = 999999;
 	_mobility = 5;
 	_type = 1;
-	_maxHP = 10.f;
+	_maxHP = 50.f;
 	_curHP = _maxHP;
 	_maxMP = 100.f;
 	_curMP = 0;

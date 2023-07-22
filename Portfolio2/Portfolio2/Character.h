@@ -63,7 +63,6 @@ public:
 	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i); _frame = 0; }
 	void setSkillName(char* skillName) {_skillName = skillName;}
 
-	//POINT getTilePos() { return _tilePos; }
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
 	int getCurWait() {return _curWait;}
@@ -73,7 +72,6 @@ public:
 	bool isDoing() {return _doing;}
 	bool canMove() {return _turn.test(TURNMOVE);}
 	bool canAction() {return _turn.test(TURNACTION);}
-	//int getType() {return _type;}
 	bool isAttack() {return _isAttack;}
 	bool isSkill() { return _state[SKILL]; }
 	float getCurHP() { return _curHP; }

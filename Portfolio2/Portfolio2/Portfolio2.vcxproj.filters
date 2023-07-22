@@ -155,6 +155,12 @@
     <ClInclude Include="PlayerSoldier.h">
       <Filter>Class\Object\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="ShopScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -250,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="PlayerSoldier.cpp">
       <Filter>Class\Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PartyManager.cpp">
+      <Filter>ManagerClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ HRESULT Vermont::init(void)
 	_wtp = 10;
 	_mobility = 5;
 	_type = 1;
-	_maxHP = 400.f;
+	_maxHP = 800.f;
 	_curHP = _maxHP;
 	_maxMP = 100.f;
 	_curMP = _maxMP;

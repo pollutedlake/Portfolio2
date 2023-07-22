@@ -559,6 +559,24 @@ void Skill::update(void)
 			if (_frame == 1)
 			{
 				SOUNDMANAGER->playSoundFMOD("SkillCasting");
+				for (int i = 0; i < 20; i++)
+				{
+					pair<POINT, POINT> chargingEFX;
+					float angle = RND->getFloat(360.f);
+					float radius = RND->getFromFloatTo(40.f, 80.f);
+					chargingEFX.first.x = _curChar->getTilePos().x * 40 + 20 + radius * cos(angle / 180.f * PI);
+					chargingEFX.first.y = _curChar->getTilePos().y * 30 - 15 + radius * sin(angle / 180.f * PI);
+					chargingEFX.second.x = -(10 * cos(angle / 180.f * PI));
+					chargingEFX.second.y = -(10 * sin(angle / 180.f * PI));
+					_efxPos.push_back(chargingEFX);
+				}
+				for (auto it = _charList.begin(); it != _charList.end(); ++it)
+				{
+					if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+					{
+						_targetChar = (*it);
+					}
+				}
 			}
 			if ((_frame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
 			{
@@ -584,18 +602,40 @@ void Skill::update(void)
 			if (_frame  == 10 || _frame == 30)
 			{
 				_startFrame = 0;
+				_targetChar->setDamage(RND->getInt(5) + 3);
+				_targetChar->setState(4);
+
 			}
 			if ((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10 < 8)
 			{
 				if (((_frame - (IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() + 10) * 10) / 10) % 2 == 1)
 				{
 					_startFrame = 0;
+					_targetChar->setDamage(RND->getInt(5) + 3);
+					_targetChar->setState(4);
 				}
 			}
 		}
 		else if (_order.test(2))
 		{
 			_startFrame++;
+			if(_frame % 2 == 0)
+			{
+				for (auto it = _efxPos.begin(); it != _efxPos.end(); ++it)
+				{
+					(*it).first.x += (*it).second.x;
+					(*it).first.y += (*it).second.y;
+					if (abs((*it).first.x - (_curChar->getTilePos().x * 40 + 20)) < 5 || abs((*it).first.y - (_curChar->getTilePos().y * 30 - 15)) < 5)
+					{
+						float angle = RND->getFloat(360.f);
+						float radius = RND->getFromFloatTo(40.f, 80.f);
+						(*it).first.x = _curChar->getTilePos().x * 40 + 20 + radius * cos(angle / 180.f * PI);
+						(*it).first.y = _curChar->getTilePos().y * 30 - 15 + radius * sin(angle / 180.f * PI);
+						(*it).second.x = -(10 * cos(angle / 180.f * PI));
+						(*it).second.y = -(10 * sin(angle / 180.f * PI));
+					}
+				}
+			}
 			if (_frame == 51)
 			{
 				SOUNDMANAGER->playSoundFMOD("FinalAttack");
@@ -607,16 +647,94 @@ void Skill::update(void)
 				_curChar->setSkillOrder(3);
 				_orderOrder.reset();
 				_orderOrder.set(0);
+				_targetChar->setDamage(200);
+				_targetChar->setState(4);
 			}
 		}
 		else if (_order.test(3))
 		{
 			if (_frame / 5 + 6 > IMAGEMANAGER->findImage("Cham")->getMaxFrameX())
 			{
-				_curChar->setDir(LEFT);
 				_curChar->setDoing(false);
 				_isFinish = true;
 			}
+		}
+	}
+	else if (!strcmp(_skillName, "혈랑마혼"))
+	{
+		// 스킬 시전
+		if (_order.test(0))
+		{
+
+			if (_frame == 1)
+			{
+				SOUNDMANAGER->playSoundFMOD("SkillCasting");
+				_wolfPos[0] = {_curChar->getTilePos().x * 40 + 20 - IMAGEMANAGER->findImage("Wolf")->getFrameWidth() / 2 + 20,
+					_curChar->getTilePos().y * 30 + 15 - IMAGEMANAGER->findImage("Wolf")->getFrameHeight() / 2 - 90 };
+				_wolfPos[1] = { _curChar->getTilePos().x * 40 + 20 - IMAGEMANAGER->findImage("Wolf")->getFrameWidth() / 2 + 20,
+					_curChar->getTilePos().y * 30 + 15 - IMAGEMANAGER->findImage("Wolf")->getFrameHeight() / 2 - 60 };
+			}
+			// 스킬 시전이 끝나면
+			if ((_frame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
+			{
+				_order = _order << 1;
+				_frame = 0;
+				_curChar->setSkillOrder(1);
+				_orderOrder.reset();
+				_startFrame = 0;
+				_orderOrder.set(0);
+			}
+		}
+		// 이리 부르기 
+		else if (_order.test(1))
+		{
+			// 이리 오른아래로 사라지면서 이동
+			if (_orderOrder.test(0))
+			{
+				if (_frame == 1)
+				{
+					SOUNDMANAGER->playSoundFMOD("혈랑마혼");
+				}
+				_wolfPos[0].first += 0.1;
+				_wolfPos[0].second += 0.1f;
+				if (7 + _frame / 5 > 16)
+				{
+					_orderOrder = _orderOrder << 1;
+					_frame = 0;
+				}
+			}
+			// 이리1 왼아래로 사라지면서 이동
+			// 이리2 밝아지면서 오른아래로 이동했다가 사라지면서 왼아래로 이동
+			else if (_orderOrder.test(1))
+			{
+				_wolfPos[0].first -= 0.1;
+				_wolfPos[1].first += 0.05;
+				_wolfPos[0].second += 0.1f;
+				_wolfPos[1].second += 0.05f;
+				if (IMAGEMANAGER->findImage("Wolf")->getMaxFrameX() / 2 - _frame / 5 < 0)
+				{
+					_wolfPos[1].first -= 0.2f;
+
+					if (SOUNDMANAGER->getCurrentPos("혈랑마혼") > 3000)
+					{
+						_orderOrder.reset();
+						_orderOrder.set(0);
+						_curChar->setSkillOrder(2);
+						_order = _order << 1;
+						_frame = 0;
+					}
+				}
+			}
+		}
+		// 돌진하며 번개 떨어지기
+		else if (_order.test(2))
+		{
+
+		}
+		// 마무리
+		else if (_order.test(3))
+		{
+
 		}
 	}
 }
@@ -1676,25 +1794,73 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 		{
 			if(_startFrame - 1 < IMAGEMANAGER->findImage("SlashLight")->getMaxFrameX() + 1)
 			{
-				IMAGEMANAGER->findImage("SlashLight")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SlashLight")->getFrameWidth() / 2 - 60,
-					position.y - IMAGEMANAGER->findImage("SlashLight")->getFrameHeight() / 2 + 30, _startFrame - 1, 0, 200);
+				IMAGEMANAGER->findImage("SlashLight")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_targetChar->getTilePos().x * 40 + 20 - IMAGEMANAGER->findImage("SlashLight")->getFrameWidth() / 2)),
+					WINSIZE_Y / 2 - (cameraPos.y - (_targetChar->getTilePos().y * 30 - 15 - IMAGEMANAGER->findImage("SlashLight")->getFrameHeight() / 2)), _startFrame - 1, 0, 200);
 			}
 		}
 		else if (_order.test(2))
 		{
+			if (_frame < 50)
+			{
+				for (auto it = _efxPos.begin(); it != _efxPos.end(); ++it)
+				{
+					IMAGEMANAGER->findImage("Charging")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (*it).first.x), WINSIZE_Y / 2 - (cameraPos.y - (*it).first.y), 128);
+				}
+			}
 			if(_frame > 50)
 			{
-				IMAGEMANAGER->findImage("Cham")->frameRender(hdc, position.x - 170, position.y - 120, (_frame - 50) / 5, 0);
+				IMAGEMANAGER->findImage("Cham")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_targetChar->getTilePos().x * 40 + 20 - IMAGEMANAGER->findImage("Cham")->getFrameWidth() / 2)),
+					WINSIZE_Y / 2 - (cameraPos.y - (_targetChar->getTilePos().y * 30 - 15 - IMAGEMANAGER->findImage("Cham")->getFrameHeight() / 2)), (_frame - 50) / 5, 0);
 			}
 			if (_startFrame - 1 < IMAGEMANAGER->findImage("SlashLight")->getMaxFrameX() + 1)
 			{
-				IMAGEMANAGER->findImage("SlashLight")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SlashLight")->getFrameWidth() / 2 - 60,
-					position.y - IMAGEMANAGER->findImage("SlashLight")->getFrameHeight() / 2 + 30, _startFrame - 1, 0, 200);
+				IMAGEMANAGER->findImage("SlashLight")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_targetChar->getTilePos().x * 40 + 20 - IMAGEMANAGER->findImage("SlashLight")->getFrameWidth() / 2)),
+					WINSIZE_Y / 2 - (cameraPos.y - (_targetChar->getTilePos().y * 30 - 15 - IMAGEMANAGER->findImage("SlashLight")->getFrameHeight() / 2)), _startFrame - 1, 0, 200);
 			}
 		}
 		else if (_order.test(3))
 		{
-			IMAGEMANAGER->findImage("Cham")->frameRender(hdc, position.x - 170, position.y - 120, _frame / 5 + 6, 0);
+			IMAGEMANAGER->findImage("Cham")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_targetChar->getTilePos().x * 40 + 20 - IMAGEMANAGER->findImage("Cham")->getFrameWidth() / 2)),
+				WINSIZE_Y / 2 - (cameraPos.y - (_targetChar->getTilePos().y * 30 - 15 - IMAGEMANAGER->findImage("Cham")->getFrameHeight() / 2)), _frame / 5 + 6, 0);
+		}
+	}
+	else if (!strcmp(_skillName, "혈랑마혼"))
+	{
+		// 스킬 시전
+		if (_order.test(0))
+		{
+			IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
+				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2, 0, 128);
+		}
+		// 이리 부르기 
+		else if (_order.test(1))
+		{
+			if(_orderOrder.test(0))
+			{
+				IMAGEMANAGER->findImage("Wolf")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _wolfPos[0].first),
+					WINSIZE_Y / 2 - (cameraPos.y - _wolfPos[0].second), 7 + _frame / 5, 0, 128);
+			}
+			else if(_orderOrder.test(1))
+			{
+				if(17 + _frame / 5 < IMAGEMANAGER->findImage("Wolf")->getMaxFrameX() + 1)
+				{
+					IMAGEMANAGER->findImage("Wolf")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _wolfPos[0].first),
+						WINSIZE_Y / 2 - (cameraPos.y - _wolfPos[0].second), 17 + _frame / 5, 0, 128);
+				}
+				IMAGEMANAGER->findImage("Wolf")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - _wolfPos[1].first),
+					WINSIZE_Y / 2 - (cameraPos.y - _wolfPos[1].second), IMAGEMANAGER->findImage("Wolf")->getMaxFrameX() / 2 - _frame / 5 < 0 ? 
+					(_frame - (IMAGEMANAGER->findImage("Wolf")->getMaxFrameX() / 2 + 1) * 5) / 5 : IMAGEMANAGER->findImage("Wolf")->getMaxFrameX() / 2 - _frame / 5, 0, 128);
+			}
+		}
+		// 돌진하며 번개 떨어지기
+		else if (_order.test(2))
+		{
+			
+		}
+		// 마무리
+		else if (_order.test(3))
+		{
+			
 		}
 	}
 }

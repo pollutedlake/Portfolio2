@@ -17,6 +17,7 @@ private:
 	int _startFrame;
 	bool _isFinish;
 	Character* _curChar;
+	Character* _targetChar;
 	vector<Character*> _charList;
 	vector<POINT> _snow;
 	bitset<4> _order;
@@ -29,6 +30,7 @@ private:
 	POINT _stonePos[4][12][5];
 	vector<pair<int, int>> _volcano;
 	vector<vector<pair<int, int>>> _bigStones;
+	pair<float, float> _wolfPos[2];
 
 public:
 	HRESULT init(void);

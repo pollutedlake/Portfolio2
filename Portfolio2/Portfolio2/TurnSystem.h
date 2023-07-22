@@ -27,7 +27,7 @@ private:
 	bool _skillChoice;
 	bool _skillRangeChoice;
 	RECT _actionButtons[4];
-	RECT _skillButtons[2];
+	RECT _skillButtons[3];
 	vector<POINT> _attackTiles;
 	vector<POINT> _skillableTiles;
 	int _frame;
