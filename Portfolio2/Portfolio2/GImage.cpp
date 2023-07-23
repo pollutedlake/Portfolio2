@@ -492,8 +492,18 @@ void GImage::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 {
 	if (!_blendImage) initForAlphaBlend();
 
-	_blendFunc.SourceConstantAlpha = alpha;
-
+	if (alpha < 0)
+	{
+		_blendFunc.SourceConstantAlpha = 0;
+	}
+	else if (alpha > 255)
+	{
+		_blendFunc.SourceConstantAlpha = 255;
+	}
+	else
+	{
+		_blendFunc.SourceConstantAlpha = alpha;
+	}
 	if (_isTrans)
 	{
 		// 1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지 그린다.

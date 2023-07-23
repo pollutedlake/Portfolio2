@@ -618,6 +618,10 @@ void Skill::update(void)
 		}
 		else if (_order.test(2))
 		{
+			if (_frame == 1)
+			{
+				SOUNDMANAGER->playSoundFMOD("Charging");
+			}
 			_startFrame++;
 			if(_frame % 2 == 0)
 			{
@@ -729,12 +733,87 @@ void Skill::update(void)
 		// 돌진하며 번개 떨어지기
 		else if (_order.test(2))
 		{
-
+			// 양 옆의 분신이 도착할때까지
+			if(_curChar->getTilePos().x > _curChar->getDestTilePos().x)
+			{
+				if (_frame >= (_curChar->getTilePos().x - _curChar->getDestTilePos().x) * 40 / 20 * 3)
+				{
+					_orderOrder.reset();
+					_orderOrder.set(0);
+					_curChar->setTilePos(_curChar->getDestTilePos());
+					_curChar->setSkillOrder(3);
+					for (auto it = _charList.begin(); it != _charList.end(); ++it)
+					{
+						(*it)->setDamage(200);
+						(*it)->setState(4);
+					}
+					_order = _order << 1;
+					_frame = 0;
+				}
+			}
+			else if (_curChar->getTilePos().x < _curChar->getDestTilePos().x)
+			{
+				if (_frame >= (_curChar->getDestTilePos().x - _curChar->getTilePos().x) * 40 / 20 * 3)
+				{
+					_orderOrder.reset();
+					_orderOrder.set(0);
+					_curChar->setTilePos(_curChar->getDestTilePos());
+					for (auto it = _charList.begin(); it != _charList.end(); ++it)
+					{
+						(*it)->setDamage(200);
+						(*it)->setState(4);
+					}
+					_curChar->setSkillOrder(3);
+					_order = _order << 1;
+					_frame = 0;
+				}
+			}
+			else
+			{
+				if (_curChar->getTilePos().y > _curChar->getDestTilePos().y)
+				{
+					if (_frame >= (float)(_curChar->getTilePos().y - _curChar->getDestTilePos().y) * 90.f / 20.f)
+					{
+						_orderOrder.reset();
+						_orderOrder.set(0);
+						_curChar->setTilePos(_curChar->getDestTilePos());
+						_curChar->setSkillOrder(3);
+						for (auto it = _charList.begin(); it != _charList.end(); ++it)
+						{
+							(*it)->setDamage(200);
+							(*it)->setState(4);
+						}
+						_order = _order << 1;
+						_frame = 0;
+					}
+				}
+				else
+				{
+					if (_frame >= (float)(_curChar->getDestTilePos().y - _curChar->getTilePos().y) * 90.f / 20.f)
+					{
+						_orderOrder.reset();
+						_orderOrder.set(0);
+						_curChar->setTilePos(_curChar->getDestTilePos());
+						_curChar->setSkillOrder(3);
+						_order = _order << 1;
+						for (auto it = _charList.begin(); it != _charList.end(); ++it)
+						{
+							(*it)->setDamage(200);
+							(*it)->setState(4);
+						}
+						_frame = 0;
+					}
+				}
+			}
 		}
 		// 마무리
 		else if (_order.test(3))
 		{
-
+			if (_frame / 4 == 4)
+			{
+				_curChar->setDoing(false);
+				_isFinish = true;
+			}
 		}
 	}
 }
@@ -1855,7 +1934,17 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 		// 돌진하며 번개 떨어지기
 		else if (_order.test(2))
 		{
-			
+			for(auto it = _charList.begin(); it != _charList.end(); ++it)
+			{
+				if(_frame / 2 < IMAGEMANAGER->findImage("Spark")->getMaxFrameX() + 1)
+				{
+					IMAGEMANAGER->findImage("Spark")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x * 40 + 20)) - 60, 
+						WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y * 30 + 15)) - 90, _frame / 2, 0, 128);
+					IMAGEMANAGER->findImage("Thunder")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - ((*it)->getTilePos().x * 40 + 20)) - IMAGEMANAGER->findImage("Thunder")->getFrameWidth() / 2,
+						WINSIZE_Y / 2 - (cameraPos.y - ((*it)->getTilePos().y * 30 + 15)) - IMAGEMANAGER->findImage("Thunder")->getFrameHeight(),
+						_frame / 5 % IMAGEMANAGER->findImage("Thunder")->getMaxFrameX(), 0, 128);
+				}
+			}
 		}
 		// 마무리
 		else if (_order.test(3))

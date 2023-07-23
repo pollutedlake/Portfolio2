@@ -185,28 +185,28 @@ void Saladin::update(void)
 				if (_frame == 1)
 				{
 					if (_destTilePos.x - _tilePos.x > 0)
-				{
-					_dir.reset();
-					_dir.set(RIGHT);
-				}
+					{
+						_dir.reset();
+						_dir.set(RIGHT);
+					}
 					else if (_destTilePos.x - _tilePos.x < 0)
-				{
-					_dir.reset();
-					_dir.set(LEFT);
-				}
+					{
+						_dir.reset();
+						_dir.set(LEFT);
+					}
 					else
-				{
-					if (_destTilePos.y - _tilePos.y > 0)
 					{
-						_dir.reset();
-						_dir.set(DOWN);
+						if (_destTilePos.y - _tilePos.y > 0)
+						{
+							_dir.reset();
+							_dir.set(DOWN);
+						}
+						else if (_destTilePos.y - _tilePos.y < 0)
+						{
+							_dir.reset();
+							_dir.set(UP);
+						}
 					}
-					else if (_destTilePos.y - _tilePos.y < 0)
-					{
-						_dir.reset();
-						_dir.set(UP);
-					}
-				}
 				}
 			}
 			else if (_skillOrder.test(1))
@@ -217,33 +217,37 @@ void Saladin::update(void)
 			{
 				if (_dir.test(LEFT))
 				{
-					if(x > _destTilePos.x * 40 + 20)
+					if(x > _destTilePos.x * 40 + 40)
 					{
-						x-=10;
+						x -= 10;
 					}
 				}
 				else if (_dir.test(RIGHT))
 				{
-					if(x < _destTilePos.x * 40 + 20)
+					if(x < _destTilePos.x * 40)
 					{
-						x+=10;
+						x += 10;
 					}
 				}
 				else if (_dir.test(UP))
 				{
 					if(y > _destTilePos.y * 30 + 15)
 					{
-						y-=10;
+						y -= 10;
 					}
 				}
 				else if (_dir.test(DOWN))
 				{
 					if(y < _destTilePos.y * 30 + 15)
 					{
-						y+=10;
+						y += 10;
 					}
 				}
 			}
+		}
+		else if (_skillOrder.test(3))
+		{
+			
 		}
 		if (!_doing)
 		{
@@ -652,18 +656,118 @@ void Saladin::render(HDC hdc, POINT position, POINT cameraPos)
 				if (_dir.test(LEFT))
 				{
 					IMAGEMANAGER->findImage("SaladinDashLeft")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 60);
+					if(_frame > (_tilePos.x - _destTilePos.x) * 40 / 20)
+					{
+						IMAGEMANAGER->findImage("SaladinDashLeft")->render(hdc, position.x - 10 * (_frame - (_tilePos.x - _destTilePos.x) * 40 / 20) - 40, WINSIZE_Y / 2 - (cameraPos.y - y) - 90);
+						IMAGEMANAGER->findImage("SaladinDashLeft")->render(hdc, position.x - 10 * (_frame - (_tilePos.x - _destTilePos.x) * 40 / 20) - 40, WINSIZE_Y / 2 - (cameraPos.y - y) - 30);
+					}
+					// ¿‹ªÛ
+					for(int i = 1; x + 20 * i <= _tilePos.x * 40 + 20; i++)
+					{
+						IMAGEMANAGER->findImage("SaladinDashLeft")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (x + 20 * i)) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 60,
+							255 - 10 * i - _frame * 3 < 0 ? 0 : 255 - 10 * i - _frame * 3);
+					}
 				}
 				else if (_dir.test(RIGHT))
 				{
 					IMAGEMANAGER->findImage("SaladinDashRight")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_Y / 2 - (cameraPos.y - y) - 60);
+					if (_frame > (_destTilePos.x - _tilePos.x) * 40 / 20)
+					{
+						IMAGEMANAGER->findImage("SaladinDashRight")->render(hdc, position.x + 10 * (_frame - (_destTilePos.x - _tilePos.x) * 40 / 20), WINSIZE_Y / 2 - (cameraPos.y - y) - 90);
+						IMAGEMANAGER->findImage("SaladinDashRight")->render(hdc, position.x + 10 * (_frame - (_destTilePos.x - _tilePos.x) * 40 / 20), WINSIZE_Y / 2 - (cameraPos.y - y) - 30);
+					}
+					// ¿‹ªÛ
+					for (int i = 1; x - 20 * i >= _tilePos.x * 40 + 20; i++)
+					{
+						IMAGEMANAGER->findImage("SaladinDashRight")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (x - 20 * i)) - 20, WINSIZE_Y / 2 - (cameraPos.y - y) - 60,
+							255 - 10 * i - _frame * 3 < 0 ? 0 : 255 - 10 * i - _frame * 3);
+					}
 				}
 				else if (_dir.test(UP))
 				{
 					IMAGEMANAGER->findImage("SaladinDashUp")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 40, WINSIZE_Y / 2 - (cameraPos.y - y) - 80);
+					if (_frame >= (_tilePos.y - _destTilePos.y) * 30 / 20)
+					{ 
+						IMAGEMANAGER->findImage("SaladinDashUp")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 80, position.y - 10 * (_frame - (_tilePos.y - _destTilePos.y) * 30 / 20) - 15);
+						IMAGEMANAGER->findImage("SaladinDashUp")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x), position.y - 10 * (_frame - (_tilePos.y - _destTilePos.y) * 30 / 20) - 15);
+					}
+					// ¿‹ªÛ
+					for (int i = 1; y + 20 * i <= _tilePos.y * 30 + 15; i++)
+					{
+						IMAGEMANAGER->findImage("SaladinDashUp")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 40, WINSIZE_Y / 2 - (cameraPos.y - (y + 20 * i)) - 80,
+							255 - 10 * i - _frame * 3 < 0 ? 0 : 255 - 10 * i - _frame * 3);
+					}
 				}
 				else if (_dir.test(DOWN))
 				{
-					IMAGEMANAGER->findImage("SaladinDashDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 30, WINSIZE_Y / 2 - (cameraPos.y - y) - 75);
+					IMAGEMANAGER->findImage("SaladinDashDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 30, WINSIZE_Y / 2 - (cameraPos.y - y) - 60);
+					if (_frame > (float)(_destTilePos.y - _tilePos.y) * 30.f / 20.f)
+					{
+						IMAGEMANAGER->findImage("SaladinDashDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 70, position.y + 10 * (_frame - (float)(_destTilePos.y - _tilePos.y) * 30.f / 20.f));
+						IMAGEMANAGER->findImage("SaladinDashDown")->render(hdc, WINSIZE_X / 2 - (cameraPos.x - x) + 10, position.y + 10 * (_frame - (float)(_destTilePos.y - _tilePos.y) * 30.f / 20.f));
+					}
+					// ¿‹ªÛ
+					for (int i = 1; y - 20 * i >= _tilePos.y * 30 + 15; i++)
+					{
+						IMAGEMANAGER->findImage("SaladinDashDown")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 30, WINSIZE_Y / 2 - (cameraPos.y - (y - 20 * i)) - 60,
+							255 - 10 * i - _frame * 3 < 0 ? 0 : 255 - 10 * i - _frame * 3);
+					}
+				}
+			}
+			else if (_skillOrder.test(3))
+			{
+				if(_dir.test(LEFT))
+				{
+					if (_frame / 4 < 3)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 110, WINSIZE_Y / 2 - (cameraPos.y - y) - 80, IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - 1, LEFT);
+						IMAGEMANAGER->findImage("SaladinAttackSideEffect")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 120, WINSIZE_Y / 2 - (cameraPos.y - y) - 105, _frame / 4, 0, 200);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 70, position.y - 20, 0, LEFT);
+					}
+				}
+				else if (_dir.test(RIGHT))
+				{
+					if (_frame / 4 < 3)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 50, WINSIZE_Y / 2 - (cameraPos.y - y) - 80, 
+							IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX() - 1, RIGHT);
+						IMAGEMANAGER->findImage("SaladinAttackSideEffect")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, 
+							WINSIZE_Y / 2 - (cameraPos.y - y) - 105, IMAGEMANAGER->findImage("SaladinAttackSideEffect")->getMaxFrameX() - _frame / 4, 1, 200);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("SaladinAttackSide")->frameRender(hdc, position.x - 50, position.y - 20, 
+							IMAGEMANAGER->findImage("SaladinAttackSide")->getMaxFrameX(), RIGHT);
+					}
+				}
+				else if (_dir.test(UP))
+				{
+					if (_frame / 4 < 3)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 50, WINSIZE_Y / 2 - (cameraPos.y - y) - 110, 1, 0);
+						IMAGEMANAGER->findImage("SaladinAttackUpEffect")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 70,
+							WINSIZE_Y / 2 - (cameraPos.y - y) - 115, _frame / 4, 0, 200);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("SaladinAttackUp")->frameRender(hdc, position.x - 30, position.y - 50, 0, 0);
+					}
+				}
+				else if (_dir.test(DOWN))
+				{
+					if (_frame / 4 < 3)
+					{
+						IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 50, WINSIZE_Y / 2 - (cameraPos.y - y) - 80, 1, 0);
+						IMAGEMANAGER->findImage("SaladinAttackDownEffect")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 50,
+							WINSIZE_Y / 2 - (cameraPos.y - y) - 110, _frame / 4, 0, 200);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("SaladinAttackDown")->frameRender(hdc, position.x - 30, position.y - 15, 0, 0);
+					}
 				}
 			}
 		}
@@ -865,19 +969,19 @@ vector<POINT> Saladin::getSkillableTiles(int map[][60], int rowN, int cloN, char
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if (map[_tilePos.y - 2 - i][_tilePos.x] != 0)
+			if (map[_tilePos.y - 2 - i][_tilePos.x] == 1)
 			{
 				_skillableTiles.push_back({ _tilePos.x, _tilePos.y - 2 - i });
 			}
-			if (map[_tilePos.y + 2 + i][_tilePos.x] != 0)
+			if (map[_tilePos.y + 2 + i][_tilePos.x] == 1)
 			{
 				_skillableTiles.push_back({ _tilePos.x, _tilePos.y + 2 + i});
 			}
-			if (map[_tilePos.y][_tilePos.x - 2 - i] != 0)
+			if (map[_tilePos.y][_tilePos.x - 2 - i] == 1)
 			{
 				_skillableTiles.push_back({ _tilePos.x - 2 - i, _tilePos.y });
 			}
-			if (map[_tilePos.y][_tilePos.x + 2 + i] != 0)
+			if (map[_tilePos.y][_tilePos.x + 2 + i] == 1)
 			{
 				_skillableTiles.push_back({ _tilePos.x + 2 + i, _tilePos.y });
 			}

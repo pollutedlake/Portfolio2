@@ -122,6 +122,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontAttackUpEffect", "Resources/Images/Effects/SkillEffect/VermontAttackUpEffect.bmp", 548, 119, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("VermontAttackDownEffect", "Resources/Images/Effects/SkillEffect/VermontAttackDownEffect.bmp", 512, 132, 4, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Wolf", "Resources/Images/Effects/SkillEffect/Ç÷¶û¸¶È¥/Wolf.bmp", 5278, 199, 26, 1, true, RGB(100, 0, 4));
+	IMAGEMANAGER->addFrameImage("Spark", "Resources/Images/Effects/SkillEffect/Ç÷¶û¸¶È¥/Spark.bmp", 1845, 137, 15, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Thunder", "Resources/Images/Effects/SkillEffect/Ç÷¶û¸¶È¥/Thunder.bmp", 384, 255, 6, 1, true, RGB(0, 0, 4));
 	IMAGEMANAGER->addImage("VermontDamagedLeft", "Resources/Images/Characters/Vermont/VermontDamagedLeft.bmp", 65, 69, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontDamagedRight", "Resources/Images/Characters/Vermont/VermontDamagedRight.bmp", 65, 69, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("VermontDamagedUp", "Resources/Images/Characters/Vermont/VermontDamagedUp.bmp", 47, 82, true, RGB(0, 0, 0));
@@ -142,7 +144,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("BattleEnd", "Resources/Images/UI/BattleEnd.bmp", WINSIZE_X, 90, true, RGB(0, 4, 4));
 	IMAGEMANAGER->addImage("Scenario", "Resources/Images/UI/Scenario.bmp", 189, 35, true, RGB(8, 36, 44));
 	IMAGEMANAGER->addImage("Clear", "Resources/Images/UI/Clear.bmp", 119, 36, true, RGB(8, 36, 44));
-	IMAGEMANAGER->addImage("Snow", "Resources/Images/UI/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Snow", "Resources/Images/Effects/SkillEffect/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("ShopEmployee", "Resources/Images/UI/Shop/ShopEmployee.bmp", 300, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Cham", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/Cham.bmp", 6780, 235, 30, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SlashLight", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/SlashLight.bmp", 3441, 109, 31, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Charging", "Resources/Images/Effects/SkillEffect/Ç³¾Æ¿­°øÂü/Charging.bmp", 12, 12, true, RGB(0, 68, 0));
@@ -207,6 +210,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("FourAttack","Resources/Sounds/SoundEffect/FourAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("FinalAttack","Resources/Sounds/SoundEffect/FinalAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("Ç÷¶û¸¶È¥","Resources/Sounds/SoundEffect/Wolf.wav");
+	SOUNDMANAGER->addSoundFMOD("Charging","Resources/Sounds/SoundEffect/Charging.wav");
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");

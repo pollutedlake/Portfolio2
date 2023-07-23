@@ -236,49 +236,49 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 								}
 								else if (!strcmp(_skillName, "Ç÷¶û¸¶È¥"))
 								{
-									if (tileInfo[cursorTile.y][cursorTile.x] == MOVABLE)
+									for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
 									{
-										for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+										if (SamePoint(cursorTile, (*it)))
 										{
-											if (SamePoint(cursorTile, (*it)))
+											vector<Character*> charList;
+											for (auto it = _charList.begin(); it != _charList.end(); ++it)
 											{
-												vector<Character*> charList;
-												for (auto it = _charList.begin(); it != _charList.end(); ++it)
+												if ((*it)->getType() == 0)
 												{
-													if ((*it)->getType() == 0)
+													continue;
+												}
+												if (cursorTile.y == _curChar->getTilePos().y)
+												{
+													if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < abs(cursorTile.x - _curChar->getTilePos().x) && 
+														((*it)->getTilePos().x - _curChar->getTilePos().x) * (cursorTile.x - _curChar->getTilePos().x) > 0)
 													{
-														continue;
-													}
-													if (cursorTile.x == _curChar->getTilePos().x)
-													{
-														if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < abs(cursorTile.x - _curChar->getTilePos().x))
+														if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < 2)
 														{
-															if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < 2)
-															{
-																charList.push_back((*it));
-															}
-														}
-													}
-													else
-													{
-														if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < abs(cursorTile.y - _curChar->getTilePos().y))
-														{
-															if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < 2)
-															{
-																charList.push_back((*it));
-															}
+															charList.push_back((*it));
 														}
 													}
 												}
-												_curChar->setDestTilePos(cursorTile);
-												_skill->start(charList, _curChar, _skillName);
-												_player->setState(8);
-												_player->setXY(40, 30);
-												_player->setDoing(true);
-												_actionChoice.reset();
-												_actionChoice.set(0);
-												break;
+												else
+												{
+													if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < abs(cursorTile.y - _curChar->getTilePos().y) &&
+														((*it)->getTilePos().y - _curChar->getTilePos().y) * (cursorTile.y - _curChar->getTilePos().y) > 0)
+													{
+														if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < 2)
+														{
+															charList.push_back((*it));
+														}
+													}
+												}
 											}
+											tileInfo[_curChar->getTilePos().y][_curChar->getTilePos().x] = MOVABLE;
+											_curChar->setDestTilePos(cursorTile);
+											_skill->start(charList, _curChar, _skillName);
+											_player->setState(8);
+											_player->setXY(40, 30);
+											_player->setDoing(true);
+											_actionChoice.reset();
+											_actionChoice.set(0);
+											break;
 										}
 									}
 								}
