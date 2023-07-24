@@ -143,7 +143,8 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "SceneManager.h"
 #include "SoundManager.h"
 #include "FontManager.h"
-//#include "DialogManager.h"
+#include "DialogManager.h"
+#include "DataManager.h"
 
 // # 싱글톤 #
 #define RND RandomFunction::getSingleton()
@@ -152,7 +153,8 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #define SCENEMANAGER SceneManager::getSingleton()
 #define SOUNDMANAGER SoundManager::getSingleton()
 #define FONTMANAGER FontManager::getSingleton()
-//#define DIALOGMANAGER DialogManager::getSingleton()
+#define DIALOGMANAGER DialogManager::getSingleton()
+#define DATAMANAGER DataManager::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))

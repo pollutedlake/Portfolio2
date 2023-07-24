@@ -8,6 +8,7 @@
 #include "BossBattleScene.h"
 #include "WorldMapScene.h"
 #include "ShopScene.h"
+#include "LoadingScene.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -18,6 +19,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("BossBattle", new BossBattleScene);
     SCENEMANAGER->addScene("WorldMap", new WorldMapScene);
     SCENEMANAGER->addScene("Shop", new ShopScene);
+    SCENEMANAGER->addScene("Loading", new LoadingScene);
     _whiteImg = IMAGEMANAGER->findImage("White");
     _blackImg = IMAGEMANAGER->findImage("Black");
     _currentScene = nullptr;
@@ -68,6 +70,14 @@ void SceneManager::addScene(string sceneName, GameNode* scene)
     {
         _sceneMap.insert(make_pair(sceneName, scene));
     }
+}
+
+HRESULT SceneManager::lodingScene(string prevScene, string nextScene)
+{
+    auto iter = ((LoadingScene*)(_sceneMap.find("Loading")->second));
+    iter->init(prevScene, nextScene);
+    _currentScene = iter;
+    return S_OK;
 }
 
 HRESULT SceneManager::changeScene(string sceneName)

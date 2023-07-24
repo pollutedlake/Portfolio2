@@ -442,6 +442,10 @@ void EndingScene::update(void)
 			_brothersIndex++;
 		}
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Title");
+	}
 }
 
 void EndingScene::render(void)

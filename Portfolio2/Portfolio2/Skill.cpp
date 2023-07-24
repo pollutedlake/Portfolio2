@@ -551,6 +551,7 @@ void Skill::update(void)
 			}
 		}
 	}
+	// ªÏ∂ÛµÚ Ω∫≈≥ «≥æ∆ø≠∞¯¬¸
 	else if (!strcmp(_skillName, "«≥æ∆ø≠∞¯¬¸"))
 	{
 		if (_order.test(0))
@@ -664,6 +665,7 @@ void Skill::update(void)
 			}
 		}
 	}
+	// ªÏ∂ÛµÚ Ω∫≈≥ «˜∂˚∏∂»•
 	else if (!strcmp(_skillName, "«˜∂˚∏∂»•"))
 	{
 		// Ω∫≈≥ Ω√¿¸
@@ -832,7 +834,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 			if (_startFrame > 0)
 			{
 				IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
-					position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 128);
+					position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 255);
 			}
 		}
 		else if (_order.test(1))
@@ -910,7 +912,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 			if (_startFrame > 0)
 			{
 				IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
-					position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 128);
+					position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_startFrame - 1) / 2, 0, 255);
 			}
 		}
 		// Ω∫≈≥ ªÁ¿¸ ¡ÿ∫Ò
@@ -929,7 +931,7 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 					}
 					tempFrame++;
 					IMAGEMANAGER->findImage("ShockWave")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x * tileWidth + tileWidth / 2 - IMAGEMANAGER->findImage("ShockWave")->getFrameWidth() / 2)),
-						WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y * tileHeight + tileHeight / 2 - IMAGEMANAGER->findImage("ShockWave")->getFrameHeight() / 2)), tempFrame / 5, 0, 255 - tempFrame * 3);
+						WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y * tileHeight + tileHeight / 2 - IMAGEMANAGER->findImage("ShockWave")->getFrameHeight() / 2)), tempFrame / 5, 0, 255 - tempFrame * 3 < 0 ? 0 : 255 - tempFrame * 3);
 					for (int i = 0; i < 4; i++)
 					{
 						for (int j = 0; j < 12; j++)
@@ -1199,8 +1201,8 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 						{
 							for(int j = 0; j < 5; j++)
 							{
-								IMAGEMANAGER->findImage("Stone1")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth - _stonePos[1][i][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight - _stonePos[1][i][j].y + 60) - (_frame - (20 + (i + 1) * 10)) * 2,
-									IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), ((_frame / 5 - i - j) * 19 % 17) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0, 
+								IMAGEMANAGER->findImage("Stone1")->alphaFrameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - (_curChar->getTilePos().x - 1 - i) * tileWidth - _stonePos[1][(i)][j].x), WINSIZE_Y / 2 - (cameraPos.y - (_curChar->getTilePos().y + 1 + i) * tileHeight - _stonePos[1][i][j].y + 60) - (_frame - (20 + (i + 1) * 10)) * 2,
+									IMAGEMANAGER->findImage("Stone1")->getFrameWidth(), IMAGEMANAGER->findImage("Stone1")->getFrameHeight(), ((_frame / 5 - i - j) * 19 % 17) % (IMAGEMANAGER->findImage("Stone1")->getMaxFrameX() + 1), 0,
 									255 - 0);
 							}
 						}
@@ -1862,12 +1864,13 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 			}
 		}
 	}
+	// ªÏ∂ÛµÚ Ω∫≈≥ «≥æ∆ø≠∞¯¬¸
 	else if (!strcmp(_skillName, "«≥æ∆ø≠∞¯¬¸"))
 	{
 		if (_order.test(0))
 		{
 			IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
-				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2, 0, 128);
+				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2, 0, 255);
 		}
 		else if (_order.test(1))
 		{
@@ -1903,13 +1906,14 @@ void Skill::render(HDC hdc, POINT position, POINT cameraPos, int tileWidth, int 
 				WINSIZE_Y / 2 - (cameraPos.y - (_targetChar->getTilePos().y * 30 - 15 - IMAGEMANAGER->findImage("Cham")->getFrameHeight() / 2)), _frame / 5 + 6, 0);
 		}
 	}
+	// ªÏ∂ÛµÚ Ω∫≈≥ «˜∂˚∏∂»•
 	else if (!strcmp(_skillName, "«˜∂˚∏∂»•"))
 	{
 		// Ω∫≈≥ Ω√¿¸
 		if (_order.test(0))
 		{
 			IMAGEMANAGER->findImage("SkillCasting")->alphaFrameRender(hdc, position.x - IMAGEMANAGER->findImage("SkillCasting")->getFrameWidth() / 2 + 10,
-				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2, 0, 128);
+				position.y - IMAGEMANAGER->findImage("SkillCasting")->getFrameHeight() / 2 + 30, (_frame - 1) / 2, 0, 255);
 		}
 		// ¿Ã∏Æ ∫Œ∏£±‚ 
 		else if (_order.test(1))

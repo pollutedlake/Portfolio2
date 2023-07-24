@@ -150,6 +150,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CommonMacroFunction.h" />
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="DialogManager.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="GImage.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Obstacle.h" />
@@ -188,6 +190,7 @@
     <ClCompile Include="BossBattleScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -196,6 +199,7 @@
     <ClCompile Include="GImage.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Obstacle.cpp" />

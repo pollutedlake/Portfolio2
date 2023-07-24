@@ -22,6 +22,7 @@ public:
 	void render(void);
 
 	void addScene(string sceneName, GameNode* scene);
+	HRESULT lodingScene(string prevScene, string nextScene);
 	HRESULT changeScene(string sceneName);
 
 	void fadeOutWhite(int start, int cur, int end);

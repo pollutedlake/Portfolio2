@@ -10,6 +10,7 @@ private:
 	bitset<50> _order;
 	char* _shopText[4] = {"도구상점", "무기점", "용병길드", "주점"};
 	RECT _buySellButton[2];
+	pair<RECT, bool> _decisionButton;
 	bool _sell;
 
 public:

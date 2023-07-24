@@ -39,6 +39,8 @@ HRESULT GameNode::init(bool managerInit)
 		RND->init();
 		IMAGEMANAGER->init();
 		SOUNDMANAGER->init();
+		DIALOGMANAGER->init();
+		DATAMANAGER->init();
 	}
 	return S_OK;
 }
@@ -57,6 +59,10 @@ void GameNode::release(void)
 		SCENEMANAGER->releaseSingleton();
 		SOUNDMANAGER->release();
 		SOUNDMANAGER->releaseSingleton();
+		DIALOGMANAGER->release();
+		DIALOGMANAGER->releaseSingleton();
+		DATAMANAGER->release();
+		DATAMANAGER->releaseSingleton();
 		ClipCursor(NULL);
 	}
 	ReleaseDC(_hWnd, _hdc);

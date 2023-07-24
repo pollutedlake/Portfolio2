@@ -10,17 +10,22 @@ HRESULT ShopScene::init(void)
 		_shopButtons[i].top = 10 + IMAGEMANAGER->findImage("ShopTitle")->getHeight() + 20 + (5 + IMAGEMANAGER->findImage("ShopButton")->getHeight() * 1.5f) * i;
 		_shopButtons[i].bottom = _shopButtons[i].top + IMAGEMANAGER->findImage("ShopButton")->getHeight() * 1.5f;
 	}
-	_exitButton.left = WINSIZE_X - 10 - IMAGEMANAGER->findImage("ShopButton")->getWidth() * 0.5f;
-	_exitButton.top = WINSIZE_Y - 20 - IMAGEMANAGER->findImage("ShopButton")->getHeight() * 0.5f;
+	_exitButton.left = WINSIZE_X - 10 - 100;
+	_exitButton.top = WINSIZE_Y - 20 - 20;
 	_exitButton.right = WINSIZE_X - 10;
 	_exitButton.bottom = WINSIZE_Y - 20;
 	for (int i = 0; i < 2; i++)
 	{
-		_buySellButton[i].left = 30 + 50 * i;
+		_buySellButton[i].left = 30 + 100 * i;
 		_buySellButton[i].top = 90;
-		_buySellButton[i].right = _buySellButton[i].left + 50;
+		_buySellButton[i].right = _buySellButton[i].left + 100;
 		_buySellButton[i].bottom = _buySellButton[i].top + 20;
 	}
+	_decisionButton.first.right = WINSIZE_X / 2 - 20;
+	_decisionButton.first.left = _decisionButton.first.right - 80;
+	_decisionButton.first.bottom = 510 - 10;
+	_decisionButton.first.top = _decisionButton.first.bottom - 20;
+	_decisionButton.second = false;
 	_order.reset();
 	_order.set(0);
 	_sell = false;
@@ -58,6 +63,10 @@ void ShopScene::update(void)
 					_sell = i;
 				}
 			}
+			if (PtInRect(&_decisionButton.first, _ptMouse))
+			{
+				_decisionButton.second = true;
+			}
 		}
 		
 	}
@@ -68,6 +77,10 @@ void ShopScene::update(void)
 			SOUNDMANAGER->stopAllSoundFMOD();
 			SCENEMANAGER->changeScene("WorldMap");
 		}
+		if (_decisionButton.second)
+		{
+			_decisionButton.second = false;
+		}
 	}
 }
 
@@ -75,8 +88,8 @@ void ShopScene::render(void)
 {
 	IMAGEMANAGER->findImage("ShopSceneBG")->render(getMemDC());
 	if(_order.test(0))
-	{
-		IMAGEMANAGER->findImage("ShopTitle")->render(getMemDC(), 0, 10, WINSIZE_X, 50, 0, 0, IMAGEMANAGER->findImage("ShopTitle")->getWidth(), IMAGEMANAGER->findImage("ShopTitle")->getHeight());
+	{	
+		DIALOGMANAGER->makeTextBox(getMemDC(), 0, 10, WINSIZE_X, 50, 255);
 		IMAGEMANAGER->findImage("ShopTitleLT")->render(getMemDC(), 0, 0, IMAGEMANAGER->findImage("ShopTitleLT")->getWidth() * 1.5, IMAGEMANAGER->findImage("ShopTitleLT")->getHeight() * 1.5,
 			0, 0, IMAGEMANAGER->findImage("ShopTitleLT")->getWidth(), IMAGEMANAGER->findImage("ShopTitleLT")->getHeight());
 		IMAGEMANAGER->findImage("ShopTitleRB")->render(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("ShopTitleRB")->getWidth() * 1.5, IMAGEMANAGER->findImage("ShopTitle")->getHeight(),
@@ -107,14 +120,14 @@ void ShopScene::render(void)
 	// 무기점 진입상태
 	else if(_order.test(1))
 	{
-		IMAGEMANAGER->findImage("TextBox")->render(getMemDC(), 10, 10, 300, 50, 0, 0, IMAGEMANAGER->findImage("TextBox")->getWidth(), IMAGEMANAGER->findImage("TextBox")->getHeight());
+		DIALOGMANAGER->makeTextBox(getMemDC(), 10, 10, 300, 50, 200);
 		SetTextAlign(getMemDC(), TA_CENTER);
 		FONTMANAGER->textOut(getMemDC(), 10 + 150, 20, "가을체", 30, 100, "무기점", strlen("무기점"), RGB(255, 255, 255));
 		IMAGEMANAGER->findImage("ShopEmployee")->render(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4 - 20, 
 			WINSIZE_Y - 80 - IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4, 
 			IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, 0, 0, IMAGEMANAGER->findImage("ShopEmployee")->getWidth(), IMAGEMANAGER->findImage("ShopEmployee")->getHeight());
 		// 상점 아이템 목록
-		IMAGEMANAGER->findImage("TextBox")->render(getMemDC(), 20, 80, WINSIZE_X / 2 - 20, 300, 0, 0, IMAGEMANAGER->findImage("TextBox")->getWidth(), IMAGEMANAGER->findImage("TextBox")->getHeight());
+		DIALOGMANAGER->makeTextBox(getMemDC(), 20, 80, WINSIZE_X / 2 - 20, 300, 255);
 		IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _buySellButton[_sell].left, _buySellButton[_sell].top,
 			_buySellButton[_sell].right - _buySellButton[_sell].left, _buySellButton[_sell].bottom - _buySellButton[_sell].top,
 			0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
@@ -125,10 +138,23 @@ void ShopScene::render(void)
 		FONTMANAGER->textOut(getMemDC(), (_buySellButton[1].left + _buySellButton[1].right) / 2, _buySellButton[1].top, "가을체", 20, 100, "판매", strlen("판매"), RGB(255, 255, 255));
 
 		// eld
-		IMAGEMANAGER->findImage("TextBox")->render(getMemDC(), 100, 390, WINSIZE_X / 2 - 100, 120, 0, 0, IMAGEMANAGER->findImage("TextBox")->getWidth(), IMAGEMANAGER->findImage("TextBox")->getHeight());
+		DIALOGMANAGER->makeTextBox(getMemDC(), 100, 390, WINSIZE_X / 2 - 100, 120, 200);
+		// 결정 버튼
+		if (_decisionButton.second)
+		{
+			IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _decisionButton.first.left, _decisionButton.first.top,
+				_decisionButton.first.right - _decisionButton.first.left, _decisionButton.first.bottom - _decisionButton.first.top,
+				0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
+		}
+		else {
+			IMAGEMANAGER->findImage("ShopButton")->render(getMemDC(), _decisionButton.first.left, _decisionButton.first.top,
+				_decisionButton.first.right - _decisionButton.first.left, _decisionButton.first.bottom - _decisionButton.first.top,
+				0, 0, IMAGEMANAGER->findImage("ShopButton")->getWidth(), IMAGEMANAGER->findImage("ShopButton")->getHeight());
+		}
+		FONTMANAGER->textOut(getMemDC(), (_decisionButton.first.left + _decisionButton.first.right) / 2, _decisionButton.first.top, "가을체", 20, 100, "결   정", strlen("결   정"), RGB(255, 255, 255));
 	}
-	IMAGEMANAGER->findImage("TextBox")->render(getMemDC(), 0, WINSIZE_Y - 200, WINSIZE_X, 200, 
-		0, 0, IMAGEMANAGER->findImage("TextBox")->getWidth(), IMAGEMANAGER->findImage("TextBox")->getHeight());
+	// 맨 밑 텍스트박스
+	DIALOGMANAGER->makeTextBox(getMemDC(), 0, WINSIZE_Y - 200, WINSIZE_X, 200, 200);
 	// 파티 캐릭터 이미지 출력
 	for(int i = 0; i < 10; i++)
 	{
@@ -142,7 +168,7 @@ void ShopScene::render(void)
 	}
 	else
 	{
-		IMAGEMANAGER->findImage("ShopButton")->render(getMemDC(), _exitButton.left, _exitButton.top, IMAGEMANAGER->findImage("ShopButton")->getWidth() * 0.5f, IMAGEMANAGER->findImage("ShopButton")->getHeight() * 0.5f,
+		IMAGEMANAGER->findImage("ShopButton")->render(getMemDC(), _exitButton.left, _exitButton.top, _exitButton.right - _exitButton.left, _exitButton.bottom - _exitButton.top,
 			0, 0, IMAGEMANAGER->findImage("ShopButton")->getWidth(), IMAGEMANAGER->findImage("ShopButton")->getHeight());
 	}
 	SetTextAlign(getMemDC(), TA_CENTER);

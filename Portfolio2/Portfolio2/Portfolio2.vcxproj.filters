@@ -161,6 +161,12 @@
     <ClInclude Include="PartyManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -261,6 +267,12 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="PartyManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
   </ItemGroup>

@@ -450,7 +450,7 @@ void StoryScene::update(void)
 			if (_frame > _fadeWhiteFrame + 300 && _dialogIndex == 20)
 			{
 				SOUNDMANAGER->stopAllSoundFMOD();
-				SCENEMANAGER->changeScene("BossBattle");
+				SCENEMANAGER->lodingScene("Story", "BossBattle");
 			}
 		}
 		else
@@ -497,7 +497,7 @@ void StoryScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
-		SCENEMANAGER->changeScene("BossBattle");
+		SCENEMANAGER->lodingScene("Story", "BossBattle");
 	}
 }
 
