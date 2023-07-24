@@ -13,13 +13,20 @@ private:
 	pair<RECT, bool> _decisionButton;
 	bool _sell;
 	vector<pair<string, string>> _saleList;
+	vector<CharacterData*> _partyList;
 	vector<int> _itemN;
+	RECT _charChoiceRT[10];
+	char _text[256];
+	int _selectChar;
 
 public:
 	HRESULT init(void);
 	void update(void);
 	void render(void);
 	void release(void);
+
+	void showCharacterStat(HDC hdc, int index, int left, int top);
+
 
 	ShopScene() {}
 	~ShopScene() {}

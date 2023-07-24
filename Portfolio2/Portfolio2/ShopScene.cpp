@@ -30,9 +30,17 @@ HRESULT ShopScene::init(void)
 	_order.set(0);
 	_sell = false;
 	_saleList = DATAMANAGER->getSaleList();
+	_partyList = DATAMANAGER->getPartyData();
 	for (int i = 0; i < _saleList.size(); i++)
 	{
 		_itemN.push_back(0);
+	}
+	for (int i = 0; i < _partyList.size(); i++)
+	{
+		_charChoiceRT[i].left = WINSIZE_X / 12 * (i + 1);
+		_charChoiceRT[i].top = WINSIZE_Y - 200 / 3 * 2;
+		_charChoiceRT[i].right = _charChoiceRT[i].left + WINSIZE_X / 12;
+		_charChoiceRT[i].bottom = _charChoiceRT[i].top + WINSIZE_X / 12;
 	}
 	return S_OK;
 }
@@ -58,6 +66,16 @@ void ShopScene::update(void)
 			{
 				_order = _order << 1;
 			}
+			// 맨 처음 화면에서 캐릭터 사진 클릭 시
+			for (int i = 0; i < _partyList.size(); i++)
+			{
+				if(PtInRect(&_charChoiceRT[i], _ptMouse))
+				{
+					_order.reset();
+					_order.set(2);
+					_selectChar = i;
+				}
+			}
 		}
 		else if (_order.test(1))
 		{
@@ -71,6 +89,16 @@ void ShopScene::update(void)
 			if (PtInRect(&_decisionButton.first, _ptMouse))
 			{
 				_decisionButton.second = true;
+			}
+		}
+		else if (_order.test(2))
+		{
+			for (int i = 0; i < _partyList.size(); i++)
+			{
+				if (PtInRect(&_charChoiceRT[i], _ptMouse))
+				{
+					_selectChar = i;
+				}
 			}
 		}
 		
@@ -92,8 +120,8 @@ void ShopScene::update(void)
 void ShopScene::render(void)
 {
 	IMAGEMANAGER->findImage("ShopSceneBG")->render(getMemDC());
-	if(_order.test(0))
-	{	
+	if(!_order.test(1))
+	{
 		DIALOGMANAGER->makeTextBox(getMemDC(), 0, 10, WINSIZE_X, 50, 255);
 		IMAGEMANAGER->findImage("ShopTitleLT")->render(getMemDC(), 0, 0, IMAGEMANAGER->findImage("ShopTitleLT")->getWidth() * 1.5, IMAGEMANAGER->findImage("ShopTitleLT")->getHeight() * 1.5,
 			0, 0, IMAGEMANAGER->findImage("ShopTitleLT")->getWidth(), IMAGEMANAGER->findImage("ShopTitleLT")->getHeight());
@@ -103,6 +131,9 @@ void ShopScene::render(void)
 		SetTextAlign(getMemDC(), TA_CENTER);
 		FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2, 5 + 15, "가을체", 30, 100, "자비단 입구", strlen("자비단 입구"), RGB(212, 204, 192));
 		SetTextAlign(getMemDC(), TA_LEFT);
+	}
+	if(_order.test(0))
+	{	
 		for (int i = 0; i < 4; i++)
 		{
 			if(PtInRect(&_shopButtons[i], _ptMouse))
@@ -182,6 +213,8 @@ void ShopScene::render(void)
 		
 		// eld
 		DIALOGMANAGER->makeTextBox(getMemDC(), 100, 390, WINSIZE_X / 2 - 100, 120, 200);
+		wsprintf(_text, "소지금액    %d Eld", *(DATAMANAGER->getEld()));
+		FONTMANAGER->textOut(getMemDC(), 120, 410, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 		// 결정 버튼
 		if (_decisionButton.second)
 		{
@@ -198,16 +231,31 @@ void ShopScene::render(void)
 		FONTMANAGER->textOut(getMemDC(), (_decisionButton.first.left + _decisionButton.first.right) / 2, _decisionButton.first.top, "가을체", 20, 100, "결   정", strlen("결   정"), RGB(255, 255, 255));
 		SetTextAlign(getMemDC(), TA_LEFT);
 	}
+	else if (_order.test(2))
+	{
+		showCharacterStat(getMemDC(), _selectChar, WINSIZE_X / 6, _shopButtons[0].top);
+	}
 
 	// 맨 밑 텍스트박스
 	DIALOGMANAGER->makeTextBox(getMemDC(), 0, WINSIZE_Y - 200, WINSIZE_X, 200, 200);
 	// 파티 캐릭터 이미지 출력
-	if(_order.test(0))
+	if(!_order.test(1))
 	{
 		for(int i = 0; i < 10; i++)
 		{
-			IMAGEMANAGER->findImage("Empty")->render(getMemDC(), WINSIZE_X / 12 * (i + 1), WINSIZE_Y - 200 / 3 * 2, WINSIZE_X / 12, WINSIZE_X / 12,
-				0, 0, IMAGEMANAGER->findImage("Empty")->getWidth(), IMAGEMANAGER->findImage("Empty")->getHeight());
+			if (i < _partyList.size())
+			{
+				char character[256];
+				wsprintf(character, _partyList[i]->_name.c_str());
+				strcat_s(character, "Mini");
+				IMAGEMANAGER->findImage(character)->render(getMemDC(), WINSIZE_X / 12 * (i + 1), WINSIZE_Y - 200 / 3 * 2, WINSIZE_X / 12, WINSIZE_X / 12,
+					0, 0, IMAGEMANAGER->findImage(character)->getWidth(), IMAGEMANAGER->findImage(character)->getHeight());
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("Empty")->render(getMemDC(), WINSIZE_X / 12 * (i + 1), WINSIZE_Y - 200 / 3 * 2, WINSIZE_X / 12, WINSIZE_X / 12,
+					0, 0, IMAGEMANAGER->findImage("Empty")->getWidth(), IMAGEMANAGER->findImage("Empty")->getHeight());
+			}
 		}
 	}
 	else if (_order.test(1))
@@ -234,4 +282,59 @@ void ShopScene::render(void)
 
 void ShopScene::release(void)
 {
+}
+
+void ShopScene::showCharacterStat(HDC hdc, int index, int left, int top)
+{
+	// 상태창 TextBox
+	DIALOGMANAGER->makeTextBox(hdc, left, top, WINSIZE_X / 3, 400, 200);
+
+	// 캐릭터 이미지
+	wsprintf(_text, _partyList[index]->_name.c_str());
+	strcat_s(_text, "Mini");
+	IMAGEMANAGER->findImage(_text)->render(hdc, left + 5, top + 5, WINSIZE_X / 12, WINSIZE_X / 12, 
+		0, 0, IMAGEMANAGER->findImage(_text)->getWidth(), IMAGEMANAGER->findImage(_text)->getHeight());
+
+	// 이름, 소속, 직업
+	wsprintf(_text, _partyList[index]->_name.c_str());
+	FONTMANAGER->textOut(hdc, left + 10 + WINSIZE_X / 12, top + 10, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	wsprintf(_text, _partyList[index]->_belong.c_str());
+	FONTMANAGER->textOut(hdc, left + 10 + WINSIZE_X / 12, top + 35, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	IMAGEMANAGER->findImage("StatusButton")->render(hdc, left + 5 + WINSIZE_X / 12, top + 55, WINSIZE_X / 4 - 10, 30, 
+		0, 0, IMAGEMANAGER->findImage("StatusButton")->getWidth(), IMAGEMANAGER->findImage("StatusButton")->getHeight());
+	wsprintf(_text, _partyList[index]->_class.c_str());
+	FONTMANAGER->textOut(hdc, left + 10 + WINSIZE_X / 12, top + 60, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+
+	//	HP, SOUL, EXP
+	FONTMANAGER->textOut(hdc, left + 5, top + 10 + WINSIZE_X / 12, "가을체", 20, 100, "HP", strlen("HP"), RGB(255, 255, 255));
+	IMAGEMANAGER->findImage("StatusBar")->render(hdc, left + 10, top + 30 + WINSIZE_X / 12, WINSIZE_X / 3 - 15, IMAGEMANAGER->findImage("StatusBar")->getHeight(),
+		0, 0, IMAGEMANAGER->findImage("StatusBar")->getWidth(), IMAGEMANAGER->findImage("StatusBar")->getHeight());
+	IMAGEMANAGER->findImage("StatusHpBar")->render(hdc, left + 10, top + 30 + WINSIZE_X / 12, 
+		(WINSIZE_X / 3 - 15) * _partyList[index]->_status[CURHP] / _partyList[index]->_status[MAXHP], IMAGEMANAGER->findImage("StatusBar")->getHeight(),
+		0, 0, IMAGEMANAGER->findImage("StatusHpBar")->getWidth(), IMAGEMANAGER->findImage("StatusHpBar")->getHeight());
+
+	FONTMANAGER->textOut(hdc, left + 5, top + 35 + WINSIZE_X / 12, "가을체", 20, 100, "SOUL", strlen("SOUL"), RGB(255, 255, 255));
+	IMAGEMANAGER->findImage("StatusBar")->render(hdc, left + 10, top + 55 + WINSIZE_X / 12, WINSIZE_X / 3 - 15, IMAGEMANAGER->findImage("StatusBar")->getHeight(),
+		0, 0, IMAGEMANAGER->findImage("StatusBar")->getWidth(), IMAGEMANAGER->findImage("StatusBar")->getHeight());
+	IMAGEMANAGER->findImage("StatusSoulBar")->render(hdc, left + 10, top + 55 + WINSIZE_X / 12,
+		(WINSIZE_X / 3 - 15) * _partyList[index]->_status[CURSOUL] / _partyList[index]->_status[MAXSOUL], IMAGEMANAGER->findImage("StatusBar")->getHeight(),
+		0, 0, IMAGEMANAGER->findImage("StatusSoulBar")->getWidth(), IMAGEMANAGER->findImage("StatusSoulBar")->getHeight());
+
+	FONTMANAGER->textOut(hdc, left + 5, top + 60 + WINSIZE_X / 12, "가을체", 20, 100, "EXP", strlen("EXP"), RGB(255, 255, 255));
+	IMAGEMANAGER->findImage("StatusBar")->render(hdc, left + 10, top + 80 + WINSIZE_X / 12, WINSIZE_X / 3 - 15, IMAGEMANAGER->findImage("StatusBar")->getHeight(),
+		0, 0, IMAGEMANAGER->findImage("StatusBar")->getWidth(), IMAGEMANAGER->findImage("StatusBar")->getHeight());
+	IMAGEMANAGER->findImage("StatusExpBar")->render(hdc, left + 80, top + 30 + WINSIZE_X / 12,
+		(WINSIZE_X / 3 - 15) * _partyList[index]->_status[CUREXP] / 100, IMAGEMANAGER->findImage("StatusBar")->getHeight(),
+		0, 0, IMAGEMANAGER->findImage("StatusExpBar")->getWidth(), IMAGEMANAGER->findImage("StatusExpBar")->getHeight());
+
+	SetTextAlign(hdc, TA_RIGHT);
+	wsprintf(_text, "%d/%d", _partyList[index]->_status[CURHP], _partyList[index]->_status[MAXHP]);
+	FONTMANAGER->textOut(hdc, left + WINSIZE_X / 3 - 5, top + 10 + WINSIZE_X / 12, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	wsprintf(_text, "%d/%d", _partyList[index]->_status[CURSOUL], _partyList[index]->_status[MAXSOUL]);
+	FONTMANAGER->textOut(hdc, left + WINSIZE_X / 3 - 5, top + 35 + WINSIZE_X / 12, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	wsprintf(_text, "%d/100", _partyList[index]->_status[CUREXP]);
+	FONTMANAGER->textOut(hdc, left + WINSIZE_X / 3 - 5, top + 60 + WINSIZE_X / 12, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	SetTextAlign(hdc, TA_LEFT);
+
+
 }

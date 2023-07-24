@@ -36,6 +36,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Sherazade", "Resources/Images/UI/Sherazade.bmp", 424, 480, true, RGB(255, 0, 255 ));
 	IMAGEMANAGER->addImage("HpBar", "Resources/Images/UI/HpBar.bmp", 2, 12);
 	IMAGEMANAGER->addImage("MpBar", "Resources/Images/UI/MpBar.bmp", 2, 12);
+	IMAGEMANAGER->addImage("StatusBar", "Resources/Images/UI/StatusBar.bmp", 150, 3);
+	IMAGEMANAGER->addImage("StatusHpBar", "Resources/Images/UI/StatusHpBar.bmp", 150, 3);
+	IMAGEMANAGER->addImage("StatusSoulBar", "Resources/Images/UI/StatusSoulBar.bmp", 150, 3);
+	IMAGEMANAGER->addImage("StatusExpBar", "Resources/Images/UI/StatusExpBar.bmp", 150, 3);
+	IMAGEMANAGER->addImage("StatusButton", "Resources/Images/UI/StatusButton.bmp", 130, 24, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addFrameImage("ForeheadKiss", "Resources/Images/BackGrounds/EndingScene/ForeheadKiss.bmp", 432, 79, 6, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("VermontEnding", "Resources/Images/BackGrounds/EndingScene/VermontEnding.bmp", 130, 78, 2, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinEnding", "Resources/Images/BackGrounds/EndingScene/SaladinEnding.bmp", 1208, 101, 8, 1, true, RGB(168, 208, 168));
@@ -88,7 +93,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("WorldMapInfo", "Resources/Images/UI/WorldMapInfo.bmp", 241, 111, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("WorldMapFlag", "Resources/Images/UI/WorldMapFlag.bmp", 61, 91, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("WorldMapSaladin", "Resources/Images/UI/WorldMapSaladin.bmp", 50, 50);
-	IMAGEMANAGER->addImage("ShopSaladin", "Resources/Images/UI/ShopSaladin.bmp", 50, 50);
+	IMAGEMANAGER->addImage("»ì¶óµòMini", "Resources/Images/UI/SaladinMini.bmp", 50, 50);
+	IMAGEMANAGER->addImage("Ã¶°¡¸éMini", "Resources/Images/UI/IronMaskMini.bmp", 50, 50);
 	IMAGEMANAGER->addFrameImage("ActionIcon", "Resources/Images/UI/ActionIcon.bmp", 96, 25, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("WorldMapMoveMarker", "Resources/Images/UI/WorldMapMoveMarker.bmp", 3360, 120, 28, 1, true, RGB(255, 45, 254));
 	IMAGEMANAGER->addFrameImage("MiniStatusWindow", "Resources/Images/UI/MiniStatusWindow.bmp", 900, 49, 15, 1, true, RGB(255, 0, 255));
