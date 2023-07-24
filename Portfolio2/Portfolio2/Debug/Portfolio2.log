@@ -1,1 +1,34 @@
-﻿  Portfolio2.vcxproj -> C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+﻿  ShopScene.cpp
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(8,41): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(10,85): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(11,48): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(33,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(52,209): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(52,149): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(98,178): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(98,119): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(101,114): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(101,55): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(100,72): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(111,127): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(111,62): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(117,115): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(117,56): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(133,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(132,133): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(132,19): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(131,133): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(155,112): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(155,55): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(154,36): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(170,110): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(170,54): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(168,65): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(174,54): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(173,90): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(172,64): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(176,114): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(176,56): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(220,208): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ShopScene.cpp(220,148): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Portfolio2.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

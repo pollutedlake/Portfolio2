@@ -149,6 +149,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("TextBoxLB", "Resources/Images/UI/TextBoxLB.bmp", 5, 5);
 	IMAGEMANAGER->addImage("TextBoxRT", "Resources/Images/UI/TextBoxRT.bmp", 5, 5);
 	IMAGEMANAGER->addImage("TextBoxRB", "Resources/Images/UI/TextBoxRB.bmp", 5, 5);
+	IMAGEMANAGER->addImage("TextBoxRB", "Resources/Images/UI/TextBoxRB.bmp", 5, 5);
+	IMAGEMANAGER->addImage("TextBoxRB", "Resources/Images/UI/TextBoxRB.bmp", 5, 5);
+	IMAGEMANAGER->addImage("TextBoxRB", "Resources/Images/UI/TextBoxRB.bmp", 5, 5);
+	IMAGEMANAGER->addImage("TextBoxRB", "Resources/Images/UI/TextBoxRB.bmp", 5, 5);
 	IMAGEMANAGER->addImage("Snow", "Resources/Images/Effects/SkillEffect/Snow.bmp", 12, 12, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("ShopEmployee", "Resources/Images/UI/Shop/ShopEmployee.bmp", 300, 460, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("자마드 아그니", "Resources/Images/UI/Shop/자마드 아그니.bmp", 24, 24);
@@ -157,6 +161,13 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("스나이퍼 건", "Resources/Images/UI/Shop/스나이퍼 건.bmp", 24, 24);
 	IMAGEMANAGER->addImage("테슈브", "Resources/Images/UI/Shop/테슈브.bmp", 24, 24);
 	IMAGEMANAGER->addImage("벽력궁", "Resources/Images/UI/Shop/벽력궁.bmp", 24, 24);
+	IMAGEMANAGER->addImage("UpButton", "Resources/Images/UI/Shop/UpButton.bmp", 12, 16);
+	IMAGEMANAGER->addImage("DownButton", "Resources/Images/UI/Shop/DownButton.bmp", 12, 16);
+	IMAGEMANAGER->addImage("UpButtonPress", "Resources/Images/UI/Shop/UpButtonPress.bmp", 12, 16);
+	IMAGEMANAGER->addImage("DownButtonPress", "Resources/Images/UI/Shop/DownButtonPress.bmp", 12, 16);
+	IMAGEMANAGER->addImage("SlideUpButton", "Resources/Images/UI/Shop/SlideUpButton.bmp", 16, 16);
+	IMAGEMANAGER->addImage("SlideDownButton", "Resources/Images/UI/Shop/SlideDownButton.bmp", 16, 16);
+	IMAGEMANAGER->addImage("ItemNum", "Resources/Images/UI/Shop/ItemNum.bmp", 17, 16);
 	IMAGEMANAGER->addImage("LoadingScene1", "Resources/Images/BackGrounds/LoadingScene/LoadingScene1.bmp", 400, 200);
 	IMAGEMANAGER->addImage("LoadingScene2", "Resources/Images/BackGrounds/LoadingScene/LoadingScene2.bmp", 400, 200);
 	IMAGEMANAGER->addImage("LoadingScene3", "Resources/Images/BackGrounds/LoadingScene/LoadingScene3.bmp", 400, 200);

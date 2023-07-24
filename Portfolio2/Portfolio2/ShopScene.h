@@ -12,6 +12,8 @@ private:
 	RECT _buySellButton[2];
 	pair<RECT, bool> _decisionButton;
 	bool _sell;
+	vector<pair<string, string>> _saleList;
+	vector<int> _itemN;
 
 public:
 	HRESULT init(void);

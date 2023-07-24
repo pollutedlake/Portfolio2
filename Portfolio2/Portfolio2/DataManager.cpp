@@ -6,14 +6,15 @@ HRESULT DataManager::init(void)
 	if (fopen_s(&_itemFP, "Resources/Data/ItemList.txt", "r") == 0)
 	{
 		char itemName[256];
-		int itemPrice;
-		fscanf_s(_itemFP, "%s %d", itemName, _countof(itemName), &itemPrice);
-		cout << itemName << "\t" << itemPrice << endl;
-		_mItemList.push_back(make_pair(itemName, itemPrice));
+		char itemPrice[256];
+		while(EOF != fscanf_s(_itemFP, "%[^\t]\t%s\n", itemName, _countof(itemName), itemPrice, _countof(itemPrice)))
+		{
+			_mSaleWeaponList.push_back(make_pair(itemName, itemPrice));
+		}
 	}
-	else
+	for (auto it = _mSaleWeaponList.begin(); it != _mSaleWeaponList.end(); ++it)
 	{
-		cout << "½ÇÆÐ" << endl;
+		cout << (*it).first << "\t" << (*it).second << endl;
 	}
 	return S_OK;
 }
