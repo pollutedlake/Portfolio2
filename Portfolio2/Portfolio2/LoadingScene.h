@@ -6,7 +6,7 @@ class LoadingScene : public GameNode
 private:
 	string _prevScene;
 	string _nextScene;
-	char _loadingImage[50];
+	int _loadingImgIndex;
 	int _frame;
 public:
 	HRESULT init(string prevScene, string nextScene);

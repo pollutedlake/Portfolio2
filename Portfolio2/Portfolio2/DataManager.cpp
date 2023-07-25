@@ -6,15 +6,18 @@ HRESULT DataManager::init(void)
 	if (fopen_s(&_fp, "Resources/Data/ItemList.txt", "r") == 0)
 	{
 		char itemName[256];
-		char itemPrice[256];
-		while(EOF != fscanf_s(_fp, "%[^\t]\t%s\n", itemName, _countof(itemName), itemPrice, _countof(itemPrice)))
+		//char itemPrice[256];
+		int itemPrice;
+		//while(EOF != fscanf_s(_fp, "%[^\t]\t%s\n", itemName, _countof(itemName), itemPrice, _countof(itemPrice)))
+		while(EOF != fscanf_s(_fp, "%[^\t]\t%d\n", itemName, _countof(itemName), &itemPrice))
 		{
-			_mSaleWeaponList.push_back(make_pair(itemName, itemPrice));
+			ItemData* item = new ItemData(itemName, itemPrice);
+			_mSaleWeaponList.push_back(item);
 		}
 	}
 	for (auto it = _mSaleWeaponList.begin(); it != _mSaleWeaponList.end(); ++it)
 	{
-		cout << (*it).first << "\t" << (*it).second << endl;
+		cout << (*it)->_name << "\t" << (*it)->_price << endl;
 	}
 	fclose(_fp);
 	if (fopen_s(&_fp, "Resources/Data/PartyData.txt", "r") == 0)
@@ -66,4 +69,37 @@ void DataManager::release(void)
 
 void DataManager::render(void)
 {
+}
+
+pair<ItemData*, int> DataManager::findItem(string strKey)
+{	
+	auto key = _mInventory.find(strKey);
+	if (key != _mInventory.end())
+	{
+		return key->second;
+	}
+	return make_pair(nullptr, NULL);
+}
+
+ItemData* DataManager::buyItem(string strKey, int num, ItemData* item)
+{
+	pair<ItemData*, int> find = findItem(strKey);
+	if (find.second)
+	{
+		_mInventory.find(strKey)->second.second += num;
+	}
+	else
+	{
+		_mInventory.insert(make_pair(strKey, make_pair(item, num)));
+	}
+	return item;
+}
+
+void DataManager::sellItem(string strKey, int num)
+{
+	_mInventory.find(strKey)->second.second -= num;
+	if (_mInventory.find(strKey)->second.second <= 0)
+	{
+		_mInventory.erase(strKey);
+	}
 }

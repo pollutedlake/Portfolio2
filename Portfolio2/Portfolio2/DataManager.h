@@ -13,7 +13,7 @@ enum STATUS
 	INTELLIGENCE,
 	SKILL,
 	LUCK,
-	APD,
+	SPD,
 	AC,
 	MR,
 	WTP,
@@ -28,13 +28,22 @@ struct CharacterData
 	int _status[14];
 };
 
+struct ItemData
+{
+	string _name;
+	int _price;
+
+	ItemData(string name, int price) { _name = name; _price = price; }
+};
+
 class DataManager : public SingletonBase<DataManager>
 {
 private:
 	FILE* _fp;
 	FILE* _partyFP;
-	vector<pair<string, string>> _mSaleWeaponList;
+	vector<ItemData*> _mSaleWeaponList;
 	vector<CharacterData*> _mParty;
+	map<string, pair<ItemData*, int>> _mInventory;
 	int _eld;
 
 public:
@@ -43,9 +52,16 @@ public:
 	void release(void);
 	void render(void);
 
-	vector<pair<string, string>> getSaleList() {return _mSaleWeaponList;}
+	void setEld(int eld) { _eld = eld; }
+
+	vector<ItemData*> getSaleList() {return _mSaleWeaponList;}
 	vector<CharacterData*> getPartyData() {return _mParty;}
-	int* getEld() {return &_eld;}
+	map<string, pair<ItemData*, int>> getInventory() { return _mInventory; }
+	int getEld() {return _eld;}
+
+	pair<ItemData*, int> findItem(string strKey);
+	ItemData* buyItem(string strKey, int num, ItemData* item);
+	void sellItem(string strKey, int num);
 
 	DataManager() {}
 	~DataManager() {}

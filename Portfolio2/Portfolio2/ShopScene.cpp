@@ -31,9 +31,15 @@ HRESULT ShopScene::init(void)
 	_sell = false;
 	_saleList = DATAMANAGER->getSaleList();
 	_partyList = DATAMANAGER->getPartyData();
+	_priceSum = 0;
 	for (int i = 0; i < _saleList.size(); i++)
 	{
 		_itemN.push_back(0);
+		RECT rt = { 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 , 125 + 39 * i,
+			400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 + IMAGEMANAGER->findImage("UpButton")->getWidth() * 1.5, 125 + 39 * i + IMAGEMANAGER->findImage("UpButton")->getHeight() * 1.5 };
+		RECT rt2 = { 420, rt.top, 420 + IMAGEMANAGER->findImage("DownButton")->getWidth() * 1.5, rt.bottom };
+		_itemNumButton.push_back(make_pair(rt, false));
+		_itemNumButton.push_back(make_pair(rt2, false));
 	}
 	for (int i = 0; i < _partyList.size(); i++)
 	{
@@ -51,44 +57,129 @@ void ShopScene::update(void)
 	if (_frame == 1)
 	{
 		SOUNDMANAGER->playSoundFMOD("ShopSceneBG");
+		getInven();
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
+		// Exit를 누르면
 		if (PtInRect(&_exitButton, _ptMouse))
 		{
 			_order = _order >> 1;
 			IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _exitButton.left, _exitButton.top, IMAGEMANAGER->findImage("PressButton")->getWidth() * 0.5f, IMAGEMANAGER->findImage("PressButton")->getHeight() * 0.5f,
 				0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
+			_priceSum = 0;
+			for (int i = 0; i < _itemN.size(); i++)
+			{
+				_itemN[i] = 0;
+			}
 		}
+		// 처음화면일 때
 		if(_order.test(0))
 		{
+			// 상점을 고르면
 			if (PtInRect(&_shopButtons[1], _ptMouse))
 			{
-				_order = _order << 1;
+				_order.reset();
+				_order.set(1);
 			}
 			// 맨 처음 화면에서 캐릭터 사진 클릭 시
 			for (int i = 0; i < _partyList.size(); i++)
 			{
 				if(PtInRect(&_charChoiceRT[i], _ptMouse))
 				{
-					_order.reset();
 					_order.set(2);
 					_selectChar = i;
 				}
 			}
 		}
+		// 상점화면일 때
 		else if (_order.test(1))
 		{
 			for(int i = 0; i < 2; i++)
 			{
 				if (PtInRect(&_buySellButton[i], _ptMouse))
 				{
+					if (_sell != i)
+					{
+						_priceSum = 0;
+						for (int i = 0; i < _itemN.size(); i++)
+						{
+							_itemN[i] = 0;
+						}
+					}
 					_sell = i;
 				}
 			}
+
+			// 결정버튼을 눌렀을 때
 			if (PtInRect(&_decisionButton.first, _ptMouse))
 			{
 				_decisionButton.second = true;
+				if (!_sell)
+				{
+					DATAMANAGER->setEld(DATAMANAGER->getEld() - _priceSum);
+					for (int i = 0; i < _itemN.size(); i++)
+					{
+						if (_itemN[i] != 0)
+						{
+							DATAMANAGER->buyItem(_saleList[i]->_name, _itemN[i], _saleList[i]);
+							_itemN[i] = 0;
+						}
+					}
+				}
+				else
+				{
+					DATAMANAGER->setEld(DATAMANAGER->getEld() + _priceSum);
+					for (int i = 0; i < DATAMANAGER->getInventory().size(); i++)
+					{
+						if (_itemN[i] != 0)
+						{
+							DATAMANAGER->sellItem(_invenList[i]->_name, _itemN[i]);
+							_itemN[i] = 0;
+						}
+					}
+				}
+				_priceSum = 0;
+				getInven();
+			}
+
+			// 구매할 아이템 개수를 변경하는 버튼을 눌렀을 때
+			for (int i = 0; i < 2 * (_sell ? _invenList.size() : _saleList.size()); i++)
+			{
+				if (PtInRect(&_itemNumButton[i].first, _ptMouse))
+				{
+					_itemNumButton[i].second = true;
+					if (i % 2 == 0)
+					{
+						if (!_sell || (DATAMANAGER->findItem(_invenList[i / 2]->_name)).second != _itemN[i / 2])
+						{
+							_itemN[i / 2]++;
+							if (_sell)
+							{
+								_priceSum += _invenList[i / 2]->_price;
+							}
+							else
+							{
+								_priceSum += _saleList[i / 2]->_price;
+							}
+						}
+					}
+					else
+					{
+						if (_itemN[i / 2] > 0)
+						{
+							_itemN[i / 2]--;
+							if (_sell)
+							{
+								_priceSum -= _invenList[i / 2]->_price;
+							}
+							else
+							{
+								_priceSum -= _saleList[i / 2]->_price;
+							}
+						}
+					}
+				}
 			}
 		}
 		else if (_order.test(2))
@@ -105,6 +196,7 @@ void ShopScene::update(void)
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
+		// 처음 화면일 때 마을 나가서 월드맵 씬으로 이동
 		if (_order.none())
 		{
 			SOUNDMANAGER->stopAllSoundFMOD();
@@ -113,6 +205,13 @@ void ShopScene::update(void)
 		if (_decisionButton.second)
 		{
 			_decisionButton.second = false;
+		}
+		for (int i = 0; i < _itemNumButton.size(); i++)
+		{
+			if (_itemNumButton[i].second)
+			{
+				_itemNumButton[i].second = false;
+			}
 		}
 	}
 }
@@ -156,82 +255,9 @@ void ShopScene::render(void)
 	// 무기점 진입상태
 	else if(_order.test(1))
 	{
-		DIALOGMANAGER->makeTextBox(getMemDC(), 10, 10, 300, 50, 200);
-		SetTextAlign(getMemDC(), TA_CENTER);
-		FONTMANAGER->textOut(getMemDC(), 10 + 150, 20, "가을체", 30, 100, "무기점", strlen("무기점"), RGB(255, 255, 255));
-		IMAGEMANAGER->findImage("ShopEmployee")->render(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4 - 20, 
-			WINSIZE_Y - 80 - IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4, 
-			IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, 0, 0, IMAGEMANAGER->findImage("ShopEmployee")->getWidth(), IMAGEMANAGER->findImage("ShopEmployee")->getHeight());
-		
-		// 상점 아이템 목록
-		// 텍스트 박스
-		DIALOGMANAGER->makeTextBox(getMemDC(), 20, 80, WINSIZE_X / 2 - 20, 300, 255);
-		// 구매 판매 버튼
-		IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _buySellButton[_sell].left, _buySellButton[_sell].top,
-			_buySellButton[_sell].right - _buySellButton[_sell].left, _buySellButton[_sell].bottom - _buySellButton[_sell].top,
-			0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
-		IMAGEMANAGER->findImage("ShopButton")->render(getMemDC(), _buySellButton[!_sell].left, _buySellButton[!_sell].top,
-			_buySellButton[!_sell].right - _buySellButton[!_sell].left, _buySellButton[!_sell].bottom - _buySellButton[!_sell].top,
-			0, 0, IMAGEMANAGER->findImage("ShopButton")->getWidth(), IMAGEMANAGER->findImage("ShopButton")->getHeight());
-		FONTMANAGER->textOut(getMemDC(), (_buySellButton[0].left + _buySellButton[0].right) / 2, _buySellButton[0].top, "가을체", 20, 100, "구입", strlen("구입"), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), (_buySellButton[1].left + _buySellButton[1].right) / 2, _buySellButton[1].top, "가을체", 20, 100, "판매", strlen("판매"), RGB(255, 255, 255));
-		// 구매 아이템 목록
-		if(!_sell)
-		{
-			SetTextAlign(getMemDC(), TA_LEFT);
-			for (auto it = _saleList.begin(); it != _saleList.end(); ++it)
-			{
-				IMAGEMANAGER->findImage((*it).first)->render(getMemDC(), 30, 
-					_buySellButton[0].bottom + 10 + (IMAGEMANAGER->findImage((*it).first)->getHeight() * 1.5 + 2) * (it - _saleList.begin()),
-					IMAGEMANAGER->findImage((*it).first)->getWidth() * 1.5, IMAGEMANAGER->findImage((*it).first)->getHeight() * 1.5,
-					0, 0, IMAGEMANAGER->findImage((*it).first)->getWidth(), IMAGEMANAGER->findImage((*it).first)->getHeight());
-				char itemInfo[50];
-				wsprintf(itemInfo, (*it).first.c_str());
-				FONTMANAGER->textOut(getMemDC(), 80, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100,
-					itemInfo, strlen(itemInfo), RGB(255, 255, 255));
-				SetTextAlign(getMemDC(), TA_RIGHT);
-				wsprintf(itemInfo, (*it).second.c_str());
-				strcat_s(itemInfo, " Eld");
-				FONTMANAGER->textOut(getMemDC(), 300, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100,
-					itemInfo, strlen(itemInfo), RGB(255, 255, 255));
-				SetTextAlign(getMemDC(), TA_LEFT);
-				// 아이템 수량 결정하는 버튼과 개수 출력하는 영역
-				IMAGEMANAGER->findImage("UpButton")->render(getMemDC(), 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5, 
-					125 + 39 * (it - _saleList.begin()),
-					IMAGEMANAGER->findImage("UpButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("UpButton")->getHeight() * 1.5, 
-					0, 0, IMAGEMANAGER->findImage("UpButton")->getWidth(), IMAGEMANAGER->findImage("UpButton")->getHeight());
-				IMAGEMANAGER->findImage("ItemNum")->render(getMemDC(), 420 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5,
-					125 + 39 * (it - _saleList.begin()), IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5, 
-					IMAGEMANAGER->findImage("ItemNum")->getHeight() * 1.5, 0, 0, IMAGEMANAGER->findImage("ItemNum")->getWidth(), IMAGEMANAGER->findImage("ItemNum")->getHeight());
-				IMAGEMANAGER->findImage("DownButton")->render(getMemDC(), 420, 125 + 39 * (it - _saleList.begin()),
-					IMAGEMANAGER->findImage("DownButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("DownButton")->getHeight() * 1.5,
-					0, 0, IMAGEMANAGER->findImage("DownButton")->getWidth(), IMAGEMANAGER->findImage("DownButton")->getHeight());
-			}
-		}
-		IMAGEMANAGER->findImage("SlideUpButton")->render(getMemDC(), WINSIZE_X / 2 - 30, _buySellButton[0].bottom + 10);
-		IMAGEMANAGER->findImage("SlideDownButton")->render(getMemDC(), WINSIZE_X / 2 - 30, 345 - IMAGEMANAGER->findImage("SlideDownButton")->getHeight());
-		
-		// eld
-		DIALOGMANAGER->makeTextBox(getMemDC(), 100, 390, WINSIZE_X / 2 - 100, 120, 200);
-		wsprintf(_text, "소지금액    %d Eld", *(DATAMANAGER->getEld()));
-		FONTMANAGER->textOut(getMemDC(), 120, 410, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
-		// 결정 버튼
-		if (_decisionButton.second)
-		{
-			IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _decisionButton.first.left, _decisionButton.first.top,
-				_decisionButton.first.right - _decisionButton.first.left, _decisionButton.first.bottom - _decisionButton.first.top,
-				0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
-		}
-		else {
-			IMAGEMANAGER->findImage("ShopButton")->render(getMemDC(), _decisionButton.first.left, _decisionButton.first.top,
-				_decisionButton.first.right - _decisionButton.first.left, _decisionButton.first.bottom - _decisionButton.first.top,
-				0, 0, IMAGEMANAGER->findImage("ShopButton")->getWidth(), IMAGEMANAGER->findImage("ShopButton")->getHeight());
-		}
-		SetTextAlign(getMemDC(), TA_CENTER);
-		FONTMANAGER->textOut(getMemDC(), (_decisionButton.first.left + _decisionButton.first.right) / 2, _decisionButton.first.top, "가을체", 20, 100, "결   정", strlen("결   정"), RGB(255, 255, 255));
-		SetTextAlign(getMemDC(), TA_LEFT);
+		shopRender(getMemDC());
 	}
-	else if (_order.test(2))
+	if (_order.test(2))
 	{
 		showCharacterStat(getMemDC(), _selectChar, WINSIZE_X / 6, _shopButtons[0].top);
 	}
@@ -241,6 +267,10 @@ void ShopScene::render(void)
 	// 파티 캐릭터 이미지 출력
 	if(!_order.test(1))
 	{
+		IMAGEMANAGER->findImage("Pattern1")->render(getMemDC(), WINSIZE_X / 8, WINSIZE_Y - 168, WINSIZE_X * 3 / 8, IMAGEMANAGER->findImage("Pattern1")->getHeight() * 1.5,
+			0, 0, IMAGEMANAGER->findImage("Pattern1")->getWidth(), IMAGEMANAGER->findImage("Pattern1")->getHeight());
+		IMAGEMANAGER->findImage("Pattern2")->render(getMemDC(), WINSIZE_X / 2, WINSIZE_Y - 153, WINSIZE_X * 3 / 8, IMAGEMANAGER->findImage("Pattern1")->getHeight() * 1.5,
+			0, 0, IMAGEMANAGER->findImage("Pattern2")->getWidth(), IMAGEMANAGER->findImage("Pattern2")->getHeight());
 		for(int i = 0; i < 10; i++)
 		{
 			if (i < _partyList.size())
@@ -265,7 +295,7 @@ void ShopScene::render(void)
 
 	if (_order.none())
 	{
-		IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _exitButton.left, _exitButton.top, IMAGEMANAGER->findImage("PressButton")->getWidth() * 0.5f, IMAGEMANAGER->findImage("PressButton")->getHeight() * 0.5f,
+		IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _exitButton.left, _exitButton.top, _exitButton.right - _exitButton.left, _exitButton.bottom - _exitButton.top,
 			0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
 	}
 	else
@@ -287,7 +317,7 @@ void ShopScene::release(void)
 void ShopScene::showCharacterStat(HDC hdc, int index, int left, int top)
 {
 	// 상태창 TextBox
-	DIALOGMANAGER->makeTextBox(hdc, left, top, WINSIZE_X / 3, 400, 200);
+	DIALOGMANAGER->makeTextBox(hdc, left, top, WINSIZE_X / 3, WINSIZE_Y - 200 - top - 5, 200);
 
 	// 캐릭터 이미지
 	wsprintf(_text, _partyList[index]->_name.c_str());
@@ -323,7 +353,7 @@ void ShopScene::showCharacterStat(HDC hdc, int index, int left, int top)
 	FONTMANAGER->textOut(hdc, left + 5, top + 60 + WINSIZE_X / 12, "가을체", 20, 100, "EXP", strlen("EXP"), RGB(255, 255, 255));
 	IMAGEMANAGER->findImage("StatusBar")->render(hdc, left + 10, top + 80 + WINSIZE_X / 12, WINSIZE_X / 3 - 15, IMAGEMANAGER->findImage("StatusBar")->getHeight(),
 		0, 0, IMAGEMANAGER->findImage("StatusBar")->getWidth(), IMAGEMANAGER->findImage("StatusBar")->getHeight());
-	IMAGEMANAGER->findImage("StatusExpBar")->render(hdc, left + 80, top + 30 + WINSIZE_X / 12,
+	IMAGEMANAGER->findImage("StatusExpBar")->render(hdc, left + 10, top + 80 + WINSIZE_X / 12,
 		(WINSIZE_X / 3 - 15) * _partyList[index]->_status[CUREXP] / 100, IMAGEMANAGER->findImage("StatusBar")->getHeight(),
 		0, 0, IMAGEMANAGER->findImage("StatusExpBar")->getWidth(), IMAGEMANAGER->findImage("StatusExpBar")->getHeight());
 
@@ -336,5 +366,218 @@ void ShopScene::showCharacterStat(HDC hdc, int index, int left, int top)
 	FONTMANAGER->textOut(hdc, left + WINSIZE_X / 3 - 5, top + 60 + WINSIZE_X / 12, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 	SetTextAlign(hdc, TA_LEFT);
 
+	// Str, Skill, Ac, Dex, Luck, Mr, Int, Spd, Wtp
+	FONTMANAGER->textOut(hdc, left + 5, top + 85 + WINSIZE_X / 12, "가을체", 20, 100, "Str", strlen("Str"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 5, top + 110 + WINSIZE_X / 12, "가을체", 20, 100, "Skill", strlen("Skill"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 5, top + 135 + WINSIZE_X / 12, "가을체", 20, 100, "Ac", strlen("Ac"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 125, top + 85 + WINSIZE_X / 12, "가을체", 20, 100, "Dex", strlen("Dex"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 125, top + 110 + WINSIZE_X / 12, "가을체", 20, 100, "Luck", strlen("Luck"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 125, top + 135 + WINSIZE_X / 12, "가을체", 20, 100, "Mr", strlen("Mr"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 245, top + 85 + WINSIZE_X / 12, "가을체", 20, 100, "Int", strlen("Int"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 245, top + 110 + WINSIZE_X / 12, "가을체", 20, 100, "Spd", strlen("Spd"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, left + 245, top + 135 + WINSIZE_X / 12, "가을체", 20, 100, "Wtp", strlen("Wtp"), RGB(255, 255, 255));
 
+	SetTextAlign(getMemDC(), TA_RIGHT);
+	for (int i = 0; i < 9; i++)
+	{
+		wsprintf(_text, "%d", _partyList[index]->_status[i + STR]);
+		FONTMANAGER->textOut(hdc, left + WINSIZE_X / 3 - 5 - 120 * (2 - (i % 3)), top + 85 + WINSIZE_X / 12 + 25 * (i / 3), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	}
+	SetTextAlign(getMemDC(), TA_LEFT);
+
+	// 장비
+	for (int i = 0; i < 5; i++)
+	{
+		IMAGEMANAGER->findImage("EquipmentEmpty")->render(hdc, left + 5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight() * 1.5) * i,
+			IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5, IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight() * 1.5,
+			0, 0, IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth(), IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight());
+		IMAGEMANAGER->findImage("StatusButton")->render(hdc, left + 15 + IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight() * 1.5) * i,
+			left + WINSIZE_X / 3 - 5 - (left + 15 + IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5), IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5,
+			0, 0, IMAGEMANAGER->findImage("StatusButton")->getWidth(), IMAGEMANAGER->findImage("StatusButton")->getHeight());
+	}
+}
+
+void ShopScene::shopRender(HDC hdc)
+{
+	DIALOGMANAGER->makeTextBox(hdc, 10, 10, 300, 50, 200);
+	SetTextAlign(hdc, TA_CENTER);
+	FONTMANAGER->textOut(hdc, 10 + 150, 20, "가을체", 30, 100, "무기점", strlen("무기점"), RGB(255, 255, 255));
+	IMAGEMANAGER->findImage("ShopEmployee")->render(hdc, WINSIZE_X - IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4 - 20,
+		WINSIZE_Y - 80 - IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4,
+		IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, 0, 0, IMAGEMANAGER->findImage("ShopEmployee")->getWidth(), IMAGEMANAGER->findImage("ShopEmployee")->getHeight());
+
+	// 상점 아이템 목록
+	// 텍스트 박스
+	DIALOGMANAGER->makeTextBox(hdc, 20, 80, WINSIZE_X / 2 - 20, 300, 255);
+	// 구매 판매 버튼
+	IMAGEMANAGER->findImage("PressButton")->render(hdc, _buySellButton[_sell].left, _buySellButton[_sell].top,
+		_buySellButton[_sell].right - _buySellButton[_sell].left, _buySellButton[_sell].bottom - _buySellButton[_sell].top,
+		0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
+	IMAGEMANAGER->findImage("ShopButton")->render(hdc, _buySellButton[!_sell].left, _buySellButton[!_sell].top,
+		_buySellButton[!_sell].right - _buySellButton[!_sell].left, _buySellButton[!_sell].bottom - _buySellButton[!_sell].top,
+		0, 0, IMAGEMANAGER->findImage("ShopButton")->getWidth(), IMAGEMANAGER->findImage("ShopButton")->getHeight());
+	FONTMANAGER->textOut(hdc, (_buySellButton[0].left + _buySellButton[0].right) / 2, _buySellButton[0].top, "가을체", 20, 100, "구입", strlen("구입"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, (_buySellButton[1].left + _buySellButton[1].right) / 2, _buySellButton[1].top, "가을체", 20, 100, "판매", strlen("판매"), RGB(255, 255, 255));
+	SetTextAlign(hdc, TA_LEFT);
+
+	// 구매 아이템 목록
+	if (!_sell)
+	{
+		SetTextAlign(hdc, TA_LEFT);
+		for (auto it = _saleList.begin(); it != _saleList.end(); ++it)
+		{
+			IMAGEMANAGER->findImage((*it)->_name)->render(hdc, 30,
+				_buySellButton[0].bottom + 10 + (IMAGEMANAGER->findImage((*it)->_name)->getHeight() * 1.5 + 2) * (it - _saleList.begin()),
+				IMAGEMANAGER->findImage((*it)->_name)->getWidth() * 1.5, IMAGEMANAGER->findImage((*it)->_name)->getHeight() * 1.5,
+				0, 0, IMAGEMANAGER->findImage((*it)->_name)->getWidth(), IMAGEMANAGER->findImage((*it)->_name)->getHeight());
+			char itemInfo[50];
+			wsprintf(itemInfo, (*it)->_name.c_str());
+			FONTMANAGER->textOut(hdc, 80, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100,
+				itemInfo, strlen(itemInfo), RGB(255, 255, 255));
+			SetTextAlign(hdc, TA_RIGHT);
+			wsprintf(itemInfo, "%d", (*it)->_price);
+			strcat_s(itemInfo, " Eld");
+			FONTMANAGER->textOut(hdc, 300, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100,
+				itemInfo, strlen(itemInfo), RGB(255, 255, 255));
+			wsprintf(_text, "(%2d)", (DATAMANAGER->findItem((*it)->_name)).second);
+			FONTMANAGER->textOut(hdc, 350, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+			SetTextAlign(hdc, TA_LEFT);
+
+			// 아이템 수량 결정하는 버튼과 개수 출력하는 영역
+			if (_itemNumButton[(it - _saleList.begin()) * 2].second)
+			{
+				IMAGEMANAGER->findImage("UpButtonPress")->render(hdc, _itemNumButton[(it - _saleList.begin()) * 2].first.left, _itemNumButton[(it - _saleList.begin()) * 2].first.top,
+					IMAGEMANAGER->findImage("UpButtonPress")->getWidth() * 1.5, IMAGEMANAGER->findImage("UpButtonPress")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("UpButtonPress")->getWidth(), IMAGEMANAGER->findImage("UpButtonPress")->getHeight());
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("UpButton")->render(hdc, _itemNumButton[(it - _saleList.begin()) * 2].first.left, _itemNumButton[(it - _saleList.begin()) * 2].first.top,
+					IMAGEMANAGER->findImage("UpButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("UpButton")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("UpButton")->getWidth(), IMAGEMANAGER->findImage("UpButton")->getHeight());
+			}
+			IMAGEMANAGER->findImage("ItemNum")->render(hdc, 420 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5,
+				125 + 39 * (it - _saleList.begin()), IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5,
+				IMAGEMANAGER->findImage("ItemNum")->getHeight() * 1.5, 0, 0, IMAGEMANAGER->findImage("ItemNum")->getWidth(), IMAGEMANAGER->findImage("ItemNum")->getHeight());
+			if (_itemNumButton[(it - _saleList.begin()) * 2 + 1].second)
+			{
+				IMAGEMANAGER->findImage("DownButtonPress")->render(hdc, _itemNumButton[(it - _saleList.begin()) * 2 + 1].first.left, _itemNumButton[(it - _saleList.begin()) * 2 + 1].first.top,
+					IMAGEMANAGER->findImage("DownButtonPress")->getWidth() * 1.5, IMAGEMANAGER->findImage("DownButtonPress")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("DownButtonPress")->getWidth(), IMAGEMANAGER->findImage("DownButtonPress")->getHeight());
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("DownButton")->render(hdc, _itemNumButton[(it - _saleList.begin()) * 2 + 1].first.left, _itemNumButton[(it - _saleList.begin()) * 2 + 1].first.top,
+					IMAGEMANAGER->findImage("DownButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("DownButton")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("DownButton")->getWidth(), IMAGEMANAGER->findImage("DownButton")->getHeight());
+			}
+			wsprintf(_text, "%d", _itemN[(it - _saleList.begin())]);
+			SetTextAlign(hdc, TA_RIGHT);
+			FONTMANAGER->textOut(hdc, 420, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 0));
+			SetTextAlign(hdc, TA_LEFT);
+		}
+	}
+	// 판매아아템 목록
+	else
+	{
+		SetTextAlign(hdc, TA_LEFT);
+		for (auto it = _invenList.begin(); it != _invenList.end(); ++it)
+		{
+			IMAGEMANAGER->findImage((*it)->_name)->render(hdc, 30,
+				_buySellButton[0].bottom + 10 + (IMAGEMANAGER->findImage((*it)->_name)->getHeight() * 1.5 + 2) * (it - _invenList.begin()),
+				IMAGEMANAGER->findImage((*it)->_name)->getWidth() * 1.5, IMAGEMANAGER->findImage((*it)->_name)->getHeight() * 1.5,
+				0, 0, IMAGEMANAGER->findImage((*it)->_name)->getWidth(), IMAGEMANAGER->findImage((*it)->_name)->getHeight());
+			char itemInfo[50];
+			wsprintf(itemInfo, (*it)->_name.c_str());
+			FONTMANAGER->textOut(hdc, 80, 125 + 39 * (it - _invenList.begin()), "가을체", 20, 100,
+				itemInfo, strlen(itemInfo), RGB(255, 255, 255));
+			SetTextAlign(hdc, TA_RIGHT);
+			wsprintf(itemInfo, "%d", (*it)->_price);
+			strcat_s(itemInfo, " Eld");
+			FONTMANAGER->textOut(hdc, 300, 125 + 39 * (it - _invenList.begin()), "가을체", 20, 100,
+				itemInfo, strlen(itemInfo), RGB(255, 255, 255));
+			wsprintf(_text, "(%2d)", (DATAMANAGER->findItem((*it)->_name)).second);
+			FONTMANAGER->textOut(hdc, 350, 125 + 39 * (it - _invenList.begin()), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+			SetTextAlign(hdc, TA_LEFT);
+
+			// 아이템 수량 결정하는 버튼과 개수 출력하는 영역
+			if (_itemNumButton[(it - _invenList.begin()) * 2].second)
+			{
+				IMAGEMANAGER->findImage("UpButtonPress")->render(hdc, _itemNumButton[(it - _invenList.begin()) * 2].first.left, _itemNumButton[(it - _invenList.begin()) * 2].first.top,
+					IMAGEMANAGER->findImage("UpButtonPress")->getWidth() * 1.5, IMAGEMANAGER->findImage("UpButtonPress")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("UpButtonPress")->getWidth(), IMAGEMANAGER->findImage("UpButtonPress")->getHeight());
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("UpButton")->render(hdc, _itemNumButton[(it - _invenList.begin()) * 2].first.left, _itemNumButton[(it - _invenList.begin()) * 2].first.top,
+					IMAGEMANAGER->findImage("UpButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("UpButton")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("UpButton")->getWidth(), IMAGEMANAGER->findImage("UpButton")->getHeight());
+			}
+			IMAGEMANAGER->findImage("ItemNum")->render(hdc, 420 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5,
+				125 + 39 * (it - _invenList.begin()), IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5,
+				IMAGEMANAGER->findImage("ItemNum")->getHeight() * 1.5, 0, 0, IMAGEMANAGER->findImage("ItemNum")->getWidth(), IMAGEMANAGER->findImage("ItemNum")->getHeight());
+			if (_itemNumButton[(it - _invenList.begin()) * 2 + 1].second)
+			{
+				IMAGEMANAGER->findImage("DownButtonPress")->render(hdc, _itemNumButton[(it - _invenList.begin()) * 2 + 1].first.left, _itemNumButton[(it - _invenList.begin()) * 2 + 1].first.top,
+					IMAGEMANAGER->findImage("DownButtonPress")->getWidth() * 1.5, IMAGEMANAGER->findImage("DownButtonPress")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("DownButtonPress")->getWidth(), IMAGEMANAGER->findImage("DownButtonPress")->getHeight());
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("DownButton")->render(hdc, _itemNumButton[(it - _invenList.begin()) * 2 + 1].first.left, _itemNumButton[(it - _invenList.begin()) * 2 + 1].first.top,
+					IMAGEMANAGER->findImage("DownButton")->getWidth() * 1.5, IMAGEMANAGER->findImage("DownButton")->getHeight() * 1.5,
+					0, 0, IMAGEMANAGER->findImage("DownButton")->getWidth(), IMAGEMANAGER->findImage("DownButton")->getHeight());
+			}
+			wsprintf(_text, "%d", _itemN[(it - _invenList.begin())]);
+			SetTextAlign(hdc, TA_RIGHT);
+			FONTMANAGER->textOut(hdc, 420, 125 + 39 * (it - _invenList.begin()), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 0));
+			SetTextAlign(hdc, TA_LEFT);
+		}
+	}
+
+	// 스크롤
+	IMAGEMANAGER->findImage("ScrollUpButton")->render(hdc, WINSIZE_X / 2 - 30, _buySellButton[0].bottom + 10);
+	IMAGEMANAGER->findImage("ScrollDownButton")->render(hdc, WINSIZE_X / 2 - 30, 345 - IMAGEMANAGER->findImage("ScrollDownButton")->getHeight());
+	FillRect(hdc, &RectMake(WINSIZE_X / 2 - 30, _buySellButton[0].bottom + 10 + IMAGEMANAGER->findImage("ScrollUpButton")->getHeight(),
+		IMAGEMANAGER->findImage("ScrollUpButton")->getWidth(),
+		345 - IMAGEMANAGER->findImage("ScrollDownButton")->getHeight() - (_buySellButton[0].bottom + 10 + IMAGEMANAGER->findImage("ScrollUpButton")->getHeight())), CreateSolidBrush(RGB(49, 49, 147)));
+	IMAGEMANAGER->findImage("ScrollButton")->render(hdc, WINSIZE_X / 2 - 30, _buySellButton[0].bottom + 10 + IMAGEMANAGER->findImage("ScrollUpButton")->getHeight());
+
+	// eld
+	DIALOGMANAGER->makeTextBox(hdc, 100, 390, WINSIZE_X / 2 - 100, 120, 200);
+	FONTMANAGER->textOut(hdc, 120, 405, "가을체", 20, 100, "소지금액", strlen("소지금액"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, 120, 440, "가을체", 20, 100, "물품총액", strlen("물품총액"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, 120, 475, "가을체", 20, 100, "잔      액", strlen("잔      액"), RGB(255, 255, 255));
+	SetTextAlign(hdc, TA_RIGHT);
+	wsprintf(_text, "%d Eld", DATAMANAGER->getEld());
+	FONTMANAGER->textOut(hdc, 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 - 20, 405, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	wsprintf(_text, "%d Eld", _priceSum);
+	FONTMANAGER->textOut(hdc, 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 - 20, 440, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	wsprintf(_text, "%d Eld", _sell ? DATAMANAGER->getEld() - _priceSum : DATAMANAGER->getEld() + _priceSum);
+	FONTMANAGER->textOut(hdc, 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 - 20, 475, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	SetTextAlign(hdc, TA_LEFT);
+	// 결정 버튼
+	if (_decisionButton.second)
+	{
+		IMAGEMANAGER->findImage("PressButton")->render(hdc, _decisionButton.first.left, _decisionButton.first.top,
+			_decisionButton.first.right - _decisionButton.first.left, _decisionButton.first.bottom - _decisionButton.first.top,
+			0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
+	}
+	else {
+		IMAGEMANAGER->findImage("ShopButton")->render(hdc, _decisionButton.first.left, _decisionButton.first.top,
+			_decisionButton.first.right - _decisionButton.first.left, _decisionButton.first.bottom - _decisionButton.first.top,
+			0, 0, IMAGEMANAGER->findImage("ShopButton")->getWidth(), IMAGEMANAGER->findImage("ShopButton")->getHeight());
+	}
+	SetTextAlign(hdc, TA_CENTER);
+	FONTMANAGER->textOut(hdc, (_decisionButton.first.left + _decisionButton.first.right) / 2, _decisionButton.first.top, "가을체", 20, 100, "결   정", strlen("결   정"), RGB(255, 255, 255));
+	SetTextAlign(hdc, TA_LEFT);
+}
+
+void ShopScene::getInven()
+{
+	_invenList.clear();
+	for (auto item : DATAMANAGER->getInventory())
+	{
+		_invenList.push_back(item.second.first);
+	}
 }
