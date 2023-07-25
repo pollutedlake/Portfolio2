@@ -20,13 +20,6 @@ enum STATUS
 	STATUSN
 };
 
-struct CharacterData
-{
-	string _name;
-	string _belong;
-	string _class;
-	int _status[14];
-};
 
 struct ItemData
 {
@@ -36,14 +29,23 @@ struct ItemData
 	ItemData(string name, int price) { _name = name; _price = price; }
 };
 
+struct CharacterData
+{
+	string _name;
+	string _belong;
+	string _class;
+	int _status[14];
+	ItemData* _equipment[5];
+};
+
 class DataManager : public SingletonBase<DataManager>
 {
 private:
 	FILE* _fp;
 	FILE* _partyFP;
-	vector<ItemData*> _mSaleWeaponList;
 	vector<CharacterData*> _mParty;
 	map<string, pair<ItemData*, int>> _mInventory;
+	map<string, ItemData*> _mItemList;
 	int _eld;
 
 public:
@@ -54,14 +56,19 @@ public:
 
 	void setEld(int eld) { _eld = eld; }
 
-	vector<ItemData*> getSaleList() {return _mSaleWeaponList;}
 	vector<CharacterData*> getPartyData() {return _mParty;}
 	map<string, pair<ItemData*, int>> getInventory() { return _mInventory; }
 	int getEld() {return _eld;}
 
-	pair<ItemData*, int> findItem(string strKey);
+	// 아이템 데이터
+	ItemData* findItem(string strKey);
+
+	// 인벤토리
+	pair<ItemData*, int> findItemInven(string strKey);
 	ItemData* buyItem(string strKey, int num, ItemData* item);
 	void sellItem(string strKey, int num);
+	void equipItem(string strKey, int charIdx, int itemIdx);
+	void takeOffEquip(int charIdx, int itemIdx);
 
 	DataManager() {}
 	~DataManager() {}

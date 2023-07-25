@@ -26,8 +26,10 @@ private:
 	
 	vector<CharacterData*> _partyList;
 	RECT _charChoiceRT[10];
+	RECT _equipmentRT[20];
 	char _text[256];
 	int _selectChar;
+	int _selectEquipment;
 	int _priceSum;
 
 public:
@@ -37,6 +39,7 @@ public:
 	void release(void);
 
 	void showCharacterStat(HDC hdc, int index, int left, int top);
+	void showInventory(HDC hdc, int index, int left, int top);
 	void shopRender(HDC hdc);
 	void getInven();
 

@@ -39,7 +39,7 @@ void ScenarioScene::update(void)
 		{
 			if (_selectScenario == 75)
 			{
-				SOUNDMANAGER->playSoundFMOD("ScenarioSelect");
+				SOUNDMANAGER->playSoundFMOD("Select");
 				SOUNDMANAGER->stopSoundFMOD("ScenarioScene");
 				_fadeOut = true;
 			}

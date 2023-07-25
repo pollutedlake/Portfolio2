@@ -29,7 +29,14 @@ HRESULT ShopScene::init(void)
 	_order.reset();
 	_order.set(0);
 	_sell = false;
-	_saleList = DATAMANAGER->getSaleList();
+	_saleList.clear();
+	_saleList.push_back(DATAMANAGER->findItem("자마드 아그니"));
+	_saleList.push_back(DATAMANAGER->findItem("브리트라"));
+	_saleList.push_back(DATAMANAGER->findItem("돌격소총"));
+	_saleList.push_back(DATAMANAGER->findItem("스나이퍼 건"));
+	_saleList.push_back(DATAMANAGER->findItem("테슈브"));
+	_saleList.push_back(DATAMANAGER->findItem("벽력궁"));
+	//_saleList = DATAMANAGER->getSaleList();
 	_partyList = DATAMANAGER->getPartyData();
 	_priceSum = 0;
 	for (int i = 0; i < _saleList.size(); i++)
@@ -48,6 +55,21 @@ HRESULT ShopScene::init(void)
 		_charChoiceRT[i].right = _charChoiceRT[i].left + WINSIZE_X / 12;
 		_charChoiceRT[i].bottom = _charChoiceRT[i].top + WINSIZE_X / 12;
 	}
+	for (int i = 0; i < 5; i++)
+	{
+		_equipmentRT[i].left = WINSIZE_X / 6 + 15 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5;
+		_equipmentRT[i].top = _shopButtons[0].top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5) * i;
+		_equipmentRT[i].right = _equipmentRT[i].left + WINSIZE_X / 3 - 20 - (IMAGEMANAGER->findImage("없음")->getWidth() * 1.5);
+		_equipmentRT[i].bottom = _equipmentRT[i].top + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5;
+	}
+	for (int i = 5; i < 20; i++)
+	{
+		_equipmentRT[i].left = WINSIZE_X / 2 + 50 + 10 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5;
+		_equipmentRT[i].top = 80 + 10 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5 * ((i - 5));
+		_equipmentRT[i].right = _equipmentRT[i].left + 250 - 15 - IMAGEMANAGER->findImage("없음")->getWidth() * 1.5;
+		_equipmentRT[i].bottom = _equipmentRT[i].top + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5;
+	}
+	_frame = 0;
 	return S_OK;
 }
 
@@ -64,7 +86,15 @@ void ShopScene::update(void)
 		// Exit를 누르면
 		if (PtInRect(&_exitButton, _ptMouse))
 		{
-			_order = _order >> 1;
+			if (_order.test(0))
+			{
+				_order = _order >> 1;
+			}
+			else
+			{
+				_order.reset();
+				_order.set(0);
+			}
 			IMAGEMANAGER->findImage("PressButton")->render(getMemDC(), _exitButton.left, _exitButton.top, IMAGEMANAGER->findImage("PressButton")->getWidth() * 0.5f, IMAGEMANAGER->findImage("PressButton")->getHeight() * 0.5f,
 				0, 0, IMAGEMANAGER->findImage("PressButton")->getWidth(), IMAGEMANAGER->findImage("PressButton")->getHeight());
 			_priceSum = 0;
@@ -72,6 +102,7 @@ void ShopScene::update(void)
 			{
 				_itemN[i] = 0;
 			}
+			SOUNDMANAGER->playSoundFMOD("Button");
 		}
 		// 처음화면일 때
 		if(_order.test(0))
@@ -79,16 +110,20 @@ void ShopScene::update(void)
 			// 상점을 고르면
 			if (PtInRect(&_shopButtons[1], _ptMouse))
 			{
-				_order.reset();
-				_order.set(1);
+				_order = _order << 1;
+				getInven();
+				_sell = false;
+				SOUNDMANAGER->playSoundFMOD("Select");
 			}
 			// 맨 처음 화면에서 캐릭터 사진 클릭 시
 			for (int i = 0; i < _partyList.size(); i++)
 			{
 				if(PtInRect(&_charChoiceRT[i], _ptMouse))
 				{
-					_order.set(2);
+
+					_order = _order << 2;
 					_selectChar = i;
+					SOUNDMANAGER->playSoundFMOD("Select");
 				}
 			}
 		}
@@ -106,6 +141,7 @@ void ShopScene::update(void)
 						{
 							_itemN[i] = 0;
 						}
+						SOUNDMANAGER->playSoundFMOD("Select");
 					}
 					_sell = i;
 				}
@@ -114,6 +150,7 @@ void ShopScene::update(void)
 			// 결정버튼을 눌렀을 때
 			if (PtInRect(&_decisionButton.first, _ptMouse))
 			{
+				SOUNDMANAGER->playSoundFMOD("Select");
 				_decisionButton.second = true;
 				if (!_sell)
 				{
@@ -130,7 +167,8 @@ void ShopScene::update(void)
 				else
 				{
 					DATAMANAGER->setEld(DATAMANAGER->getEld() + _priceSum);
-					for (int i = 0; i < DATAMANAGER->getInventory().size(); i++)
+					int inventorySize = DATAMANAGER->getInventory().size();
+					for (int i = 0; i < inventorySize; i++)
 					{
 						if (_itemN[i] != 0)
 						{
@@ -151,7 +189,7 @@ void ShopScene::update(void)
 					_itemNumButton[i].second = true;
 					if (i % 2 == 0)
 					{
-						if (!_sell || (DATAMANAGER->findItem(_invenList[i / 2]->_name)).second != _itemN[i / 2])
+						if (!_sell || (DATAMANAGER->findItemInven(_invenList[i / 2]->_name)).second != _itemN[i / 2])
 						{
 							_itemN[i / 2]++;
 							if (_sell)
@@ -179,20 +217,50 @@ void ShopScene::update(void)
 							}
 						}
 					}
+					SOUNDMANAGER->playSoundFMOD("Select");
 				}
 			}
 		}
 		else if (_order.test(2))
 		{
+			for (int i = 0; i < 5; i++)
+			{
+				if (PtInRect(&_equipmentRT[i], _ptMouse))
+				{
+					_order = _order << 1;
+					_selectEquipment = i;
+					getInven();
+					SOUNDMANAGER->playSoundFMOD("Select");
+				}
+			}
 			for (int i = 0; i < _partyList.size(); i++)
 			{
 				if (PtInRect(&_charChoiceRT[i], _ptMouse))
 				{
 					_selectChar = i;
+					SOUNDMANAGER->playSoundFMOD("Select");
 				}
 			}
 		}
-		
+		else if (_order.test(3))
+		{
+			for (int i = 5; i < 6 + _invenList.size(); i++)
+			{
+				if (PtInRect(&_equipmentRT[i], _ptMouse))
+				{
+					_order = _order >> 1;
+					if (i == 5)
+					{
+						DATAMANAGER->equipItem("없음", _selectChar, _selectEquipment);
+					}
+					else
+					{
+						DATAMANAGER->equipItem(_invenList[i - 6]->_name, _selectChar, _selectEquipment);
+					}
+					SOUNDMANAGER->playSoundFMOD("Select");
+				}
+			}
+		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
@@ -219,6 +287,7 @@ void ShopScene::update(void)
 void ShopScene::render(void)
 {
 	IMAGEMANAGER->findImage("ShopSceneBG")->render(getMemDC());
+	// 상단의 마을 정보
 	if(!_order.test(1))
 	{
 		DIALOGMANAGER->makeTextBox(getMemDC(), 0, 10, WINSIZE_X, 50, 255);
@@ -231,7 +300,7 @@ void ShopScene::render(void)
 		FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2, 5 + 15, "가을체", 30, 100, "자비단 입구", strlen("자비단 입구"), RGB(212, 204, 192));
 		SetTextAlign(getMemDC(), TA_LEFT);
 	}
-	if(_order.test(0))
+	if(_order.test(0) || _order.none())
 	{	
 		for (int i = 0; i < 4; i++)
 		{
@@ -257,9 +326,13 @@ void ShopScene::render(void)
 	{
 		shopRender(getMemDC());
 	}
-	if (_order.test(2))
+	else if (_order.test(2))
 	{
 		showCharacterStat(getMemDC(), _selectChar, WINSIZE_X / 6, _shopButtons[0].top);
+	}
+	else if (_order.test(3))
+	{
+		showInventory(getMemDC(), _selectEquipment, WINSIZE_X / 2 + 50, 80);
 	}
 
 	// 맨 밑 텍스트박스
@@ -388,12 +461,57 @@ void ShopScene::showCharacterStat(HDC hdc, int index, int left, int top)
 	// 장비
 	for (int i = 0; i < 5; i++)
 	{
-		IMAGEMANAGER->findImage("EquipmentEmpty")->render(hdc, left + 5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight() * 1.5) * i,
-			IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5, IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight() * 1.5,
-			0, 0, IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth(), IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight());
-		IMAGEMANAGER->findImage("StatusButton")->render(hdc, left + 15 + IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("EquipmentEmpty")->getHeight() * 1.5) * i,
-			left + WINSIZE_X / 3 - 5 - (left + 15 + IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5), IMAGEMANAGER->findImage("EquipmentEmpty")->getWidth() * 1.5,
+		IMAGEMANAGER->findImage(_partyList[index]->_equipment[i]->_name)->render(hdc, left + 5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5) * i,
+			IMAGEMANAGER->findImage("없음")->getWidth() * 1.5, IMAGEMANAGER->findImage("없음")->getHeight() * 1.5,
+			0, 0, IMAGEMANAGER->findImage("없음")->getWidth(), IMAGEMANAGER->findImage("없음")->getHeight());
+		if (PtInRect(&_equipmentRT[i], _ptMouse))
+		{
+			IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, left + 15 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5) * i,
+				WINSIZE_X / 3 - 20 - (IMAGEMANAGER->findImage("없음")->getWidth() * 1.5), IMAGEMANAGER->findImage("없음")->getWidth() * 1.5,
+				0, 0, IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 200);
+		}
+		IMAGEMANAGER->findImage("StatusButton")->render(hdc, left + 15 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5, top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5) * i,
+			WINSIZE_X / 3 - 20 - (IMAGEMANAGER->findImage("없음")->getWidth() * 1.5), IMAGEMANAGER->findImage("없음")->getWidth() * 1.5,
 			0, 0, IMAGEMANAGER->findImage("StatusButton")->getWidth(), IMAGEMANAGER->findImage("StatusButton")->getHeight());
+		SetTextAlign(hdc, TA_CENTER);
+		wsprintf(_text, _partyList[index]->_equipment[i]->_name.c_str());
+		FONTMANAGER->textOut(hdc, left + 15 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5 + (WINSIZE_X / 3 - 20 - (IMAGEMANAGER->findImage("없음")->getWidth() * 1.5)) / 2,
+			top + 160 + WINSIZE_X / 12 + (2 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5) * i + 10, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	}
+}
+
+void ShopScene::showInventory(HDC hdc, int index, int left, int top)
+{
+	DIALOGMANAGER->makeTextBox(hdc, left, top, 250, 20 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5 * (_invenList.size() + 1), 200);
+	IMAGEMANAGER->findImage("없음")->render(hdc, left + 10, top + 10, IMAGEMANAGER->findImage("없음")->getWidth() * 1.5, IMAGEMANAGER->findImage("없음")->getHeight() * 1.5,
+		0, 0, IMAGEMANAGER->findImage("없음")->getWidth(), IMAGEMANAGER->findImage("없음")->getHeight());
+	if (PtInRect(&_equipmentRT[5], _ptMouse))
+	{
+		IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, _equipmentRT[5].left, _equipmentRT[5].top,
+			_equipmentRT[5].right - _equipmentRT[5].left, _equipmentRT[5].bottom - _equipmentRT[5].top,
+			0, 0, IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 200);
+	}
+	FONTMANAGER->textOut(hdc, left + 10 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5 + 10, top + 10 + 10, "가을체",
+		20, 100, "해제", strlen("해제"), RGB(255, 255, 255));
+	for (int i = 0; i < _invenList.size(); i++)
+	{
+		if (PtInRect(&_equipmentRT[6 + i], _ptMouse))
+		{
+			IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, _equipmentRT[6 + i].left, _equipmentRT[i + 6].top, 
+				_equipmentRT[6 + i].right - _equipmentRT[6 + i].left, _equipmentRT[i + 6].bottom - _equipmentRT[i + 6].top,
+				0, 0, IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 200);
+		}
+		IMAGEMANAGER->findImage(_invenList[i]->_name)->render(hdc, left + 10, top + 10 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5 * (i + 1), 
+			IMAGEMANAGER->findImage("없음")->getWidth() * 1.5, IMAGEMANAGER->findImage("없음")->getHeight() * 1.5,
+			0, 0, IMAGEMANAGER->findImage("없음")->getWidth(), IMAGEMANAGER->findImage("없음")->getHeight());
+		wsprintf(_text, _invenList[i]->_name.c_str());
+		FONTMANAGER->textOut(hdc, left + 10 + IMAGEMANAGER->findImage("없음")->getWidth() * 1.5 + 10, top + 10 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5 * (i + 1) + 10, 
+			"가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+		wsprintf(_text, "%d", DATAMANAGER->findItemInven(_invenList[i]->_name).second);
+		SetTextAlign(hdc, TA_RIGHT);
+		FONTMANAGER->textOut(hdc, left + 250 - 10, top + 10 + IMAGEMANAGER->findImage("없음")->getHeight() * 1.5 * (i + 1) + 10,
+			"가을체", 20, 100, _text, strlen(_text), RGB(255, 0, 0));
+		SetTextAlign(hdc, TA_LEFT);
 	}
 }
 
@@ -401,7 +519,7 @@ void ShopScene::shopRender(HDC hdc)
 {
 	DIALOGMANAGER->makeTextBox(hdc, 10, 10, 300, 50, 200);
 	SetTextAlign(hdc, TA_CENTER);
-	FONTMANAGER->textOut(hdc, 10 + 150, 20, "가을체", 30, 100, "무기점", strlen("무기점"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(hdc, 10 + 150, 20, "가을체", 30, 100, "무기상점", strlen("무기상점"), RGB(255, 255, 255));
 	IMAGEMANAGER->findImage("ShopEmployee")->render(hdc, WINSIZE_X - IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4 - 20,
 		WINSIZE_Y - 80 - IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, IMAGEMANAGER->findImage("ShopEmployee")->getWidth() * 1.4,
 		IMAGEMANAGER->findImage("ShopEmployee")->getHeight() * 1.4, 0, 0, IMAGEMANAGER->findImage("ShopEmployee")->getWidth(), IMAGEMANAGER->findImage("ShopEmployee")->getHeight());
@@ -439,7 +557,7 @@ void ShopScene::shopRender(HDC hdc)
 			strcat_s(itemInfo, " Eld");
 			FONTMANAGER->textOut(hdc, 300, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100,
 				itemInfo, strlen(itemInfo), RGB(255, 255, 255));
-			wsprintf(_text, "(%2d)", (DATAMANAGER->findItem((*it)->_name)).second);
+			wsprintf(_text, "(%2d)", (DATAMANAGER->findItemInven((*it)->_name)).second);
 			FONTMANAGER->textOut(hdc, 350, 125 + 39 * (it - _saleList.begin()), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 			SetTextAlign(hdc, TA_LEFT);
 
@@ -496,7 +614,7 @@ void ShopScene::shopRender(HDC hdc)
 			strcat_s(itemInfo, " Eld");
 			FONTMANAGER->textOut(hdc, 300, 125 + 39 * (it - _invenList.begin()), "가을체", 20, 100,
 				itemInfo, strlen(itemInfo), RGB(255, 255, 255));
-			wsprintf(_text, "(%2d)", (DATAMANAGER->findItem((*it)->_name)).second);
+			wsprintf(_text, "(%2d)", (DATAMANAGER->findItemInven((*it)->_name)).second);
 			FONTMANAGER->textOut(hdc, 350, 125 + 39 * (it - _invenList.begin()), "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 			SetTextAlign(hdc, TA_LEFT);
 
@@ -553,7 +671,7 @@ void ShopScene::shopRender(HDC hdc)
 	FONTMANAGER->textOut(hdc, 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 - 20, 405, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 	wsprintf(_text, "%d Eld", _priceSum);
 	FONTMANAGER->textOut(hdc, 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 - 20, 440, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
-	wsprintf(_text, "%d Eld", _sell ? DATAMANAGER->getEld() - _priceSum : DATAMANAGER->getEld() + _priceSum);
+	wsprintf(_text, "%d Eld", _sell ? DATAMANAGER->getEld() +_priceSum : DATAMANAGER->getEld() - _priceSum);
 	FONTMANAGER->textOut(hdc, 400 - IMAGEMANAGER->findImage("ItemNum")->getWidth() * 1.5 - 20, 475, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 	SetTextAlign(hdc, TA_LEFT);
 	// 결정 버튼

@@ -24,7 +24,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("ShopTitleRB", "Resources/Images/UI/ShopTitleRB.bmp", 80, 13, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("ShopButton", "Resources/Images/UI/ShopButton.bmp", 140, 36);
 	IMAGEMANAGER->addImage("Empty", "Resources/Images/UI/Empty.bmp", 50, 50);
-	IMAGEMANAGER->addImage("EquipmentEmpty", "Resources/Images/UI/Shop/EquipmentEmpty.bmp", 24, 24);
+	IMAGEMANAGER->addImage("없음", "Resources/Images/UI/Shop/없음.bmp", 24, 24);
 	IMAGEMANAGER->addImage("PressButton", "Resources/Images/UI/PressButton.bmp", 140, 36);
 	IMAGEMANAGER->addFrameImage("ShopIcon", "Resources/Images/UI/ShopIcon.bmp", 140, 35, 4, 1, true, RGB(236, 208, 208));
 	IMAGEMANAGER->addImage("ShopButtonActive", "Resources/Images/UI/ShopButtonActive.bmp", 140, 36);
@@ -168,6 +168,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("스나이퍼 건", "Resources/Images/UI/Shop/스나이퍼 건.bmp", 24, 24);
 	IMAGEMANAGER->addImage("테슈브", "Resources/Images/UI/Shop/테슈브.bmp", 24, 24);
 	IMAGEMANAGER->addImage("벽력궁", "Resources/Images/UI/Shop/벽력궁.bmp", 24, 24);
+	IMAGEMANAGER->addImage("다마스커스", "Resources/Images/UI/Shop/다마스커스.bmp", 24, 24);
+	IMAGEMANAGER->addImage("방탄복", "Resources/Images/UI/Shop/방탄복.bmp", 24, 24);
+	IMAGEMANAGER->addImage("스피드 슈즈", "Resources/Images/UI/Shop/스피드 슈즈.bmp", 24, 24);
 	IMAGEMANAGER->addImage("UpButton", "Resources/Images/UI/Shop/UpButton.bmp", 12, 16);
 	IMAGEMANAGER->addImage("DownButton", "Resources/Images/UI/Shop/DownButton.bmp", 12, 16);
 	IMAGEMANAGER->addImage("UpButtonPress", "Resources/Images/UI/Shop/UpButtonPress.bmp", 12, 16);
@@ -230,7 +233,8 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3", true);
-	SOUNDMANAGER->addSoundFMOD("ScenarioSelect", "Resources/Sounds/SoundEffect/ScenarioSelect.mp3");
+	SOUNDMANAGER->addSoundFMOD("Select", "Resources/Sounds/SoundEffect/Select.mp3");
+	SOUNDMANAGER->addSoundFMOD("Button", "Resources/Sounds/SoundEffect/Button.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleButton", "Resources/Sounds/SoundEffect/TitleButton.wav");
 	SOUNDMANAGER->addSoundFMOD("BreakIce", "Resources/Sounds/SoundEffect/BreakIce.wav");
 	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/VermontSkillAttack.wav");
