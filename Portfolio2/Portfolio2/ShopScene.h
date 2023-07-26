@@ -42,6 +42,7 @@ public:
 	void showInventory(HDC hdc, int index, int left, int top);
 	void shopRender(HDC hdc);
 	void getInven();
+	void getInven(int type);
 
 	ShopScene() {}
 	~ShopScene() {}

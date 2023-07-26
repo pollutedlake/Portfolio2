@@ -162,6 +162,8 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #define WINSTART_Y				100
 #define WINSIZE_X				960
 #define WINSIZE_Y				720
+#define TILEWIDTH				40
+#define TILEHEIGHT				30
 
 #define PI                       3.141592
 // WS_CAPTION : 타이틀바를 가지기 위한 옵션

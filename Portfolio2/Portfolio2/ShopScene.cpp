@@ -229,7 +229,7 @@ void ShopScene::update(void)
 				{
 					_order = _order << 1;
 					_selectEquipment = i;
-					getInven();
+					getInven(i);
 					SOUNDMANAGER->playSoundFMOD("Select");
 				}
 			}
@@ -260,6 +260,18 @@ void ShopScene::update(void)
 					SOUNDMANAGER->playSoundFMOD("Select");
 				}
 			}
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		if (_order.test(3))
+		{
+			_order = _order >> 1;
+		}
+		else if (_order.test(2))
+		{
+			_order.reset();
+			_order.set(0);
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
@@ -697,5 +709,46 @@ void ShopScene::getInven()
 	for (auto item : DATAMANAGER->getInventory())
 	{
 		_invenList.push_back(item.second.first);
+	}
+}
+
+void ShopScene::getInven(int type)
+{
+	_invenList.clear();
+	for (auto item : DATAMANAGER->getInventory())
+	{
+		switch (type)
+		{
+		case 0:
+			if (item.second.first->_type == WEAPON)
+			{
+				_invenList.push_back(item.second.first);
+			}
+			break;
+		case 1:
+			if (item.second.first->_type == WEAPON)
+			{
+				_invenList.push_back(item.second.first);
+			}
+			break;
+		case 2:
+			if (item.second.first->_type == ARMOR)
+			{
+				_invenList.push_back(item.second.first);
+			}
+			break;
+		case 3:
+			if (item.second.first->_type == SHOES)
+			{
+				_invenList.push_back(item.second.first);
+			}
+			break;
+		case 4:
+			if (item.second.first->_type == ACCESSORY)
+			{
+				_invenList.push_back(item.second.first);
+			}
+			break;
+		}
 	}
 }

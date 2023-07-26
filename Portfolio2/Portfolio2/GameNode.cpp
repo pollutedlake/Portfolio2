@@ -37,10 +37,10 @@ HRESULT GameNode::init(bool managerInit)
 		ClipCursor(&rect);
 		KEYMANAGER->init();
 		RND->init();
+		DATAMANAGER->init();
 		IMAGEMANAGER->init();
 		SOUNDMANAGER->init();
 		DIALOGMANAGER->init();
-		DATAMANAGER->init();
 	}
 	return S_OK;
 }

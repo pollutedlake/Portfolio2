@@ -181,6 +181,7 @@
     <ClInclude Include="StoryScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TurnSystem.h" />
+    <ClInclude Include="TurnSystem2.h" />
     <ClInclude Include="Vermont.h" />
     <ClInclude Include="WorldMapScene.h" />
   </ItemGroup>
@@ -220,6 +221,7 @@
     <ClCompile Include="StoryScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TurnSystem.cpp" />
+    <ClCompile Include="TurnSystem2.cpp" />
     <ClCompile Include="Vermont.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="WorldMapScene.cpp" />

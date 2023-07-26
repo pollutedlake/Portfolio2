@@ -20,13 +20,23 @@ enum STATUS
 	STATUSN
 };
 
+enum ITEMTYPE
+{
+	EMPTY,
+	WEAPON,
+	ARMOR,
+	SHOES,
+	ACCESSORY
+};
+
 
 struct ItemData
 {
 	string _name;
 	int _price;
+	int _type;
 
-	ItemData(string name, int price) { _name = name; _price = price; }
+	ItemData(string name, int price, int type) { _name = name; _price = price; _type = type; }
 };
 
 struct CharacterData

@@ -7,9 +7,10 @@ HRESULT DataManager::init(void)
 	{
 		char itemName[256];
 		int itemPrice;
-		while(EOF != fscanf_s(_fp, "%[^\t]\t%d\n", itemName, _countof(itemName), &itemPrice))
+		int itemType;
+		while(EOF != fscanf_s(_fp, "%[^\t]\t%d%d\n", itemName, _countof(itemName), &itemPrice, &itemType))
 		{
-			ItemData* item = new ItemData(itemName, itemPrice);
+			ItemData* item = new ItemData(itemName, itemPrice, itemType);
 			_mItemList.insert(make_pair(itemName, item));
 		}
 	}

@@ -73,6 +73,17 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("test", "Resources/Images/Effects/StoryScene/test2.bmp", 201, 242, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("TitleEFX3", "Resources/Images/Effects/TitleScene/TitleEFX3.bmp", 20880, 240, 87, 1, true, RGB(4, 88, 4));
 	IMAGEMANAGER->addImage("BossBattleBG", "Resources/Images/BackGrounds/BossBattleScene/BossBattleBG.bmp", 1600, 1800);
+	IMAGEMANAGER->addImage("BattleSceneBG", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG.bmp", 1080, 1920);
+	IMAGEMANAGER->addImage("검사용BattleSceneBG", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG.bmp", 1200, 1920);
+	IMAGEMANAGER->addImage("Object1", "Resources/Images/BackGrounds/BattleScene/Object1.bmp", 360, 208, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object2", "Resources/Images/BackGrounds/BattleScene/Object2.bmp", 360, 176, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object3", "Resources/Images/BackGrounds/BattleScene/Object3.bmp", 360, 432, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4", "Resources/Images/BackGrounds/BattleScene/Object4.bmp", 280, 432, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object5", "Resources/Images/BackGrounds/BattleScene/Object5.bmp", 160, 96, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object6", "Resources/Images/BackGrounds/BattleScene/Object6.bmp", 360, 104, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object7", "Resources/Images/BackGrounds/BattleScene/Object7.bmp", 280, 104, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object8", "Resources/Images/BackGrounds/BattleScene/Object8.bmp", 120, 184, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object9", "Resources/Images/BackGrounds/BattleScene/Object9.bmp", 160, 184, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Table", "Resources/Images/BackGrounds/BossBattleScene/Table.bmp", 120, 136, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinIdleLeft", "Resources/Images/Characters/Saladin/SaladinIdleLeft.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinIdleRight", "Resources/Images/Characters/Saladin/SaladinIdleRight.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
