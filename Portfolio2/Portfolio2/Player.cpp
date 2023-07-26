@@ -14,6 +14,6 @@ void Player::update(void)
 {
 }
 
-void Player::render(void)
+void Player::render(HDC hdc, POINT position, POINT cameraPos)
 {
 }

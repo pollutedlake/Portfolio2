@@ -10,16 +10,20 @@ HRESULT BattleScene::init(void)
 	_camera->setLimitBottom(IMAGEMANAGER->findImage("BattleSceneBG")->getHeight() - WINSIZE_Y / 2);
 
 	_turnSystem = new TurnSystem2();
-	_turnSystem->init(_camera);
+	_turnSystem->init(_camera, IMAGEMANAGER->findImage("BattleSceneBG")->getMemDC(), IMAGEMANAGER->findImage("BattleSceneBG")->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage("BattleSceneBG")->getWidth() / TILEWIDTH);
 	vector<CharacterData*> party = DATAMANAGER->getPartyData();
 	for (auto it = party.begin(); it != party.end(); ++it)
 	{
 		if (!strcmp((*it)->_name.c_str(), "»ì¶óµò"))
 		{
-			_turnSystem->addCharacter(new Saladin, UP, { 13, 57 }, 0);
+			Saladin* _saladin = new Saladin;
+			_saladin->init();
+			_turnSystem->addCharacter(_saladin, UP, { 13, 57 }, 0);
 		}
 	}
-	_turnSystem->addCharacter(new Soldier, DOWN, { 13, 40 }, 1);
+	Soldier* _soldier = new Soldier{};
+	_soldier->init();
+	_turnSystem->addCharacter(_soldier, DOWN, { 13, 40 }, 1);
 	_turnSystem->addObject(new Obstacle("Object1", {0, 1408}, 1, 1, {0, 0}));
 	_turnSystem->addObject(new Obstacle("Object2", {720, 1408}, 1, 1, { 0, 0 }));
 	_turnSystem->addObject(new Obstacle("Object3", {80, 632}, 1, 1, { 0, 0 }));
@@ -49,7 +53,7 @@ void BattleScene::update(void)
 	_cursorTile.y = (_cameraPos.y - WINSIZE_Y / 2 + _ptMouse.y) / TILEHEIGHT;
 	_cursorTileLT = { _cursorTile.x * TILEWIDTH, _cursorTile.y * TILEHEIGHT };
 
-	_turnSystem->update();
+	_turnSystem->update(_cursorTile);
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{

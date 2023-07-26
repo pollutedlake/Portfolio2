@@ -78,6 +78,7 @@ public:
 	float getMaxHP() { return _maxHP; }
 	float getMaxMP() { return _maxMP; }
 	float getCurMP() { return _curMP; }
+	int getMobility() {return _mobility;}
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
 	void endTurn() {_turn.reset();}
