@@ -10,7 +10,6 @@ HRESULT BattleScene::init(void)
 	_camera->setLimitBottom(IMAGEMANAGER->findImage("BattleSceneBG")->getHeight() - WINSIZE_Y / 2);
 
 	_turnSystem = new TurnSystem2();
-	_turnSystem->init(_camera, IMAGEMANAGER->findImage("BattleSceneBG")->getMemDC(), IMAGEMANAGER->findImage("BattleSceneBG")->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage("BattleSceneBG")->getWidth() / TILEWIDTH);
 	vector<CharacterData*> party = DATAMANAGER->getPartyData();
 	for (auto it = party.begin(); it != party.end(); ++it)
 	{
@@ -22,8 +21,14 @@ HRESULT BattleScene::init(void)
 		}
 	}
 	Soldier* _soldier = new Soldier{};
-	_soldier->init();
-	_turnSystem->addCharacter(_soldier, DOWN, { 13, 40 }, 1);
+	_soldier->init(EnemyType::SOLDIER4);
+	_turnSystem->addCharacter(_soldier, DOWN, { 8, 45 }, 1);
+	Soldier* _soldier2 = new Soldier{};
+	_soldier2->init(EnemyType::SOLDIER4);
+	_turnSystem->addCharacter(_soldier2, DOWN, { 18, 46 }, 2);
+	Soldier* _soldier3 = new Soldier{};
+	_soldier3->init(EnemyType::SOLDIER4);
+	_turnSystem->addCharacter(_soldier3, DOWN, { 13, 41 }, 3);
 	_turnSystem->addObject(new Obstacle("Object1", {0, 1408}, 1, 1, {0, 0}));
 	_turnSystem->addObject(new Obstacle("Object2", {720, 1408}, 1, 1, { 0, 0 }));
 	_turnSystem->addObject(new Obstacle("Object3", {80, 632}, 1, 1, { 0, 0 }));
@@ -33,8 +38,8 @@ HRESULT BattleScene::init(void)
 	_turnSystem->addObject(new Obstacle("Object7", {160, 1064}, 1, 1, { 0, 0 }));
 	_turnSystem->addObject(new Obstacle("Object8", {320, 1465}, 1, 1, { 0, 0 }));
 	_turnSystem->addObject(new Obstacle("Object9", {300, 1464}, 1, 1, { 0, 0 }));
+	_turnSystem->init(_camera, IMAGEMANAGER->findImage("검사용BattleSceneBG")->getMemDC(), IMAGEMANAGER->findImage("검사용BattleSceneBG")->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage("BattleSceneBG")->getWidth() / TILEWIDTH);
 
-	//_turnSystem->addObject(new Obstacle("Table", { 1110, 1180 }, 1, 1.5, { 29, 40 }));
 	return S_OK;
 }
 
@@ -42,7 +47,7 @@ void BattleScene::update(void)
 {
 	if (_frame == 0)
 	{
-
+		SOUNDMANAGER->playSoundFMOD("BattleSceneBG");
 	}
 	_frame++;
 	_camera->update();

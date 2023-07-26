@@ -241,6 +241,21 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinSkill", "Resources/Images/Characters/Saladin/SaladinSkill.bmp", 1100, 101, 11, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(4, 0, 4));
 
+	// Enemy Solider Image
+	IMAGEMANAGER->addFrameImage("Soldier4IdleUp", "Resources/Images/Characters/Soldier4/Soldier4IdleUp.bmp", 150, 71, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4IdleDown", "Resources/Images/Characters/Soldier4/Soldier4IdleDown.bmp", 123, 72, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4IdleSide", "Resources/Images/Characters/Soldier4/Soldier4IdleSide.bmp", 168, 138, 3, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4MoveUp", "Resources/Images/Characters/Soldier4/Soldier4MoveUp.bmp", 204, 99, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4MoveSide", "Resources/Images/Characters/Soldier4/Soldier4MoveSide.bmp", 426, 172, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4MoveDown", "Resources/Images/Characters/Soldier4/Soldier4MoveDown.bmp", 324, 85, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4AttackUp", "Resources/Images/Characters/Soldier4/Soldier4AttackUp.bmp", 945, 127, 9, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4AttackSide", "Resources/Images/Characters/Soldier4/Soldier4AttackSide.bmp", 1224, 204, 9, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4AttackDown", "Resources/Images/Characters/Soldier4/Soldier4AttackDown.bmp", 909, 129, 9, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier4DamagedUp", "Resources/Images/Characters/Soldier4/Soldier4DamagedUp.bmp", 41, 70, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier4DamagedSide", "Resources/Images/Characters/Soldier4/Soldier4DamagedSide.bmp", 62, 116, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier4DamagedDown", "Resources/Images/Characters/Soldier4/Soldier4DamagedDown.bmp", 59, 57, true, RGB(0, 0, 0));
+
+
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3", true);
@@ -299,12 +314,8 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Dialog35", "Resources/Sounds/StoryScene/35.mp3");
 	SOUNDMANAGER->addSoundFMOD("Dialog36", "Resources/Sounds/StoryScene/36.mp3");
 	SOUNDMANAGER->addSoundFMOD("Fight", "Resources/Sounds/StoryScene/Fight.wav");
-	//SOUNDMANAGER->addWaveFileWithKey("Fight", "Resources/Sounds/StoryScene/0005.wav");
-	//SOUNDMANAGER->addMp3FileWithKey("Fight", "Resources/Sounds/StoryScene/test.mp3");
 	SOUNDMANAGER->addSoundFMOD("Scream1", "Resources/Sounds/StoryScene/Scream1.wav");
 	SOUNDMANAGER->addSoundFMOD("Scream2", "Resources/Sounds/StoryScene/Scream2.wav");
-	//SOUNDMANAGER->addSoundFMOD("SaladinAttack", "Resources/Sounds/SoundEffect/SaladinAttack.wav");
-	//SOUNDMANAGER->addSoundFMOD("VermontAttack", "Resources/Sounds/SoundEffect/VermontAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("BossBattle", "Resources/Sounds/BossBattle/BossBattle.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("StageClear", "Resources/Sounds/BossBattle/StageClear.mp3");
 	SOUNDMANAGER->addSoundFMOD("Conspiracy2", "Resources/Sounds/StoryScene/Conspiracy2.mp3", true);
@@ -312,9 +323,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("SherazadeDead", "Resources/Sounds/StoryScene/SherazadeDead.mp3");
 	SOUNDMANAGER->addSoundFMOD("WorldMapBG", "Resources/Sounds/WorldMapScene/WorldMapBG.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ShopSceneBG", "Resources/Sounds/ShopScene/ShopSceneBG.mp3", true);
-	//DIALOGMANAGER->addDialogs("StoryScene");
-	//DIALOGMANAGER->addDialogs("EndingScene");
-	//DIALOGMANAGER->addDialog("EndingScene", "Vermont", "", { L"[버몬트]", L"죽여라..." }, )
+	SOUNDMANAGER->addSoundFMOD("BattleSceneBG", "Resources/Sounds/BattleScene/BattleSceneBG.mp3", true);
 	return S_OK;
 }
 
