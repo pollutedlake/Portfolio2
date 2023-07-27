@@ -254,6 +254,22 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Soldier1AttackSide", "Resources/Images/Characters/Soldier1/Soldier1AttackSide.bmp", 356, 216, 4, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier1AttackDown", "Resources/Images/Characters/Soldier1/Soldier1AttackDown.bmp", 140, 80, 4, 1, true, RGB(0, 0, 0));
 
+	IMAGEMANAGER->addImage("Soldier1DamagedUp", "Resources/Images/Characters/Soldier1/Soldier1DamagedUp.bmp", 39, 62, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1DamagedSide", "Resources/Images/Characters/Soldier1/Soldier1DamagedSide.bmp", 45, 110, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier1DamagedDown", "Resources/Images/Characters/Soldier1/Soldier1DamagedDown.bmp", 57, 61, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier2IdleUp", "Resources/Images/Characters/Soldier2/Soldier2IdleUp.bmp", 129, 87, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2IdleDown", "Resources/Images/Characters/Soldier2/Soldier2IdleDown.bmp", 135, 96, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2IdleSide", "Resources/Images/Characters/Soldier2/Soldier2IdleSide.bmp", 96, 196, 3, 2, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier2MoveUp", "Resources/Images/Characters/Soldier2/Soldier2MoveUp.bmp", 264, 100, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2MoveSide", "Resources/Images/Characters/Soldier2/Soldier2MoveSide.bmp", 522, 194, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2MoveDown", "Resources/Images/Characters/Soldier2/Soldier2MoveDown.bmp", 264, 89, 6, 1, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier2AttackUp", "Resources/Images/Characters/Soldier2/Soldier2AttackUp.bmp", 968, 141, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2AttackSide", "Resources/Images/Characters/Soldier2/Soldier2AttackSide.bmp", 1376, 216, 8, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2AttackDown", "Resources/Images/Characters/Soldier2/Soldier2AttackDown.bmp", 984, 154, 8, 1, true, RGB(0, 0, 0));
+
 	IMAGEMANAGER->addFrameImage("Soldier4IdleUp", "Resources/Images/Characters/Soldier4/Soldier4IdleUp.bmp", 150, 71, 3, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4IdleDown", "Resources/Images/Characters/Soldier4/Soldier4IdleDown.bmp", 123, 72, 3, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4IdleSide", "Resources/Images/Characters/Soldier4/Soldier4IdleSide.bmp", 168, 138, 3, 2, true, RGB(0, 0, 0));
@@ -263,6 +279,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Soldier4AttackUp", "Resources/Images/Characters/Soldier4/Soldier4AttackUp.bmp", 945, 127, 9, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4AttackSide", "Resources/Images/Characters/Soldier4/Soldier4AttackSide.bmp", 1224, 204, 9, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4AttackDown", "Resources/Images/Characters/Soldier4/Soldier4AttackDown.bmp", 909, 129, 9, 1, true, RGB(0, 0, 0));
+
 	IMAGEMANAGER->addImage("Soldier4DamagedUp", "Resources/Images/Characters/Soldier4/Soldier4DamagedUp.bmp", 41, 70, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4DamagedSide", "Resources/Images/Characters/Soldier4/Soldier4DamagedSide.bmp", 62, 116, 1, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Soldier4DamagedDown", "Resources/Images/Characters/Soldier4/Soldier4DamagedDown.bmp", 59, 57, true, RGB(0, 0, 0));
