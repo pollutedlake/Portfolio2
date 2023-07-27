@@ -73,8 +73,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("test", "Resources/Images/Effects/StoryScene/test2.bmp", 201, 242, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("TitleEFX3", "Resources/Images/Effects/TitleScene/TitleEFX3.bmp", 20880, 240, 87, 1, true, RGB(4, 88, 4));
 	IMAGEMANAGER->addImage("BossBattleBG", "Resources/Images/BackGrounds/BossBattleScene/BossBattleBG.bmp", 1600, 1800);
-	IMAGEMANAGER->addImage("BattleSceneBG", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG.bmp", 1080, 1920);
-	IMAGEMANAGER->addImage("검사용BattleSceneBG", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG.bmp", 1200, 1920);
+	IMAGEMANAGER->addImage("BattleSceneBG1", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG1.bmp", 1080, 1920);
+	IMAGEMANAGER->addImage("검사용BattleSceneBG1", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG1.bmp", 1200, 1920);
 	IMAGEMANAGER->addImage("Object1", "Resources/Images/BackGrounds/BattleScene/Object1.bmp", 360, 208, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Object2", "Resources/Images/BackGrounds/BattleScene/Object2.bmp", 360, 176, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Object3", "Resources/Images/BackGrounds/BattleScene/Object3.bmp", 360, 432, true, RGB(0, 0, 0));
@@ -241,7 +241,19 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinSkill", "Resources/Images/Characters/Saladin/SaladinSkill.bmp", 1100, 101, 11, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("FireFly", "Resources/Images/Effects/StoryScene/FireFly.bmp", 6882, 249, 31, 1, true, RGB(4, 0, 4));
 
-	// Enemy Solider Image
+	// 적 병사 이미지
+	IMAGEMANAGER->addFrameImage("Soldier1IdleUp", "Resources/Images/Characters/Soldier1/Soldier1IdleUp.bmp", 90, 75, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1IdleDown", "Resources/Images/Characters/Soldier1/Soldier1IdleDown.bmp", 108, 75, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1IdleSide", "Resources/Images/Characters/Soldier1/Soldier1IdleSide.bmp", 141, 156, 3, 2, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier1MoveUp", "Resources/Images/Characters/Soldier1/Soldier1MoveUp.bmp", 246, 75, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1MoveSide", "Resources/Images/Characters/Soldier1/Soldier1MoveSide.bmp", 264, 152, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1MoveDown", "Resources/Images/Characters/Soldier1/Soldier1MoveDown.bmp", 228, 75, 6, 1, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier1AttackUp", "Resources/Images/Characters/Soldier1/Soldier1AttackUp.bmp", 116, 106, 4, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1AttackSide", "Resources/Images/Characters/Soldier1/Soldier1AttackSide.bmp", 356, 216, 4, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier1AttackDown", "Resources/Images/Characters/Soldier1/Soldier1AttackDown.bmp", 140, 80, 4, 1, true, RGB(0, 0, 0));
+
 	IMAGEMANAGER->addFrameImage("Soldier4IdleUp", "Resources/Images/Characters/Soldier4/Soldier4IdleUp.bmp", 150, 71, 3, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4IdleDown", "Resources/Images/Characters/Soldier4/Soldier4IdleDown.bmp", 123, 72, 3, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4IdleSide", "Resources/Images/Characters/Soldier4/Soldier4IdleSide.bmp", 168, 138, 3, 2, true, RGB(0, 0, 0));
@@ -254,6 +266,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Soldier4DamagedUp", "Resources/Images/Characters/Soldier4/Soldier4DamagedUp.bmp", 41, 70, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4DamagedSide", "Resources/Images/Characters/Soldier4/Soldier4DamagedSide.bmp", 62, 116, 1, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Soldier4DamagedDown", "Resources/Images/Characters/Soldier4/Soldier4DamagedDown.bmp", 59, 57, true, RGB(0, 0, 0));
+
+	// 철가면 이미지
+	IMAGEMANAGER->addFrameImage("IronMaskIdleUp", "Resources/Images/Characters/IronMask/IronMaskIdleUp.bmp", 186, 93, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskIdleDown", "Resources/Images/Characters/IronMask/IronMaskIdleDown.bmp", 186, 93, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskIdleSide", "Resources/Images/Characters/IronMask/IronMaskIdleSide.bmp", 177, 176, 3, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskMoveUp", "Resources/Images/Characters/IronMask/IronMaskMoveUp.bmp", 660, 85, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskMoveDown", "Resources/Images/Characters/IronMask/IronMaskMoveDown.bmp", 672, 87, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskMoveSide", "Resources/Images/Characters/IronMask/IronMaskMoveSide.bmp", 546, 160, 6, 2, true, RGB(168, 208, 168));
 
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");

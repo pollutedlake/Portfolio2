@@ -93,6 +93,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch(_enemyType)
 			{
+				case EnemyType::SOLDIER1:
+					IMAGEMANAGER->findImage("Soldier1IdleSide")->frameRender(hdc, position.x - 5, position.y - 10, (_frame / 10) % 3, 0);
+				break;
 				case EnemyType::SOLDIER4:
 					IMAGEMANAGER->findImage("Soldier4IdleSide")->frameRender(hdc, position.x - 25, position.y - 5, (_frame / 10) % 3, 0);
 				break;
@@ -102,6 +105,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1IdleSide")->frameRender(hdc, position.x, position.y - 10, (_frame / 10) % 3, 1);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4IdleSide")->frameRender(hdc, position.x + 5, position.y - 5, 2 - (_frame / 10) % 3, 1);
 				break;
@@ -111,6 +117,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1IdleUp")->frameRender(hdc, position.x + 5, position.y - 5, (_frame / 10) % 3, 0);
+				break;
 			case EnemyType::SOLDIER4:
 					IMAGEMANAGER->findImage("Soldier4IdleUp")->frameRender(hdc, position.x + 5, position.y, (_frame / 10) % 3, 0);
 				break;
@@ -120,6 +129,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1IdleDown")->frameRender(hdc, position.x, position.y - 5, (_frame / 10) % 3, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4IdleDown")->frameRender(hdc, position.x - 5, position.y, (_frame / 10) % 3, 0);
 				break;
@@ -132,6 +144,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_X / 2 - (cameraPos.y - y) - 190, (_frame / 10) % 6, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 40, WINSIZE_X / 2 - (cameraPos.y - y) - 195, _frame / 10 % 6, 0);
 				break;
@@ -141,6 +156,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 190, 5 - (_frame / 10) % 6, 1);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 35, WINSIZE_X / 2 - (cameraPos.y - y) - 200, 5 - _frame / 10 % 6, 1);
 				break;
@@ -150,6 +168,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 190, _frame / 10 % 6, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_X / 2 - (cameraPos.y - y) - 210, _frame / 10 % 6, 0);
 				break;
@@ -159,6 +180,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 190, _frame / 10 % 6, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_X / 2 - (cameraPos.y - y) - 195, _frame / 10 % 6, 0);
 				break;
@@ -171,6 +195,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1AttackSide")->frameRender(hdc, position.x - 70, position.y - 25, IMAGEMANAGER->findImage("Soldier1AttackSide")->getMaxFrameX() - 1 - 0, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackSide")->frameRender(hdc, position.x - 70, position.y - 25, _frame / 10, 0);
 				break;
@@ -180,6 +207,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1AttackSide")->frameRender(hdc, position.x - 70, position.y - 25, 0, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackSide")->frameRender(hdc, position.x - 30, position.y - 25, 8 - _frame / 10, 1);
 				break;
@@ -189,6 +219,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1AttackUp")->frameRender(hdc, position.x - 70, position.y - 25, 0, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackUp")->frameRender(hdc, position.x - 45, position.y - 55, _frame / 10, 0);
 				break;
@@ -198,6 +231,9 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			switch (_enemyType)
 			{
+			case EnemyType::SOLDIER1:
+				IMAGEMANAGER->findImage("Soldier1AttackDown")->frameRender(hdc, position.x - 70, position.y - 25, 0, 0);
+				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackDown")->frameRender(hdc, position.x - 10, position.y - 25, _frame / 10, 0);
 				break;

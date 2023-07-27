@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Obstacle.h"
 #include "Camera.h"
+#include "Skill.h"
 
 #define PLAYER 0
 #define ENEMY 1
@@ -38,6 +39,7 @@ private:
 
 	vector<POINT> _movableTiles;
 	vector<POINT> _attackableTiles;
+	vector<POINT> _skillableTiles;
 
 	vector<Object*> _objectList;
 	vector<Character*> _charList;
@@ -45,6 +47,7 @@ private:
 	Character* _curChar;
 	Enemy* _enemy;
 	Camera* _camera;
+	Skill* _skill;
 	HDC _tileCheckDC;
 	int _frame;
 
@@ -52,13 +55,20 @@ private:
 	int _colN;
 
 	RECT _actionButtons[4];
+	RECT _skillButtons[50];
 	bitset<4> _actionChoice;
+
+	bool _isClear;
+	bool _isFail;
 
 public:
 	HRESULT init(Camera* camera, HDC hdc, int rowN, int colN);
 	void release(void);
 	void update(POINT cursorTile);
 	void render(HDC hdc);
+
+	Character* getCurChar() { return _curChar; }
+	Character* findCharacter(POINT cursorPoint);
 
 	void addCharacter(Character* character, int dir, POINT tilePos, int turnOrder);
 	void addObject(Object* object);

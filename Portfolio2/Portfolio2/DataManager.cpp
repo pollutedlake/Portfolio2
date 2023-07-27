@@ -60,6 +60,39 @@ HRESULT DataManager::init(void)
 	}
 	cout << _eld << endl;
 	fclose(_fp);
+	if (fopen_s(&_fp, "Resources/Data/BattleStageData.txt", "r") == 0)
+	{
+		char str[256];
+		fscanf_s(_fp, "%s", str, _countof(str));
+		BattleData* battleData = new BattleData;
+		vector<BattleData*> battleList;
+		int battleN;
+		fscanf_s(_fp, "%d\n", &battleN);
+		while (battleN--)
+		{
+			fscanf_s(_fp, "%d", &(battleData->_bgImgN));
+			int enemyTotal;
+			fscanf_s(_fp, "%d\n", &enemyTotal);
+			int enemyN = 0;
+			while (enemyTotal != enemyN)
+			{
+				int type;
+				int num;
+				fscanf_s(_fp, "%d%d\n", &type, &num);
+				enemyN += num;
+				while (num--)
+				{
+					BattleData::Enemy enemy;
+					enemy._type = type;
+					fscanf_s(_fp, "%d%d%d%d\n", &(enemy._tilePos.x), &(enemy._tilePos.y), &(enemy._dir), &(enemy._turnOrder));
+					battleData->_enemy.push_back(enemy);
+				}
+			}
+			battleList.push_back(battleData);
+		}
+		_mBattleList.insert(make_pair(str, battleList));
+	}
+	fclose(_fp);
 	return S_OK;
 }
 
@@ -95,6 +128,11 @@ pair<ItemData*, int> DataManager::findItemInven(string strKey)
 		return key->second;
 	}
 	return make_pair(nullptr, NULL);
+}
+
+BattleData* DataManager::findBattleData(string strKey, int i)
+{
+	return _mBattleList.find(strKey)->second[i];
 }
 
 ItemData* DataManager::buyItem(string strKey, int num, ItemData* item)

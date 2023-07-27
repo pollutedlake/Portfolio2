@@ -23,6 +23,10 @@ HRESULT TurnSystem2::init(Camera* camera, HDC hdc, int rowN, int colN)
 	{
 		(*it)->setCurWait((*it)->getCurWait() - curWait);
 	}
+	_isClear = false;
+	_isFail = false;
+	_skill = new Skill;
+	_skill->init();
     return S_OK;
 }
 
@@ -72,17 +76,17 @@ void TurnSystem2::update(POINT cursorTile)
                 {
                     _attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
                 }
-                if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
+                if (checkTile({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y }) % 2 == 1)
                 {
-                    _attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+                    _attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y });
                 }
-                if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
+                if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2}) % 2 == 1)
                 {
-                    _attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+                    _attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2});
                 }
-                if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
+                if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2}) % 2 == 1)
                 {
-                    _attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+                    _attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2});
                 }
             }
             if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -94,6 +98,13 @@ void TurnSystem2::update(POINT cursorTile)
 						if (PtInRect(&_actionButtons[0], _ptMouse))
 						{
 							_actionChoice = _actionChoice << 1;
+							for (int i = 0; i < 3; i++)
+							{
+								_skillButtons[i].left = _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH + 5, (_curChar->getTilePos().y - 2) * TILEHEIGHT + 5 + 23 * i }).x;
+								_skillButtons[i].right = _skillButtons[i].left + 155;
+								_skillButtons[i].top = _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH + 5, (_curChar->getTilePos().y - 2) * TILEHEIGHT + 5 + 23 * i }).y;
+								_skillButtons[i].bottom = _skillButtons[i].top + 20;
+							}
 						}
 						if (PtInRect(&_actionButtons[2], _ptMouse))
 						{
@@ -101,6 +112,34 @@ void TurnSystem2::update(POINT cursorTile)
 							_actionChoice.set(0);
 							nextTurn();
 						}
+					}
+					// 스킬 선택하고 스킬 범위 받기
+					else if (_actionChoice.test(2))
+					{
+						for (int i = 0; i < 3; i++)
+						{
+							if (PtInRect(&_skillButtons[i], _ptMouse))
+							{
+								_actionChoice = _actionChoice << 1;
+								//if (i == 0)
+								//{
+								//	_skillName = "천지파열무";
+								//}
+								//else if (i == 1)
+								//{
+								//	_skillName = "풍아열공참";
+								//}
+								//else if (i == 2)
+								//{
+								//	_skillName = "혈랑마혼";
+								//}
+								//_skillableTiles = ((Saladin*)(_curChar))->getSkillableTiles(tileInfo, 90, 60, _skillName);
+							}
+						}
+					}
+					else if (_actionChoice.test(3))
+					{
+
 					}
                 }
                 else
@@ -205,6 +244,7 @@ void TurnSystem2::update(POINT cursorTile)
                     }
                 }
             }
+			// 행동 선택 되돌리기
 			if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 			{
 				if (!_actionChoice.test(0))
@@ -213,6 +253,7 @@ void TurnSystem2::update(POINT cursorTile)
 				}
 			}
         }
+		// 적의 행동패턴
 		else if (_curChar->getType() == ENEMY)
 		{
 			if (_frame / 10 == 8)
@@ -251,6 +292,28 @@ void TurnSystem2::update(POINT cursorTile)
 			}
 		}
     }
+	else
+	{
+		if (_curChar->isAttack())
+		{
+			Character* targetChar = nullptr;
+			for (auto it = _charList.begin(); it != _charList.end(); ++it)
+			{
+				if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+				{
+					targetChar = (*it);
+					break;
+				}
+			}
+			targetChar->setState(4);
+			targetChar->setDamage(_curChar->getDamage());
+			targetChar->setDoing(true);
+		}
+		else if (_curChar->isSkill())
+		{
+			_skill->update();
+		}
+	}
 }
 
 void TurnSystem2::render(HDC hdc)
@@ -263,7 +326,11 @@ void TurnSystem2::render(HDC hdc)
 			{
 				if (_actionChoice.test(3))
 				{
-
+					for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+					{
+						IMAGEMANAGER->findImage("SkillableTile")->render(hdc, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT,
+							0, 0, IMAGEMANAGER->findImage("SkillableTile")->getWidth(), IMAGEMANAGER->findImage("SkillableTile")->getHeight());
+					}
 				}
 				else
 				{
@@ -273,6 +340,26 @@ void TurnSystem2::render(HDC hdc)
 							_camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT, 0, 0,
 							IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
 					}
+					for (auto it = _attackableTiles.begin(); it != _attackableTiles.end(); ++it)
+					{
+						IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x,
+							_camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT, 0, 0,
+							IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
+					}
+				}
+			}
+			else
+			{
+				if (_actionChoice.test(3))
+				{
+					for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+					{
+						IMAGEMANAGER->findImage("SkillableTile")->render(hdc, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT,
+							0, 0, IMAGEMANAGER->findImage("SkillableTile")->getWidth(), IMAGEMANAGER->findImage("SkillableTile")->getHeight());
+					}
+				}
+				else if (_curChar->canAction())
+				{
 					for (auto it = _attackableTiles.begin(); it != _attackableTiles.end(); ++it)
 					{
 						IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x,
@@ -300,6 +387,36 @@ void TurnSystem2::render(HDC hdc)
 				_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3}).y }, _camera->getPosition());
 		}
 	}
+	if (_isClear || _isFail)
+	{
+		IMAGEMANAGER->findImage("Black")->alphaRender(hdc, _frame * 10 > 128 ? 128 : _frame * 10);
+		if (_frame * 10 > 128)
+		{
+			IMAGEMANAGER->findImage("BattleEnd")->alphaRender(hdc, 0, WINSIZE_Y / 2 - IMAGEMANAGER->findImage("BattleEnd")->getHeight() / 2, 128);
+			IMAGEMANAGER->findImage("Scenario")->render(hdc, WINSIZE_X / 2 - IMAGEMANAGER->findImage("Scenario")->getWidth() - 20, WINSIZE_Y / 2 - IMAGEMANAGER->findImage("Scenario")->getHeight() / 2);
+			IMAGEMANAGER->findImage("Clear")->render(hdc, WINSIZE_X / 2 + 20, WINSIZE_Y / 2 - IMAGEMANAGER->findImage("Clear")->getHeight() / 2);
+		}
+	}
+	else
+	{
+		if (!_curChar->isDoing())
+		{
+			if (_curChar->getType() == 0)
+			{
+				IMAGEMANAGER->findImage("PlayerMarker")->frameRender(hdc, _camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH + 15, _curChar->getTilePos().y * TILEHEIGHT - 70 }).x, 
+					_camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH + 15, _curChar->getTilePos().y * TILEHEIGHT - 70 }).y, (_frame / 5) % 8, 0);
+			}
+			else if (_curChar->getType() == 1)
+			{
+				IMAGEMANAGER->findImage("EnemyMarker")->frameRender(hdc, _camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH + 15, _curChar->getTilePos().y * TILEHEIGHT - 70 }).x,
+					_camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH + 15, _curChar->getTilePos().y * TILEHEIGHT - 70 }).y, (_frame / 5) % 8, 0);
+			}
+		}
+		if (!_skill->isFinish())
+		{
+			_skill->render(hdc, _camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH, _curChar->getTilePos().y * TILEHEIGHT + TILEHEIGHT / 2 * 3 }), _camera->getPosition(), TILEWIDTH, TILEHEIGHT);
+		}
+	}
 	if (_actionChoice.test(1))
 	{
 		POINT curPos = _curChar->getTilePos();
@@ -324,6 +441,40 @@ void TurnSystem2::render(HDC hdc)
 			}
 			IMAGEMANAGER->findImage("ActionIcon")->frameRender(hdc, _actionButtons[i].left + 10, _actionButtons[i].top, i, 0);
 			FONTMANAGER->textOut(hdc, _actionButtons[i].left + 35 + 3 * (strlen(actionStr[0]) - strlen(actionStr[i])), _actionButtons[i].top + 5, "가을체", 15, 100, actionStr[i], strlen(actionStr[i]), RGB(255, 255, 255));
+		}
+	}
+	// 스킬 선택창
+	else if (_actionChoice.test(2))
+	{
+		DIALOGMANAGER->makeTextBox(hdc, _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH,  (_curChar->getTilePos().y - 2) * TILEHEIGHT }).x,
+			_camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH,  (_curChar->getTilePos().y - 2) * TILEHEIGHT }).y, 160, 100, 128);
+		for (int i = 0; i < 3; i++)
+		{
+			if (PtInRect(&_skillButtons[i], _ptMouse))
+			{
+				IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, _skillButtons[i].left,
+					_skillButtons[i].top, 150, 20, 0, 0,
+					IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 128);
+			}
+			IMAGEMANAGER->findImage("SkillIcon")->render(hdc, _skillButtons[i].left, _skillButtons[i].top);
+		}
+		char skillStr[258];
+		wsprintf(skillStr, "천지파열무");
+		FONTMANAGER->textOut(hdc, _skillButtons[0].left + 22, _skillButtons[0].top, "가을체", 18, 100, skillStr, strlen(skillStr), RGB(255, 255, 255));
+		wsprintf(skillStr, "풍아열공참");
+		FONTMANAGER->textOut(hdc, _skillButtons[1].left + 22, _skillButtons[1].top, "가을체", 18, 100, skillStr, strlen(skillStr), RGB(255, 255, 255));
+		wsprintf(skillStr, "혈랑마혼");
+		FONTMANAGER->textOut(hdc, _skillButtons[2].left + 22, _skillButtons[2].top, "가을체", 18, 100, skillStr, strlen(skillStr), RGB(255, 255, 255));
+	}
+}
+
+Character* TurnSystem2::findCharacter(POINT cursorPoint)
+{
+	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	{
+		if (SamePoint(cursorPoint, (*it)->getTilePos()))
+		{
+			return (*it);
 		}
 	}
 }
@@ -375,7 +526,7 @@ void TurnSystem2::sortObjectList()
 
 int TurnSystem2::checkTile(POINT tilePos)
 {
-    if (GetPixel(_tileCheckDC, tilePos.x * TILEWIDTH, tilePos.y * TILEHEIGHT) == RGB(255, 0, 255))
+    if (GetPixel(_tileCheckDC, tilePos.x * TILEWIDTH + TILEWIDTH / 2, tilePos.y * TILEHEIGHT + TILEHEIGHT / 2) == RGB(255, 0, 255))
     {
         return CANTMOVE;
     }
@@ -475,7 +626,7 @@ void TurnSystem2::searchMovableTiles()
             }
             else if (node.y > 0 && checkTile({ node.x, node.y - 1 }) == ENEMY)
             {
-                if (!tileCheck[node.y].test(node.x - 1))
+                if (!tileCheck[node.y - 1].test(node.x))
                 {
                     _attackableTiles.push_back(POINT{ node.x, node.y - 1 });
                     tileCheck[node.y - 1].set(node.x);

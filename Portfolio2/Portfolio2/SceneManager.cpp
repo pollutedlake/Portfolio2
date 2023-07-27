@@ -21,7 +21,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("WorldMap", new WorldMapScene);
     SCENEMANAGER->addScene("Shop", new ShopScene);
     SCENEMANAGER->addScene("Loading", new LoadingScene);
-    SCENEMANAGER->addScene("BattleScene", new BattleScene);
+    SCENEMANAGER->addScene("Battle", new BattleScene);
     _whiteImg = IMAGEMANAGER->findImage("White");
     _blackImg = IMAGEMANAGER->findImage("Black");
     _currentScene = nullptr;

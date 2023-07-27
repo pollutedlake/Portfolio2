@@ -7,7 +7,7 @@ HRESULT MainGame::init(void)
 	_resources = new Resources;
 	_resources->init();
 	SCENEMANAGER->init();
-	SCENEMANAGER->changeScene("BattleScene");
+	SCENEMANAGER->changeScene("Battle");
 	ShowCursor(false);
 	return S_OK;
 }

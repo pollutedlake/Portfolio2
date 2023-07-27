@@ -48,6 +48,18 @@ struct CharacterData
 	ItemData* _equipment[5];
 };
 
+struct BattleData
+{
+	struct Enemy {
+		POINT _tilePos;
+		int _dir;
+		int _turnOrder;
+		int _type;
+	};
+	vector<Enemy> _enemy;
+	int _bgImgN;
+};
+
 class DataManager : public SingletonBase<DataManager>
 {
 private:
@@ -56,6 +68,7 @@ private:
 	vector<CharacterData*> _mParty;
 	map<string, pair<ItemData*, int>> _mInventory;
 	map<string, ItemData*> _mItemList;
+	map < string, vector<BattleData*>> _mBattleList;
 	int _eld;
 
 public:
@@ -69,6 +82,9 @@ public:
 	vector<CharacterData*> getPartyData() {return _mParty;}
 	map<string, pair<ItemData*, int>> getInventory() { return _mInventory; }
 	int getEld() {return _eld;}
+
+	// 전투데이터
+	BattleData* findBattleData(string strKey, int i);
 
 	// 아이템 데이터
 	ItemData* findItem(string strKey);

@@ -18,6 +18,10 @@ private:
 	POINT _cursorTile;
 	POINT _cursorTileLT;
 	bool _debug;
+	char _text[50];
+	char _bgImg[256];
+	char _checkBGImg[256];
+	int _showMiniStatusFrame;
 
 public:
 	HRESULT init(void);

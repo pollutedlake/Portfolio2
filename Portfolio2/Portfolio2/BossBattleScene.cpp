@@ -83,140 +83,140 @@ HRESULT BossBattleScene::init(void)
 	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = ENEMY;
 
 	Character* _enemySoldier = new Soldier();
-	_enemySoldier->init();
+	((Soldier*)(_enemySoldier))->init(EnemyType::SOLDIER4);
 	_enemySoldier->setDir(UP);
 	_enemySoldier->setTilePos({ 32, 42 });
 	_enemySoldier->setTurnOder(6);
 	_tileInfo[_enemySoldier->getTilePos().y][_enemySoldier->getTilePos().x] = ENEMY;
 
 	Character* _enemySoldier2 = new Soldier();
-	_enemySoldier2->init();
+	((Soldier*)(_enemySoldier2))->init(EnemyType::SOLDIER4);
 	_enemySoldier2->setDir(UP);
 	_enemySoldier2->setTilePos({ 32, 43 });
 	_enemySoldier2->setTurnOder(7);
 	_tileInfo[_enemySoldier2->getTilePos().y][_enemySoldier2->getTilePos().x] = ENEMY;
 
 	Character* _vermont5 = new Soldier();
-	_vermont5->init();
+	((Soldier*)(_vermont5))->init(EnemyType::SOLDIER4);
 	_vermont5->setDir(UP);
 	_vermont5->setTilePos({ 32, 45 });
 	_vermont5->setTurnOder(9);
 	_tileInfo[_vermont5->getTilePos().y][_vermont5->getTilePos().x] = ENEMY;
 
 	Character* _vermont4 = new Soldier();
-	_vermont4->init();
+	((Soldier*)(_vermont4))->init(EnemyType::SOLDIER4);
 	_vermont4->setDir(UP);
 	_vermont4->setTilePos({ 32, 44 });
 	_vermont4->setTurnOder(8);
 	_tileInfo[_vermont4->getTilePos().y][_vermont4->getTilePos().x] = ENEMY;
 
 	Character* _vermont6 = new Soldier();
-	_vermont6->init();
+	((Soldier*)(_vermont6))->init(EnemyType::SOLDIER4);
 	_vermont6->setDir(DOWN);
 	_vermont6->setTilePos({ 31, 46 });
 	_vermont6->setTurnOder(8);
 	_tileInfo[_vermont6->getTilePos().y][_vermont6->getTilePos().x] = ENEMY;
 
 	Character* _vermont7 = new Soldier();
-	_vermont7->init();
+	((Soldier*)(_vermont7))->init(EnemyType::SOLDIER4);
 	_vermont7->setDir(RIGHT);
 	_vermont7->setTilePos({ 30, 47 });
 	_vermont7->setTurnOder(10);
 	_tileInfo[_vermont7->getTilePos().y][_vermont7->getTilePos().x] = ENEMY;
 
 	Character* _vermont8 = new Soldier();
-	_vermont8->init();
+	((Soldier*)(_vermont8))->init(EnemyType::SOLDIER4);
 	_vermont8->setDir(RIGHT);
 	_vermont8->setTilePos({ 31, 40 });
 	_vermont8->setTurnOder(11);
 	_tileInfo[_vermont8->getTilePos().y][_vermont8->getTilePos().x] = ENEMY;
 
 	Character* _vermont9 = new Soldier();
-	_vermont9->init();
+	((Soldier*)(_vermont9))->init(EnemyType::SOLDIER4);
 	_vermont9->setDir(RIGHT);
 	_vermont9->setTilePos({ 30, 41 });
 	_vermont9->setTurnOder(12);
 	_tileInfo[_vermont9->getTilePos().y][_vermont9->getTilePos().x] = ENEMY;
 
 	Character* _vermont10 = new Soldier();
-	_vermont10->init();
+	((Soldier*)(_vermont10))->init(EnemyType::SOLDIER4);
 	_vermont10->setDir(RIGHT);
 	_vermont10->setTilePos({ 30, 42 });
 	_vermont10->setTurnOder(13);
 	_tileInfo[_vermont10->getTilePos().y][_vermont10->getTilePos().x] = ENEMY;
 
 	Character* _vermont11 = new Soldier();
-	_vermont11->init();
+	((Soldier*)(_vermont11))->init(EnemyType::SOLDIER4);
 	_vermont11->setDir(DOWN);
 	_vermont11->setTilePos({ 37, 42 });
 	_vermont11->setTurnOder(14);
 	_tileInfo[_vermont11->getTilePos().y][_vermont11->getTilePos().x] = ENEMY;
 
 	Character* _vermont12 = new Soldier();
-	_vermont12->init();
+	((Soldier*)(_vermont12))->init(EnemyType::SOLDIER4);
 	_vermont12->setDir(LEFT);
 	_vermont12->setTilePos({ 34, 39 });
 	_vermont12->setTurnOder(15);
 	_tileInfo[_vermont12->getTilePos().y][_vermont12->getTilePos().x] = ENEMY;
 
 	Character* _vermont13 = new Soldier();
-	_vermont13->init();
+	((Soldier*)(_vermont13))->init(EnemyType::SOLDIER4);
 	_vermont13->setDir(DOWN);
 	_vermont13->setTilePos({ 34, 38 });
 	_vermont13->setTurnOder(16);
 	_tileInfo[_vermont13->getTilePos().y][_vermont13->getTilePos().x] = ENEMY;
 
 	Character* _vermont14 = new Soldier();
-	_vermont14->init();
+	((Soldier*)(_vermont14))->init(EnemyType::SOLDIER4);
 	_vermont14->setDir(DOWN);
 	_vermont14->setTilePos({ 33, 38 });
 	_vermont14->setTurnOder(17);
 	_tileInfo[_vermont14->getTilePos().y][_vermont14->getTilePos().x] = ENEMY;
 
 	Character* _vermont15 = new Soldier();
-	_vermont15->init();
+	((Soldier*)(_vermont15))->init(EnemyType::SOLDIER4);
 	_vermont15->setDir(DOWN);
 	_vermont15->setTilePos({ 32, 38 });
 	_vermont15->setTurnOder(18);
 	_tileInfo[_vermont15->getTilePos().y][_vermont15->getTilePos().x] = ENEMY;
 
 	Character* _vermont16 = new Soldier();
-	_vermont16->init();
+	((Soldier*)(_vermont16))->init(EnemyType::SOLDIER4);
 	_vermont16->setDir(DOWN);
 	_vermont16->setTilePos({ 32, 37 });
 	_vermont16->setTurnOder(19);
 	_tileInfo[_vermont16->getTilePos().y][_vermont16->getTilePos().x] = ENEMY;
 
 	Character* _vermont17 = new Soldier();
-	_vermont17->init();
+	((Soldier*)(_vermont17))->init(EnemyType::SOLDIER4);
 	_vermont17->setDir(DOWN);
 	_vermont17->setTilePos({ 32, 36 });
 	_vermont17->setTurnOder(20);
 	_tileInfo[_vermont17->getTilePos().y][_vermont17->getTilePos().x] = ENEMY;
 
 	Character* _vermont18 = new Soldier();
-	_vermont18->init();
+	((Soldier*)(_vermont18))->init(EnemyType::SOLDIER4);
 	_vermont18->setDir(DOWN);
 	_vermont18->setTilePos({ 33, 36 });
 	_vermont18->setTurnOder(21);
 	_tileInfo[_vermont18->getTilePos().y][_vermont18->getTilePos().x] = ENEMY;
 
 	Character* _vermont19 = new Soldier();
-	_vermont19->init();
+	((Soldier*)(_vermont19))->init(EnemyType::SOLDIER4);
 	_vermont19->setDir(DOWN);
 	_vermont19->setTilePos({ 32, 34 });
 	_vermont19->setTurnOder(22);
 	_tileInfo[_vermont19->getTilePos().y][_vermont19->getTilePos().x] = ENEMY;
 
 	Character* _vermont20 = new Soldier();
-	_vermont20->init();
+	((Soldier*)(_vermont20))->init(EnemyType::SOLDIER4);
 	_vermont20->setDir(LEFT);
 	_vermont20->setTilePos({ 37, 43 });
 	_vermont20->setTurnOder(22);
 	_tileInfo[_vermont20->getTilePos().y][_vermont20->getTilePos().x] = ENEMY;
 
 	Character* _vermont21 = new Soldier();
-	_vermont21->init();
+	((Soldier*)(_vermont21))->init(EnemyType::SOLDIER4);
 	_vermont21->setDir(LEFT);
 	_vermont21->setTilePos({ 37, 41 });
 	_vermont21->setTurnOder(22);
