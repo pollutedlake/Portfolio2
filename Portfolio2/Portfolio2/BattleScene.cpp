@@ -13,14 +13,15 @@ HRESULT BattleScene::init(void)
 	_camera->setLimitBottom(IMAGEMANAGER->findImage(_bgImg)->getHeight() - WINSIZE_Y / 2);
 
 	_turnSystem = new TurnSystem2();
-	vector<CharacterData*> party = DATAMANAGER->getPartyData();
-	for (auto it = party.begin(); it != party.end(); ++it)
+	_party = DATAMANAGER->getPartyData();
+	for (auto it = _party.begin(); it != _party.end(); ++it)
 	{
 		if (!strcmp((*it)->_name.c_str(), "살라딘"))
 		{
 			Saladin* _saladin = new Saladin;
 			_saladin->init();
 			_turnSystem->addCharacter(_saladin, UP, { 13, 57 }, 0);
+			//_turnSystem->addCharacter(_saladin, UP, { 16, 61 }, 0);
 		}
 	}
 	for (auto it = battleData->_enemy.begin(); it != battleData->_enemy.end(); ++it)
@@ -30,18 +31,15 @@ HRESULT BattleScene::init(void)
 		_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder + 1);
 		//soldier->setState(1);
 	}
-	_turnSystem->addObject(new Obstacle("Object1", {0, 1408}, 1, 1, {2, 53}));
-	_turnSystem->addObject(new Obstacle("Object2", {720, 1408}, 1, 1, { 26, 52 }));
-	_turnSystem->addObject(new Obstacle("Object3", {80, 632}, 1, 1, { 0, 0 }));
-	_turnSystem->addObject(new Obstacle("Object4", {640, 632}, 1, 1, { 0, 0 }));
-	_turnSystem->addObject(new Obstacle("Object5", {0, 1064}, 1, 1, { 0, 0 }));
-	_turnSystem->addObject(new Obstacle("Object6", {640, 1064}, 1, 1, { 0, 0 }));
-	_turnSystem->addObject(new Obstacle("Object7", {160, 1064}, 1, 1, { 10, 38 }));
-	_turnSystem->addObject(new Obstacle("Object8", {320, 1465}, 1, 1, { 0, 0 }));
-	_turnSystem->addObject(new Obstacle("Object9", {300, 1464}, 1, 1, { 9, 53 }));
+	for (auto it = battleData->_object.begin(); it != battleData->_object.end(); ++it)
+	{
+		wsprintf(_text, "Object%d-%d", battleData->_bgImgN, it->_index);
+		_turnSystem->addObject(new Obstacle(_text, it->_rcLT, it->_width, it->_height, it->_sortTile));
+	}
 	_turnSystem->init(_camera, IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), IMAGEMANAGER->findImage(_bgImg)->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage(_bgImg)->getWidth() / TILEWIDTH);
 
 	_showMiniStatusFrame = 0;
+	_launch = false;
 	return S_OK;
 }
 
@@ -74,6 +72,15 @@ void BattleScene::update(void)
 
 	_turnSystem->update(_cursorTile);
 
+	if (_launch)
+	{
+
+	}
+	else
+	{
+
+	}
+
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
 		_debug = !_debug;
@@ -89,11 +96,14 @@ void BattleScene::release(void)
 void BattleScene::render(void)
 {
 	IMAGEMANAGER->findImage(_bgImg)->render(getMemDC(), _camera->worldToCamera({ 0, 0 }).x, _camera->worldToCamera({ 0, 0 }).y);
-	IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y, TILEWIDTH, TILEHEIGHT, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);
-	if (GetPixel(IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), _cursorTileLT.x + TILEWIDTH / 2, _cursorTileLT.y + TILEHEIGHT / 2) == RGB(255, 0, 255))
+	if(_launch)
 	{
-		IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y,	
-			TILEWIDTH, TILEHEIGHT, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
+		IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y, TILEWIDTH, TILEHEIGHT, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);
+		if (GetPixel(IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), _cursorTileLT.x + TILEWIDTH / 2, _cursorTileLT.y + TILEHEIGHT / 2) == RGB(255, 0, 255))
+		{
+			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y,
+				TILEWIDTH, TILEHEIGHT, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
+		}
 	}
 	_turnSystem->render(getMemDC());
 	// 적을 가리키고 있을 때
@@ -131,6 +141,17 @@ void BattleScene::render(void)
 				0, 0, IMAGEMANAGER->findImage("MpBar")->getWidth(), IMAGEMANAGER->findImage("MpBar")->getHeight());
 			wsprintf(_text, "%d/%d", (int)_turnSystem->findCharacter(_cursorTile)->getCurMP(), (int)_turnSystem->findCharacter(_cursorTile)->getMaxMP());
 			FONTMANAGER->textOut(getMemDC(), _camera->worldToCamera(pt).x + 36, _camera->worldToCamera(pt).y + 12, "가을체", 7, 500, _text, strlen(_text), RGB(255, 255, 255));
+		}
+	}
+	if (!_launch)
+	{
+		DIALOGMANAGER->makeTextBox(getMemDC(), 5, 5, WINSIZE_X / 2 - 50, 100, 200);
+		FONTMANAGER->textOut(getMemDC(), 10, 10, "가을체", 20, 100, "출전할 캐릭터를 선택하세요.", strlen("출전할 캐릭터를 선택하세요."), RGB(164, 215, 242));
+		for (auto it = _party.begin(); it != _party.end(); ++it)
+		{
+			wsprintf(_text, (*it)->_name.c_str());
+			strcat_s(_text, "Mini");
+			IMAGEMANAGER->findImage(_text)->render(getMemDC(), 10 + IMAGEMANAGER->findImage(_text)->getWidth() * (it - _party.begin()), 40);
 		}
 	}
 	if(_turnSystem->checkTile(_cursorTile) != ENEMY)

@@ -13,11 +13,13 @@ class BattleScene : public GameNode
 private:
 	Camera* _camera;
 	TurnSystem2* _turnSystem;
+	vector<CharacterData*> _party;
 	int _frame;
 	POINT _cameraPos;
 	POINT _cursorTile;
 	POINT _cursorTileLT;
 	bool _debug;
+	bool _launch;
 	char _text[50];
 	char _bgImg[256];
 	char _checkBGImg[256];

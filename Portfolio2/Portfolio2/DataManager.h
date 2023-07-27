@@ -56,7 +56,15 @@ struct BattleData
 		int _turnOrder;
 		int _type;
 	};
+	struct Object {
+		POINT _rcLT;
+		POINT _sortTile;
+		int _width;
+		int _height;
+		int _index;
+	};
 	vector<Enemy> _enemy;
+	vector<Object> _object;
 	int _bgImgN;
 };
 

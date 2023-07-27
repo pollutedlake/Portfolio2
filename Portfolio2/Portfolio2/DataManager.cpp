@@ -88,6 +88,15 @@ HRESULT DataManager::init(void)
 					battleData->_enemy.push_back(enemy);
 				}
 			}
+			int objectN;
+			fscanf_s(_fp, "%d\n", &objectN);
+			while (objectN--)
+			{
+				BattleData::Object object;
+				fscanf_s(_fp, "%d%d%d%d%d%d%d\n", 
+					&(object._index), &(object._rcLT.x), &(object._rcLT.y), &(object._width), &(object._height), &(object._sortTile.x), &(object._sortTile.y));
+				battleData->_object.push_back(object);
+			}
 			battleList.push_back(battleData);
 		}
 		_mBattleList.insert(make_pair(str, battleList));

@@ -60,6 +60,7 @@ private:
 
 	bool _isClear;
 	bool _isFail;
+	bool _start;
 
 public:
 	HRESULT init(Camera* camera, HDC hdc, int rowN, int colN);

@@ -75,15 +75,17 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("BossBattleBG", "Resources/Images/BackGrounds/BossBattleScene/BossBattleBG.bmp", 1600, 1800);
 	IMAGEMANAGER->addImage("BattleSceneBG1", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG1.bmp", 1080, 1920);
 	IMAGEMANAGER->addImage("검사용BattleSceneBG1", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG1.bmp", 1200, 1920);
-	IMAGEMANAGER->addImage("Object1", "Resources/Images/BackGrounds/BattleScene/Object1.bmp", 360, 208, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object2", "Resources/Images/BackGrounds/BattleScene/Object2.bmp", 360, 176, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object3", "Resources/Images/BackGrounds/BattleScene/Object3.bmp", 360, 432, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object4", "Resources/Images/BackGrounds/BattleScene/Object4.bmp", 280, 432, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object5", "Resources/Images/BackGrounds/BattleScene/Object5.bmp", 160, 96, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object6", "Resources/Images/BackGrounds/BattleScene/Object6.bmp", 360, 104, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object7", "Resources/Images/BackGrounds/BattleScene/Object7.bmp", 280, 104, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object8", "Resources/Images/BackGrounds/BattleScene/Object8.bmp", 120, 184, true, RGB(0, 0, 0));
-	IMAGEMANAGER->addImage("Object9", "Resources/Images/BackGrounds/BattleScene/Object9.bmp", 160, 184, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-1", "Resources/Images/BackGrounds/BattleScene/Object1-1.bmp", 360, 208, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-2", "Resources/Images/BackGrounds/BattleScene/Object1-2.bmp", 360, 176, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-3", "Resources/Images/BackGrounds/BattleScene/Object1-3.bmp", 360, 432, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-4", "Resources/Images/BackGrounds/BattleScene/Object1-4.bmp", 280, 432, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-5", "Resources/Images/BackGrounds/BattleScene/Object1-5.bmp", 160, 96, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-6", "Resources/Images/BackGrounds/BattleScene/Object1-6.bmp", 360, 104, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-7", "Resources/Images/BackGrounds/BattleScene/Object1-7.bmp", 280, 104, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-8", "Resources/Images/BackGrounds/BattleScene/Object1-8.bmp", 120, 184, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-9", "Resources/Images/BackGrounds/BattleScene/Object1-9.bmp", 160, 184, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-10", "Resources/Images/BackGrounds/BattleScene/Object1-10.bmp", 40, 192, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object1-11", "Resources/Images/BackGrounds/BattleScene/Object1-11.bmp", 40, 192, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Table", "Resources/Images/BackGrounds/BossBattleScene/Table.bmp", 120, 136, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinIdleLeft", "Resources/Images/Characters/Saladin/SaladinIdleLeft.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinIdleRight", "Resources/Images/Characters/Saladin/SaladinIdleRight.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
@@ -269,6 +271,26 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Soldier2AttackUp", "Resources/Images/Characters/Soldier2/Soldier2AttackUp.bmp", 968, 141, 8, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier2AttackSide", "Resources/Images/Characters/Soldier2/Soldier2AttackSide.bmp", 1376, 216, 8, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier2AttackDown", "Resources/Images/Characters/Soldier2/Soldier2AttackDown.bmp", 984, 154, 8, 1, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addImage("Soldier2DamagedUp", "Resources/Images/Characters/Soldier2/Soldier2DamagedUp.bmp", 40, 87, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier2DamagedSide", "Resources/Images/Characters/Soldier2/Soldier2DamagedSide.bmp", 44, 188, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier2DamagedDown", "Resources/Images/Characters/Soldier2/Soldier2DamagedDown.bmp", 49, 99, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier3IdleUp", "Resources/Images/Characters/Soldier3/Soldier3IdleUp.bmp", 114, 68, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3IdleDown", "Resources/Images/Characters/Soldier3/Soldier3IdleDown.bmp", 126, 67, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3IdleSide", "Resources/Images/Characters/Soldier3/Soldier3IdleSide.bmp", 117, 134, 3, 2, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier3MoveUp", "Resources/Images/Characters/Soldier3/Soldier3MoveUp.bmp", 276, 70, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3MoveSide", "Resources/Images/Characters/Soldier3/Soldier3MoveSide.bmp", 408, 138, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3MoveDown", "Resources/Images/Characters/Soldier3/Soldier3MoveDown.bmp", 264, 67, 6, 1, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier3AttackUp", "Resources/Images/Characters/Soldier3/Soldier3AttackUp.bmp", 264, 80, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3AttackSide", "Resources/Images/Characters/Soldier3/Soldier3AttackSide.bmp", 348, 134, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3AttackDown", "Resources/Images/Characters/Soldier3/Soldier3AttackDown.bmp", 312, 72, 6, 1, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addImage("Soldier3DamagedUp", "Resources/Images/Characters/Soldier3/Soldier3DamagedUp.bmp", 39, 65, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier3DamagedSide", "Resources/Images/Characters/Soldier3/Soldier3DamagedSide.bmp", 48, 104, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier3DamagedDown", "Resources/Images/Characters/Soldier3/Soldier3DamagedDown.bmp", 40, 50, true, RGB(0, 0, 0));
 
 	IMAGEMANAGER->addFrameImage("Soldier4IdleUp", "Resources/Images/Characters/Soldier4/Soldier4IdleUp.bmp", 150, 71, 3, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4IdleDown", "Resources/Images/Characters/Soldier4/Soldier4IdleDown.bmp", 123, 72, 3, 1, true, RGB(0, 0, 0));
