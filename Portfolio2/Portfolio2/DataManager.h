@@ -63,6 +63,7 @@ struct BattleData
 		int _height;
 		int _index;
 	};
+	vector<POINT> _launchTile;
 	vector<Enemy> _enemy;
 	vector<Object> _object;
 	int _bgImgN;

@@ -313,7 +313,13 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("IronMaskMoveUp", "Resources/Images/Characters/IronMask/IronMaskMoveUp.bmp", 660, 85, 6, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("IronMaskMoveDown", "Resources/Images/Characters/IronMask/IronMaskMoveDown.bmp", 672, 87, 6, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("IronMaskMoveSide", "Resources/Images/Characters/IronMask/IronMaskMoveSide.bmp", 546, 160, 6, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskAttackUp", "Resources/Images/Characters/IronMask/IronMaskAttackUp.bmp", 928, 161, 8, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskAttackDown", "Resources/Images/Characters/IronMask/IronMaskAttackDown.bmp", 672, 87, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskAttackSide", "Resources/Images/Characters/IronMask/IronMaskAttackSide.bmp", 546, 160, 6, 2, true, RGB(168, 208, 168));
 
+	//UI
+	IMAGEMANAGER->addFrameImage("FingerCursor", "Resources/Images/UI/FingerCursor.bmp", 105, 27, 5, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addImage("LaunchTile", "Resources/Images/UI/LaunchTile.bmp", 40, 30);
 
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3", true);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "Enemy.h"
+#include "Player.h"
 #include "Obstacle.h"
 #include "Camera.h"
 #include "Skill.h"
@@ -9,13 +10,7 @@
 #define ENEMY 1
 #define CANTMOVE 2
 #define MOVABLE 3
-//enum TileInfo
-//{
-//	PLAYER,
-//	ENEMY,
-//	CANTMOVE,
-//	MOVABLE
-//};
+
 struct cmp2 
 {
 	bool operator()(pair<POINT, int> node1, pair<POINT, int> node2)
@@ -72,6 +67,7 @@ public:
 	Character* findCharacter(POINT cursorPoint);
 
 	void addCharacter(Character* character, int dir, POINT tilePos, int turnOrder);
+	void deleteCharacter(string name);
 	void addObject(Object* object);
 	void sortObjectList();
 	int checkTile(POINT tilePos);

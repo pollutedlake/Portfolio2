@@ -57,312 +57,315 @@ void TurnSystem2::update(POINT cursorTile)
 			++it;
 		}
 	}
-	if (_isClear || _isFail)
+	if (_start)
 	{
-		if (_frame == 1)
+		if (_isClear || _isFail)
 		{
-			SOUNDMANAGER->stopAllSoundFMOD();
-			SOUNDMANAGER->playSoundFMOD("StageClear");
-		}
-		if (!SOUNDMANAGER->isPlaying() || KEYMANAGER->isOnceKeyDown(VK_SPACE))
-		{
-			SOUNDMANAGER->stopAllSoundFMOD();
-			SCENEMANAGER->lodingScene("Battle", "WorldMap");
-		}
-	}
-	else if(_start)
-	{
-		for (auto it = _charList.begin(); it != _charList.end();)
-		{
-			if ((*it)->getType() == ENEMY)
+			if (_frame == 1)
 			{
-				break;
+				SOUNDMANAGER->stopAllSoundFMOD();
+				SOUNDMANAGER->playSoundFMOD("StageClear");
 			}
-			++it;
-			if (it == _charList.end())
+			if (!SOUNDMANAGER->isPlaying() || KEYMANAGER->isOnceKeyDown(VK_SPACE))
 			{
-				_isClear = true;
-				_frame = 0;
-				return;
-			}
-		}
-		for (auto it = _charList.begin(); it != _charList.end();)
-		{
-			if ((*it)->getType() == PLAYER)
-			{
-				break;
-			}
-			++it;
-			if (it == _charList.end())
-			{
-				_isFail = true;
-				_frame = 0;
-				return;
-			}
-		}
-		// 모든 캐릭터가 행동중이 아닐 때
-		if (checkAllDoingNot())
-		{
-		    // 움직일 수도 없고 행동할 수도 없을 때 다음 턴
-			if (!_curChar->canMove() && !_curChar->canAction())
-			{
-				if (checkAllDoingNot())
-				{
-					nextTurn();
-				}
-			}
-		    // 현재 캐릭터가 플레이어
-		    if (_curChar->getType() == PLAYER)
-		    {
-		        // 움직일 수 있으면 움직일 수 있는 타일들을 찾는다.
-		        if (_curChar->canMove())
-		        {
-		            searchMovableTiles();
-		        }
-		        // 움직일 수 없으면 상하좌우 2칸 떨어진 타일이 움직일 수 있는 타일이거나 적이 있는 타일이면 공격가능한 타일
-		        else
-		        {
-		            _attackableTiles.clear();
-		            if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
-		            {
-		                _attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
-		            }
-		            if (checkTile({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y }) % 2 == 1)
-		            {
-		                _attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y });
-		            }
-		            if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2}) % 2 == 1)
-		            {
-		                _attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2});
-		            }
-		            if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2}) % 2 == 1)
-		            {
-		                _attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2});
-		            }
-		        }
-		        if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-		        {
-		            if (!_actionChoice.test(0))
-		            {
-						if (_actionChoice.test(1))
-						{
-							if (PtInRect(&_actionButtons[0], _ptMouse))
-							{
-								_actionChoice = _actionChoice << 1;
-								for (int i = 0; i < 3; i++)
-								{
-									_skillButtons[i].left = _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH + 5, (_curChar->getTilePos().y - 2) * TILEHEIGHT + 5 + 23 * i }).x;
-									_skillButtons[i].right = _skillButtons[i].left + 155;
-									_skillButtons[i].top = _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH + 5, (_curChar->getTilePos().y - 2) * TILEHEIGHT + 5 + 23 * i }).y;
-									_skillButtons[i].bottom = _skillButtons[i].top + 20;
-								}
-							}
-							if (PtInRect(&_actionButtons[2], _ptMouse))
-							{
-								_actionChoice.reset();
-								_actionChoice.set(0);
-								nextTurn();
-							}
-						}
-						// 스킬 선택하고 스킬 범위 받기
-						else if (_actionChoice.test(2))
-						{
-							for (int i = 0; i < 3; i++)
-							{
-								if (PtInRect(&_skillButtons[i], _ptMouse))
-								{
-									_actionChoice = _actionChoice << 1;
-									//if (i == 0)
-									//{
-									//	_skillName = "천지파열무";
-									//}
-									//else if (i == 1)
-									//{
-									//	_skillName = "풍아열공참";
-									//}
-									//else if (i == 2)
-									//{
-									//	_skillName = "혈랑마혼";
-									//}
-									//_skillableTiles = ((Saladin*)(_curChar))->getSkillableTiles(tileInfo, 90, 60, _skillName);
-								}
-							}
-						}
-						else if (_actionChoice.test(3))
-						{
-
-						}
-		            }
-		            else
-		            {
-		                // Player가 움직일 수도 행동을 할 수도 있을 때
-		                if (_curChar->canMove())
-		                {
-		                    if (_curChar->canAction())
-		                    {
-		                        // 클릭한 타일에 적이 있을 경우 상하좌우 2칸 떨어진 곳 검사해서 가장 가까운 경로 찾기
-		                        if (checkTile(cursorTile) == ENEMY)
-		                        {
-		                            vector<vector<POINT>> routes;
-		                            vector<POINT> route;
-		                            if (cursorTile.x > 1 && checkTile({ cursorTile.x - 2, cursorTile.y }) % 3 == 0)
-		                            {
-		                                routes.push_back(astar(_curChar->getTilePos(), {cursorTile.x - 2, cursorTile.y}));
-		                            }
-									if (cursorTile.x < _colN - 2 && checkTile({ cursorTile.x + 2, cursorTile.y }) % 3 == 0)
-									{
-										routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x + 2, cursorTile.y }));
-									}
-									if (cursorTile.y > 1 && checkTile({ cursorTile.x, cursorTile.y - 2 }) % 3 == 0)
-									{
-										routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x, cursorTile.y - 2 }));
-									}
-									if (cursorTile.y < _rowN - 2 && checkTile({ cursorTile.x, cursorTile.y + 2 }) % 3 == 0)
-									{
-										routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x, cursorTile.y + 2 }));
-									}
-									route = routes[0];
-									for (auto it = routes.begin(); it != routes.end(); ++it)
-									{
-										if (route.size() > (*it).size())
-										{
-											route = (*it);
-										}
-									}
-									if (route.size() > 0)
-									{
-										_curChar->setState(3);
-									}
-									else
-									{
-										_curChar->setState(2);
-									}
-									_curChar->setDoing(true);
-									_curChar->setRoute(route);
-									_curChar->setDestTilePos(cursorTile);
-		                        }
-		                        // 현재 플레이어 캐릭터 타일 선택 시 행동 고르는 UI 생성
-		                        if (SamePoint(cursorTile, _curChar->getTilePos()))
-		                        {
-		                            _actionChoice = _actionChoice << 1;
-		                        }
-		                    }
-		                    // 움직일 수 있는 타일일 시 경로 astar로 구하고 이동
-		                    if (checkTile(cursorTile) == MOVABLE)
-		                    {
-		                        _curChar->setState(1);
-		                        _curChar->setDoing(true);
-		                        _curChar->setRoute(astar(_curChar->getTilePos(), cursorTile));
-		                    }
-		                }
-		                // 움직일 수는 없고 행동할 수는 있을 때
-		                else
-		                {
-		                    if (_curChar->canAction())
-		                    {
-		                        if (checkTile(cursorTile) == ENEMY)
-		                        {
-									if (SamePoint(cursorTile, {_curChar->getTilePos().x + 2, _curChar->getTilePos().y}))
-									{
-										_curChar->setDestTilePos(cursorTile);
-										_curChar->setState(2);
-										_curChar->setDoing(true);
-									}
-									if (SamePoint(cursorTile, { _curChar->getTilePos().x - 2, _curChar->getTilePos().y }))
-									{
-										_curChar->setDestTilePos(cursorTile);
-										_curChar->setState(2);
-										_curChar->setDoing(true);
-									}
-									if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y + 2}))
-									{
-										_curChar->setDestTilePos(cursorTile);
-										_curChar->setState(2);
-										_curChar->setDoing(true);
-									}
-									if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y - 2}))
-									{
-										_curChar->setDestTilePos(cursorTile);
-										_curChar->setState(2);
-										_curChar->setDoing(true);
-									}
-		                        }
-								else if (checkTile(cursorTile) == PLAYER)
-								{
-									_actionChoice = _actionChoice << 1;
-								}
-		                    }
-		                }
-		            }
-		        }
-				// 행동 선택 되돌리기
-				if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-				{
-					if (!_actionChoice.test(0))
-					{
-						_actionChoice = _actionChoice >> 1;
-					}
-				}
-		    }
-			// 적의 행동패턴
-			else if (_curChar->getType() == ENEMY)
-			{
-				if (_frame / 10 == 8)
-				{
-					_curChar->setState(3);
-					_curChar->setDoing(true);
-					POINT player = findPlayer();
-					vector<vector<POINT>> routes;
-					vector<POINT> route;
-					if (player.x > 1 && (checkTile({player.x - 2, player.y}) == MOVABLE || SamePoint(_curChar->getTilePos(), {player.x - 2, player.y})))
-					{
-						routes.push_back(astar(_curChar->getTilePos(), { player.x - 2, player.y }));
-					}
-					if (player.x < _colN - 2 && (checkTile({ player.x + 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), {player.x + 2, player.y})))
-					{
-						routes.push_back(astar(_curChar->getTilePos(), { player.x + 2, player.y }));
-					}
-					if (player.y > 1 && (checkTile({ player.x, player.y - 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), {player.x, player.y - 2})))
-					{
-						routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y - 2 }));
-					}
-					if (player.y < _rowN - 2 && (checkTile({ player.x, player.y + 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), {player.x, player.y + 2})))
-					{
-						routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y + 2 }));
-					}
-					route = routes[0];
-					for (auto it = routes.begin(); it != routes.end(); ++it)
-					{
-						if (route.size() > (*it).size())
-						{
-							route = (*it);
-						}
-					}
-					_curChar->setRoute(route);
-					_curChar->setDestTilePos(player);
-				}
+				SOUNDMANAGER->stopAllSoundFMOD();
+				SCENEMANAGER->lodingScene("Battle", "WorldMap");
 			}
 		}
 		else
 		{
-			if (_curChar->isAttack())
+			for (auto it = _charList.begin(); it != _charList.end();)
 			{
-				Character* targetChar = nullptr;
-				for (auto it = _charList.begin(); it != _charList.end(); ++it)
+				if ((*it)->getType() == ENEMY)
 				{
-					if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+					break;
+				}
+				++it;
+				if (it == _charList.end())
+				{
+					_isClear = true;
+					_frame = 0;
+					return;
+				}
+			}
+			for (auto it = _charList.begin(); it != _charList.end();)
+			{
+				if ((*it)->getType() == PLAYER)
+				{
+					break;
+				}
+				++it;
+				if (it == _charList.end())
+				{
+					_isFail = true;
+					_frame = 0;
+					return;
+				}
+			}
+			// 모든 캐릭터가 행동중이 아닐 때
+			if (checkAllDoingNot())
+			{
+				// 움직일 수도 없고 행동할 수도 없을 때 다음 턴
+				if (!_curChar->canMove() && !_curChar->canAction())
+				{
+					if (checkAllDoingNot())
 					{
-						targetChar = (*it);
-						break;
+						nextTurn();
 					}
 				}
-				targetChar->setState(4);
-				targetChar->setDamage(_curChar->getDamage());
-				targetChar->setDoing(true);
+				// 현재 캐릭터가 플레이어
+				if (_curChar->getType() == PLAYER)
+				{
+					// 움직일 수 있으면 움직일 수 있는 타일들을 찾는다.
+					if (_curChar->canMove())
+					{
+						searchMovableTiles();
+					}
+					// 움직일 수 없으면 상하좌우 2칸 떨어진 타일이 움직일 수 있는 타일이거나 적이 있는 타일이면 공격가능한 타일
+					else
+					{
+						_attackableTiles.clear();
+						if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
+						{
+							_attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+						}
+						if (checkTile({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y }) % 2 == 1)
+						{
+							_attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y });
+						}
+						if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 }) % 2 == 1)
+						{
+							_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 });
+						}
+						if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 }) % 2 == 1)
+						{
+							_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 });
+						}
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+					{
+						if (!_actionChoice.test(0))
+						{
+							if (_actionChoice.test(1))
+							{
+								if (PtInRect(&_actionButtons[0], _ptMouse))
+								{
+									_actionChoice = _actionChoice << 1;
+									for (int i = 0; i < 3; i++)
+									{
+										_skillButtons[i].left = _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH + 5, (_curChar->getTilePos().y - 2) * TILEHEIGHT + 5 + 23 * i }).x;
+										_skillButtons[i].right = _skillButtons[i].left + 155;
+										_skillButtons[i].top = _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH + 5, (_curChar->getTilePos().y - 2) * TILEHEIGHT + 5 + 23 * i }).y;
+										_skillButtons[i].bottom = _skillButtons[i].top + 20;
+									}
+								}
+								if (PtInRect(&_actionButtons[2], _ptMouse))
+								{
+									_actionChoice.reset();
+									_actionChoice.set(0);
+									nextTurn();
+								}
+							}
+							// 스킬 선택하고 스킬 범위 받기
+							else if (_actionChoice.test(2))
+							{
+								for (int i = 0; i < 3; i++)
+								{
+									if (PtInRect(&_skillButtons[i], _ptMouse))
+									{
+										_actionChoice = _actionChoice << 1;
+										//if (i == 0)
+										//{
+										//	_skillName = "천지파열무";
+										//}
+										//else if (i == 1)
+										//{
+										//	_skillName = "풍아열공참";
+										//}
+										//else if (i == 2)
+										//{
+										//	_skillName = "혈랑마혼";
+										//}
+										//_skillableTiles = ((Saladin*)(_curChar))->getSkillableTiles(tileInfo, 90, 60, _skillName);
+									}
+								}
+							}
+							else if (_actionChoice.test(3))
+							{
+
+							}
+						}
+						else
+						{
+							// Player가 움직일 수도 행동을 할 수도 있을 때
+							if (_curChar->canMove())
+							{
+								if (_curChar->canAction())
+								{
+									// 클릭한 타일에 적이 있을 경우 상하좌우 2칸 떨어진 곳 검사해서 가장 가까운 경로 찾기
+									if (checkTile(cursorTile) == ENEMY)
+									{
+										vector<vector<POINT>> routes;
+										vector<POINT> route;
+										if (cursorTile.x > 1 && checkTile({ cursorTile.x - 2, cursorTile.y }) % 3 == 0)
+										{
+											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x - 2, cursorTile.y }));
+										}
+										if (cursorTile.x < _colN - 2 && checkTile({ cursorTile.x + 2, cursorTile.y }) % 3 == 0)
+										{
+											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x + 2, cursorTile.y }));
+										}
+										if (cursorTile.y > 1 && checkTile({ cursorTile.x, cursorTile.y - 2 }) % 3 == 0)
+										{
+											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x, cursorTile.y - 2 }));
+										}
+										if (cursorTile.y < _rowN - 2 && checkTile({ cursorTile.x, cursorTile.y + 2 }) % 3 == 0)
+										{
+											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x, cursorTile.y + 2 }));
+										}
+										route = routes[0];
+										for (auto it = routes.begin(); it != routes.end(); ++it)
+										{
+											if (route.size() > (*it).size())
+											{
+												route = (*it);
+											}
+										}
+										if (route.size() > 0)
+										{
+											_curChar->setState(3);
+										}
+										else
+										{
+											_curChar->setState(2);
+										}
+										_curChar->setDoing(true);
+										_curChar->setRoute(route);
+										_curChar->setDestTilePos(cursorTile);
+									}
+									// 현재 플레이어 캐릭터 타일 선택 시 행동 고르는 UI 생성
+									if (SamePoint(cursorTile, _curChar->getTilePos()))
+									{
+										_actionChoice = _actionChoice << 1;
+									}
+								}
+								// 움직일 수 있는 타일일 시 경로 astar로 구하고 이동
+								if (checkTile(cursorTile) == MOVABLE)
+								{
+									_curChar->setState(1);
+									_curChar->setDoing(true);
+									_curChar->setRoute(astar(_curChar->getTilePos(), cursorTile));
+								}
+							}
+							// 움직일 수는 없고 행동할 수는 있을 때
+							else
+							{
+								if (_curChar->canAction())
+								{
+									if (checkTile(cursorTile) == ENEMY)
+									{
+										if (SamePoint(cursorTile, { _curChar->getTilePos().x + 2, _curChar->getTilePos().y }))
+										{
+											_curChar->setDestTilePos(cursorTile);
+											_curChar->setState(2);
+											_curChar->setDoing(true);
+										}
+										if (SamePoint(cursorTile, { _curChar->getTilePos().x - 2, _curChar->getTilePos().y }))
+										{
+											_curChar->setDestTilePos(cursorTile);
+											_curChar->setState(2);
+											_curChar->setDoing(true);
+										}
+										if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y + 2 }))
+										{
+											_curChar->setDestTilePos(cursorTile);
+											_curChar->setState(2);
+											_curChar->setDoing(true);
+										}
+										if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y - 2 }))
+										{
+											_curChar->setDestTilePos(cursorTile);
+											_curChar->setState(2);
+											_curChar->setDoing(true);
+										}
+									}
+									else if (checkTile(cursorTile) == PLAYER)
+									{
+										_actionChoice = _actionChoice << 1;
+									}
+								}
+							}
+						}
+					}
+					// 행동 선택 되돌리기
+					if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+					{
+						if (!_actionChoice.test(0))
+						{
+							_actionChoice = _actionChoice >> 1;
+						}
+					}
+				}
+				// 적의 행동패턴
+				else if (_curChar->getType() == ENEMY)
+				{
+					if (_frame / 10 == 8)
+					{
+						_curChar->setState(3);
+						_curChar->setDoing(true);
+						POINT player = findPlayer();
+						vector<vector<POINT>> routes;
+						vector<POINT> route;
+						if (player.x > 1 && (checkTile({ player.x - 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x - 2, player.y })))
+						{
+							routes.push_back(astar(_curChar->getTilePos(), { player.x - 2, player.y }));
+						}
+						if (player.x < _colN - 2 && (checkTile({ player.x + 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x + 2, player.y })))
+						{
+							routes.push_back(astar(_curChar->getTilePos(), { player.x + 2, player.y }));
+						}
+						if (player.y > 1 && (checkTile({ player.x, player.y - 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x, player.y - 2 })))
+						{
+							routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y - 2 }));
+						}
+						if (player.y < _rowN - 2 && (checkTile({ player.x, player.y + 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x, player.y + 2 })))
+						{
+							routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y + 2 }));
+						}
+						route = routes[0];
+						for (auto it = routes.begin(); it != routes.end(); ++it)
+						{
+							if (route.size() > (*it).size())
+							{
+								route = (*it);
+							}
+						}
+						_curChar->setRoute(route);
+						_curChar->setDestTilePos(player);
+					}
+				}
 			}
-			else if (_curChar->isSkill())
+			else
 			{
-				_skill->update();
+				if (_curChar->isAttack())
+				{
+					Character* targetChar = nullptr;
+					for (auto it = _charList.begin(); it != _charList.end(); ++it)
+					{
+						if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+						{
+							targetChar = (*it);
+							break;
+						}
+					}
+					targetChar->setState(4);
+					targetChar->setDamage(_curChar->getDamage());
+					targetChar->setDoing(true);
+				}
+				else if (_curChar->isSkill())
+				{
+					_skill->update();
+				}
 			}
 		}
 	}
@@ -538,6 +541,34 @@ void TurnSystem2::addCharacter(Character* character, int dir, POINT tilePos, int
     character->setTurnOder(turnOrder);
     _charList.push_back(character);
     addObject(character);
+}
+
+void TurnSystem2::deleteCharacter(string name)
+{
+	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	{
+		if ((*it)->getType() == PLAYER)
+		{
+			Player* _player = (Player*)(*it);
+			if (!strcmp(_player->getPlayerName().c_str(), name.c_str()))
+			{
+				it = _charList.erase(it);
+				break;
+			}
+		}
+	}
+	for (auto it = _objectList.begin(); it != _objectList.end(); ++it)
+	{
+		if ((*it)->getType() == PLAYER)
+		{
+			Player* _player = (Player*)(*it);
+			if (!strcmp(_player->getPlayerName().c_str(), name.c_str()))
+			{
+				it = _objectList.erase(it);
+				return;
+			}
+		}
+	}
 }
 
 void TurnSystem2::addObject(Object* object)

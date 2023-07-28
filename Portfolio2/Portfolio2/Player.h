@@ -1,12 +1,11 @@
 #pragma once
 #include "Character.h"
+
 class Player : public Character
 {
 private:
-	vector<POINT> _movableTiles;
-	vector<POINT> _attackableTiles;
-	vector<POINT> _skillableTiles;
 	bool _cameraShake;
+	string _playerName;
 
 public:
 	HRESULT init(void);
@@ -14,7 +13,9 @@ public:
 	void update(void);
 	void render(HDC hdc, POINT position, POINT cameraPos);
 
-	Player() {}
+	string getPlayerName() { return _playerName; }
+
+	Player(string playerName) { _playerName = playerName; }
 	~Player() {}
 };
 

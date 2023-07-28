@@ -96,6 +96,15 @@ HRESULT DataManager::init(void)
 				fscanf_s(_fp, "%d%d%d%d%d%d%d\n", 
 					&(object._index), &(object._rcLT.x), &(object._rcLT.y), &(object._width), &(object._height), &(object._sortTile.x), &(object._sortTile.y));
 				battleData->_object.push_back(object);
+
+			}
+			int launchTileN;
+			fscanf_s(_fp, "%d\n", &launchTileN);
+			while (launchTileN--)
+			{
+				POINT launchTile;
+				fscanf_s(_fp, "%d%d", &launchTile.x, &launchTile.y);
+				battleData->_launchTile.push_back(launchTile);
 			}
 			battleList.push_back(battleData);
 		}

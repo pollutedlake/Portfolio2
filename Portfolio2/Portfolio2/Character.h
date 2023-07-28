@@ -86,7 +86,6 @@ public:
 	void setXY(int tileWidth, int tileHeight);
 	bool isDie();
 	virtual int getDamage();
-
 public:
 	Character() {}
 	virtual ~Character() {}

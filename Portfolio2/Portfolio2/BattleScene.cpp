@@ -14,21 +14,20 @@ HRESULT BattleScene::init(void)
 
 	_turnSystem = new TurnSystem2();
 	_party = DATAMANAGER->getPartyData();
-	for (auto it = _party.begin(); it != _party.end(); ++it)
+	/*for (auto it = _party.begin(); it != _party.end(); ++it)
 	{
 		if (!strcmp((*it)->_name.c_str(), "살라딘"))
 		{
 			Saladin* _saladin = new Saladin;
 			_saladin->init();
 			_turnSystem->addCharacter(_saladin, UP, { 13, 57 }, 0);
-			//_turnSystem->addCharacter(_saladin, UP, { 16, 61 }, 0);
 		}
-	}
+	}*/
 	for (auto it = battleData->_enemy.begin(); it != battleData->_enemy.end(); ++it)
 	{
 		Soldier* soldier = new Soldier;
 		soldier->init(EnemyType(it->_type));
-		_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder + 1);
+		_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder);
 		//soldier->setState(1);
 	}
 	for (auto it = battleData->_object.begin(); it != battleData->_object.end(); ++it)
@@ -38,7 +37,18 @@ HRESULT BattleScene::init(void)
 	}
 	_turnSystem->init(_camera, IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), IMAGEMANAGER->findImage(_bgImg)->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage(_bgImg)->getWidth() / TILEWIDTH);
 
+	for (int i = 0; i < 10; i++)
+	{
+		_launchRT[i].first.left = 10 + (IMAGEMANAGER->findImage("살라딘Mini")->getWidth() + 6) * (i % 5);
+		_launchRT[i].first.right = _launchRT[i].first.left + 4 + IMAGEMANAGER->findImage("살라딘Mini")->getWidth();
+		_launchRT[i].first.top = 40 + (IMAGEMANAGER->findImage("살라딘Mini")->getHeight() + 6) * (i / 5);
+		_launchRT[i].first.bottom = _launchRT[i].first.top + 4 + IMAGEMANAGER->findImage("살라딘Mini")->getHeight();
+		_launchRT[i].second = false;
+	}
+	_launchTile = battleData->_launchTile;
 	_showMiniStatusFrame = 0;
+	_launchOrder.reset();
+	_launchOrder.set(0);
 	_launch = false;
 	return S_OK;
 }
@@ -72,13 +82,69 @@ void BattleScene::update(void)
 
 	_turnSystem->update(_cursorTile);
 
-	if (_launch)
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-
-	}
-	else
-	{
-
+		if (!_launch)
+		{
+			if (_launchOrder.test(0))
+			{
+				for (int i = 0; i < _party.size(); i++)
+				{
+					if (PtInRect(&_launchRT[i].first, _ptMouse))
+					{
+						_launchOrder = _launchOrder << 1;
+						_exPtMouse = _ptMouse;
+						_launchButton[0] = { _exPtMouse.x + 5, _exPtMouse.y + 5, _exPtMouse.x + 125, _exPtMouse.y + 20 };
+						_launchButton[1] = { _exPtMouse.x + 5, _exPtMouse.y + 25, _exPtMouse.x + 125, _exPtMouse.y + 45 };
+						_launchButton[2] = { _exPtMouse.x + 5, _exPtMouse.y + 125, _exPtMouse.x + 125, _exPtMouse.y + 145 };
+						_launchButton[3] = { _exPtMouse.x + 5, _exPtMouse.y + 145, _exPtMouse.x + 125, _exPtMouse.y + 165 };
+						_selectCharIndex = i;
+					}
+				}
+			}
+			else if (_launchOrder.test(1))
+			{
+				if (PtInRect(&_launchButton[0], _ptMouse) && !_launchRT[_selectCharIndex].second)
+				{
+					_launchOrder = _launchOrder << 1;
+				}
+				else if (PtInRect(&_launchButton[1], _ptMouse) && _launchRT[_selectCharIndex].second)
+				{
+					_launchOrder = _launchOrder >> 1;
+					_launchRT[_selectCharIndex].second = false;
+					_turnSystem->deleteCharacter(_party[_selectCharIndex]->_name.c_str());
+				}
+				else if (PtInRect(&_launchButton[2], _ptMouse))
+				{
+					_launchOrder = _launchOrder >> 1;
+				}
+				else if (PtInRect(&_launchButton[3], _ptMouse))
+				{
+					_launch = true;
+				}
+				else
+				{
+					_launchOrder = _launchOrder >> 1;
+				}
+			}
+			else if (_launchOrder.test(2))
+			{
+				for (auto it = _launchTile.begin(); it != _launchTile.end(); ++it)
+				{
+					if (PtInRect(&RectMakeCenter(_camera->worldToCamera({ (*it).x * TILEWIDTH + TILEWIDTH / 2, (*it).y * TILEHEIGHT + TILEHEIGHT / 2 }).x,
+						_camera->worldToCamera({ (*it).x * TILEWIDTH + TILEWIDTH / 2, (*it).y * TILEHEIGHT + TILEHEIGHT / 2 }).y, TILEWIDTH, TILEHEIGHT), _ptMouse))
+					{
+						Player* _player = new Player(_party[_selectCharIndex]->_name.c_str());
+						_player->init();
+						_turnSystem->addCharacter(_player, UP, *it, 0);
+						_player->setState(2);
+						_launchRT[_selectCharIndex].second = true;
+						_launchOrder.reset();
+						_launchOrder.set(0);
+					}
+				}
+			}
+		}
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
@@ -105,7 +171,79 @@ void BattleScene::render(void)
 				TILEWIDTH, TILEHEIGHT, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
 		}
 	}
-	_turnSystem->render(getMemDC());
+	// 파티 배치
+	if (!_launch)
+	{
+		bool launchTile = false;
+		// 출전시킬 수 있는 타일
+		for (auto it = _launchTile.begin(); it != _launchTile.end(); ++it)
+		{
+			IMAGEMANAGER->findImage("LaunchTile")->alphaRender(getMemDC(), _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, 127);
+			// 출전시킬 수 있는 타일에 마우스 올리면 커서 바뀜
+			if (PtInRect(&RectMakeCenter(_camera->worldToCamera({ (*it).x * TILEWIDTH + TILEWIDTH / 2, (*it).y * TILEHEIGHT + TILEHEIGHT / 2 }).x,
+				_camera->worldToCamera({ (*it).x * TILEWIDTH + TILEWIDTH / 2, (*it).y * TILEHEIGHT + TILEHEIGHT / 2 }).y, TILEWIDTH, TILEHEIGHT), _ptMouse))
+			{
+				IMAGEMANAGER->findImage("FingerCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 5, 0);
+				launchTile = true;
+			}
+		}
+		_turnSystem->render(getMemDC());
+		DIALOGMANAGER->makeTextBox(getMemDC(), 5, 5, WINSIZE_X / 2 - 50, 100, 200);
+		FONTMANAGER->textOut(getMemDC(), 10, 10, "가을체", 20, 100, "출전할 캐릭터를 선택하세요.", strlen("출전할 캐릭터를 선택하세요."), RGB(164, 215, 242));
+		for (auto it = _party.begin(); it != _party.end(); ++it)
+		{
+			wsprintf(_text, (*it)->_name.c_str());
+			strcat_s(_text, "Mini");
+			FillRect(getMemDC(), &_launchRT[(it - _party.begin())].first, CreateSolidBrush(RGB(255, 255, 0)));
+			IMAGEMANAGER->findImage(_text)->render(getMemDC(), _launchRT[it - _party.begin()].first.left + 2, _launchRT[it - _party.begin()].first.top + 2);
+			if (_launchRT[it - _party.begin()].second)
+			{
+				IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), _launchRT[it - _party.begin()].first.left, _launchRT[it - _party.begin()].first.top, _launchRT[it - _party.begin()].first.right - _launchRT[it - _party.begin()].first.left,
+					_launchRT[it - _party.begin()].first.bottom - _launchRT[it - _party.begin()].first.top, 0, 0, IMAGEMANAGER->findImage("Black")->getWidth(), IMAGEMANAGER->findImage("Black")->getHeight(), 128);
+				SetTextAlign(getMemDC(), TA_CENTER);
+				FONTMANAGER->textOut(getMemDC(), (_launchRT[it - _party.begin()].first.right + _launchRT[it - _party.begin()].first.left) / 2, _launchRT[it - _party.begin()].first.bottom - 30, "가을체", 20, 100, "Entry", strlen("Entry"), RGB(255, 0, 0));
+				SetTextAlign(getMemDC(), TA_LEFT);
+			}
+		}
+		if (_launchOrder.test(1))
+		{
+			DIALOGMANAGER->makeTextBox(getMemDC(), _exPtMouse.x, _exPtMouse.y, 130, 170, 200);
+			for (int i = 0; i < 4; i++)
+			{
+				if (PtInRect(&_launchButton[i], _ptMouse))
+				{
+					if (i < 2 && i != _launchRT[_selectCharIndex].second)
+					{
+						continue;
+					}
+					IMAGEMANAGER->findImage("SkillButtonActive")->render(getMemDC(), _launchButton[i].left, _launchButton[i].top, _launchButton[i].right - _launchButton[i].left, _launchButton[i].bottom - _launchButton[i].top,
+						0, 0, IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight());
+				}
+			}
+			SetTextAlign(getMemDC(), TA_CENTER);
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 5, "가을체", 15, 100, "출전", strlen("출전"), _launchRT[_selectCharIndex].second ? RGB(139, 140, 141) :RGB(255, 255, 255));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 25, "가을체", 15, 100, "출전 취소", strlen("출전 취소"), _launchRT[_selectCharIndex].second ? RGB(255, 255, 255) : RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 45, "가을체", 15, 100, "용병 배치", strlen("용병 배치"), RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 65, "가을체", 15, 100, "용병 배치 취소", strlen("용병 배치 취소"), RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 85, "가을체", 15, 100, "탑승", strlen("탑승"), RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 105, "가을체", 15, 100, "탑승 취소", strlen("탑승 취소"), RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 125, "가을체", 15, 100, "자동 배치", strlen("자동 배치"), RGB(255, 255, 255));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 145, "가을체", 15, 100, "배치 종료", strlen("배치 종료"), RGB(255, 255, 255));
+			SetTextAlign(getMemDC(), TA_LEFT);
+		}
+		if (!launchTile)
+		{
+			IMAGEMANAGER->findImage("MouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+		}
+	}
+	else
+	{
+		_turnSystem->render(getMemDC());
+		if (_turnSystem->checkTile(_cursorTile) != ENEMY)
+		{
+			IMAGEMANAGER->findImage("MouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+		}
+	}
 	// 적을 가리키고 있을 때
 	if (_turnSystem->checkTile(_cursorTile) == ENEMY)
 	{
@@ -142,21 +280,6 @@ void BattleScene::render(void)
 			wsprintf(_text, "%d/%d", (int)_turnSystem->findCharacter(_cursorTile)->getCurMP(), (int)_turnSystem->findCharacter(_cursorTile)->getMaxMP());
 			FONTMANAGER->textOut(getMemDC(), _camera->worldToCamera(pt).x + 36, _camera->worldToCamera(pt).y + 12, "가을체", 7, 500, _text, strlen(_text), RGB(255, 255, 255));
 		}
-	}
-	if (!_launch)
-	{
-		DIALOGMANAGER->makeTextBox(getMemDC(), 5, 5, WINSIZE_X / 2 - 50, 100, 200);
-		FONTMANAGER->textOut(getMemDC(), 10, 10, "가을체", 20, 100, "출전할 캐릭터를 선택하세요.", strlen("출전할 캐릭터를 선택하세요."), RGB(164, 215, 242));
-		for (auto it = _party.begin(); it != _party.end(); ++it)
-		{
-			wsprintf(_text, (*it)->_name.c_str());
-			strcat_s(_text, "Mini");
-			IMAGEMANAGER->findImage(_text)->render(getMemDC(), 10 + IMAGEMANAGER->findImage(_text)->getWidth() * (it - _party.begin()), 40);
-		}
-	}
-	if(_turnSystem->checkTile(_cursorTile) != ENEMY)
-	{
-		IMAGEMANAGER->findImage("MouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
 	}
 	if (_debug)
 	{
