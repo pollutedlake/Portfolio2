@@ -31,9 +31,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("EldBar", "Resources/Images/UI/EldBar.bmp", 62, 4);
 	IMAGEMANAGER->addImage("EldIcon", "Resources/Images/UI/EldIcon.bmp", 12, 15, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("CurEld", "Resources/Images/UI/CurEld.bmp", 7, 6, true, RGB(252, 252, 252));
-	IMAGEMANAGER->addImage("Vermont", "Resources/Images/UI/Vermont.bmp", 260, 480, true, RGB(0, 0, 4));
-	IMAGEMANAGER->addImage("Saladin", "Resources/Images/UI/Saladin.bmp", 400, 480, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Sherazade", "Resources/Images/UI/Sherazade.bmp", 424, 480, true, RGB(255, 0, 255 ));
+	IMAGEMANAGER->addImage("DialogVermont", "Resources/Images/UI/Vermont.bmp", 260, 480, true, RGB(0, 0, 4));
+	IMAGEMANAGER->addImage("DialogSaladin", "Resources/Images/UI/Saladin.bmp", 400, 480, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DialogSherazade", "Resources/Images/UI/Sherazade.bmp", 424, 480, true, RGB(255, 0, 255 ));
 	IMAGEMANAGER->addImage("HpBar", "Resources/Images/UI/HpBar.bmp", 2, 12);
 	IMAGEMANAGER->addImage("MpBar", "Resources/Images/UI/MpBar.bmp", 2, 12);
 	IMAGEMANAGER->addImage("StatusBar", "Resources/Images/UI/StatusBar.bmp", 150, 3);

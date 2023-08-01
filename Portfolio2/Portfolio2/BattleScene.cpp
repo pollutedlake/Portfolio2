@@ -51,6 +51,7 @@ HRESULT BattleScene::init(void)
 	_launchOrder.reset();
 	_launchOrder.set(0);
 	_launch = false;
+	_frame = 0;
 	return S_OK;
 }
 
@@ -161,9 +162,14 @@ void BattleScene::update(void)
 					_partyTurnOrder = 0;
 					for (auto it = _party.begin(); it != _party.end(); ++it)
 					{
+						int random = RND->getInt(_launchTile.size());
+						while (_turnSystem->checkTile(_launchTile[random]) != MOVABLE)
+						{
+							random = RND->getInt(_launchTile.size());
+						}
 						Player* _player = new Player((*it)->_name.c_str());
 						_player->init();
-						_turnSystem->addCharacter(_player, UP, _launchTile[RND->getInt(_launchTile.size())], _partyTurnOrder);
+						_turnSystem->addCharacter(_player, UP, _launchTile[random], _partyTurnOrder);
 						_launchRT[it - _party.begin()].second = true;
 						_partyTurnOrder++;
 					}
@@ -185,14 +191,17 @@ void BattleScene::update(void)
 					if (PtInRect(&RectMakeCenter(_camera->worldToCamera({ (*it).x * TILEWIDTH + TILEWIDTH / 2, (*it).y * TILEHEIGHT + TILEHEIGHT / 2 }).x,
 						_camera->worldToCamera({ (*it).x * TILEWIDTH + TILEWIDTH / 2, (*it).y * TILEHEIGHT + TILEHEIGHT / 2 }).y, TILEWIDTH, TILEHEIGHT), _ptMouse))
 					{
-						Player* _player = new Player(_party[_selectCharIndex]->_name.c_str());
-						_player->init();
-						_turnSystem->addCharacter(_player, UP, *it, _partyTurnOrder);
-						//_player->setState(2);
-						_launchRT[_selectCharIndex].second = true;
-						_launchOrder.reset();
-						_launchOrder.set(0);
-						_partyTurnOrder++;
+						if(_turnSystem->checkTile((*it)) == MOVABLE)
+						{
+							Player* _player = new Player(_party[_selectCharIndex]->_name.c_str());
+							_player->init();
+							_turnSystem->addCharacter(_player, UP, *it, _partyTurnOrder);
+							//_player->setState(2);
+							_launchRT[_selectCharIndex].second = true;
+							_launchOrder.reset();
+							_launchOrder.set(0);
+							_partyTurnOrder++;
+						}
 					}
 				}
 			}
@@ -202,6 +211,11 @@ void BattleScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
 		_debug = !_debug;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SOUNDMANAGER->stopAllSoundFMOD();
+		SCENEMANAGER->loadingScene();
 	}
 }
 
@@ -359,6 +373,8 @@ void BattleScene::render(void)
 			LineMake(getMemDC(), _camera->worldToCamera({ TILEWIDTH * (i + 1), 0 }).x, _camera->worldToCamera({ TILEWIDTH * (i + 1), 0 }).y,
 				_camera->worldToCamera({ TILEWIDTH * (i + 1), IMAGEMANAGER->findImage(_bgImg)->getHeight() }).x, _camera->worldToCamera({ TILEWIDTH * (i + 1), IMAGEMANAGER->findImage(_bgImg)->getHeight() }).y);
 		}
+		SelectObject(getMemDC(), hOldPen);
+		DeleteObject(hPen);
 	}
 	// ¸Ê Á¤º¸
 	IMAGEMANAGER->findImage("TextBox")->alphaRender(getMemDC(), WINSIZE_X - IMAGEMANAGER->findImage("TextBox")->getWidth() * 0.7 - 10, 10,

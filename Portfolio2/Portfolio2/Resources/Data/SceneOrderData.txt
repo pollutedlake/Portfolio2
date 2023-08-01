@@ -1,0 +1,4 @@
+69 3
+Story Battle Battle
+75 5
+Battle WorldMap Story BossBattle Ending

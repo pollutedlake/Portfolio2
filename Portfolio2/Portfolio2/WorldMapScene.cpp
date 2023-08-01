@@ -55,7 +55,7 @@ void WorldMapScene::update(void)
 		if (_state.test(0) && PtInRect(&_nextMoveRC, _ptMouse))
 		{
 			SOUNDMANAGER->stopAllSoundFMOD();
-			SCENEMANAGER->lodingScene("WorldMap", "Story");
+			SCENEMANAGER->loadingScene();
 		}
 	}
 }

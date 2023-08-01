@@ -5,6 +5,8 @@ HRESULT DataManager::init(void)
 {
 	_introVideo = true;
 	_scenario = 69;
+	_sceneIdx = 0;
+	_battleIdx = 0;
 	if (fopen_s(&_fp, "Resources/Data/ItemList.txt", "r") == 0)
 	{
 		char itemName[256];
@@ -186,6 +188,26 @@ HRESULT DataManager::init(void)
 				storyDataList.push_back(storyData);
 			}
 			_mStoryData.insert(make_pair(scenarioN, storyDataList));
+		}
+	}
+	fclose(_fp);
+	if (fopen_s(&_fp, "Resources/Data/SceneOrderData.txt", "r") == 0)
+	{
+		int totalScenarioN = 2;
+		while (totalScenarioN--)
+		{
+			int scenarioN;
+			int sceneN;
+			fscanf_s(_fp, "%d %d", &scenarioN, &sceneN);
+			vector<string> sceneList;
+			while (sceneN--)
+			{
+				char scene[256];
+				fscanf_s(_fp, "%s", scene, _countof(scene));
+				sceneList.push_back(scene);
+			}
+			fscanf_s(_fp, "\n");
+			_mSceneList.insert(make_pair(scenarioN, sceneList));
 		}
 	}
 	fclose(_fp);

@@ -74,10 +74,21 @@ void SceneManager::addScene(string sceneName, GameNode* scene)
     }
 }
 
-HRESULT SceneManager::lodingScene(string prevScene, string nextScene)
+HRESULT SceneManager::loadingScene()
 {
     auto iter = ((LoadingScene*)(_sceneMap.find("Loading")->second));
-    iter->init(prevScene, nextScene);
+    cout << DATAMANAGER->getSceneIdx() << endl;
+    if (DATAMANAGER->getSceneIdx() == DATAMANAGER->getSceneList(DATAMANAGER->getScenario()).size())
+    {
+        DATAMANAGER->setSceneIdx(0);
+        DATAMANAGER->setBattleIdx(0);
+        iter->init("Title");
+    }
+    else
+    {
+        iter->init(DATAMANAGER->getSceneList(DATAMANAGER->getScenario())[DATAMANAGER->getSceneIdx()]);
+    }
+    DATAMANAGER->setSceneIdx(DATAMANAGER->getSceneIdx() + 1);
     _currentScene = iter;
     return S_OK;
 }

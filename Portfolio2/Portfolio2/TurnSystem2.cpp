@@ -65,7 +65,7 @@ void TurnSystem2::update(POINT cursorTile)
 			if (!SOUNDMANAGER->isPlaying() || KEYMANAGER->isOnceKeyDown(VK_SPACE))
 			{
 				SOUNDMANAGER->stopAllSoundFMOD();
-				SCENEMANAGER->lodingScene("Battle", "WorldMap");
+				SCENEMANAGER->loadingScene();
 				DATAMANAGER->setBattleIdx(DATAMANAGER->getBattleIdx() + 1);
 			}
 		}
@@ -300,19 +300,19 @@ void TurnSystem2::update(POINT cursorTile)
 									{
 										vector<vector<POINT>> routes;
 										vector<POINT> route;
-										if (cursorTile.x > 1 && checkTile({ cursorTile.x - 2, cursorTile.y }) % 3 == 0)
+										if (cursorTile.x > 1 && (checkTile({ cursorTile.x - 2, cursorTile.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { cursorTile.x - 2, cursorTile.y })))
 										{
 											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x - 2, cursorTile.y }));
 										}
-										if (cursorTile.x < _colN - 2 && checkTile({ cursorTile.x + 2, cursorTile.y }) % 3 == 0)
+										if (cursorTile.x < _colN - 2 && (checkTile({ cursorTile.x + 2, cursorTile.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { cursorTile.x + 2, cursorTile.y })))
 										{
 											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x + 2, cursorTile.y }));
 										}
-										if (cursorTile.y > 1 && checkTile({ cursorTile.x, cursorTile.y - 2 }) % 3 == 0)
+										if (cursorTile.y > 1 && (checkTile({ cursorTile.x, cursorTile.y - 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { cursorTile.x, cursorTile.y - 2 })))
 										{
 											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x, cursorTile.y - 2 }));
 										}
-										if (cursorTile.y < _rowN - 2 && checkTile({ cursorTile.x, cursorTile.y + 2 }) % 3 == 0)
+										if (cursorTile.y < _rowN - 2 && (checkTile({ cursorTile.x, cursorTile.y + 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { cursorTile.x, cursorTile.y + 2 })))
 										{
 											routes.push_back(astar(_curChar->getTilePos(), { cursorTile.x, cursorTile.y + 2 }));
 										}

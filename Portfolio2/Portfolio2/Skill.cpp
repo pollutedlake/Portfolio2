@@ -543,7 +543,7 @@ void Skill::update(void)
 			{
 				if (IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 == -1)
 				{
-					//((Saladin*)_curChar)->setCameraShake(false);
+					((Saladin*)_curChar)->setCameraShake(false);
 					((Player*)_curChar)->setCameraShake(false);
 				}
 			}

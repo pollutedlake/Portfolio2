@@ -1,10 +1,9 @@
 #include "Stdafx.h"
 #include "LoadingScene.h"
 
-HRESULT LoadingScene::init(string prevScene, string nextScene)
+HRESULT LoadingScene::init(string nextScene)
 {
     _frame = 0;
-    _prevScene = prevScene;
     _nextScene = nextScene;
     _loadingImgIndex = RND->getFromIntTo(1, 41);
     return S_OK;

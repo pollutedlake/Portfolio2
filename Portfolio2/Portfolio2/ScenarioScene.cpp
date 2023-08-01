@@ -43,6 +43,7 @@ void ScenarioScene::update(void)
 				SOUNDMANAGER->stopSoundFMOD("ScenarioScene");
 				DATAMANAGER->setScenario(_selectScenario);
 				DATAMANAGER->setBattleIdx(0);
+				DATAMANAGER->setSceneIdx(0);
 				_fadeOut = true;
 			}
 			if (PtInRect(&_scrollUpRC, _ptMouse))
@@ -143,7 +144,7 @@ void ScenarioScene::update(void)
 		_frame++;
 		if (_frame > 50)
 		{
-			SCENEMANAGER->lodingScene("Scenario", "Battle");
+			SCENEMANAGER->loadingScene();
 		}
 	}
 }

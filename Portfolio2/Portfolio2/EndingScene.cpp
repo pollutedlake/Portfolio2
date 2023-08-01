@@ -389,7 +389,7 @@ void EndingScene::update(void)
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("Title");
+		SCENEMANAGER->loadingScene();
 	}
 	if (_showDialog)
 	{
@@ -537,7 +537,9 @@ void EndingScene::fadeInBlack(int startTime, int curTime, int endTime)
 
 void EndingScene::dialog(string charName, LPCWSTR* printStringArr, int length, int arrSize)
 {
-	_speakerImg = IMAGEMANAGER->findImage(charName);
+	char text[256];
+	wsprintf(text, "Dialog%s", charName.c_str());
+	_speakerImg = IMAGEMANAGER->findImage(text);
 	_speakerImg->render(getMemDC(), (WINSIZE_X - _speakerImg->getWidth() * 1.5) / 2, WINSIZE_Y - _speakerImg->getHeight() * 1.5,
 		_speakerImg->getWidth() * 1.5, _speakerImg->getHeight() * 1.5,
 		0, 0, _speakerImg->getWidth(), _speakerImg->getHeight());

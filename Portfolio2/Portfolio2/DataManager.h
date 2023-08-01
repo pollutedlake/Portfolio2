@@ -103,9 +103,11 @@ private:
 	map < string, vector<BattleData*>> _mBattleList;
 	map<int, DialogData*> _mDialogList;
 	map<int, vector<StoryData*>> _mStoryData;
+	map<int, vector<string>> _mSceneList;
 	int _eld;
 	int _scenario;
 	int _battleIdx;
+	int _sceneIdx;
 	bool _introVideo;
 
 public:
@@ -125,6 +127,8 @@ public:
 	int getScenario() {return _scenario;}
 	void setBattleIdx(int battleIdx) {_battleIdx = battleIdx;}
 	int getBattleIdx() {return _battleIdx;}
+	void setSceneIdx(int sceneIdx) {_sceneIdx = sceneIdx;}
+	int getSceneIdx() {return _sceneIdx;}
 	bool getIntroVideo() {return _introVideo;}
 
 	// 전투데이터
@@ -145,6 +149,8 @@ public:
 
 	// StoryData
 	vector<StoryData*> getStoryData(int scenarioN) { return _mStoryData.find(scenarioN)->second; }
+
+	vector<string> getSceneList(int scenarioN) {return _mSceneList.find(scenarioN)->second;}
 
 	DataManager() {}
 	~DataManager() {}

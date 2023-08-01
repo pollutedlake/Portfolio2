@@ -26,17 +26,20 @@ HRESULT TitleScene::init(void)
 	{
 		_buttonsRC[i] = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y / 2 + _titleName->getHeight() / 2 + 50 + _titleButtons->getFrameHeight() * 3 / 2 * (i + 1), _titleButtons->getFrameWidth(), _titleButtons->getFrameHeight() * 3 / 2);
 	}
-	if(FAILED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)))
+	if(DATAMANAGER->getIntroVideo())
 	{
-		cout << "CoInitializeEx Failed" << endl;
-	}
-	if(FAILED(CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&_pGraphBuilder)))
-	{
-		cout << "CoCreateInstance Failed" << endl;
-	}
-	if (LoadVideo(L"Resources/Video/Opening.avi"))
-	{
-		cout << "Load Video" << endl;
+		if(FAILED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)))
+		{
+			cout << "CoInitializeEx Failed" << endl;
+		}
+		if(FAILED(CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&_pGraphBuilder)))
+		{
+			cout << "CoCreateInstance Failed" << endl;
+		}
+		if (LoadVideo(L"Resources/Video/Opening.avi"))
+		{
+			cout << "Load Video" << endl;
+		}
 	}
 	return S_OK;
 }

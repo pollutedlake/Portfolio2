@@ -473,7 +473,8 @@ void StoryScene::update(void)
 				if (_frame > _fadeWhiteFrame + 300 && _dialogIndex == 20)
 				{
 					SOUNDMANAGER->stopAllSoundFMOD();
-					SCENEMANAGER->lodingScene("Story", "BossBattle");
+					SCENEMANAGER->loadingScene();
+					DATAMANAGER->setSceneIdx(DATAMANAGER->getSceneIdx() + 1);
 				}
 			}
 			else
@@ -516,11 +517,6 @@ void StoryScene::update(void)
 					}
 				}
 			}
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_F1))
-		{
-			SOUNDMANAGER->stopAllSoundFMOD();
-			SCENEMANAGER->lodingScene("Story", "BossBattle");
 		}
 	}
 	else
@@ -774,7 +770,7 @@ void StoryScene::update(void)
 				}
 				if (_frame > 500)
 				{
-					SCENEMANAGER->lodingScene("Story", "Battle");
+					SCENEMANAGER->loadingScene();
 				}
 			break;
 		}
@@ -823,6 +819,12 @@ void StoryScene::update(void)
 				}
 			}
 		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SOUNDMANAGER->stopAllSoundFMOD();
+		SCENEMANAGER->loadingScene();
+		SetTextAlign(getMemDC(), TA_NOUPDATECP);
 	}
 }
 
@@ -1261,7 +1263,8 @@ void StoryScene::dialog(string charName, LPCWSTR* printStringArr, int length, in
 			if (dialogType && _storyDialog[_dialogIndex - 1]._dialogType)
 			{
 
-				_speakerImg = IMAGEMANAGER->findImage(_storyDialog[_dialogIndex - 1]._speaker);
+				wsprintf(_text, "Dialog%s", _storyDialog[_dialogIndex - 1]._speaker.c_str());
+				_speakerImg = IMAGEMANAGER->findImage(_text);
 				if (_storyDialog[_dialogIndex - 1]._dialogType == 1)
 				{
 					_speakerImg->render(getMemDC(), WINSIZE_X - 380, WINSIZE_Y - _speakerImg->getHeight() * 1.5,

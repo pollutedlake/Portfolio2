@@ -62,7 +62,7 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 		if (!SOUNDMANAGER->isPlaying() || KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
 			SOUNDMANAGER->stopAllSoundFMOD();
-			SCENEMANAGER->lodingScene("BossBattle", "Ending");
+			SCENEMANAGER->loadingScene();
 		}
 	}
 	else
