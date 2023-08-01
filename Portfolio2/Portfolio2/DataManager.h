@@ -69,16 +69,44 @@ struct BattleData
 	int _bgImgN;
 };
 
+struct DialogData
+{
+	struct Dialog
+	{
+		string _speaker;
+		int _dialogN;
+		int _dialogType;
+		LPCWSTR _script[10];
+	};
+	vector<Dialog> _dialogList;
+	vector<int> _stopDialog;
+};
+
+struct StoryData
+{
+	struct Object
+	{
+		int _objectType;
+		int _x;
+		int _y;
+	};
+	vector<Object> _objectList;
+};
+
 class DataManager : public SingletonBase<DataManager>
 {
 private:
 	FILE* _fp;
-	FILE* _partyFP;
 	vector<CharacterData*> _mParty;
 	map<string, pair<ItemData*, int>> _mInventory;
 	map<string, ItemData*> _mItemList;
 	map < string, vector<BattleData*>> _mBattleList;
+	map<int, DialogData*> _mDialogList;
+	map<int, vector<StoryData*>> _mStoryData;
 	int _eld;
+	int _scenario;
+	int _battleIdx;
+	bool _introVideo;
 
 public:
 	HRESULT init(void);
@@ -87,10 +115,17 @@ public:
 	void render(void);
 
 	void setEld(int eld) { _eld = eld; }
+	void setIntroVideo(bool introVideo) {_introVideo = introVideo;}
 
 	vector<CharacterData*> getPartyData() {return _mParty;}
 	map<string, pair<ItemData*, int>> getInventory() { return _mInventory; }
 	int getEld() {return _eld;}
+
+	void setScenario(int scenario) { _scenario = scenario; }
+	int getScenario() {return _scenario;}
+	void setBattleIdx(int battleIdx) {_battleIdx = battleIdx;}
+	int getBattleIdx() {return _battleIdx;}
+	bool getIntroVideo() {return _introVideo;}
 
 	// 전투데이터
 	BattleData* findBattleData(string strKey, int i);
@@ -104,6 +139,12 @@ public:
 	void sellItem(string strKey, int num);
 	void equipItem(string strKey, int charIdx, int itemIdx);
 	void takeOffEquip(int charIdx, int itemIdx);
+
+	// 다이얼로그
+	DialogData* getDialogList(int scenarioN) { return _mDialogList.find(scenarioN)->second; }
+
+	// StoryData
+	vector<StoryData*> getStoryData(int scenarioN) { return _mStoryData.find(scenarioN)->second; }
 
 	DataManager() {}
 	~DataManager() {}

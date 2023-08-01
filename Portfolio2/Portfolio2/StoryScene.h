@@ -39,6 +39,14 @@ private:
 	int _fadeWhiteFrame;
 	int _speakStartFrame;
 
+	DialogData* _dialogData;
+	vector<StoryData*> _storyDataList;
+	int _stopDialogIndex;
+	char _text[256];
+	int _objectIndex;
+	bool _fadeOut;
+	int _fadeStartFrame;
+
 public:
 	HRESULT init(void);
 	void release(void);

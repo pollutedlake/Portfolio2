@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "Saladin.h"
+#include "Player.h"
 
 struct IcePillar
 {

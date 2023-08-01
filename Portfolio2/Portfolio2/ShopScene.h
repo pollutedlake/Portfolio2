@@ -9,7 +9,6 @@
 class ShopScene : public GameNode
 {
 private:
-	//bitset<50> _state;
 	int _frame;
 	RECT _shopButtons[4];
 	RECT _exitButton;

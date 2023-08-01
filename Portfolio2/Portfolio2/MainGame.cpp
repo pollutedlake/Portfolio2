@@ -7,7 +7,7 @@ HRESULT MainGame::init(void)
 	_resources = new Resources;
 	_resources->init();
 	SCENEMANAGER->init();
-	SCENEMANAGER->changeScene("Battle");
+	SCENEMANAGER->changeScene("Title");
 	ShowCursor(false);
 	return S_OK;
 }
@@ -29,5 +29,8 @@ void MainGame::render(void)
 
 	SCENEMANAGER->render();
 
-	this->getBackBuffer()->render(getHDC(), 0, 0);
+	if(!DATAMANAGER->getIntroVideo())
+	{
+		this->getBackBuffer()->render(getHDC(), 0, 0);
+	}
 }

@@ -9,7 +9,6 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("TitleEFX1", "Resources/Images/Effects/TitleScene/TitleEFX1.bmp", 3315, 2398, 13, 11, true, RGB(4, 100, 4));
 	IMAGEMANAGER->addFrameImage("TitleButtons", "Resources/Images/BackGrounds/TitleScene/TitleButtons.bmp", 390, 124, 2, 4, true, RGB(252, 0, 0));
 
-
 	IMAGEMANAGER->addImage("ScenarioBG", "Resources/Images/BackGrounds/ScenarioScene/Scenario_BG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addFrameImage("Scenarios", "Resources/Images/BackGrounds/ScenarioScene/Scenarios.bmp", 1680, 2700, 6, 27, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("ScrollUp", "Resources/Images/BackGrounds/ScenarioScene/ScrollUp.bmp", 19, 45, true, RGB(0, 0, 0));
@@ -72,6 +71,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("TitleEFX4", "Resources/Images/Effects/TitleScene/TitleEFX4.bmp", 4080, 254, 16, 1, true, RGB(4, 0, 4));
 	IMAGEMANAGER->addImage("test", "Resources/Images/Effects/StoryScene/test2.bmp", 201, 242, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("TitleEFX3", "Resources/Images/Effects/TitleScene/TitleEFX3.bmp", 20880, 240, 87, 1, true, RGB(4, 88, 4));
+
+	// 전투맵 이미지
 	IMAGEMANAGER->addImage("BossBattleBG", "Resources/Images/BackGrounds/BossBattleScene/BossBattleBG.bmp", 1600, 1800);
 	IMAGEMANAGER->addImage("BattleSceneBG1", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG1.bmp", 1080, 1920);
 	IMAGEMANAGER->addImage("검사용BattleSceneBG1", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG1.bmp", 1200, 1920);
@@ -86,6 +87,23 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Object1-9", "Resources/Images/BackGrounds/BattleScene/Object1-9.bmp", 160, 184, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Object1-10", "Resources/Images/BackGrounds/BattleScene/Object1-10.bmp", 40, 192, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Object1-11", "Resources/Images/BackGrounds/BattleScene/Object1-11.bmp", 40, 192, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addImage("BattleSceneBG3", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG3.bmp", 1600, 1290);
+	IMAGEMANAGER->addImage("검사용BattleSceneBG3", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG3.bmp", 1600, 1290);
+	IMAGEMANAGER->addImage("Object3-1", "Resources/Images/BackGrounds/BattleScene/Object3-1.bmp", 80, 440, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object3-2", "Resources/Images/BackGrounds/BattleScene/Object3-2.bmp", 80, 440, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addImage("BattleSceneBG4", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG4.bmp",1400, 1920);
+	IMAGEMANAGER->addImage("검사용BattleSceneBG4", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG4.bmp", 1400, 1920);
+	IMAGEMANAGER->addImage("Object4-1", "Resources/Images/BackGrounds/BattleScene/Object4-1.bmp", 400, 320, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4-2", "Resources/Images/BackGrounds/BattleScene/Object4-2.bmp", 320, 272, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4-3", "Resources/Images/BackGrounds/BattleScene/Object4-3.bmp", 600, 184, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4-4", "Resources/Images/BackGrounds/BattleScene/Object4-4.bmp", 120, 104, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4-5", "Resources/Images/BackGrounds/BattleScene/Object4-5.bmp", 600, 272, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4-6", "Resources/Images/BackGrounds/BattleScene/Object4-6.bmp", 600, 240, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Object4-7", "Resources/Images/BackGrounds/BattleScene/Object4-7.bmp", 40, 272, true, RGB(0, 0, 0));
+
+
 	IMAGEMANAGER->addImage("Table", "Resources/Images/BackGrounds/BossBattleScene/Table.bmp", 120, 136, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinIdleLeft", "Resources/Images/Characters/Saladin/SaladinIdleLeft.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SaladinIdleRight", "Resources/Images/Characters/Saladin/SaladinIdleRight.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));
@@ -314,13 +332,82 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("IronMaskMoveDown", "Resources/Images/Characters/IronMask/IronMaskMoveDown.bmp", 672, 87, 6, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("IronMaskMoveSide", "Resources/Images/Characters/IronMask/IronMaskMoveSide.bmp", 546, 160, 6, 2, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("IronMaskAttackUp", "Resources/Images/Characters/IronMask/IronMaskAttackUp.bmp", 928, 161, 8, 1, true, RGB(168, 208, 168));
-	IMAGEMANAGER->addFrameImage("IronMaskAttackDown", "Resources/Images/Characters/IronMask/IronMaskAttackDown.bmp", 672, 87, 6, 1, true, RGB(168, 208, 168));
-	IMAGEMANAGER->addFrameImage("IronMaskAttackSide", "Resources/Images/Characters/IronMask/IronMaskAttackSide.bmp", 546, 160, 6, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskAttackDown", "Resources/Images/Characters/IronMask/IronMaskAttackDown.bmp", 944, 183, 8, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskAttackSide", "Resources/Images/Characters/IronMask/IronMaskAttackSide.bmp", 1480, 236, 8, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("IronMaskDamagedUp", "Resources/Images/Characters/IronMask/IronMaskDamagedUp.bmp", 55, 71, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("IronMaskDamagedDown", "Resources/Images/Characters/IronMask/IronMaskDamagedDown.bmp", 83, 73, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("IronMaskDamagedSide", "Resources/Images/Characters/IronMask/IronMaskDamagedSide.bmp", 84, 146, 1, 2, true, RGB(168, 208, 168));
+
+	// 크리스티앙 이미지
+	IMAGEMANAGER->addImage("크리스티앙Mini", "Resources/Images/UI/ChristianMini.bmp", 50, 50);
+	IMAGEMANAGER->addFrameImage("ChristianIdleUp", "Resources/Images/Characters/Christian/ChristianIdleUp.bmp", 87, 74, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianIdleDown", "Resources/Images/Characters/Christian/ChristianIdleDown.bmp", 99, 75, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianIdleSide", "Resources/Images/Characters/Christian/ChristianIdleSide.bmp", 99, 148, 3, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianMoveUp", "Resources/Images/Characters/Christian/ChristianMoveUp.bmp", 222, 72, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianMoveDown", "Resources/Images/Characters/Christian/ChristianMoveDown.bmp", 216, 73, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianMoveSide", "Resources/Images/Characters/Christian/ChristianMoveSide.bmp", 264, 140, 6, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianAttackUp", "Resources/Images/Characters/Christian/ChristianAttackUp.bmp", 852, 97, 12, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("GunFireUp", "Resources/Images/Characters/Christian/GunFireUp.bmp", 616, 85, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("ChristianAttackDown", "Resources/Images/Characters/Christian/ChristianAttackDown.bmp", 726, 83, 11, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("GunFireDown", "Resources/Images/Characters/Christian/GunFireDown.bmp", 616, 85, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("ChristianAttackSide", "Resources/Images/Characters/Christian/ChristianAttackSide.bmp", 700, 194, 10, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("GunFireSide", "Resources/Images/Characters/Christian/GunFireSide.bmp", 680, 154, 8, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("ChristianDamagedUp", "Resources/Images/Characters/Christian/ChristianDamagedUp.bmp", 27, 68, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("ChristianDamagedDown", "Resources/Images/Characters/Christian/ChristianDamagedDown.bmp", 36, 61, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("ChristianDamagedSide", "Resources/Images/Characters/Christian/ChristianDamagedSide.bmp", 44, 114, 1, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("GunTurnSide", "Resources/Images/Characters/Christian/GunTurnSide.bmp", 200, 50, 8, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("GunTurnUpDown", "Resources/Images/Characters/Christian/GunTurnUpDown.bmp", 40, 24, 8, 2, true, RGB(168, 208, 168));
+
+	// 죠안 이미지
+	IMAGEMANAGER->addImage("죠안 카트라이트Mini", "Resources/Images/UI/JoanMini.bmp", 50, 50);
 
 	//UI
 	IMAGEMANAGER->addFrameImage("FingerCursor", "Resources/Images/UI/FingerCursor.bmp", 105, 27, 5, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addImage("LaunchTile", "Resources/Images/UI/LaunchTile.bmp", 40, 30);
 
+	// 스토리씬 배경
+	IMAGEMANAGER->addImage("StoryBG69-1", "Resources/Images/BackGrounds/StoryScene/StoryBG69-1.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-2", "Resources/Images/BackGrounds/StoryScene/StoryBG69-2.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-3", "Resources/Images/BackGrounds/StoryScene/StoryBG69-3.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-4", "Resources/Images/BackGrounds/StoryScene/StoryBG69-4.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-5", "Resources/Images/BackGrounds/StoryScene/StoryBG69-5.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-6", "Resources/Images/BackGrounds/StoryScene/StoryBG69-6.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-7", "Resources/Images/BackGrounds/StoryScene/StoryBG69-7.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-8", "Resources/Images/BackGrounds/StoryScene/StoryBG69-8.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryBG69-9", "Resources/Images/BackGrounds/StoryScene/StoryBG69-9.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("StoryObject69-1", "Resources/Images/BackGrounds/StoryScene/StoryObject69-1.bmp", 56, 76, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-2", "Resources/Images/BackGrounds/StoryScene/StoryObject69-2.bmp", 43, 76, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-3", "Resources/Images/BackGrounds/StoryScene/StoryObject69-3.bmp", 38, 69, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-4", "Resources/Images/BackGrounds/StoryScene/StoryObject69-4.bmp", 31, 73, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-5", "Resources/Images/BackGrounds/StoryScene/StoryObject69-5.bmp", 27, 75, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-6", "Resources/Images/BackGrounds/StoryScene/StoryObject69-6.bmp", 25, 67, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-7", "Resources/Images/BackGrounds/StoryScene/StoryObject69-7.bmp", 31, 77, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("StoryObject69-8", "Resources/Images/BackGrounds/StoryScene/StoryObject69-8.bmp", 37, 75, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("StoryObject69-9", "Resources/Images/BackGrounds/StoryScene/StoryObject69-9.bmp", 33, 72, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-10", "Resources/Images/BackGrounds/StoryScene/StoryObject69-10.bmp", 24, 90, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-11", "Resources/Images/BackGrounds/StoryScene/StoryObject69-11.bmp", 53, 60, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("StoryObject69-12", "Resources/Images/BackGrounds/StoryScene/StoryObject69-12.bmp", 44, 67, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Story69-Saladin", "Resources/Images/BackGrounds/StoryScene/Story69-Saladin.bmp", 186, 65, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Story69-Soldier", "Resources/Images/BackGrounds/StoryScene/Story69-Soldier.bmp", 159, 86, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Story69-Soldier2", "Resources/Images/BackGrounds/StoryScene/Story69-Soldier2.bmp", 858, 79, 13, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Story69-FireUp", "Resources/Images/BackGrounds/StoryScene/Story69-FireUp.bmp", 403, 93, 13, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Story69-Die1", "Resources/Images/BackGrounds/StoryScene/Story69-Die1.bmp", 238, 74, 7, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Story69-Die2", "Resources/Images/BackGrounds/StoryScene/Story69-Die2.bmp", 252, 76, 7, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Story69-Die3", "Resources/Images/BackGrounds/StoryScene/Story69-Die3.bmp", 266, 79, 7, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Story69-Osman", "Resources/Images/BackGrounds/StoryScene/Story69-Osman.bmp", 832, 81, 13, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Story69-Yan", "Resources/Images/BackGrounds/StoryScene/Story69-Yan.bmp", 1120, 71, 16, 1, true, RGB(168, 208, 168));
+
+	// 대화 캐릭터 이미지
+	IMAGEMANAGER->addImage("Dialog발라", "Resources/Images/BackGrounds/StoryScene/Dialog발라.bmp", 395, 415, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Dialog오스만", "Resources/Images/BackGrounds/StoryScene/Dialog오스만.bmp", 426, 418, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Dialog얀", "Resources/Images/BackGrounds/StoryScene/Dialog얀.bmp", 296, 446, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Dialog알 아샤", "Resources/Images/BackGrounds/StoryScene/Dialog알 아샤.bmp", 285, 421, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Dialog아두스 베이", "Resources/Images/BackGrounds/StoryScene/Dialog아두스 베이.bmp", 255, 440, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Dialog라쉬카", "Resources/Images/BackGrounds/StoryScene/Dialog라쉬카.bmp", 396, 429, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Dialog무카파", "Resources/Images/BackGrounds/StoryScene/Dialog무카파.bmp", 339, 434, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Dialog멘붕살라딘", "Resources/Images/BackGrounds/StoryScene/Dialog멘붕살라딘.bmp", 278, 444, true, RGB(255, 0, 255));
+
+	// SOUND
 	SOUNDMANAGER->addSoundFMOD("Brother", "Resources/Sounds/EndingScene/Brother.mp3");
 	SOUNDMANAGER->addSoundFMOD("TitleScene", "Resources/Sounds/TitleScene/TitleScene.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ScenarioScene", "Resources/Sounds/ScenarioScene/ScenarioScene.mp3", true);
@@ -339,6 +426,61 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("FinalAttack","Resources/Sounds/SoundEffect/FinalAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("혈랑마혼","Resources/Sounds/SoundEffect/Wolf.wav");
 	SOUNDMANAGER->addSoundFMOD("Charging","Resources/Sounds/SoundEffect/Charging.wav");
+	SOUNDMANAGER->addSoundFMOD("IronMaskAttack1", "Resources/Sounds/SoundEffect/IronMaskAttack1.wav");
+
+	// 크리스티앙
+	SOUNDMANAGER->addSoundFMOD("ChristianFire", "Resources/Sounds/SoundEffect/ChristianFire.wav");
+	SOUNDMANAGER->addSoundFMOD("GunLoad", "Resources/Sounds/SoundEffect/GunLoad.wav");
+
+	// 불사조 Story
+	SOUNDMANAGER->addSoundFMOD("69-1", "Resources/Sounds/StoryScene/69/69-1.wav");
+	SOUNDMANAGER->addSoundFMOD("69-2", "Resources/Sounds/StoryScene/69/69-2.wav");
+	SOUNDMANAGER->addSoundFMOD("69-3", "Resources/Sounds/StoryScene/69/69-3.wav");
+	SOUNDMANAGER->addSoundFMOD("69-4", "Resources/Sounds/StoryScene/69/69-4.wav");
+	SOUNDMANAGER->addSoundFMOD("69-5", "Resources/Sounds/StoryScene/69/69-5.wav");
+	SOUNDMANAGER->addSoundFMOD("69-6", "Resources/Sounds/StoryScene/69/69-6.wav");
+	SOUNDMANAGER->addSoundFMOD("69-7", "Resources/Sounds/StoryScene/69/69-7.wav");
+	SOUNDMANAGER->addSoundFMOD("69-8", "Resources/Sounds/StoryScene/69/69-8.wav");
+	SOUNDMANAGER->addSoundFMOD("69-9", "Resources/Sounds/StoryScene/69/69-9.wav");
+	SOUNDMANAGER->addSoundFMOD("69-10", "Resources/Sounds/StoryScene/69/69-10.wav");
+	SOUNDMANAGER->addSoundFMOD("69-11", "Resources/Sounds/StoryScene/69/69-11.wav");
+	SOUNDMANAGER->addSoundFMOD("69-12", "Resources/Sounds/StoryScene/69/69-12.wav");
+	SOUNDMANAGER->addSoundFMOD("69-13", "Resources/Sounds/StoryScene/69/69-13.wav");
+	SOUNDMANAGER->addSoundFMOD("69-14", "Resources/Sounds/StoryScene/69/69-14.wav");
+	SOUNDMANAGER->addSoundFMOD("69-15", "Resources/Sounds/StoryScene/69/69-15.wav");
+	SOUNDMANAGER->addSoundFMOD("69-16", "Resources/Sounds/StoryScene/69/69-16.wav");
+	SOUNDMANAGER->addSoundFMOD("69-17", "Resources/Sounds/StoryScene/69/69-17.wav");
+	SOUNDMANAGER->addSoundFMOD("69-18", "Resources/Sounds/StoryScene/69/69-18.wav");
+	SOUNDMANAGER->addSoundFMOD("69-19", "Resources/Sounds/StoryScene/69/69-19.wav");
+	SOUNDMANAGER->addSoundFMOD("69-20", "Resources/Sounds/StoryScene/69/69-20.wav");
+	SOUNDMANAGER->addSoundFMOD("69-21", "Resources/Sounds/StoryScene/69/69-21.wav");
+	SOUNDMANAGER->addSoundFMOD("69-22", "Resources/Sounds/StoryScene/69/69-22.wav");
+	SOUNDMANAGER->addSoundFMOD("69-23", "Resources/Sounds/StoryScene/69/69-23.wav");
+	SOUNDMANAGER->addSoundFMOD("69-24", "Resources/Sounds/StoryScene/69/69-24.wav");
+	SOUNDMANAGER->addSoundFMOD("69-25", "Resources/Sounds/StoryScene/69/69-25.wav");
+	SOUNDMANAGER->addSoundFMOD("69-26", "Resources/Sounds/StoryScene/69/69-26.wav");
+	SOUNDMANAGER->addSoundFMOD("69-27", "Resources/Sounds/StoryScene/69/69-27.wav");
+	SOUNDMANAGER->addSoundFMOD("69-28", "Resources/Sounds/StoryScene/69/69-28.wav");
+	SOUNDMANAGER->addSoundFMOD("69-29", "Resources/Sounds/StoryScene/69/69-29.wav");
+	SOUNDMANAGER->addSoundFMOD("69-30", "Resources/Sounds/StoryScene/69/69-30.wav");
+	SOUNDMANAGER->addSoundFMOD("69-31", "Resources/Sounds/StoryScene/69/69-31.wav");
+	SOUNDMANAGER->addSoundFMOD("69-32", "Resources/Sounds/StoryScene/69/69-32.wav");
+	SOUNDMANAGER->addSoundFMOD("69-33", "Resources/Sounds/StoryScene/69/69-33.wav");
+	SOUNDMANAGER->addSoundFMOD("69-34", "Resources/Sounds/StoryScene/69/69-34.wav");
+	SOUNDMANAGER->addSoundFMOD("69-35", "Resources/Sounds/StoryScene/69/69-35.wav");
+	SOUNDMANAGER->addSoundFMOD("69-36", "Resources/Sounds/StoryScene/69/69-36.wav");
+	SOUNDMANAGER->addSoundFMOD("69-37", "Resources/Sounds/StoryScene/69/69-37.wav");
+	SOUNDMANAGER->addSoundFMOD("69-38", "Resources/Sounds/StoryScene/69/69-38.wav");
+	SOUNDMANAGER->addSoundFMOD("69-39", "Resources/Sounds/StoryScene/69/69-39.wav");
+	SOUNDMANAGER->addSoundFMOD("69-40", "Resources/Sounds/StoryScene/69/69-40.wav");
+	SOUNDMANAGER->addSoundFMOD("69-41", "Resources/Sounds/StoryScene/69/69-41.wav");
+	SOUNDMANAGER->addSoundFMOD("69-42", "Resources/Sounds/StoryScene/69/69-42.wav");
+	SOUNDMANAGER->addSoundFMOD("69-43", "Resources/Sounds/StoryScene/69/69-43.wav");
+	SOUNDMANAGER->addSoundFMOD("69-44", "Resources/Sounds/StoryScene/69/69-44.wav");
+	SOUNDMANAGER->addSoundFMOD("69-45", "Resources/Sounds/StoryScene/69/69-45.wav");
+	SOUNDMANAGER->addSoundFMOD("Flirting", "Resources/Sounds/StoryScene/69/Flirting.wav");
+	SOUNDMANAGER->addSoundFMOD("BangBangBang", "Resources/Sounds/StoryScene/69/BangBangBang.wav");
+	SOUNDMANAGER->addSoundFMOD("Story69-BG", "Resources/Sounds/StoryScene/69/Story69-BG.wav", true);
 
 	IMAGEMANAGER->addFrameImage("StoryBG", "Resources/Images/BackGrounds/StoryScene/StoryBG.bmp", 3840, 480, 6, 1);
 	SOUNDMANAGER->addSoundFMOD("Dialog0", "Resources/Sounds/StoryScene/0.mp3");

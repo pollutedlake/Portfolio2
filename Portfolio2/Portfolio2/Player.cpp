@@ -267,15 +267,91 @@ void Player::update(void)
 		}
 		else if (_state.test(ATTACK))
 		{
+			if (_frame == 20 || _frame == 60)
+			{
+				SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
 
+			}
+			if ((_frame / 10 == 2) || (_frame / 10 == 6))
+			{
+				_isAttack = true;
+			}
+			else
+			{
+				_isAttack = false;
+				_damage = 0;
+			}
+			if (_destTilePos.x - _tilePos.x > 0)
+			{
+				_dir.reset();
+				_dir.set(RIGHT);
+			}
+			else if (_destTilePos.x - _tilePos.x < 0)
+			{
+				_dir.reset();
+				_dir.set(LEFT);
+			}
+			else
+			{
+				if (_destTilePos.y - _tilePos.y > 0)
+				{
+					_dir.reset();
+					_dir.set(DOWN);
+				}
+				else if (_destTilePos.y - _tilePos.y < 0)
+				{
+					_dir.reset();
+					_dir.set(UP);
+				}
+			}
+			if (_dir.test(LEFT) && _frame / 10 > IMAGEMANAGER->findImage("IronMaskAttackSide")->getMaxFrameX())
+			{
+				_state.reset();
+				setDoing(false);
+				_turn.flip(1);
+			}
+			else if (_dir.test(RIGHT) && _frame / 10 > IMAGEMANAGER->findImage("IronMaskAttackSide")->getMaxFrameX())
+			{
+				_state.reset();
+				setDoing(false);
+				_turn.flip(1);
+			}
+			else if (_dir.test(UP) && _frame / 10 > IMAGEMANAGER->findImage("IronMaskAttackUp")->getMaxFrameX())
+			{
+				_state.reset();
+				setDoing(false);
+				_turn.flip(1);
+			}
+			else if (_dir.test(DOWN) && _frame / 10 > IMAGEMANAGER->findImage("IronMaskAttackDown")->getMaxFrameX())
+			{
+				_state.reset();
+				setDoing(false);
+				_turn.flip(1);
+			}
 		}
 		else if (_state.test(DIE))
 		{
-
+			if (255 - 255 / 30 * _frame < 0)
+			{
+				_isDie = true;
+			}
 		}
 		else if (_state.test(DAMAGED))
 		{
-
+			if (_frame / 5 > 0)
+			{
+				_curHP -= _damage;
+				if (_curHP <= 0)
+				{
+					_curHP = 0;
+					setState(pow(2, DIE));
+				}
+				else
+				{
+					_state.reset();
+					setDoing(false);
+				}
+			}
 		}
 		else if (_state.test(SKILL))
 		{
@@ -290,22 +366,138 @@ void Player::update(void)
 		}
 		else if (_state.test(ATTACK))
 		{
-
+			if (_destTilePos.x - _tilePos.x > 0)
+			{
+				_dir.reset();
+				_dir.set(RIGHT);
+			}
+			else if (_destTilePos.x - _tilePos.x < 0)
+			{
+				_dir.reset();
+				_dir.set(LEFT);
+			}
+			else
+			{
+				if (_destTilePos.y - _tilePos.y > 0)
+				{
+					_dir.reset();
+					_dir.set(DOWN);
+				}
+				else if (_destTilePos.y - _tilePos.y < 0)
+				{
+					_dir.reset();
+					_dir.set(UP);
+				}
+			}
+			if (_dir.test(LEFT) || _dir.test(RIGHT))
+			{
+				if (_frame == 10 || _frame == 80)
+				{
+					SOUNDMANAGER->playSoundFMOD("GunLoad");
+				}
+				if (_frame == 50)
+				{
+					SOUNDMANAGER->playSoundFMOD("ChristianFire");
+				}
+				if (_frame / 10 == 5 || _frame / 10 == 7)
+				{
+					_isAttack = true;
+				}
+				else
+				{
+					_isAttack = false;
+					_damage = 0;
+				}
+				if (_frame / 10 > IMAGEMANAGER->findImage("ChristianAttackSide")->getMaxFrameX())
+				{
+					_state.reset();
+					setDoing(false);
+					_turn.flip(1);
+				}
+			}
+			else if (_dir.test(UP))
+			{
+				if (_frame == 10 || _frame == 90)
+				{
+					SOUNDMANAGER->playSoundFMOD("GunLoad");
+				}
+				if (_frame == 50)
+				{
+					SOUNDMANAGER->playSoundFMOD("ChristianFire");
+				}
+				if (_frame / 10 == 4 || _frame / 10 == 6)
+				{
+					_isAttack = true;
+				}
+				else
+				{
+					_isAttack = false;
+					_damage = 0;
+				}
+				if (_frame / 10 > IMAGEMANAGER->findImage("ChristianAttackUp")->getMaxFrameX())
+				{
+					_state.reset();
+					setDoing(false);
+					_turn.flip(1);
+				}
+			}
+			else if (_dir.test(DOWN))
+			{
+				if (_frame == 10 || _frame == 90)
+				{
+					SOUNDMANAGER->playSoundFMOD("GunLoad");
+				}
+				if (_frame == 50)
+				{
+					SOUNDMANAGER->playSoundFMOD("ChristianFire");
+				}
+				if (_frame / 10 == 5 || _frame / 10 == 7)
+				{
+					_isAttack = true;
+				}
+				else
+				{
+					_isAttack = false;
+					_damage = 0;
+				}
+				if (_frame / 10 > IMAGEMANAGER->findImage("ChristianAttackDown")->getMaxFrameX())
+				{
+					_state.reset();
+					setDoing(false);
+					_turn.flip(1);
+				}
+			}
 		}
 		else if (_state.test(DIE))
 		{
-
+			if (255 - 255 / 30 * _frame < 0)
+			{
+				_isDie = true;
+			}
 		}
 		else if (_state.test(DAMAGED))
 		{
-
+			if (_frame / 5 > 0)
+			{
+				_curHP -= _damage;
+				if (_curHP <= 0)
+				{
+					_curHP = 0;
+					setState(pow(2, DIE));
+				}
+				else
+				{
+					_state.reset();
+					setDoing(false);
+				}
+			}
 		}
 		else if (_state.test(SKILL))
 		{
 
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "죠앙"))
+	else if (!strcmp(_playerName.c_str(), "죠안 카트라이트"))
 	{
 		if (_state.test(MOVE))
 		{
@@ -313,15 +505,15 @@ void Player::update(void)
 		}
 		else if (_state.test(ATTACK))
 		{
-
+			
 		}
 		else if (_state.test(DIE))
 		{
-
+			
 		}
 		else if (_state.test(DAMAGED))
 		{
-
+			
 		}
 		else if (_state.test(SKILL))
 		{
@@ -894,11 +1086,11 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-				IMAGEMANAGER->findImage("IronMaskAttackSide")->frameRender(hdc, position.x - 70, position.y - 20, 0, LEFT);
+				IMAGEMANAGER->findImage("IronMaskAttackSide")->frameRender(hdc, position.x - 108, position.y - 45, _frame / 10, LEFT);
 			}
 			else if (_dir.test(RIGHT))
 			{
-				IMAGEMANAGER->findImage("IronMaskAttackSide")->frameRender(hdc, position.x - 70, position.y - 20, 0, RIGHT);
+				IMAGEMANAGER->findImage("IronMaskAttackSide")->frameRender(hdc, position.x - 37, position.y - 45, 7 - (_frame / 10), RIGHT);
 			}
 			else if (_dir.test(UP))
 			{
@@ -906,45 +1098,46 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			}
 			else if (_dir.test(DOWN))
 			{
-				IMAGEMANAGER->findImage("IronMaskAttackDown")->frameRender(hdc, position.x - 70, position.y - 20, 0, 0);
+				IMAGEMANAGER->findImage("IronMaskAttackDown")->frameRender(hdc, position.x - 50, position.y - 30, _frame / 10, 0);
 			}
 		}
 		else if (_state.test(DAMAGED))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedSide")->frameRender(hdc, position.x, position.y - 5, 0, LEFT);
 			}
 			else if (_dir.test(RIGHT))
 			{
+				IMAGEMANAGER->findImage("IronMaskDamagedSide")->frameRender(hdc, position.x - 45, position.y - 5, 0, RIGHT);
 
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedUp")->render(hdc, position.x, position.y + 10);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedDown")->render(hdc, position.x - 20, position.y - 5);
 			}
 		}
 		else if (_state.test(DIE))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedSide")->alphaFrameRender(hdc, position.x, position.y - 5, 0, LEFT, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedSide")->alphaFrameRender(hdc, position.x - 45, position.y - 5, 0, RIGHT, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedUp")->alphaRender(hdc, position.x, position.y + 10, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("IronMaskDamagedDown")->alphaRender(hdc, position.x - 20, position.y - 5, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 		}
 		else if (_state.test(SKILL))
@@ -958,95 +1151,155 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianIdleSide")->frameRender(hdc, position.x + 5, position.y - 5, _frame / 10 % 3, 0);
 			}
 			else if (_dir.test(RIGHT))
 			{
+				IMAGEMANAGER->findImage("ChristianIdleSide")->frameRender(hdc, position.x + 5, position.y - 5, 2 - _frame / 10 % 3, 1);
 
 			}
 			else if (_dir.test(UP))
 			{
+				IMAGEMANAGER->findImage("ChristianIdleUp")->frameRender(hdc, position.x + 5, position.y, _frame / 10 % 3, 0);
 
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("ChristianIdleDown")->frameRender(hdc, position.x, position.y - 5, _frame / 10 % 3, 0);
 			}
 		}
 		else if (_state.test(MOVE))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianMoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, _frame / 10 % 6, 0);
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianMoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, 5 - _frame / 10 % 6, 1);
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("ChristianMoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, _frame / 10 % 6, 0);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("ChristianMoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, _frame / 10 % 6, 0);
 			}
 		}
 		else if (_state.test(ATTACK))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				if (_frame / 10 == 8)
+				{
+					IMAGEMANAGER->findImage("GunTurnSide")->frameRender(hdc, position.x - 5, position.y + 25, _frame % 8, 0);
+				}
+				IMAGEMANAGER->findImage("ChristianAttackSide")->frameRender(hdc, position.x - 28, position.y - 28, _frame / 10 % 10, LEFT);
+				if (_frame / 10 == 8)
+				{
+					IMAGEMANAGER->findImage("GunTurnSide")->frameRender(hdc, position.x + 15, position.y + 30, _frame % 8, 0);
+				}
+				if (_frame / 10 > 4)
+				{
+					IMAGEMANAGER->findImage("GunFireSide")->alphaFrameRender(hdc, position.x - 85, position.y - 30, (_frame - 50) / 2, 0, 128);
+				}
+				if (_frame / 10 > 6)
+				{
+					IMAGEMANAGER->findImage("GunFireSide")->alphaFrameRender(hdc, position.x - 70, position.y - 30, (_frame - 70) / 2, 0, 128);
+				}
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				if(_frame / 10 == 8)
+				{
+					IMAGEMANAGER->findImage("GunTurnSide")->frameRender(hdc, position.x + 15, position.y + 25, _frame % 8, 0);
+				}
+				IMAGEMANAGER->findImage("ChristianAttackSide")->frameRender(hdc, position.x - 2, position.y - 28, 9 - _frame / 10 % 10, RIGHT);
+				if (_frame / 10 == 8)
+				{
+					IMAGEMANAGER->findImage("GunTurnSide")->frameRender(hdc, position.x - 5, position.y + 30, _frame % 8, 0);
+				}
+				if (_frame / 10 > 4)
+				{
+					IMAGEMANAGER->findImage("GunFireSide")->alphaFrameRender(hdc, position.x + 15, position.y - 30, 7 - (_frame - 50) / 2, 1, 128);
+				}
+				if (_frame / 10 > 6)
+				{
+					IMAGEMANAGER->findImage("GunFireSide")->alphaFrameRender(hdc, position.x + 30, position.y - 30, 7 - (_frame - 70) / 2, 1, 128);
+				}
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("ChristianAttackUp")->frameRender(hdc, position.x - 15, position.y - 35, _frame / 10, 0);
+				if (_frame / 10 ==9)
+				{
+					IMAGEMANAGER->findImage("GunTurnUpDown")->frameRender(hdc, position.x - 5, position.y + 30, _frame % 8, 0);
+					IMAGEMANAGER->findImage("GunTurnUpDown")->frameRender(hdc, position.x + 40, position.y + 30, _frame % 8, 0);
+				}
+				if (_frame / 10 > 3)
+				{
+					IMAGEMANAGER->findImage("GunFireUp")->alphaFrameRender(hdc, position.x - 25, position.y - 80, (_frame - 40) / 2, 0, 128);
+				}
+				if (_frame / 10 > 5)
+				{
+					IMAGEMANAGER->findImage("GunFireUp")->alphaFrameRender(hdc, position.x - 10, position.y - 80, (_frame - 60) / 2, 0, 128);
+				}
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("ChristianAttackDown")->frameRender(hdc, position.x - 15, position.y - 20, _frame / 10, 0);
+				if(_frame / 10 == 8)
+				{
+					IMAGEMANAGER->findImage("GunTurnUpDown")->frameRender(hdc, position.x, position.y + 25, _frame % 8, 0);
+					IMAGEMANAGER->findImage("GunTurnUpDown")->frameRender(hdc, position.x + 35, position.y + 25, _frame % 8, 0);
+				}
+				if (_frame / 10 > 4)
+				{
+					IMAGEMANAGER->findImage("GunFireDown")->alphaFrameRender(hdc, position.x - 25, position.y - 5, (_frame - 50) / 2 , 0, 128);
+				}
+				if (_frame / 10 > 6)
+				{
+					IMAGEMANAGER->findImage("GunFireDown")->alphaFrameRender(hdc, position.x - 15, position.y - 5, (_frame - 70) / 2, 0, 128);
+				}
 			}
 		}
 		else if (_state.test(DAMAGED))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedSide")->frameRender(hdc, position.x - 5, position.y + 10, 0, LEFT);
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedSide")->frameRender(hdc, position.x, position.y + 10, 0, RIGHT);
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedUp")->render(hdc, position.x + 5, position.y + 5);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedDown")->render(hdc, position.x, position.y + 10);
 			}
 		}
 		else if (_state.test(DIE))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedSide")->alphaFrameRender(hdc, position.x - 5, position.y + 10, 0, LEFT, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedSide")->alphaFrameRender(hdc, position.x, position.y  + 10, 0, RIGHT, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedUp")->alphaRender(hdc, position.x + 5, position.y + 5, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("ChristianDamagedDown")->alphaRender(hdc, position.x, position.y + 10, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 		}
 		else if (_state.test(SKILL))
@@ -1054,13 +1307,13 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "죠앙"))
+	else if (!strcmp(_playerName.c_str(), "죠안 카트라이트"))
 	{
 		if (_state.none())
 		{
 			if (_dir.test(LEFT))
 			{
-
+				//IMAGEMANAGER->findImage("ChristianMoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, _frame / 10 % 6, 0);
 			}
 			else if (_dir.test(RIGHT))
 			{
@@ -1117,7 +1370,7 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-
+				
 			}
 			else if (_dir.test(RIGHT))
 			{

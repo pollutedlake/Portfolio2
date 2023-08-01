@@ -52,6 +52,7 @@ private:
 	RECT _actionButtons[4];
 	RECT _skillButtons[50];
 	bitset<4> _actionChoice;
+	char* _skillName;
 
 	bool _isClear;
 	bool _isFail;
@@ -69,12 +70,16 @@ public:
 	void addCharacter(Character* character, int dir, POINT tilePos, int turnOrder);
 	void deleteCharacter(string name);
 	void addObject(Object* object);
+
 	void sortObjectList();
 	int checkTile(POINT tilePos);
 	void searchMovableTiles();
+	void searchSkillableTiles(char skillName[]);
 	bool checkAllDoingNot();
 	POINT findPlayer();
 	void nextTurn();
+
+	void setStart(bool start);
 
 	vector<POINT> astar(POINT start, POINT dest); 
 	int heuristic(POINT node, POINT dest);

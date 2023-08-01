@@ -1,5 +1,10 @@
 #pragma once
+#pragma comment(lib, "strmiids")
+#pragma comment(lib, "comsuppw.lib")
+#include <dshow.h>
+#include <comutil.h>
 #include "GameNode.h"
+#include <Mfidl.h>
 
 class TitleScene : public GameNode
 {
@@ -19,12 +24,24 @@ private:
 	RECT _buttonsRC[4];
 	int _fadeOutStartFrame;
 	bool _fadeOut;
+	bool _videoShow;
+
+	RECT rcSrc, rcDest;
+	IGraphBuilder* _pGraphBuilder;
+	IMediaControl* _pMediaControl;
+	IMediaEvent* _pMediaEvent;
+	IMediaSeeking* _pMediaSeeking;
+	IVMRWindowlessControl* _pWindowless;
 
 public :
 	HRESULT init(void);
 	void update(void);
 	void render(void);
 	void release(void);
+
+	HRESULT InitWindowlessVMR(HWND hwndApp, IGraphBuilder* pGraph, IVMRWindowlessControl** ppWc);
+	bool LoadVideo(LPCWSTR videoFilePath);
+	HRESULT PlayIntroVideo(LPTSTR szMovie, HINSTANCE hInstance);
 
 	TitleScene() {}
 	virtual ~TitleScene() {}

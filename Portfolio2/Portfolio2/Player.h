@@ -13,7 +13,10 @@ public:
 	void update(void);
 	void render(HDC hdc, POINT position, POINT cameraPos);
 
+	void setCameraShake(bool cameraShake) {_cameraShake = cameraShake;}
+
 	string getPlayerName() { return _playerName; }
+	bool isCameraShake() { return _cameraShake; }
 
 	Player(string playerName) { _playerName = playerName; }
 	~Player() {}

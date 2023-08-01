@@ -18,11 +18,7 @@ HRESULT TurnSystem2::init(Camera* camera, HDC hdc, int rowN, int colN)
 			break;
 		}
 	}
-	int curWait = _curChar->getCurWait();
-	for (auto it = _charList.begin(); it != _charList.end(); ++it)
-	{
-		(*it)->setCurWait((*it)->getCurWait() - curWait);
-	}
+	_skillName = "";
 	_isClear = false;
 	_isFail = false;
 	_start = false;
@@ -70,6 +66,7 @@ void TurnSystem2::update(POINT cursorTile)
 			{
 				SOUNDMANAGER->stopAllSoundFMOD();
 				SCENEMANAGER->lodingScene("Battle", "WorldMap");
+				DATAMANAGER->setBattleIdx(DATAMANAGER->getBattleIdx() + 1);
 			}
 		}
 		else
@@ -174,25 +171,121 @@ void TurnSystem2::update(POINT cursorTile)
 									if (PtInRect(&_skillButtons[i], _ptMouse))
 									{
 										_actionChoice = _actionChoice << 1;
-										//if (i == 0)
-										//{
-										//	_skillName = "ÃµÁöÆÄ¿­¹«";
-										//}
-										//else if (i == 1)
-										//{
-										//	_skillName = "Ç³¾Æ¿­°øÂü";
-										//}
-										//else if (i == 2)
-										//{
-										//	_skillName = "Ç÷¶û¸¶È¥";
-										//}
-										//_skillableTiles = ((Saladin*)(_curChar))->getSkillableTiles(tileInfo, 90, 60, _skillName);
+										if (i == 0)
+										{
+											_skillName = "ÃµÁöÆÄ¿­¹«";
+										}
+										else if (i == 1)
+										{
+											_skillName = "Ç³¾Æ¿­°øÂü";
+										}
+										else if (i == 2)
+										{
+											_skillName = "Ç÷¶û¸¶È¥";
+										}
+										searchSkillableTiles(_skillName);
 									}
 								}
 							}
 							else if (_actionChoice.test(3))
 							{
-
+								Player* _player = (Player*)_curChar;
+								if (_player->getCurMP() == _player->getMaxMP())
+								{
+									if (!strcmp(_skillName, "Ç³¾Æ¿­°øÂü"))
+									{
+										if (checkTile(cursorTile) == ENEMY)
+										{
+											for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+											{
+												if (SamePoint(cursorTile, (*it)))
+												{
+													_curChar->setDestTilePos(cursorTile);
+													_skill->start(_charList, _curChar, _skillName);
+													_player->setState(8);
+													_player->setXY(40, 30);
+													_player->setDoing(true);
+													_actionChoice.reset();
+													_actionChoice.set(0);
+													break;
+												}
+											}
+										}
+									}
+									else if (!strcmp(_skillName, "ÃµÁöÆÄ¿­¹«"))
+									{
+										vector<Character*> charList;
+										for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+										{
+											for (int i = 0; i < _charList.size(); i++)
+											{
+												if (SamePoint((*it), _charList[i]->getTilePos()))
+												{
+													if (_charList[i]->getType() == 1)
+													{
+														charList.push_back(_charList[i]);
+													}
+												}
+											}
+										}
+										if (charList.size() > 0)
+										{
+											_player->setState(8);
+											_player->setXY(40, 30);
+											_player->setDoing(true);
+											_skill->start(charList, _curChar, _skillName);
+											_actionChoice.reset();
+											_actionChoice.set(0);
+										}
+									}
+									else if (!strcmp(_skillName, "Ç÷¶û¸¶È¥"))
+									{
+										for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+										{
+											if (SamePoint(cursorTile, (*it)))
+											{
+												vector<Character*> charList;
+												for (auto it = _charList.begin(); it != _charList.end(); ++it)
+												{
+													if ((*it)->getType() == 0)
+													{
+														continue;
+													}
+													if (cursorTile.y == _curChar->getTilePos().y)
+													{
+														if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < abs(cursorTile.x - _curChar->getTilePos().x) &&
+															((*it)->getTilePos().x - _curChar->getTilePos().x) * (cursorTile.x - _curChar->getTilePos().x) > 0)
+														{
+															if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < 2)
+															{
+																charList.push_back((*it));
+															}
+														}
+													}
+													else
+													{
+														if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < abs(cursorTile.y - _curChar->getTilePos().y) &&
+															((*it)->getTilePos().y - _curChar->getTilePos().y) * (cursorTile.y - _curChar->getTilePos().y) > 0)
+														{
+															if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < 2)
+															{
+																charList.push_back((*it));
+															}
+														}
+													}
+												}
+												_curChar->setDestTilePos(cursorTile);
+												_skill->start(charList, _curChar, _skillName);
+												_player->setState(8);
+												_player->setXY(40, 30);
+												_player->setDoing(true);
+												_actionChoice.reset();
+												_actionChoice.set(0);
+												break;
+											}
+										}
+									}
+								}
 							}
 						}
 						else
@@ -311,37 +404,44 @@ void TurnSystem2::update(POINT cursorTile)
 				{
 					if (_frame / 10 == 8)
 					{
-						_curChar->setState(3);
-						_curChar->setDoing(true);
 						POINT player = findPlayer();
-						vector<vector<POINT>> routes;
-						vector<POINT> route;
-						if (player.x > 1 && (checkTile({ player.x - 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x - 2, player.y })))
+						if(player.x != -1)
 						{
-							routes.push_back(astar(_curChar->getTilePos(), { player.x - 2, player.y }));
-						}
-						if (player.x < _colN - 2 && (checkTile({ player.x + 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x + 2, player.y })))
-						{
-							routes.push_back(astar(_curChar->getTilePos(), { player.x + 2, player.y }));
-						}
-						if (player.y > 1 && (checkTile({ player.x, player.y - 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x, player.y - 2 })))
-						{
-							routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y - 2 }));
-						}
-						if (player.y < _rowN - 2 && (checkTile({ player.x, player.y + 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x, player.y + 2 })))
-						{
-							routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y + 2 }));
-						}
-						route = routes[0];
-						for (auto it = routes.begin(); it != routes.end(); ++it)
-						{
-							if (route.size() > (*it).size())
+							_curChar->setState(3);
+							_curChar->setDoing(true);
+							vector<vector<POINT>> routes;
+							vector<POINT> route;
+							if (player.x > 1 && (checkTile({ player.x - 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x - 2, player.y })))
 							{
-								route = (*it);
+								routes.push_back(astar(_curChar->getTilePos(), { player.x - 2, player.y }));
 							}
+							if (player.x < _colN - 2 && (checkTile({ player.x + 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x + 2, player.y })))
+							{
+								routes.push_back(astar(_curChar->getTilePos(), { player.x + 2, player.y }));
+							}
+							if (player.y > 1 && (checkTile({ player.x, player.y - 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x, player.y - 2 })))
+							{
+								routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y - 2 }));
+							}
+							if (player.y < _rowN - 2 && (checkTile({ player.x, player.y + 2 }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x, player.y + 2 })))
+							{
+								routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y + 2 }));
+							}
+							route = routes[0];
+							for (auto it = routes.begin(); it != routes.end(); ++it)
+							{
+								if (route.size() > (*it).size())
+								{
+									route = (*it);
+								}
+							}
+							_curChar->setRoute(route);
+							_curChar->setDestTilePos(player);
 						}
-						_curChar->setRoute(route);
-						_curChar->setDestTilePos(player);
+						else
+						{
+							nextTurn();
+						}
 					}
 				}
 			}
@@ -469,7 +569,7 @@ void TurnSystem2::render(HDC hdc)
 		}
 		if (!_skill->isFinish())
 		{
-			_skill->render(hdc, _camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH, _curChar->getTilePos().y * TILEHEIGHT + TILEHEIGHT / 2 * 3 }), _camera->getPosition(), TILEWIDTH, TILEHEIGHT);
+			_skill->render(hdc, _camera->worldToCamera({ _curChar->getTilePos().x * TILEWIDTH, _curChar->getTilePos().y * TILEHEIGHT - TILEHEIGHT * 3 / 2}), _camera->getPosition(), TILEWIDTH, TILEHEIGHT);
 		}
 	}
 	if (_actionChoice.test(1))
@@ -758,6 +858,91 @@ void TurnSystem2::searchMovableTiles()
     }
 }
 
+void TurnSystem2::searchSkillableTiles(char skillName[])
+{
+	_skillableTiles.clear();
+	POINT _tilePos = _curChar->getTilePos();
+	if (!strcmp(skillName, "ÃµÁöÆÄ¿­¹«"))
+	{
+		for (int i = 0; i <= 10; i++)
+		{
+			for (int j = 0; j <= 10 - i; j++)
+			{
+				if (checkTile({ _tilePos.x - i, _tilePos.y - j}) != CANTMOVE)
+				{
+					_skillableTiles.push_back({ _tilePos.x - i, _tilePos.y - j });
+				}
+				if (i == 0 && j == 0)
+				{
+					continue;
+				}
+				else if (j != 0)
+				{
+					if (checkTile({_tilePos.x - i, _tilePos.y + j}) != CANTMOVE)
+					{
+						_skillableTiles.push_back({ _tilePos.x - i, _tilePos.y + j });
+					}
+				}
+				if (i != 0)
+				{
+					if (checkTile({ _tilePos.x + i, _tilePos.y - j }) != CANTMOVE)
+					{
+						_skillableTiles.push_back({ _tilePos.x + i, _tilePos.y - j });
+					}
+				}
+				if (i != 0 && j != 0)
+				{
+					if (checkTile({ _tilePos.x + i, _tilePos.y + j }) != CANTMOVE)
+					{
+						_skillableTiles.push_back({ _tilePos.x + i, _tilePos.y + j });
+					}
+				}
+			}
+		}
+	}
+	else if (!strcmp(skillName, "Ç³¾Æ¿­°øÂü"))
+	{
+		if (checkTile({ _tilePos.x, _tilePos.y - 2 }) != CANTMOVE)
+		{
+			_skillableTiles.push_back({ _tilePos.x, _tilePos.y - 2 });
+		}
+		if (checkTile({ _tilePos.x, _tilePos.y + 2 }) != CANTMOVE)
+		{
+			_skillableTiles.push_back({ _tilePos.x, _tilePos.y + 2 });
+		}
+		if (checkTile({ _tilePos.x - 2, _tilePos.y }) != CANTMOVE)
+		{
+			_skillableTiles.push_back({ _tilePos.x - 2, _tilePos.y });
+		}
+		if (checkTile({ _tilePos.x + 2, _tilePos.y }) != CANTMOVE)
+		{
+			_skillableTiles.push_back({ _tilePos.x + 2, _tilePos.y });
+		}
+	}
+	else if (!strcmp(skillName, "Ç÷¶û¸¶È¥"))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			if (checkTile({ _tilePos.x, _tilePos.y - 2 - i }) == MOVABLE)
+			{
+				_skillableTiles.push_back({ _tilePos.x, _tilePos.y - 2 - i });
+			}
+			if (checkTile({ _tilePos.x, _tilePos.y + 2 + i }) == MOVABLE)
+			{
+				_skillableTiles.push_back({ _tilePos.x, _tilePos.y + 2 + i });
+			}
+			if (checkTile({ _tilePos.x - 2 - i, _tilePos.y }) == MOVABLE)
+			{
+				_skillableTiles.push_back({ _tilePos.x - 2 - i, _tilePos.y });
+			}
+			if (checkTile({ _tilePos.x + 2 + i, _tilePos.y }) == MOVABLE)
+			{
+				_skillableTiles.push_back({ _tilePos.x + 2 + i, _tilePos.y });
+			}
+		}
+	}
+}
+
 bool TurnSystem2::checkAllDoingNot()
 {
     for (auto it = _charList.begin(); it != _charList.end(); ++it)
@@ -781,8 +966,14 @@ POINT TurnSystem2::findPlayer()
 		tileCheck[i].reset();
 	}
 	tileCheck[node.y].set(node.x);
+	int count = 0;
 	while (true)
 	{
+		count++;
+		if (count > 20)
+		{
+			break;
+		}
 		int leafN = closedList.size();
 		while (leafN--)
 		{
@@ -838,7 +1029,7 @@ POINT TurnSystem2::findPlayer()
 			closedList.pop();
 		}
 	}
-	return POINT();
+	return {-1, -1};
 }
 
 void TurnSystem2::nextTurn()
@@ -876,6 +1067,42 @@ void TurnSystem2::nextTurn()
 		(*it)->setCurWait((*it)->getCurWait() - curWait);
 	}
 	_curChar->resetTurn();
+}
+
+void TurnSystem2::setStart(bool start)
+{
+	_start = start;
+	if (_start)
+	{
+		int playerN = 0;
+		for (auto it = _charList.begin(); it != _charList.end(); ++it)
+		{
+			if ((*it)->getType() == PLAYER)
+			{
+				playerN++;
+			}
+		}
+		for (auto it = _charList.begin(); it != _charList.end(); ++it)
+		{
+			if ((*it)->getType() == ENEMY)
+			{
+				(*it)->setTurnOder((*it)->getTurnOrder(_charList.size()) + playerN);
+			}
+		}
+		for (auto it = _charList.begin(); it != _charList.end(); ++it)
+		{
+			if ((*it)->getTurnOrder(_charList.size()) == 0)
+			{
+				_curChar = (*it);
+				break;
+			}
+		}
+		int curWait = _curChar->getCurWait();
+		for (auto it = _charList.begin(); it != _charList.end(); ++it)
+		{
+			(*it)->setCurWait((*it)->getCurWait() - curWait);
+		}
+	}
 }
 
 vector<POINT> TurnSystem2::astar(POINT start, POINT dest)
@@ -993,6 +1220,10 @@ vector<POINT> TurnSystem2::astar(POINT start, POINT dest)
 				_route.pop_back();
 			}
 		}
+	}
+	else
+	{
+		_route.clear();
 	}
     return _route;
 }

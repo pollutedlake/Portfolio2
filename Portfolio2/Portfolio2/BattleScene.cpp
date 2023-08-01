@@ -3,7 +3,16 @@
 
 HRESULT BattleScene::init(void)
 {
-	BattleData* battleData = DATAMANAGER->findBattleData("형제", 0);
+	BattleData* battleData = nullptr;
+	switch (DATAMANAGER->getScenario())
+	{
+		case 69:
+			battleData = DATAMANAGER->findBattleData("불사조", DATAMANAGER->getBattleIdx());
+		break;
+		case 75:
+			battleData = DATAMANAGER->findBattleData("형제", DATAMANAGER->getBattleIdx());
+		break;
+	}
 	wsprintf(_bgImg, "BattleSceneBG%d", battleData->_bgImgN);
 	wsprintf(_checkBGImg, "검사용BattleSceneBG%d", battleData->_bgImgN);
 	_camera = new Camera();
@@ -14,15 +23,6 @@ HRESULT BattleScene::init(void)
 
 	_turnSystem = new TurnSystem2();
 	_party = DATAMANAGER->getPartyData();
-	/*for (auto it = _party.begin(); it != _party.end(); ++it)
-	{
-		if (!strcmp((*it)->_name.c_str(), "살라딘"))
-		{
-			Saladin* _saladin = new Saladin;
-			_saladin->init();
-			_turnSystem->addCharacter(_saladin, UP, { 13, 57 }, 0);
-		}
-	}*/
 	for (auto it = battleData->_enemy.begin(); it != battleData->_enemy.end(); ++it)
 	{
 		Soldier* soldier = new Soldier;
@@ -37,7 +37,7 @@ HRESULT BattleScene::init(void)
 	}
 	_turnSystem->init(_camera, IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), IMAGEMANAGER->findImage(_bgImg)->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage(_bgImg)->getWidth() / TILEWIDTH);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < _party.size(); i++)
 	{
 		_launchRT[i].first.left = 10 + (IMAGEMANAGER->findImage("살라딘Mini")->getWidth() + 6) * (i % 5);
 		_launchRT[i].first.right = _launchRT[i].first.left + 4 + IMAGEMANAGER->findImage("살라딘Mini")->getWidth();
@@ -47,6 +47,7 @@ HRESULT BattleScene::init(void)
 	}
 	_launchTile = battleData->_launchTile;
 	_showMiniStatusFrame = 0;
+	_partyTurnOrder = 0;
 	_launchOrder.reset();
 	_launchOrder.set(0);
 	_launch = false;
@@ -62,6 +63,40 @@ void BattleScene::update(void)
 	_frame++;
 	_camera->update();
 	_cameraPos = _camera->getPosition();
+
+	if (_fade.none() && _turnSystem->getCurChar()->isSkill())
+	{
+		_fade.set(0);
+		_fadeStartFrame = _frame;
+	}
+	else if (_fade.test(0))
+	{
+		if ((_frame - _fadeStartFrame) * 10 > 230)
+		{
+			_fade = _fade << 1;
+		}
+	}
+	else if (_fade.test(1) && (!_turnSystem->getCurChar()->isSkill()))
+	{
+		_fade = _fade << 1;
+	}
+	else if (_fade.test(2))
+	{
+		if ((_frame - _fadeStartFrame) * 10 > 230)
+		{
+			_fade.reset();
+		}
+	}
+
+	if (_turnSystem->getCurChar()->isSkill())
+	{
+		_camera->setPosition({ (LONG)(_turnSystem->getCurChar()->getX()), (LONG)(_turnSystem->getCurChar()->getY()) });
+		Player* saladin = (Player*)_turnSystem->getCurChar();
+		if (saladin->isCameraShake())
+		{
+			_camera->setPosition({ _camera->getPosition().x - RND->getInt(20), _camera->getPosition().y - RND->getInt(20) });
+		}
+	}
 
 	//마우스커서가 위치한 타일 구하기
 	_cursorTile.x = (_cameraPos.x - WINSIZE_X / 2 + _ptMouse.x) / TILEWIDTH;
@@ -113,14 +148,30 @@ void BattleScene::update(void)
 					_launchOrder = _launchOrder >> 1;
 					_launchRT[_selectCharIndex].second = false;
 					_turnSystem->deleteCharacter(_party[_selectCharIndex]->_name.c_str());
+					_partyTurnOrder--;
 				}
 				else if (PtInRect(&_launchButton[2], _ptMouse))
 				{
 					_launchOrder = _launchOrder >> 1;
+					for (auto it = _party.begin(); it != _party.end(); ++it)
+					{
+						_launchRT[_selectCharIndex].second = false;
+						_turnSystem->deleteCharacter((*it)->_name.c_str());
+					}
+					_partyTurnOrder = 0;
+					for (auto it = _party.begin(); it != _party.end(); ++it)
+					{
+						Player* _player = new Player((*it)->_name.c_str());
+						_player->init();
+						_turnSystem->addCharacter(_player, UP, _launchTile[RND->getInt(_launchTile.size())], _partyTurnOrder);
+						_launchRT[it - _party.begin()].second = true;
+						_partyTurnOrder++;
+					}
 				}
 				else if (PtInRect(&_launchButton[3], _ptMouse))
 				{
 					_launch = true;
+					_turnSystem->setStart(true);
 				}
 				else
 				{
@@ -136,11 +187,12 @@ void BattleScene::update(void)
 					{
 						Player* _player = new Player(_party[_selectCharIndex]->_name.c_str());
 						_player->init();
-						_turnSystem->addCharacter(_player, UP, *it, 0);
-						_player->setState(2);
+						_turnSystem->addCharacter(_player, UP, *it, _partyTurnOrder);
+						//_player->setState(2);
 						_launchRT[_selectCharIndex].second = true;
 						_launchOrder.reset();
 						_launchOrder.set(0);
+						_partyTurnOrder++;
 					}
 				}
 			}
@@ -170,6 +222,18 @@ void BattleScene::render(void)
 			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y,
 				TILEWIDTH, TILEHEIGHT, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
 		}
+	}
+	if (_fade.test(0))
+	{
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 230 ? 230 : (_frame - _fadeStartFrame) * 10);
+	}
+	if (_fade.test(1))
+	{
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 230);
+	}
+	if (_fade.test(2))
+	{
+		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 230 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 230 - (_frame - _fadeStartFrame) * 10);
 	}
 	// 파티 배치
 	if (!_launch)

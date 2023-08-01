@@ -3,6 +3,8 @@
 
 HRESULT DataManager::init(void)
 {
+	_introVideo = true;
+	_scenario = 69;
 	if (fopen_s(&_fp, "Resources/Data/ItemList.txt", "r") == 0)
 	{
 		char itemName[256];
@@ -22,7 +24,7 @@ HRESULT DataManager::init(void)
 		fscanf_s(_fp, "%d\n", &charN);
 		while (charN--)
 		{
-			fscanf_s(_fp, "%s", str, _countof(str));
+			fscanf_s(_fp, "%[^\t]\t", str, _countof(str));
 			CharacterData* character = new CharacterData;
 			character->_name = str;
 			for (int i = 0; i < STATUSN; i++)
@@ -62,53 +64,129 @@ HRESULT DataManager::init(void)
 	fclose(_fp);
 	if (fopen_s(&_fp, "Resources/Data/BattleStageData.txt", "r") == 0)
 	{
-		char str[256];
-		fscanf_s(_fp, "%s", str, _countof(str));
-		BattleData* battleData = new BattleData;
-		vector<BattleData*> battleList;
-		int battleN;
-		fscanf_s(_fp, "%d\n", &battleN);
-		while (battleN--)
+		int secnarioN;
+		fscanf_s(_fp, "%d\n",  &secnarioN);
+		while(secnarioN--)
 		{
-			fscanf_s(_fp, "%d", &(battleData->_bgImgN));
-			int enemyTotal;
-			fscanf_s(_fp, "%d\n", &enemyTotal);
-			int enemyN = 0;
-			while (enemyTotal != enemyN)
+			char str[256];
+			fscanf_s(_fp, "%s", str, _countof(str));
+			vector<BattleData*> battleList;
+			int battleN;
+			fscanf_s(_fp, "%d\n", &battleN);
+			while (battleN--)
 			{
-				int type;
-				int num;
-				fscanf_s(_fp, "%d%d\n", &type, &num);
-				enemyN += num;
-				while (num--)
+				BattleData* battleData = new BattleData;
+				fscanf_s(_fp, "%d", &(battleData->_bgImgN));
+				int enemyTotal;
+				fscanf_s(_fp, "%d\n", &enemyTotal);
+				int enemyN = 0;
+				while (enemyTotal != enemyN)
 				{
-					BattleData::Enemy enemy;
-					enemy._type = type;
-					fscanf_s(_fp, "%d%d%d%d\n", &(enemy._tilePos.x), &(enemy._tilePos.y), &(enemy._dir), &(enemy._turnOrder));
-					battleData->_enemy.push_back(enemy);
+					int type;
+					int num;
+					fscanf_s(_fp, "%d%d\n", &type, &num);
+					enemyN += num;
+					while (num--)
+					{
+						BattleData::Enemy enemy;
+						enemy._type = type;
+						fscanf_s(_fp, "%d%d%d%d\n", &(enemy._tilePos.x), &(enemy._tilePos.y), &(enemy._dir), &(enemy._turnOrder));
+						battleData->_enemy.push_back(enemy);
+					}
 				}
-			}
-			int objectN;
-			fscanf_s(_fp, "%d\n", &objectN);
-			while (objectN--)
-			{
-				BattleData::Object object;
-				fscanf_s(_fp, "%d%d%d%d%d%d%d\n", 
-					&(object._index), &(object._rcLT.x), &(object._rcLT.y), &(object._width), &(object._height), &(object._sortTile.x), &(object._sortTile.y));
-				battleData->_object.push_back(object);
+				int objectN;
+				fscanf_s(_fp, "%d\n", &objectN);
+				while (objectN--)
+				{
+					BattleData::Object object;
+					fscanf_s(_fp, "%d%d%d%d%d%d%d\n", 
+						&(object._index), &(object._rcLT.x), &(object._rcLT.y), &(object._width), &(object._height), &(object._sortTile.x), &(object._sortTile.y));
+					battleData->_object.push_back(object);
 
+				}
+				int launchTileN;
+				fscanf_s(_fp, "%d\n", &launchTileN);
+				while (launchTileN--)
+				{
+					POINT launchTile;
+					fscanf_s(_fp, "%d%d", &launchTile.x, &launchTile.y);
+					battleData->_launchTile.push_back(launchTile);
+				}
+				battleList.push_back(battleData);
 			}
-			int launchTileN;
-			fscanf_s(_fp, "%d\n", &launchTileN);
-			while (launchTileN--)
-			{
-				POINT launchTile;
-				fscanf_s(_fp, "%d%d", &launchTile.x, &launchTile.y);
-				battleData->_launchTile.push_back(launchTile);
-			}
-			battleList.push_back(battleData);
+			_mBattleList.insert(make_pair(str, battleList));
 		}
-		_mBattleList.insert(make_pair(str, battleList));
+	}
+	fclose(_fp);
+	if (fopen_s(&_fp, "Resources/Data/DialogList.txt", "r") == 0)
+	{
+		int totalScenario = 2;
+		char str[256];
+		while (totalScenario--)
+		{
+			int scenarioN;
+			int dialogN;
+			//vector<DialogData*> dialogList;
+			fscanf_s(_fp, "%d%d\n", &scenarioN, &dialogN);
+			DialogData* dialogData = new DialogData;
+			while (dialogN--)
+			{
+				DialogData::Dialog dialog;
+				fscanf_s(_fp, "%[^\t]\t%d%d ", str, _countof(str), &dialog._dialogN, &dialog._dialogType);
+				dialog._speaker = str;
+				for (int i = 0; i < dialog._dialogN - 1; i++)
+				{
+					wchar_t* charBuffer = new wchar_t[256];
+					fscanf_s(_fp, "%[^\t]\t", str, _countof(str));
+					ZeroMemory(charBuffer, sizeof(charBuffer));
+					MultiByteToWideChar(CP_ACP, 0, str, _countof(str), charBuffer, 256);
+					dialog._script[i] = charBuffer;
+				}
+				fscanf_s(_fp, "%[^\n]\n", str, _countof(str));
+				wchar_t* charBuffer = new wchar_t[256];
+				ZeroMemory(charBuffer, sizeof(charBuffer));
+				MultiByteToWideChar(CP_ACP, 0, str, _countof(str), charBuffer, 256);
+				dialog._script[dialog._dialogN - 1] = charBuffer;
+				dialogData->_dialogList.push_back(dialog);
+			}
+			int stopDialogN;
+			fscanf_s(_fp, "%d", &stopDialogN);
+			while(stopDialogN--)
+			{
+				int stopDialog;
+				fscanf_s(_fp, "%d", &stopDialog);
+				dialogData->_stopDialog.push_back(stopDialog);
+			}
+			_mDialogList.insert(make_pair(scenarioN, dialogData));
+		}
+	}
+	fclose(_fp);
+	if (fopen_s(&_fp, "Resources/Data/StoryData.txt", "r") == 0)
+	{
+		int totalScenario = 1;
+		while (totalScenario--)
+		{
+			int scenarioN;
+			fscanf_s(_fp, "%d\n", &scenarioN);
+			int backGroundN;
+			fscanf_s(_fp, "%d\n", &backGroundN);
+			vector<StoryData*> storyDataList;
+			while(backGroundN--)
+			{
+				int objectN;
+				fscanf_s(_fp, "%d\n", &objectN);
+				StoryData* storyData = new StoryData;
+				while (objectN--)
+				{
+					
+					StoryData::Object objectData;
+					fscanf_s(_fp, "%d%d%d\n", &objectData._objectType, &objectData._x, &objectData._y);
+					storyData->_objectList.push_back(objectData);
+				}
+				storyDataList.push_back(storyData);
+			}
+			_mStoryData.insert(make_pair(scenarioN, storyDataList));
+		}
 	}
 	fclose(_fp);
 	return S_OK;

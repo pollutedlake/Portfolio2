@@ -439,6 +439,7 @@ void Skill::update(void)
 				if (_frame == 1)
 				{
 					((Saladin*)_curChar)->setCameraShake(true);
+					((Player*)_curChar)->setCameraShake(true);
 				}
 				if ((_frame == 1 || _frame == 25) || _frame == 50)
 				{
@@ -489,6 +490,7 @@ void Skill::update(void)
 					_curChar->setSkillOrder(2);
 					_frame = 0;
 					((Saladin*)_curChar)->setCameraShake(false);
+					((Player*)_curChar)->setCameraShake(false);
 				}
 			}
 		}
@@ -519,6 +521,7 @@ void Skill::update(void)
 			if ((_frame - (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5 + 8) / 5 == 3)
 			{
 				((Saladin*)_curChar)->setCameraShake(true);
+				((Player*)_curChar)->setCameraShake(true);
 				for (auto it = _charList.begin(); it != _charList.end(); ++it)
 				{
 					if ((*it)->getType() == 1)
@@ -540,7 +543,8 @@ void Skill::update(void)
 			{
 				if (IMAGEMANAGER->findImage("RestoreEarth1LU")->getMaxFrameX() - (_frame - 90) / 5 == -1)
 				{
-					((Saladin*)_curChar)->setCameraShake(false);
+					//((Saladin*)_curChar)->setCameraShake(false);
+					((Player*)_curChar)->setCameraShake(false);
 				}
 			}
 			if (IMAGEMANAGER->findImage("RestoreEarth3LU")->getMaxFrameX() - (_frame - 90) / 5 + 11 < 0)

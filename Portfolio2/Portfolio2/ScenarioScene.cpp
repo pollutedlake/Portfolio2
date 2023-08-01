@@ -37,10 +37,12 @@ void ScenarioScene::update(void)
 		_scrollRC = RectMakeCenter(WINSIZE_X - 58 + _scrollDown->getWidth() * 1.4 / 2.0f, _scrollCenterY, _scrollNoClick->getWidth() * 1.4, _scrollNoClick->getHeight() * 1.4);
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			if (_selectScenario == 75)
+			if (_selectScenario == 75 || _selectScenario == 69)
 			{
 				SOUNDMANAGER->playSoundFMOD("Select");
 				SOUNDMANAGER->stopSoundFMOD("ScenarioScene");
+				DATAMANAGER->setScenario(_selectScenario);
+				DATAMANAGER->setBattleIdx(0);
 				_fadeOut = true;
 			}
 			if (PtInRect(&_scrollUpRC, _ptMouse))
@@ -141,7 +143,7 @@ void ScenarioScene::update(void)
 		_frame++;
 		if (_frame > 50)
 		{
-			SCENEMANAGER->lodingScene("Scenario", "WorldMap");
+			SCENEMANAGER->lodingScene("Scenario", "Battle");
 		}
 	}
 }

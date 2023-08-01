@@ -62,3 +62,4 @@ void DialogManager::makeTextBox(HDC hdc, int left, int top, int width, int heigh
 }
 
 
+
