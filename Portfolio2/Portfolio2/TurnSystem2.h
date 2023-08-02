@@ -68,7 +68,7 @@ public:
 	Character* findCharacter(POINT cursorPoint);
 
 	void addCharacter(Character* character, int dir, POINT tilePos, int turnOrder);
-	void deleteCharacter(string name);
+	Player* deleteCharacter(string name);
 	void addObject(Object* object);
 
 	void sortObjectList();

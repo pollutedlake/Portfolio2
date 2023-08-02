@@ -6,7 +6,13 @@ enum class EnemyType
 	SOLDIER1,
 	SOLDIER2,
 	SOLDIER3,
-	SOLDIER4
+	SOLDIER4,
+	SOLDIER5,
+	SOLDIER6,
+	SOLDIER7,
+	SOLDIER8,
+	SOLDIER9,
+	SOLDIER10
 };
 
 class Soldier : public Enemy

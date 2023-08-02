@@ -16,7 +16,7 @@ public:
 
 	POINT getPosition() {return _position;}
 
-	void setPosition(POINT position) {_position = position;}
+	void setPosition(POINT position);
 	void setLimitRight(int limitRight) {_limitRC.right = limitRight;}
 	void setLimitBottom(int limitBottom) {_limitRC.bottom = limitBottom;}
 	

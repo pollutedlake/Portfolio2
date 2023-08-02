@@ -319,10 +319,74 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Soldier4AttackUp", "Resources/Images/Characters/Soldier4/Soldier4AttackUp.bmp", 945, 127, 9, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4AttackSide", "Resources/Images/Characters/Soldier4/Soldier4AttackSide.bmp", 1224, 204, 9, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4AttackDown", "Resources/Images/Characters/Soldier4/Soldier4AttackDown.bmp", 909, 129, 9, 1, true, RGB(0, 0, 0));
-
 	IMAGEMANAGER->addImage("Soldier4DamagedUp", "Resources/Images/Characters/Soldier4/Soldier4DamagedUp.bmp", 41, 70, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("Soldier4DamagedSide", "Resources/Images/Characters/Soldier4/Soldier4DamagedSide.bmp", 62, 116, 1, 2, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Soldier4DamagedDown", "Resources/Images/Characters/Soldier4/Soldier4DamagedDown.bmp", 59, 57, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier5IdleUp", "Resources/Images/Characters/Soldier5/Soldier5IdleUp.bmp", 90, 73, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5IdleDown", "Resources/Images/Characters/Soldier5/Soldier5IdleDown.bmp", 90, 74, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5IdleSide", "Resources/Images/Characters/Soldier5/Soldier5IdleSide.bmp", 150, 150, 3, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5MoveUp", "Resources/Images/Characters/Soldier5/Soldier5MoveUp.bmp", 198, 72, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5MoveSide", "Resources/Images/Characters/Soldier5/Soldier5MoveSide.bmp", 275, 136, 5, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5MoveDown", "Resources/Images/Characters/Soldier5/Soldier5MoveDown.bmp", 210, 73, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5AttackUp", "Resources/Images/Characters/Soldier5/Soldier5AttackUp.bmp", 132, 72, 4, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5AttackSide", "Resources/Images/Characters/Soldier5/Soldier5AttackSide.bmp", 220, 150, 4, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5AttackDown", "Resources/Images/Characters/Soldier5/Soldier5AttackDown.bmp", 136, 73, 4, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier5DamagedUp", "Resources/Images/Characters/Soldier5/Soldier5DamagedUp.bmp", 36, 64, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier5DamagedSide", "Resources/Images/Characters/Soldier5/Soldier5DamagedSide.bmp", 50, 118, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier5DamagedDown", "Resources/Images/Characters/Soldier5/Soldier5DamagedDown.bmp", 35, 60, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier6IdleUp", "Resources/Images/Characters/Soldier6/Soldier6IdleUp.bmp", 111, 68, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6IdleDown", "Resources/Images/Characters/Soldier6/Soldier6IdleDown.bmp", 111, 69, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6IdleSide", "Resources/Images/Characters/Soldier6/Soldier6IdleSide.bmp", 99, 146, 3, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6MoveUp", "Resources/Images/Characters/Soldier6/Soldier6MoveUp.bmp", 228, 67, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6MoveSide", "Resources/Images/Characters/Soldier6/Soldier6MoveSide.bmp", 294, 138, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6MoveDown", "Resources/Images/Characters/Soldier6/Soldier6MoveDown.bmp", 204, 69, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6AttackUp", "Resources/Images/Characters/Soldier6/Soldier6AttackUp.bmp", 720, 70, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6AttackSide", "Resources/Images/Characters/Soldier6/Soldier6AttackSide.bmp", 800, 174, 8, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6AttackDown", "Resources/Images/Characters/Soldier6/Soldier6AttackDown.bmp", 864, 91, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier6DamagedUp", "Resources/Images/Characters/Soldier6/Soldier6DamagedUp.bmp", 40, 56, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier6DamagedSide", "Resources/Images/Characters/Soldier6/Soldier6DamagedSide.bmp", 42, 114, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier6DamagedDown", "Resources/Images/Characters/Soldier6/Soldier6DamagedDown.bmp", 47, 41, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier8IdleUp", "Resources/Images/Characters/Soldier8/Soldier8IdleUp.bmp", 135, 74, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8IdleDown", "Resources/Images/Characters/Soldier8/Soldier8IdleDown.bmp", 111, 72, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8IdleSide", "Resources/Images/Characters/Soldier8/Soldier8IdleSide.bmp", 126, 144, 3, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8MoveUp", "Resources/Images/Characters/Soldier8/Soldier8MoveUp.bmp", 252, 97, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8MoveSide", "Resources/Images/Characters/Soldier8/Soldier8MoveSide.bmp", 468, 152, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8MoveDown", "Resources/Images/Characters/Soldier8/Soldier8MoveDown.bmp", 240, 71, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8AttackUp", "Resources/Images/Characters/Soldier8/Soldier8AttackUp.bmp", 928, 109, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8AttackSide", "Resources/Images/Characters/Soldier8/Soldier8AttackSide.bmp", 720, 180, 8, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8AttackDown", "Resources/Images/Characters/Soldier8/Soldier8AttackDown.bmp", 928, 102, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier8DamagedUp", "Resources/Images/Characters/Soldier8/Soldier8DamagedUp.bmp", 63, 56, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier8DamagedSide", "Resources/Images/Characters/Soldier8/Soldier8DamagedSide.bmp", 61, 102, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier8DamagedDown", "Resources/Images/Characters/Soldier8/Soldier8DamagedDown.bmp", 48, 51, true, RGB(0, 0, 0));
+
+	IMAGEMANAGER->addFrameImage("Soldier9IdleUp", "Resources/Images/Characters/Soldier9/Soldier9IdleUp.bmp", 99, 75, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9IdleDown", "Resources/Images/Characters/Soldier9/Soldier9IdleDown.bmp", 93, 76, 3, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9IdleSide", "Resources/Images/Characters/Soldier9/Soldier9IdleSide.bmp", 141, 146, 3, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9MoveUp", "Resources/Images/Characters/Soldier9/Soldier9MoveUp.bmp", 204, 76, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9MoveSide", "Resources/Images/Characters/Soldier9/Soldier9MoveSide.bmp", 354, 134, 6, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9MoveDown", "Resources/Images/Characters/Soldier9/Soldier9MoveDown.bmp", 192, 70, 6, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9AttackUp", "Resources/Images/Characters/Soldier9/Soldier9AttackUp.bmp", 304, 71, 4, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9AttackSide", "Resources/Images/Characters/Soldier9/Soldier9AttackSide.bmp", 316, 126, 4, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9AttackDown", "Resources/Images/Characters/Soldier9/Soldier9AttackDown.bmp", 292, 79, 4, 1, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("Soldier9DamagedUp", "Resources/Images/Characters/Soldier9/Soldier9DamagedUp.bmp", 39, 79, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addFrameImage("Soldier9DamagedSide", "Resources/Images/Characters/Soldier9/Soldier9DamagedSide.bmp", 66, 122, 1, 2, true, RGB(168, 208, 168));
+	IMAGEMANAGER->addImage("Soldier9DamagedDown", "Resources/Images/Characters/Soldier9/Soldier9DamagedDown.bmp", 42, 61, true, RGB(168, 208, 168));
+
+	IMAGEMANAGER->addFrameImage("Soldier10IdleUp", "Resources/Images/Characters/Soldier10/Soldier10IdleUp.bmp", 93, 78, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10IdleDown", "Resources/Images/Characters/Soldier10/Soldier10IdleDown.bmp", 138, 64, 3, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10IdleSide", "Resources/Images/Characters/Soldier10/Soldier10IdleSide.bmp", 174, 136, 3, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10MoveUp", "Resources/Images/Characters/Soldier10/Soldier10MoveUp.bmp", 300, 71, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10MoveSide", "Resources/Images/Characters/Soldier10/Soldier10MoveSide.bmp", 378, 136, 6, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10MoveDown", "Resources/Images/Characters/Soldier10/Soldier10MoveDown.bmp", 294, 72, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10AttackUp", "Resources/Images/Characters/Soldier10/Soldier10AttackUp.bmp", 140, 93, 5, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10AttackSide", "Resources/Images/Characters/Soldier10/Soldier10AttackSide.bmp", 320, 140, 5, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10AttackDown", "Resources/Images/Characters/Soldier10/Soldier10AttackDown.bmp", 180, 71, 5, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier10DamagedUp", "Resources/Images/Characters/Soldier10/Soldier10DamagedUp.bmp", 29, 64, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("Soldier10DamagedSide", "Resources/Images/Characters/Soldier10/Soldier10DamagedSide.bmp", 53, 104, 1, 2, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("Soldier10DamagedDown", "Resources/Images/Characters/Soldier10/Soldier10DamagedDown.bmp", 39, 48, true, RGB(0, 0, 0));
 
 	// Ã¶°¡¸é ÀÌ¹ÌÁö
 	IMAGEMANAGER->addFrameImage("IronMaskIdleUp", "Resources/Images/Characters/IronMask/IronMaskIdleUp.bmp", 186, 93, 3, 1, true, RGB(168, 208, 168));
@@ -427,6 +491,9 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Ç÷¶û¸¶È¥","Resources/Sounds/SoundEffect/Wolf.wav");
 	SOUNDMANAGER->addSoundFMOD("Charging","Resources/Sounds/SoundEffect/Charging.wav");
 	SOUNDMANAGER->addSoundFMOD("IronMaskAttack1", "Resources/Sounds/SoundEffect/IronMaskAttack1.wav");
+	SOUNDMANAGER->addSoundFMOD("Machinegun", "Resources/Sounds/SoundEffect/Machinegun.wav");
+	SOUNDMANAGER->addSoundFMOD("Sword", "Resources/Sounds/SoundEffect/Sword.wav");
+	SOUNDMANAGER->addSoundFMOD("Tang", "Resources/Sounds/SoundEffect/Tang.wav");
 
 	// Å©¸®½ºÆ¼¾Ó
 	SOUNDMANAGER->addSoundFMOD("ChristianFire", "Resources/Sounds/SoundEffect/ChristianFire.wav");
@@ -530,7 +597,11 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("SherazadeDead", "Resources/Sounds/StoryScene/SherazadeDead.mp3");
 	SOUNDMANAGER->addSoundFMOD("WorldMapBG", "Resources/Sounds/WorldMapScene/WorldMapBG.mp3", true);
 	SOUNDMANAGER->addSoundFMOD("ShopSceneBG", "Resources/Sounds/ShopScene/ShopSceneBG.mp3", true);
-	SOUNDMANAGER->addSoundFMOD("BattleSceneBG", "Resources/Sounds/BattleScene/BattleSceneBG.mp3", true);
+	SOUNDMANAGER->addSoundFMOD("BattleSceneBG1", "Resources/Sounds/BattleScene/BattleSceneBG1.mp3", true);
+	SOUNDMANAGER->addSoundFMOD("BattleSceneBG2", "Resources/Sounds/BattleScene/BattleSceneBG2.mp3", true);
+	SOUNDMANAGER->addSoundFMOD("Bang", "Resources/Sounds/SoundEffect/Bang.wav");
+	SOUNDMANAGER->addSoundFMOD("Thrust", "Resources/Sounds/SoundEffect/Thrust.wav");
+	SOUNDMANAGER->addSoundFMOD("Fire", "Resources/Sounds/SoundEffect/Fire.wav");
 	return S_OK;
 }
 

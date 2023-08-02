@@ -24,13 +24,12 @@ private:
 	vector<POINT> _launchTile;
 	bool _debug;
 	bool _launch;
-	char _text[50];
+	char _text[256];
 	char _bgImg[256];
 	char _checkBGImg[256];
 	int _showMiniStatusFrame;
 	int _fadeStartFrame;
 	int _selectCharIndex;
-	int _partyTurnOrder;
 	bitset<4> _launchOrder;
 	bitset<3> _fade;
 	POINT _exPtMouse;

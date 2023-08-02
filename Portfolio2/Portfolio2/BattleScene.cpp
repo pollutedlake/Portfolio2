@@ -17,9 +17,9 @@ HRESULT BattleScene::init(void)
 	wsprintf(_checkBGImg, "검사용BattleSceneBG%d", battleData->_bgImgN);
 	_camera = new Camera();
 	_camera->init();
-	_camera->setPosition({ IMAGEMANAGER->findImage(_bgImg)->getWidth() / 2, IMAGEMANAGER->findImage(_bgImg)->getHeight() / 2 });
 	_camera->setLimitRight(IMAGEMANAGER->findImage(_bgImg)->getWidth() - WINSIZE_X / 2);
 	_camera->setLimitBottom(IMAGEMANAGER->findImage(_bgImg)->getHeight() - WINSIZE_Y / 2);
+	_camera->setPosition({ IMAGEMANAGER->findImage(_bgImg)->getWidth() / 2, IMAGEMANAGER->findImage(_bgImg)->getHeight() / 2 });
 
 	_turnSystem = new TurnSystem2();
 	_party = DATAMANAGER->getPartyData();
@@ -28,7 +28,7 @@ HRESULT BattleScene::init(void)
 		Soldier* soldier = new Soldier;
 		soldier->init(EnemyType(it->_type));
 		_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder);
-		//soldier->setState(1);
+		//soldier->setState(4);
 	}
 	for (auto it = battleData->_object.begin(); it != battleData->_object.end(); ++it)
 	{
@@ -47,7 +47,6 @@ HRESULT BattleScene::init(void)
 	}
 	_launchTile = battleData->_launchTile;
 	_showMiniStatusFrame = 0;
-	_partyTurnOrder = 0;
 	_launchOrder.reset();
 	_launchOrder.set(0);
 	_launch = false;
@@ -59,7 +58,8 @@ void BattleScene::update(void)
 {
 	if (_frame == 0)
 	{
-		SOUNDMANAGER->playSoundFMOD("BattleSceneBG");
+		wsprintf(_text, "BattleSceneBG%d", DATAMANAGER->getBattleIdx() + 1);
+		SOUNDMANAGER->playSoundFMOD(_text);
 	}
 	_frame++;
 	_camera->update();
@@ -148,8 +148,8 @@ void BattleScene::update(void)
 				{
 					_launchOrder = _launchOrder >> 1;
 					_launchRT[_selectCharIndex].second = false;
-					_turnSystem->deleteCharacter(_party[_selectCharIndex]->_name.c_str());
-					_partyTurnOrder--;
+					Player* player = _turnSystem->deleteCharacter(_party[_selectCharIndex]->_name.c_str());
+					SAFE_DELETE(player);
 				}
 				else if (PtInRect(&_launchButton[2], _ptMouse))
 				{
@@ -157,9 +157,12 @@ void BattleScene::update(void)
 					for (auto it = _party.begin(); it != _party.end(); ++it)
 					{
 						_launchRT[_selectCharIndex].second = false;
-						_turnSystem->deleteCharacter((*it)->_name.c_str());
+						Player* player = _turnSystem->deleteCharacter((*it)->_name.c_str());
+						if(player != nullptr)
+						{
+							SAFE_DELETE(player);
+						}
 					}
-					_partyTurnOrder = 0;
 					for (auto it = _party.begin(); it != _party.end(); ++it)
 					{
 						int random = RND->getInt(_launchTile.size());
@@ -169,9 +172,8 @@ void BattleScene::update(void)
 						}
 						Player* _player = new Player((*it)->_name.c_str());
 						_player->init();
-						_turnSystem->addCharacter(_player, UP, _launchTile[random], _partyTurnOrder);
+						_turnSystem->addCharacter(_player, UP, _launchTile[random], NULL);
 						_launchRT[it - _party.begin()].second = true;
-						_partyTurnOrder++;
 					}
 				}
 				else if (PtInRect(&_launchButton[3], _ptMouse))
@@ -195,12 +197,11 @@ void BattleScene::update(void)
 						{
 							Player* _player = new Player(_party[_selectCharIndex]->_name.c_str());
 							_player->init();
-							_turnSystem->addCharacter(_player, UP, *it, _partyTurnOrder);
+							_turnSystem->addCharacter(_player, UP, *it, NULL);
 							//_player->setState(2);
 							_launchRT[_selectCharIndex].second = true;
 							_launchOrder.reset();
 							_launchOrder.set(0);
-							_partyTurnOrder++;
 						}
 					}
 				}
@@ -216,6 +217,7 @@ void BattleScene::update(void)
 	{
 		SOUNDMANAGER->stopAllSoundFMOD();
 		SCENEMANAGER->loadingScene();
+		DATAMANAGER->setBattleIdx(DATAMANAGER->getBattleIdx() + 1);
 	}
 }
 
@@ -253,7 +255,7 @@ void BattleScene::render(void)
 	if (!_launch)
 	{
 		bool launchTile = false;
-		// 출전시킬 수 있는 타일
+	//	// 출전시킬 수 있는 타일
 		for (auto it = _launchTile.begin(); it != _launchTile.end(); ++it)
 		{
 			IMAGEMANAGER->findImage("LaunchTile")->alphaRender(getMemDC(), _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, 127);
@@ -272,7 +274,8 @@ void BattleScene::render(void)
 		{
 			wsprintf(_text, (*it)->_name.c_str());
 			strcat_s(_text, "Mini");
-			FillRect(getMemDC(), &_launchRT[(it - _party.begin())].first, CreateSolidBrush(RGB(255, 255, 0)));
+			HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 0));
+			FillRect(getMemDC(), &_launchRT[(it - _party.begin())].first, hBrush);
 			IMAGEMANAGER->findImage(_text)->render(getMemDC(), _launchRT[it - _party.begin()].first.left + 2, _launchRT[it - _party.begin()].first.top + 2);
 			if (_launchRT[it - _party.begin()].second)
 			{
@@ -282,6 +285,7 @@ void BattleScene::render(void)
 				FONTMANAGER->textOut(getMemDC(), (_launchRT[it - _party.begin()].first.right + _launchRT[it - _party.begin()].first.left) / 2, _launchRT[it - _party.begin()].first.bottom - 30, "가을체", 20, 100, "Entry", strlen("Entry"), RGB(255, 0, 0));
 				SetTextAlign(getMemDC(), TA_LEFT);
 			}
+			DeleteObject(hBrush);
 		}
 		if (_launchOrder.test(1))
 		{
@@ -299,7 +303,7 @@ void BattleScene::render(void)
 				}
 			}
 			SetTextAlign(getMemDC(), TA_CENTER);
-			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 5, "가을체", 15, 100, "출전", strlen("출전"), _launchRT[_selectCharIndex].second ? RGB(139, 140, 141) :RGB(255, 255, 255));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 5, "가을체", 15, 100, "출전", strlen("출전"), _launchRT[_selectCharIndex].second ? RGB(139, 140, 141) : RGB(255, 255, 255));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 25, "가을체", 15, 100, "출전 취소", strlen("출전 취소"), _launchRT[_selectCharIndex].second ? RGB(255, 255, 255) : RGB(139, 140, 141));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 45, "가을체", 15, 100, "용병 배치", strlen("용병 배치"), RGB(139, 140, 141));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 65, "가을체", 15, 100, "용병 배치 취소", strlen("용병 배치 취소"), RGB(139, 140, 141));

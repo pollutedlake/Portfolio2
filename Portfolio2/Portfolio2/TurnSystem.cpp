@@ -44,6 +44,19 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 					(*it2)->moveTurnOrder();
 				}
 			}
+			for (auto it2 = _objectList.begin(); it2 != _objectList.end();)
+			{
+				if (SamePoint((*it2)->getTilePos(), (*it)->getTilePos()))
+				{
+					it2 = _objectList.erase(it2);
+					break;
+				}
+				else
+				{
+					++it2;
+				}
+			}
+			SAFE_DELETE(*it);
 			it = _charList.erase(it);
 		}
 		else
@@ -543,7 +556,7 @@ void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 			Obstacle* obstacle = (Obstacle*)(*it);
 			obstacle->render(hdc, cameraPos);
 		}
-		else
+		else if((*it)->getType() < 2)
 		{
 			Character* temp = (Character*)(*it);
 			temp->render(hdc, { WINSIZE_X / 2 - (cameraPos.x - temp->getTilePos().x * tileWidth),

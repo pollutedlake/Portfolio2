@@ -47,10 +47,47 @@ void Camera::update(void)
 			_position.y = _limitRC.top;
 		}
 	}
+	if (_position.x < _limitRC.left)
+	{
+		_position.x = _limitRC.left;
+	}
+	if (_position.x > _limitRC.right)
+	{
+		_position.x = _limitRC.right;
+	}
+	if (_position.y < _limitRC.top)
+	{
+		_position.y = _limitRC.top;
+	}
+	if (_position.y > _limitRC.bottom)
+	{
+		_position.y = _limitRC.bottom;
+	}
 }
 
 void Camera::render(void)
 {
+}
+
+void Camera::setPosition(POINT position)
+{
+	_position = position;
+	if (_position.x < _limitRC.left)
+	{
+		_position.x = _limitRC.left;
+	}
+	if (_position.x > _limitRC.right)
+	{
+		_position.x = _limitRC.right;
+	}
+	if (_position.y < _limitRC.top)
+	{
+		_position.y = _limitRC.top;
+	}
+	if (_position.y > _limitRC.bottom)
+	{
+		_position.y = _limitRC.bottom;
+	}
 }
 
 POINT Camera::worldToCamera(POINT point)

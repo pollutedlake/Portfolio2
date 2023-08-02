@@ -30,12 +30,24 @@ void Soldier::update(void)
 	}
 	else if (_state.test(ATTACK))
 	{
-		
 		if (_dir.test(LEFT) || _dir.test(RIGHT))
 		{
 			switch (_enemyType)
 			{
 				case EnemyType::SOLDIER1:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Fire");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier1AttackSide")->getMaxFrameX())
 					{
 						_state.reset();
@@ -44,6 +56,19 @@ void Soldier::update(void)
 					}
 				break;
 				case EnemyType::SOLDIER2:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("Thrust");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier2AttackSide")->getMaxFrameX())
 					{
 						_state.reset();
@@ -52,6 +77,19 @@ void Soldier::update(void)
 					}
 				break;
 				case EnemyType::SOLDIER3:
+					if (_frame == 10)
+					{
+						SOUNDMANAGER->playSoundFMOD("Bang");
+					}
+					if (_frame / 10 == 1)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier3AttackSide")->getMaxFrameX())
 					{
 						_state.reset();
@@ -60,6 +98,19 @@ void Soldier::update(void)
 					}
 				break;
 				case EnemyType::SOLDIER4:
+					if (_frame == 20 || _frame == 70)
+					{
+						SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 7)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier4AttackSide")->getMaxFrameX())
 					{
 						_state.reset();
@@ -67,6 +118,111 @@ void Soldier::update(void)
 						endTurn();
 					}
 				break;
+				case EnemyType::SOLDIER5:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Machinegun");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier5AttackSide")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER6:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("Sword");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier6AttackSide")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER8:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier8AttackSide")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER9:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Sword");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier9AttackSide")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER10:
+					if (_frame == 30)
+					{
+						SOUNDMANAGER->playSoundFMOD("Tang");
+					}
+					if (_frame / 10 == 3)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier10AttackSide")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
 			}
 		}
 		else if (_dir.test(UP))
@@ -74,30 +230,82 @@ void Soldier::update(void)
 			switch (_enemyType)
 			{
 				case EnemyType::SOLDIER1:
-				if (_frame / 10 > IMAGEMANAGER->findImage("Soldier1AttackUp")->getMaxFrameX())
-				{
-					_state.reset();
-					setDoing(false);
-					endTurn();
-				}
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Fire");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier1AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
 				break;
 				case EnemyType::SOLDIER2:
-				if (_frame / 10 > IMAGEMANAGER->findImage("Soldier2AttackUp")->getMaxFrameX())
-				{
-					_state.reset();
-					setDoing(false);
-					endTurn();
-				}
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("Thrust");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier2AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
 				break;
 				case EnemyType::SOLDIER3:
-				if (_frame / 10 > IMAGEMANAGER->findImage("Soldier3AttackUp")->getMaxFrameX())
-				{
-					_state.reset();
-					setDoing(false);
-					endTurn();
-				}
+					if (_frame == 10)
+					{
+						SOUNDMANAGER->playSoundFMOD("Bang");
+					}
+					if (_frame / 10 == 1)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier3AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
 				break;
 				case EnemyType::SOLDIER4:
+					if (_frame == 20 || _frame == 70)
+					{
+						SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 7)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if(_frame / 10 > IMAGEMANAGER->findImage("Soldier4AttackUp")->getMaxFrameX())
 					{
 						_state.reset();
@@ -105,13 +313,131 @@ void Soldier::update(void)
 						endTurn();
 					}
 				break;
+				case EnemyType::SOLDIER5:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Machinegun");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier5AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER6:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("Sword");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier6AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER8:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier8AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER9:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Sword");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier9AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER10:
+					if (_frame == 30)
+					{
+						SOUNDMANAGER->playSoundFMOD("Tang");
+					}
+					if (_frame / 10 == 3)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier10AttackUp")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
 			}
 		}
-		else if (_dir.test(DOWN) && _frame / 10 > IMAGEMANAGER->findImage("Soldier4AttackDown")->getMaxFrameX())
+		else if (_dir.test(DOWN))
 		{
 			switch(_enemyType)
 			{
 				case EnemyType::SOLDIER1:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Fire");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier1AttackDown")->getMaxFrameX())
 					{
 						_state.reset();
@@ -120,6 +446,19 @@ void Soldier::update(void)
 					}
 				break;
 				case EnemyType::SOLDIER2:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("Thrust");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier2AttackDown")->getMaxFrameX())
 					{
 						_state.reset();
@@ -128,6 +467,19 @@ void Soldier::update(void)
 					}
 				break;
 				case EnemyType::SOLDIER3:
+					if (_frame == 10)
+					{
+						SOUNDMANAGER->playSoundFMOD("Bang");
+					}
+					if (_frame / 10 == 1)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier3AttackDown")->getMaxFrameX())
 					{
 						_state.reset();
@@ -136,7 +488,125 @@ void Soldier::update(void)
 					}
 				break;
 				case EnemyType::SOLDIER4:
+					if (_frame == 20 || _frame == 70)
+					{
+						SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 7)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
 					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier4AttackDown")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+				break;
+				case EnemyType::SOLDIER5:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Machinegun");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier5AttackDown")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER6:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("Sword");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier6AttackDown")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER8:
+					if (_frame == 20 || _frame == 60)
+					{
+						SOUNDMANAGER->playSoundFMOD("IronMaskAttack1");
+					}
+					if (_frame / 10 == 2 || _frame / 10 == 6)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier8AttackDown")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER9:
+					if (_frame == 20)
+					{
+						SOUNDMANAGER->playSoundFMOD("Sword");
+					}
+					if (_frame / 10 == 2)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier9AttackDown")->getMaxFrameX())
+					{
+						_state.reset();
+						setDoing(false);
+						endTurn();
+					}
+					break;
+				case EnemyType::SOLDIER10:
+					if (_frame == 30)
+					{
+						SOUNDMANAGER->playSoundFMOD("Tang");
+					}
+					if (_frame / 10 == 3)
+					{
+						_isAttack = true;
+					}
+					else
+					{
+						_isAttack = false;
+						_damage = 0;
+					}
+					if (_frame / 10 > IMAGEMANAGER->findImage("Soldier10AttackDown")->getMaxFrameX())
 					{
 						_state.reset();
 						setDoing(false);
@@ -196,6 +666,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				case EnemyType::SOLDIER4:
 					IMAGEMANAGER->findImage("Soldier4IdleSide")->frameRender(hdc, position.x - 25, position.y - 5, (_frame / 10) % 3, 0);
 				break;
+				case EnemyType::SOLDIER5:
+					IMAGEMANAGER->findImage("Soldier5IdleSide")->frameRender(hdc, position.x - 5, position.y, (_frame / 10) % 3, 0);
+					break;
+				case EnemyType::SOLDIER6:
+					IMAGEMANAGER->findImage("Soldier6IdleSide")->frameRender(hdc, position.x, position.y- 5, (_frame / 10) % 3, 0);
+					break;
+				case EnemyType::SOLDIER8:
+					IMAGEMANAGER->findImage("Soldier8IdleSide")->frameRender(hdc, position.x - 5, position.y - 5, (_frame / 10) % 3, 0);
+					break;
+				case EnemyType::SOLDIER9:
+					IMAGEMANAGER->findImage("Soldier9IdleSide")->frameRender(hdc, position.x - 5, position.y, (_frame / 10) % 3, 0);
+					break;
+				case EnemyType::SOLDIER10:
+					IMAGEMANAGER->findImage("Soldier10IdleSide")->frameRender(hdc, position.x - 20, position.y + 5, (_frame / 10) % 3, 0);
+					break;
 			}
 		}
 		else if (_dir.test(RIGHT))
@@ -213,6 +698,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4IdleSide")->frameRender(hdc, position.x + 5, position.y - 5, 2 - (_frame / 10) % 3, 1);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5IdleSide")->frameRender(hdc, position.x - 5, position.y, 2 - (_frame / 10) % 3, 1);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6IdleSide")->frameRender(hdc, position.x + 5, position.y - 5, 2 - (_frame / 10) % 3, 1);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8IdleSide")->frameRender(hdc, position.x + 5, position.y - 5, 2 - (_frame / 10) % 3, 1);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9IdleSide")->frameRender(hdc, position.x - 5, position.y, 2 - (_frame / 10) % 3, 1);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10IdleSide")->frameRender(hdc, position.x + 5, position.y + 5, 2 - (_frame / 10) % 3, 1);
 				break;
 			}
 		}
@@ -232,6 +732,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4IdleUp")->frameRender(hdc, position.x + 5, position.y, (_frame / 10) % 3, 0);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5IdleUp")->frameRender(hdc, position.x + 5, position.y, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6IdleUp")->frameRender(hdc, position.x + 5, position.y, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8IdleUp")->frameRender(hdc, position.x - 5, position.y - 5, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9IdleUp")->frameRender(hdc, position.x + 5, position.y - 5, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10IdleUp")->frameRender(hdc, position.x + 5, position.y - 5, (_frame / 10) % 3, 0);
+				break;
 			}
 		}
 		else if (_dir.test(DOWN))
@@ -249,6 +764,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4IdleDown")->frameRender(hdc, position.x - 5, position.y, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5IdleDown")->frameRender(hdc, position.x + 5, position.y, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6IdleDown")->frameRender(hdc, position.x, position.y, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8IdleDown")->frameRender(hdc, position.x, position.y, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9IdleDown")->frameRender(hdc, position.x + 5, position.y - 5, (_frame / 10) % 3, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10IdleDown")->frameRender(hdc, position.x + 3, position.y + 5, (_frame / 10) % 3, 0);
 				break;
 			}
 		}
@@ -271,6 +801,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 40, WINSIZE_X / 2 - (cameraPos.y - y) - 195, _frame / 10 % 6, 0);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 35, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 5, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 30, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 55, WINSIZE_X / 2 - (cameraPos.y - y) - 190, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 35, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 6, 0);
+				break;
 			}
 		}
 		else if (_dir.test(RIGHT))
@@ -288,6 +833,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 35, WINSIZE_X / 2 - (cameraPos.y - y) - 200, 5 - _frame / 10 % 6, 1);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 180, 4 - _frame / 10 % 5, 1);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 180, 5 - _frame / 10 % 6, 1);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 190, 5 - _frame / 10 % 6, 1);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 40, WINSIZE_X / 2 - (cameraPos.y - y) - 180, 5 - _frame / 10 % 6, 1);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10MoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_X / 2 - (cameraPos.y - y) - 180, 5 - _frame / 10 % 6, 1);
 				break;
 			}
 		}
@@ -307,6 +867,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_X / 2 - (cameraPos.y - y) - 210, _frame / 10 % 6, 0);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 5, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 210, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 185, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10MoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 27, WINSIZE_X / 2 - (cameraPos.y - y) - 185, _frame / 10 % 6, 0);
+				break;
 			}
 		}
 		else if (_dir.test(DOWN))
@@ -324,6 +899,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_X / 2 - (cameraPos.y - y) - 195, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 5, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 20, WINSIZE_X / 2 - (cameraPos.y - y) - 180, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_X / 2 - (cameraPos.y - y) - 175, _frame / 10 % 6, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10MoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 17, WINSIZE_X / 2 - (cameraPos.y - y) - 175, _frame / 10 % 6, 0);
 				break;
 			}
 		}
@@ -346,6 +936,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackSide")->frameRender(hdc, position.x - 70, position.y - 25, _frame / 10, 0);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5AttackSide")->frameRender(hdc, position.x - 15, position.y, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6AttackSide")->frameRender(hdc, position.x - 45, position.y - 20, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8AttackSide")->frameRender(hdc, position.x - 25, position.y - 20, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9AttackSide")->frameRender(hdc, position.x - 25, position.y + 5, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10AttackSide")->frameRender(hdc, position.x - 20, position.y - 5, _frame / 10, 0);
+				break;
 			}
 		}
 		else if (_dir.test(RIGHT))
@@ -363,6 +968,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackSide")->frameRender(hdc, position.x - 30, position.y - 25, 8 - _frame / 10, 1);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5AttackSide")->frameRender(hdc, position.x, position.y, 3 - _frame / 10, 1);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6AttackSide")->frameRender(hdc, position.x - 15, position.y - 20, 7 - _frame / 10, 1);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8AttackSide")->frameRender(hdc, position.x - 25, position.y - 20, 7 - _frame / 10, 1);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9AttackSide")->frameRender(hdc, position.x - 15, position.y + 5, 3 - _frame / 10, 1);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10AttackSide")->frameRender(hdc, position.x, position.y - 5, 4 - _frame / 10, 1);
 				break;
 			}
 		}
@@ -382,6 +1002,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackUp")->frameRender(hdc, position.x - 45, position.y - 55, _frame / 10, 0);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5AttackUp")->frameRender(hdc, position.x + 5, position.y, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6AttackUp")->frameRender(hdc, position.x - 25, position.y + 10, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8AttackUp")->frameRender(hdc, position.x - 45, position.y - 30, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9AttackUp")->frameRender(hdc, position.x - 40, position.y, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10AttackUp")->frameRender(hdc, position.x + 5, position.y - 20, _frame / 10, 0);
+				break;
 			}
 		}
 		else if (_dir.test(DOWN))
@@ -399,6 +1034,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4AttackDown")->frameRender(hdc, position.x - 10, position.y - 25, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5AttackDown")->frameRender(hdc, position.x + 5, position.y + 5, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6AttackDown")->frameRender(hdc, position.x - 35, position.y - 5, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8AttackDown")->frameRender(hdc, position.x - 35, position.y - 5, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9AttackDown")->frameRender(hdc, position.x + 5, position.y, _frame / 10, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10AttackDown")->frameRender(hdc, position.x + 3, position.y + 5, _frame / 10, 0);
 				break;
 			}
 		}
@@ -421,6 +1071,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedSide")->frameRender(hdc, position.x - 15, position.y + 15, 0, 0);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedSide")->frameRender(hdc, position.x - 5, position.y + 15, 0, 0);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedSide")->frameRender(hdc, position.x - 5, position.y + 15, 0, 0);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedSide")->frameRender(hdc, position.x - 15, position.y + 20, 0, 0);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedSide")->frameRender(hdc, position.x - 25, position.y + 10, 0, 0);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedSide")->frameRender(hdc, position.x - 15, position.y + 15, 0, 0);
+				break;
 			}
 		}
 		else if (_dir.test(RIGHT))
@@ -438,6 +1103,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedSide")->frameRender(hdc, position.x - 5, position.y + 15, 0, 1);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedSide")->frameRender(hdc, position.x, position.y + 15, 0, 1);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedSide")->frameRender(hdc, position.x, position.y + 15, 0, 1);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedSide")->frameRender(hdc, position.x, position.y + 20, 0, 1);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedSide")->frameRender(hdc, position.x, position.y + 10, 0, 1);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedSide")->frameRender(hdc, position.x + 5, position.y + 15, 0, 1);
 				break;
 			}
 		}
@@ -457,6 +1137,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedUp")->render(hdc, position.x + 3, position.y + 5);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedUp")->render(hdc, position.x, position.y + 10);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedUp")->render(hdc, position.x - 15, position.y + 20);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedUp")->render(hdc, position.x - 25, position.y + 15);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedUp")->render(hdc, position.x + 10, position.y + 5);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedUp")->render(hdc, position.x + 5, position.y + 5);
+				break;
 			}
 		}
 		else if (_dir.test(DOWN))
@@ -474,6 +1169,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedDown")->render(hdc, position.x - 10, position.y + 15);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedDown")->render(hdc, position.x, position.y + 15);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedDown")->render(hdc, position.x, position.y + 30);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedDown")->render(hdc, position.x, position.y + 20);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedDown")->render(hdc, position.x + 5, position.y + 15);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedDown")->render(hdc, position.x, position.y + 25);
 				break;
 			}
 		}
@@ -503,6 +1213,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedSide")->alphaFrameRender(hdc, position.x - 15, position.y + 15, 0, 0, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedSide")->alphaFrameRender(hdc, position.x - 5, position.y + 15, 0, 0, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedSide")->alphaFrameRender(hdc, position.x - 5, position.y + 15, 0, 0, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedSide")->alphaFrameRender(hdc, position.x - 15, position.y + 20, 0, 0, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedSide")->alphaFrameRender(hdc, position.x - 25, position.y + 10, 0, 0, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedSide")->alphaFrameRender(hdc, position.x - 15, position.y + 15, 0, 0, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
 			}
 		}
 		else if (_dir.test(RIGHT))
@@ -520,6 +1245,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedSide")->alphaFrameRender(hdc, position.x - 5, position.y + 15, 0, 1, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedSide")->alphaFrameRender(hdc, position.x, position.y + 15, 0, 1, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedSide")->alphaFrameRender(hdc, position.x, position.y + 15, 0, 1, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedSide")->alphaFrameRender(hdc, position.x, position.y + 20, 0, 1, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedSide")->alphaFrameRender(hdc, position.x, position.y + 10, 0, 1, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedSide")->alphaFrameRender(hdc, position.x + 5, position.y + 15, 0, 1, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 				break;
 			}
 		}
@@ -539,6 +1279,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedUp")->alphaRender(hdc, position.x + 3, position.y + 5, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedUp")->alphaRender(hdc, position.x, position.y + 10, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedUp")->alphaRender(hdc, position.x - 15, position.y + 20, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedUp")->alphaRender(hdc, position.x - 25, position.y + 15, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedUp")->alphaRender(hdc, position.x + 10, position.y + 5, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedUp")->alphaRender(hdc, position.x + 5, position.y + 5, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
 			}
 		}
 		else if (_dir.test(DOWN))
@@ -556,6 +1311,21 @@ void Soldier::render(HDC hdc, POINT position, POINT cameraPos)
 				break;
 			case EnemyType::SOLDIER4:
 				IMAGEMANAGER->findImage("Soldier4DamagedDown")->alphaRender(hdc, position.x - 10, position.y + 15, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER5:
+				IMAGEMANAGER->findImage("Soldier5DamagedDown")->alphaRender(hdc, position.x, position.y + 15, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER6:
+				IMAGEMANAGER->findImage("Soldier6DamagedDown")->alphaRender(hdc, position.x, position.y + 30, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER8:
+				IMAGEMANAGER->findImage("Soldier8DamagedDown")->alphaRender(hdc, position.x, position.y + 20, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER9:
+				IMAGEMANAGER->findImage("Soldier9DamagedDown")->alphaRender(hdc, position.x + 5, position.y + 15, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
+				break;
+			case EnemyType::SOLDIER10:
+				IMAGEMANAGER->findImage("Soldier10DamagedDown")->alphaRender(hdc, position.x, position.y + 25, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 				break;
 			}
 		}

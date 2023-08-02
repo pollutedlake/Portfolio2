@@ -407,8 +407,6 @@ void TurnSystem2::update(POINT cursorTile)
 						POINT player = findPlayer();
 						if(player.x != -1)
 						{
-							_curChar->setState(3);
-							_curChar->setDoing(true);
 							vector<vector<POINT>> routes;
 							vector<POINT> route;
 							if (player.x > 1 && (checkTile({ player.x - 2, player.y }) == MOVABLE || SamePoint(_curChar->getTilePos(), { player.x - 2, player.y })))
@@ -427,16 +425,25 @@ void TurnSystem2::update(POINT cursorTile)
 							{
 								routes.push_back(astar(_curChar->getTilePos(), { player.x, player.y + 2 }));
 							}
-							route = routes[0];
-							for (auto it = routes.begin(); it != routes.end(); ++it)
+							if(routes.size() > 0)
 							{
-								if (route.size() > (*it).size())
+								route = routes[0];
+								for (auto it = routes.begin(); it != routes.end(); ++it)
 								{
-									route = (*it);
+									if (route.size() > (*it).size())
+									{
+										route = (*it);
+									}
 								}
+								_curChar->setRoute(route);
+								_curChar->setDestTilePos(player);
+								_curChar->setState(3);
+								_curChar->setDoing(true);
 							}
-							_curChar->setRoute(route);
-							_curChar->setDestTilePos(player);
+							else
+							{
+								nextTurn();
+							}
 						}
 						else
 						{
@@ -643,7 +650,7 @@ void TurnSystem2::addCharacter(Character* character, int dir, POINT tilePos, int
     addObject(character);
 }
 
-void TurnSystem2::deleteCharacter(string name)
+Player* TurnSystem2::deleteCharacter(string name)
 {
 	for (auto it = _charList.begin(); it != _charList.end(); ++it)
 	{
@@ -665,10 +672,11 @@ void TurnSystem2::deleteCharacter(string name)
 			if (!strcmp(_player->getPlayerName().c_str(), name.c_str()))
 			{
 				it = _objectList.erase(it);
-				return;
+				return _player;
 			}
 		}
 	}
+	return nullptr;
 }
 
 void TurnSystem2::addObject(Object* object)
@@ -1067,6 +1075,7 @@ void TurnSystem2::nextTurn()
 		(*it)->setCurWait((*it)->getCurWait() - curWait);
 	}
 	_curChar->resetTurn();
+	_camera->setPosition({_curChar->getTilePos().x * TILEWIDTH + TILEWIDTH / 2, _curChar->getTilePos().y * TILEHEIGHT + TILEHEIGHT / 2});
 }
 
 void TurnSystem2::setStart(bool start)
@@ -1079,6 +1088,7 @@ void TurnSystem2::setStart(bool start)
 		{
 			if ((*it)->getType() == PLAYER)
 			{
+				(*it)->setTurnOder(playerN);
 				playerN++;
 			}
 		}
