@@ -29,6 +29,8 @@ struct cmp2
 class TurnSystem2
 {
 private:
+	FILE* _fp;
+
 	priority_queue<pair<POINT, int>, vector<pair<POINT, int>>, cmp2> _closedList;
 	vector<POINT> _route;
 
@@ -51,12 +53,16 @@ private:
 
 	RECT _actionButtons[4];
 	RECT _skillButtons[50];
+	RECT _preferenceButtons[7];
+	POINT _exPtMouse;
 	bitset<4> _actionChoice;
 	char* _skillName;
+	int _skillIdx;
 
 	bool _isClear;
 	bool _isFail;
 	bool _start;
+	bool _preference;
 
 public:
 	HRESULT init(Camera* camera, HDC hdc, int rowN, int colN);
@@ -74,10 +80,11 @@ public:
 	void sortObjectList();
 	int checkTile(POINT tilePos);
 	void searchMovableTiles();
-	void searchSkillableTiles(char skillName[]);
+	void searchSkillableTiles(int skillType);
 	bool checkAllDoingNot();
 	POINT findPlayer();
 	void nextTurn();
+	void saveGame();
 
 	void setStart(bool start);
 

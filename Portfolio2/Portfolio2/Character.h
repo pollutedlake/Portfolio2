@@ -61,7 +61,7 @@ public:
 	void setDestTilePos(POINT destTilePos) {_destTilePos = destTilePos;}
 	void setDamage(int damage) {_damage = damage;}
 	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i); _frame = 0; }
-	void setSkillName(char* skillName) {_skillName = skillName;}
+	void setSkillName(char* skillName) { _skillName = skillName; }
 
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}

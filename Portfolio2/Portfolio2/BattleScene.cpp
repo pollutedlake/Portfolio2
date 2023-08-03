@@ -65,30 +65,6 @@ void BattleScene::update(void)
 	_camera->update();
 	_cameraPos = _camera->getPosition();
 
-	if (_fade.none() && _turnSystem->getCurChar()->isSkill())
-	{
-		_fade.set(0);
-		_fadeStartFrame = _frame;
-	}
-	else if (_fade.test(0))
-	{
-		if ((_frame - _fadeStartFrame) * 10 > 230)
-		{
-			_fade = _fade << 1;
-		}
-	}
-	else if (_fade.test(1) && (!_turnSystem->getCurChar()->isSkill()))
-	{
-		_fade = _fade << 1;
-	}
-	else if (_fade.test(2))
-	{
-		if ((_frame - _fadeStartFrame) * 10 > 230)
-		{
-			_fade.reset();
-		}
-	}
-
 	if (_turnSystem->getCurChar()->isSkill())
 	{
 		_camera->setPosition({ (LONG)(_turnSystem->getCurChar()->getX()), (LONG)(_turnSystem->getCurChar()->getY()) });
@@ -170,7 +146,7 @@ void BattleScene::update(void)
 						{
 							random = RND->getInt(_launchTile.size());
 						}
-						Player* _player = new Player((*it)->_name.c_str());
+						Player* _player = new Player((*it)->_name.c_str(), (*it)->_skill);
 						_player->init();
 						_turnSystem->addCharacter(_player, UP, _launchTile[random], NULL);
 						_launchRT[it - _party.begin()].second = true;
@@ -195,7 +171,7 @@ void BattleScene::update(void)
 					{
 						if(_turnSystem->checkTile((*it)) == MOVABLE)
 						{
-							Player* _player = new Player(_party[_selectCharIndex]->_name.c_str());
+							Player* _player = new Player(_party[_selectCharIndex]->_name.c_str(), _party[_selectCharIndex]->_skill);
 							_player->init();
 							_turnSystem->addCharacter(_player, UP, *it, NULL);
 							//_player->setState(2);
@@ -238,18 +214,6 @@ void BattleScene::render(void)
 			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y,
 				TILEWIDTH, TILEHEIGHT, (_frame / 10) % (IMAGEMANAGER->findImage("CantMoveTile")->getMaxFrameX() + 1), 0, 200);
 		}
-	}
-	if (_fade.test(0))
-	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), (_frame - _fadeStartFrame) * 10 > 230 ? 230 : (_frame - _fadeStartFrame) * 10);
-	}
-	if (_fade.test(1))
-	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 230);
-	}
-	if (_fade.test(2))
-	{
-		IMAGEMANAGER->findImage("Black")->alphaRender(getMemDC(), 230 - (_frame - _fadeStartFrame) * 10 < 0 ? 0 : 230 - (_frame - _fadeStartFrame) * 10);
 	}
 	// 파티 배치
 	if (!_launch)

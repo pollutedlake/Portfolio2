@@ -46,6 +46,7 @@ struct CharacterData
 	string _class;
 	int _status[14];
 	ItemData* _equipment[5];
+	vector<pair<char*, int>> _skill;
 };
 
 struct BattleData

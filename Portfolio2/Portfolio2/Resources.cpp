@@ -425,8 +425,14 @@ HRESULT Resources::init(void)
 	// 죠안 이미지
 	IMAGEMANAGER->addImage("죠안 카트라이트Mini", "Resources/Images/UI/JoanMini.bmp", 50, 50);
 
+	// 아지다하카
+	IMAGEMANAGER->addFrameImage("AjdahakaUp", "Resources/Images/Characters/Ajdahaka/AjdahakaUp.bmp", 2880, 141, 12, 1, true, RGB(8, 8, 4));
+	IMAGEMANAGER->addFrameImage("AjdahakaDown", "Resources/Images/Characters/Ajdahaka/AjdahakaDown.bmp", 2868, 161, 12, 1, true, RGB(8, 8, 4));
+	IMAGEMANAGER->addFrameImage("AjdahakaSide", "Resources/Images/Characters/Ajdahaka/AjdahakaSide.bmp", 1800, 458, 12, 2, true, RGB(8, 8, 4));
+
 	//UI
 	IMAGEMANAGER->addFrameImage("FingerCursor", "Resources/Images/UI/FingerCursor.bmp", 105, 27, 5, 1, true, RGB(80, 120, 116));
+	IMAGEMANAGER->addFrameImage("PreferenceIcon", "Resources/Images/UI/PreferenceIcon.bmp", 98, 15, 7, 1, true, RGB(220, 160, 168));
 	IMAGEMANAGER->addImage("LaunchTile", "Resources/Images/UI/LaunchTile.bmp", 40, 30);
 
 	// 스토리씬 배경

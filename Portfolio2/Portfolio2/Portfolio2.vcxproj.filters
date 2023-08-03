@@ -167,7 +167,9 @@
     <ClInclude Include="DataManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
-    <ClInclude Include="TurnSystem2.h" />
+    <ClInclude Include="TurnSystem2.h">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -276,7 +278,9 @@
     <ClCompile Include="DataManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="TurnSystem2.cpp" />
+    <ClCompile Include="TurnSystem2.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">

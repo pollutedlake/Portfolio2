@@ -42,8 +42,18 @@ HRESULT DataManager::init(void)
 				fscanf_s(_fp, "%[^\t]\t", str, _countof(str));
 				character->_equipment[i] = findItem(str);
 			}
-			fscanf_s(_fp, "%[^\n]\n", str, _countof(str));
+			fscanf_s(_fp, "%[^\t]\t", str, _countof(str));
 			character->_equipment[4] = findItem(str);
+			int skillN;
+			fscanf_s(_fp, "%d ", &skillN);
+			while (skillN--)
+			{
+				int skillType;
+				char* skillName = new char[256];
+				fscanf_s(_fp, "%[^\t]\t%d ", skillName, strlen(skillName), &skillType);
+				character->_skill.push_back(make_pair(skillName, skillType));
+			}
+			fscanf_s(_fp, "\n");
 			_mParty.push_back(character);
 		}
 		fscanf_s(_fp, "%d\n", &_eld);
@@ -60,6 +70,10 @@ HRESULT DataManager::init(void)
 		for (int i = 0; i < 5; i++)
 		{
 			cout << (*it)->_equipment[i]->_name << endl;
+		}
+		for (auto it2 = (*it)->_skill.begin(); it2 != (*it)->_skill.end(); ++it2)
+		{
+			cout << (*it2).first << "\t" << (*it2).second << endl;
 		}
 	}
 	cout << _eld << endl;

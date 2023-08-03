@@ -125,6 +125,7 @@ FMOD::Sound* SoundManager::findSound(string key)
     {
         return iter->second;
     }
+    cout << "no sound" << endl;
     return nullptr;
 }
 
@@ -137,7 +138,11 @@ void SoundManager::playSoundFMOD(string key)
         pChannel[i]->isPlaying(&playing);
         if (!playing)
         {
-            pSystem->playSound(findSound(key), NULL, false, &pChannel[i]);
+            FMOD_RESULT fr;
+            if (fr = pSystem->playSound(findSound(key), NULL, false, &pChannel[i]))
+            {
+                cout << fr << endl;
+            }
             return;
         }
     }

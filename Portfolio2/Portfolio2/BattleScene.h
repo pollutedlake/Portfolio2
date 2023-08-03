@@ -28,10 +28,8 @@ private:
 	char _bgImg[256];
 	char _checkBGImg[256];
 	int _showMiniStatusFrame;
-	int _fadeStartFrame;
 	int _selectCharIndex;
 	bitset<4> _launchOrder;
-	bitset<3> _fade;
 	POINT _exPtMouse;
 	
 
