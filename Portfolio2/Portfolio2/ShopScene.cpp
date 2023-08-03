@@ -76,6 +76,7 @@ HRESULT ShopScene::init(void)
 void ShopScene::update(void)
 {
 	_frame++;
+	SOUNDMANAGER->update();
 	if (_frame == 1)
 	{
 		SOUNDMANAGER->playSoundFMOD("ShopSceneBG");

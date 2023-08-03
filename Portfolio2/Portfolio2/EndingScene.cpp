@@ -75,6 +75,7 @@ void EndingScene::release(void)
 
 void EndingScene::update(void)
 {
+	SOUNDMANAGER->update();
 	if (!SOUNDMANAGER->isPlaying())
 	{
 		SOUNDMANAGER->playSoundFMOD("Brother");

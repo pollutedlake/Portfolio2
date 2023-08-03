@@ -25,6 +25,8 @@ public:
 	void update(void);
 	void render(HDC hdc, POINT position, POINT cameraPos);
 
+	int getEnemyType() {return (int)_enemyType;}
+
 	Soldier() {}
 	virtual ~Soldier() {}
 };

@@ -21,7 +21,10 @@ HRESULT TurnSystem2::init(Camera* camera, HDC hdc, int rowN, int colN)
 	_skillName = "";
 	_isClear = false;
 	_isFail = false;
-	_start = false;
+	if(!DATAMANAGER->isLoadGame())
+	{
+		_start = false;
+	}
 	_skill = new Skill;
 	_preference = false;
 	_skill->init();
@@ -174,18 +177,6 @@ void TurnSystem2::update(POINT cursorTile)
 									if (PtInRect(&_skillButtons[i], _ptMouse))
 									{
 										_actionChoice = _actionChoice << 1;
-										/*if (i == 0)
-										{
-											_skillName = "ÃµÁöÆÄ¿­¹«";
-										}
-										else if (i == 1)
-										{
-											_skillName = "Ç³¾Æ¿­°øÂü";
-										}
-										else if (i == 2)
-										{
-											_skillName = "Ç÷¶û¸¶È¥";
-										}*/
 										_skillIdx = i;
 										searchSkillableTiles(player->getSkill()[i].second);
 									}
@@ -300,7 +291,12 @@ void TurnSystem2::update(POINT cursorTile)
 							}
 							else if (PtInRect(&_preferenceButtons[1], _ptMouse))
 							{
-
+								saveGame();
+							}
+							else if (PtInRect(&_preferenceButtons[2], _ptMouse))
+							{
+								SOUNDMANAGER->stopAllSoundFMOD();
+								SCENEMANAGER->changeScene("Load");
 							}
 						}
 						else
@@ -1142,9 +1138,37 @@ void TurnSystem2::nextTurn()
 
 void TurnSystem2::saveGame()
 {
-	if (0 == fopen_s(&_fp, "save.txt", "w"))
+	if (0 == fopen_s(&_fp, "save9.txt", "w"))
 	{
-		//fprintf(_fp, "", )
+		fprintf(_fp, "%d %d %d\n", DATAMANAGER->getScenario(), DATAMANAGER->getBattleIdx(), DATAMANAGER->getSceneIdx() - 1);
+		fprintf(_fp, "%d\n", _charList.size());
+		for (int i = 0; i < _charList.size(); i++)
+		{
+			fprintf(_fp, "%d\n", _charList[i]->getType());
+			if (_charList[i]->getType() == PLAYER)
+			{
+				Player* player = (Player*)_charList[i];
+				//vector<pair<char*, int>> skill = player->getSkill();
+				fprintf(_fp, "%s\n", player->getPlayerName().c_str());
+				fprintf(_fp, "%d\n", player->getSkill().size());
+				for (int j = 0; j < player->getSkill().size(); j++)
+				{
+					fprintf(_fp, "%s\t%d ", player->getSkill()[j].first, player->getSkill()[j].second);
+				}
+				fprintf(_fp, "\n");
+			}
+			else
+			{
+				Soldier* enemy = (Soldier*)_charList[i];
+				fprintf(_fp, "%d\n", enemy->getEnemyType());
+			}
+			fprintf(_fp, "%d %d %d %d %d %d %d %d %d\n", _charList[i]->getTilePos().x, _charList[i]->getTilePos().y, _charList[i]->getCurHP(), _charList[i]->getCurMP(), 
+				_charList[i]->getMobility(), _charList[i]->getWTP(), _charList[i]->getCurWait(), _charList[i]->getTurnOrder(_charList.size()), _charList[i]->getDir());
+		}
+		/*for (auto it = DATAMANAGER->getPartyData().begin(); it != DATAMANAGER->getPartyData().end(); ++it)
+		{
+			
+		}*/
 		fclose(_fp);
 	}
 }
@@ -1152,7 +1176,7 @@ void TurnSystem2::saveGame()
 void TurnSystem2::setStart(bool start)
 {
 	_start = start;
-	if (_start)
+	if (_start && !DATAMANAGER->isLoadGame())
 	{
 		int playerN = 0;
 		for (auto it = _charList.begin(); it != _charList.end(); ++it)
@@ -1183,7 +1207,18 @@ void TurnSystem2::setStart(bool start)
 		{
 			(*it)->setCurWait((*it)->getCurWait() - curWait);
 		}
-	}
+	}/*
+	else if (_start && DATAMANAGER->isLoadGame())
+	{
+		for (auto it = _charList.begin(); it != _charList.end(); ++it)
+		{
+			if ((*it)->getTurnOrder(_charList.size()) == 0)
+			{
+				_curChar = (*it);
+				break;
+			}
+		}
+	}*/
 }
 
 vector<POINT> TurnSystem2::astar(POINT start, POINT dest)

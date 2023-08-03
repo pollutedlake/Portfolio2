@@ -36,6 +36,7 @@ void WorldMapScene::update(void)
 		SOUNDMANAGER->playSoundFMOD("WorldMapBG");
 	}
 	_camera->update();
+	SOUNDMANAGER->update();
 	_cameraPos = _camera->getPosition();
 	_frame++;
 	_nextMoveRC = RectMakeCenter(WINSIZE_X / 2 - (_cameraPos.x - 200) + IMAGEMANAGER->findImage("WorldMapMoveMarker")->getFrameWidth() / 4,

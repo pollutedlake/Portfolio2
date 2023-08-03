@@ -25,6 +25,11 @@ void SoundManager::release(void)
     deleteAll();
 }
 
+void SoundManager::update(void)
+{
+    pSystem->update();
+}
+
 void SoundManager::addMp3FileWithKey(string key, string fileName)
 {
 	string first = "open \"";
@@ -146,6 +151,7 @@ void SoundManager::playSoundFMOD(string key)
             return;
         }
     }
+    cout << "no channel" << endl;
 }
 
 void SoundManager::stopSoundFMOD(string key)

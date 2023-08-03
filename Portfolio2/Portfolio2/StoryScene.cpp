@@ -218,7 +218,8 @@ void StoryScene::release(void)
 
 void StoryScene::update(void)
 {
-	if(DATAMANAGER->getScenario() == 75)
+	SOUNDMANAGER->update();
+	if (DATAMANAGER->getScenario() == 75)
 	{
 		if (_backGroundIndex < 2)
 		{
@@ -1371,18 +1372,16 @@ void StoryScene::dialog(string charName, LPCWSTR* printStringArr, int length, in
 				DIALOGMANAGER->makeTextBox(getMemDC(), _dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].left, _dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].top,
 					_dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].right - _dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].left,
 					_dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].bottom - _dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].top, 127);
-				/*_textBoxImg->alphaRender(getMemDC(), _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left, _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top,
-				_dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].right - _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left, _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].bottom - _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top,
-				0, 0, _textBoxImg->getWidth(), _textBoxImg->getHeight(), 127);*/
 				FONTMANAGER->textOut(getMemDC(), _dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].left + 20, _dialogRC[_dialogData->_dialogList[_dialogIndex - 1]._dialogType].top + 20, "가을체", 25, 50,
 					_dialogData->_dialogList[_dialogIndex - 1]._script, _dialogData->_dialogList[_dialogIndex - 1]._dialogN, 999, RGB(255, 255, 255));
 			}
 		}
 		DIALOGMANAGER->makeTextBox(getMemDC(), _dialogRC[dialogType].left, _dialogRC[dialogType].top,
 			_dialogRC[dialogType].right - _dialogRC[dialogType].left, _dialogRC[dialogType].bottom - _dialogRC[dialogType].top, 127);
-		/*_textBoxImg->alphaRender(getMemDC(), _dialogRC[dialogType].left, _dialogRC[dialogType].top,
-		_dialogRC[dialogType].right - _dialogRC[dialogType].left, _dialogRC[dialogType].bottom - _dialogRC[dialogType].top,
-		0, 0, _textBoxImg->getWidth(), _textBoxImg->getHeight(), 127);*/
 		FONTMANAGER->textOut(getMemDC(), _dialogRC[dialogType].left + 20, _dialogRC[dialogType].top + 20, "가을체", 25, 50, printStringArr, arrSize, length, RGB(255, 255, 255));
+		if (_speakFinish)
+		{
+			IMAGEMANAGER->findImage("NextDialog")->frameRender(getMemDC(), _dialogRC[dialogType].right - 20, _dialogRC[dialogType].bottom - 20, (_frame / 10) % 6, 0);
+		}
 	}
 }

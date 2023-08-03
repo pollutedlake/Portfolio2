@@ -1,5 +1,7 @@
 #pragma once
 #include "SingletonBase.h"
+#include "Player.h"
+#include "Soldier.h"
 
 enum STATUS
 {
@@ -11,7 +13,7 @@ enum STATUS
 	STR,
 	DEX,
 	INTELLIGENCE,
-	SKILL,
+	SKILLPOWER,
 	LUCK,
 	SPD,
 	AC,
@@ -105,11 +107,14 @@ private:
 	map<int, DialogData*> _mDialogList;
 	map<int, vector<StoryData*>> _mStoryData;
 	map<int, vector<string>> _mSceneList;
+	vector<Character*> _loadCharList;
+	
 	int _eld;
 	int _scenario;
 	int _battleIdx;
 	int _sceneIdx;
 	bool _introVideo;
+	bool _loadGame;
 
 public:
 	HRESULT init(void);
@@ -119,6 +124,8 @@ public:
 
 	void setEld(int eld) { _eld = eld; }
 	void setIntroVideo(bool introVideo) {_introVideo = introVideo;}
+
+	void loadGame(FILE* fp);
 
 	vector<CharacterData*> getPartyData() {return _mParty;}
 	map<string, pair<ItemData*, int>> getInventory() { return _mInventory; }
@@ -131,6 +138,8 @@ public:
 	void setSceneIdx(int sceneIdx) {_sceneIdx = sceneIdx;}
 	int getSceneIdx() {return _sceneIdx;}
 	bool getIntroVideo() {return _introVideo;}
+	bool isLoadGame() {return _loadGame;}
+	void setLoadGame(bool load) {_loadGame = load;}
 
 	// 전투데이터
 	BattleData* findBattleData(string strKey, int i);
@@ -152,6 +161,8 @@ public:
 	vector<StoryData*> getStoryData(int scenarioN) { return _mStoryData.find(scenarioN)->second; }
 
 	vector<string> getSceneList(int scenarioN) {return _mSceneList.find(scenarioN)->second;}
+
+	vector<Character*> getLoadCharList() {return _loadCharList;}
 
 	DataManager() {}
 	~DataManager() {}

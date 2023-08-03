@@ -45,6 +45,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("VermontEnding", "Resources/Images/BackGrounds/EndingScene/VermontEnding.bmp", 130, 78, 2, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinEnding", "Resources/Images/BackGrounds/EndingScene/SaladinEnding.bmp", 1208, 101, 8, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addImage("EndingBG", "Resources/Images/BackGrounds/EndingScene/EndingBG.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("LoadBG", "Resources/Images/BackGrounds/TitleScene/LoadBG.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("Reminisce1", "Resources/Images/BackGrounds/EndingScene/Reminisce1.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("Reminisce2", "Resources/Images/BackGrounds/EndingScene/Reminisce2.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("Reminisce3", "Resources/Images/BackGrounds/EndingScene/Reminisce3.bmp", WINSIZE_X, WINSIZE_Y);
@@ -434,6 +435,12 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("FingerCursor", "Resources/Images/UI/FingerCursor.bmp", 105, 27, 5, 1, true, RGB(80, 120, 116));
 	IMAGEMANAGER->addFrameImage("PreferenceIcon", "Resources/Images/UI/PreferenceIcon.bmp", 98, 15, 7, 1, true, RGB(220, 160, 168));
 	IMAGEMANAGER->addImage("LaunchTile", "Resources/Images/UI/LaunchTile.bmp", 40, 30);
+	IMAGEMANAGER->addImage("Episode", "Resources/Images/UI/Episode.bmp", 26, 6, true, RGB(220, 160, 168));
+	IMAGEMANAGER->addImage("Chapter", "Resources/Images/UI/Chapter.bmp", 28, 6, true, RGB(220, 160, 168));
+	IMAGEMANAGER->addImage("Time", "Resources/Images/UI/Time.bmp", 14, 6, true, RGB(220, 160, 168));
+	IMAGEMANAGER->addFrameImage("NextDialog", "Resources/Images/UI/NextDialog.bmp", 54, 8, 6, 1, true, RGB(0, 252, 0));
+	IMAGEMANAGER->addFrameImage("SaveLoadIcon", "Resources/Images/UI/SaveLoadIcon.bmp", 39, 15, 3, 1, true, RGB(220, 160, 168));
+	IMAGEMANAGER->addImage("BulletPoint", "Resources/Images/UI/BulletPoint.bmp", 2, 2);
 
 	// 스토리씬 배경
 	IMAGEMANAGER->addImage("StoryBG69-1", "Resources/Images/BackGrounds/StoryScene/StoryBG69-1.bmp", WINSIZE_X, WINSIZE_Y);

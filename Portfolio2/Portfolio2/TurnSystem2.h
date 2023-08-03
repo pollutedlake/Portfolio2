@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "Enemy.h"
+#include "Soldier.h"
 #include "Player.h"
 #include "Obstacle.h"
 #include "Camera.h"
@@ -85,6 +86,7 @@ public:
 	POINT findPlayer();
 	void nextTurn();
 	void saveGame();
+	void setCharList(vector<Character*> charList) {_charList = charList; for(int i = 0; i <_charList.size(); i++) { _objectList.push_back(_charList[i]);}}
 
 	void setStart(bool start);
 

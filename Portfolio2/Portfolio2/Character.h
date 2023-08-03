@@ -37,10 +37,10 @@ protected:
 	float x, y;
 	char* _skillName;
 
-	float _curHP;
-	float _maxHP;
-	float _maxMP;
-	float _curMP;
+	int _curHP;
+	int _maxHP;
+	int _maxMP;
+	int _curMP;
 	
 
 public:
@@ -62,6 +62,10 @@ public:
 	void setDamage(int damage) {_damage = damage;}
 	void setSkillOrder(int i) {_skillOrder.reset(); _skillOrder.set(i); _frame = 0; }
 	void setSkillName(char* skillName) { _skillName = skillName; }
+	void setCurHP(int curHP) {_curHP = curHP;}
+	void setCurMP(int curMP) {_curMP = curMP;}
+	void setMobility(int mobility) {_mobility = mobility;}
+	void setWTP(int wtp) {_wtp = wtp;}
 
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
@@ -74,11 +78,12 @@ public:
 	bool canAction() {return _turn.test(TURNACTION);}
 	bool isAttack() {return _isAttack;}
 	bool isSkill() { return _state[SKILL]; }
-	float getCurHP() { return _curHP; }
-	float getMaxHP() { return _maxHP; }
-	float getMaxMP() { return _maxMP; }
-	float getCurMP() { return _curMP; }
+	int getCurHP() { return _curHP; }
+	int getMaxHP() { return _maxHP; }
+	int getMaxMP() { return _maxMP; }
+	int getCurMP() { return _curMP; }
 	int getMobility() {return _mobility;}
+	int getDir() {for(int i = 0; i < 4; i++) {if(_dir.test(i)) {return i;} } }
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
 	void endTurn() {_turn.reset();}

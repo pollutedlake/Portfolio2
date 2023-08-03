@@ -10,6 +10,7 @@
 #include "ShopScene.h"
 #include "LoadingScene.h"
 #include "BattleScene.h"
+#include "LoadScene.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -22,6 +23,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Shop", new ShopScene);
     SCENEMANAGER->addScene("Loading", new LoadingScene);
     SCENEMANAGER->addScene("Battle", new BattleScene);
+    SCENEMANAGER->addScene("Load", new LoadScene);
     _whiteImg = IMAGEMANAGER->findImage("White");
     _blackImg = IMAGEMANAGER->findImage("Black");
     _currentScene = nullptr;

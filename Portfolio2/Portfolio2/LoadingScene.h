@@ -7,6 +7,7 @@ private:
 	string _nextScene;
 	int _loadingImgIndex;
 	int _frame;
+
 public:
 	HRESULT init(string nextScene);
 	void release(void);

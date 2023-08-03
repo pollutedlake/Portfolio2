@@ -25,6 +25,7 @@ private:
 	int _fadeOutStartFrame;
 	bool _fadeOut;
 	bool _videoShow;
+	bool _load;
 
 	RECT rcSrc, rcDest;
 	IGraphBuilder* _pGraphBuilder;

@@ -13,6 +13,7 @@ HRESULT TitleScene::init(void)
 	_titleButtons = IMAGEMANAGER->findImage("TitleButtons");
 	_cursor = IMAGEMANAGER->findImage("MouseCursor");
 	_frame = 0;
+	_load = false;
 	_deltaTime = 0;
 	_activeButton = -1;
 	_fadeOutStartFrame = 0;
@@ -46,6 +47,7 @@ HRESULT TitleScene::init(void)
 
 void TitleScene::update(void)
 {
+	SOUNDMANAGER->update();
 	if (DATAMANAGER->getIntroVideo())
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
@@ -94,6 +96,13 @@ void TitleScene::update(void)
 					_fadeOut = true;
 					_fadeOutStartFrame = _frame;
 					break;
+				case 1:
+					_load = true;
+					_fadeOut = true;
+					_fadeOutStartFrame = _frame;
+					SOUNDMANAGER->stopSoundFMOD("TitleScene");
+					SOUNDMANAGER->playSoundFMOD("TitleButton");
+					break;
 				case 3:
 					PostQuitMessage(0);
 					break;
@@ -104,7 +113,14 @@ void TitleScene::update(void)
 		{
 			if (_frame > _fadeOutStartFrame + _titleEFX4->getMaxFrameX())
 			{
-				SCENEMANAGER->changeScene("Scenario");
+				if (_load)
+				{
+					SCENEMANAGER->changeScene("Load");
+				}
+				else
+				{
+					SCENEMANAGER->changeScene("Scenario");
+				}
 			}
 		}
 	}

@@ -157,7 +157,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #define DATAMANAGER DataManager::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)
-#define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))
+#define WINNAME					(LPTSTR)(TEXT("창세기전3 Part1"))
 #define WINSTART_X				400
 #define WINSTART_Y				100
 #define WINSIZE_X				960

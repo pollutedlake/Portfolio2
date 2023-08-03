@@ -1120,6 +1120,9 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("IronMaskDamagedDown")->render(hdc, position.x - 20, position.y - 5);
 			}
+			char damageStr[50];
+			wsprintf(damageStr, "%d", _damage);
+			FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "가을체", 20, 500, damageStr, strlen(damageStr), RGB(255, 0, 0));
 		}
 		else if (_state.test(DIE))
 		{
@@ -1282,6 +1285,9 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("ChristianDamagedDown")->render(hdc, position.x, position.y + 10);
 			}
+			char damageStr[50];
+			wsprintf(damageStr, "%d", _damage);
+			FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "가을체", 20, 500, damageStr, strlen(damageStr), RGB(255, 0, 0));
 		}
 		else if (_state.test(DIE))
 		{

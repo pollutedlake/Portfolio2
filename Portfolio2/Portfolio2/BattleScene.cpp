@@ -23,12 +23,22 @@ HRESULT BattleScene::init(void)
 
 	_turnSystem = new TurnSystem2();
 	_party = DATAMANAGER->getPartyData();
-	for (auto it = battleData->_enemy.begin(); it != battleData->_enemy.end(); ++it)
+	_launch = false;
+	if (DATAMANAGER->isLoadGame())
 	{
-		Soldier* soldier = new Soldier;
-		soldier->init(EnemyType(it->_type));
-		_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder);
-		//soldier->setState(4);
+		_turnSystem->setCharList(DATAMANAGER->getLoadCharList());
+		_launch = true;
+		_turnSystem->setStart(true);
+	}
+	else
+	{
+		for (auto it = battleData->_enemy.begin(); it != battleData->_enemy.end(); ++it)
+		{
+			Soldier* soldier = new Soldier;
+			soldier->init(EnemyType(it->_type));
+			_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder);
+			//soldier->setState(4);
+		}
 	}
 	for (auto it = battleData->_object.begin(); it != battleData->_object.end(); ++it)
 	{
@@ -36,6 +46,7 @@ HRESULT BattleScene::init(void)
 		_turnSystem->addObject(new Obstacle(_text, it->_rcLT, it->_width, it->_height, it->_sortTile));
 	}
 	_turnSystem->init(_camera, IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), IMAGEMANAGER->findImage(_bgImg)->getHeight() / TILEHEIGHT, IMAGEMANAGER->findImage(_bgImg)->getWidth() / TILEWIDTH);
+	DATAMANAGER->setLoadGame(false);
 
 	for (int i = 0; i < _party.size(); i++)
 	{
@@ -49,7 +60,6 @@ HRESULT BattleScene::init(void)
 	_showMiniStatusFrame = 0;
 	_launchOrder.reset();
 	_launchOrder.set(0);
-	_launch = false;
 	_frame = 0;
 	return S_OK;
 }
@@ -63,6 +73,7 @@ void BattleScene::update(void)
 	}
 	_frame++;
 	_camera->update();
+	SOUNDMANAGER->update();
 	_cameraPos = _camera->getPosition();
 
 	if (_turnSystem->getCurChar()->isSkill())

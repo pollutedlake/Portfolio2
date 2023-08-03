@@ -312,6 +312,7 @@ void BossBattleScene::update(void)
 		SOUNDMANAGER->playSoundFMOD("BossBattle");
 	}
 	_camera->update();
+	SOUNDMANAGER->update();
 	_cameraPos = _camera->getPosition();
 	_frame++;
 	if (KEYMANAGER->isOnceKeyDown('B'))

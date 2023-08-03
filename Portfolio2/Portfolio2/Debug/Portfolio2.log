@@ -1,2 +1,3 @@
-﻿  SoundManager.cpp
-  Portfolio2.vcxproj -> C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+﻿  DataManager.cpp
+C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\DataManager.cpp(251,7): warning C4101: 'str' :참조되지 않은 지역 변수입니다.
+  Portfolio2.vcxproj -> C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

@@ -20,6 +20,7 @@ private:
 public:
 	HRESULT init(void);
 	void release(void);
+	void update(void);
 
 	void addMp3FileWithKey(string key, string fileName);
 	void addWaveFileWithKey(string key, string fileName);

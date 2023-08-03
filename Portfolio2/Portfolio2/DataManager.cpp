@@ -7,6 +7,7 @@ HRESULT DataManager::init(void)
 	_scenario = 69;
 	_sceneIdx = 0;
 	_battleIdx = 0;
+	_loadGame = false;
 	if (fopen_s(&_fp, "Resources/Data/ItemList.txt", "r") == 0)
 	{
 		char itemName[256];
@@ -142,7 +143,6 @@ HRESULT DataManager::init(void)
 		{
 			int scenarioN;
 			int dialogN;
-			//vector<DialogData*> dialogList;
 			fscanf_s(_fp, "%d%d\n", &scenarioN, &dialogN);
 			DialogData* dialogData = new DialogData;
 			while (dialogN--)
@@ -239,6 +239,83 @@ void DataManager::release(void)
 
 void DataManager::render(void)
 {
+}
+
+void DataManager::loadGame(FILE* fp)
+{
+	_loadCharList.clear();
+	_loadGame = true;
+	fscanf_s(fp, "%d %d\n", &_battleIdx, &_sceneIdx);
+	int charN;
+	fscanf_s(fp, "%d\n", &charN);
+	char str[256];
+	int data;
+	int data2;
+	for (int i = 0; i < charN; i++)
+	{
+		fscanf_s(fp, "%d\n", &data);
+		if (data == 0)
+		{
+			char name[256];
+			fscanf_s(fp, "%s\n", name, _countof(name));
+			int skillN;
+			fscanf_s(fp, "%d\n", &skillN);
+			vector<pair<char*, int>> skill;
+			while (skillN--)
+			{
+				char* skillName = new char[256];
+				fscanf_s(fp, "%[^\t]\t%d ", skillName, strlen(skillName), &data);
+				skill.push_back(make_pair(skillName, data));
+			}
+			fscanf_s(fp, "\n");
+			Player* player = new Player(name, skill);
+			player->init();
+			fscanf_s(fp, "%d", &data);
+			fscanf_s(fp, "%d", &data2);
+			player->setTilePos({data, data2});
+			fscanf_s(fp, "%d", &data);
+			player->setCurHP(data);
+			fscanf_s(fp, "%d", &data);
+			player->setCurMP(data);
+			fscanf_s(fp, "%d", &data);
+			player->setMobility(data);
+			fscanf_s(fp, "%d", &data);
+			player->setWTP(data);
+			fscanf_s(fp, "%d", &data);
+			player->setCurWait(data);
+			fscanf_s(fp, "%d", &data);
+			player->setTurnOder(data);
+			fscanf_s(fp, "%d", &data);
+			player->setDir(data);
+			fscanf_s(fp, "\n");
+			_loadCharList.push_back(player);
+		}
+		else
+		{
+			fscanf_s(_fp, "%d\n", &data);
+			Soldier* enemy = new Soldier;
+			enemy->init((EnemyType)data);
+			fscanf_s(fp, "%d", &data);
+			fscanf_s(fp, "%d", &data2);
+			enemy->setTilePos({ data, data2 });
+			fscanf_s(fp, "%d", &data);
+			enemy->setCurHP(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setCurMP(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setMobility(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setWTP(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setCurWait(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setTurnOder(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setDir(data);
+			fscanf_s(fp, "\n");
+			_loadCharList.push_back(enemy);
+		}
+	}
 }
 
 ItemData* DataManager::findItem(string strKey)

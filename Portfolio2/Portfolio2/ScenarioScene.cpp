@@ -28,7 +28,8 @@ HRESULT ScenarioScene::init(void)
 
 void ScenarioScene::update(void)
 {
-	if(!_fadeOut)
+	SOUNDMANAGER->update();
+	if (!_fadeOut)
 	{
 		if (!SOUNDMANAGER->isPlaying())
 		{

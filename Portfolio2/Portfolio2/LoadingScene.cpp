@@ -16,7 +16,8 @@ void LoadingScene::release(void)
 void LoadingScene::update(void)
 {
     _frame++;
-    if (_frame > 100)
+	SOUNDMANAGER->update();
+	if (_frame > 100)
     {
         SCENEMANAGER->changeScene(_nextScene);
     }
