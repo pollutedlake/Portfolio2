@@ -136,6 +136,7 @@ public:
 	void setBattleIdx(int battleIdx) {_battleIdx = battleIdx;}
 	int getBattleIdx() {return _battleIdx;}
 	void setSceneIdx(int sceneIdx) {_sceneIdx = sceneIdx;}
+	void setLoadCharList(vector<Character*> loadCharList) { _loadCharList = loadCharList; }
 	int getSceneIdx() {return _sceneIdx;}
 	bool getIntroVideo() {return _introVideo;}
 	bool isLoadGame() {return _loadGame;}

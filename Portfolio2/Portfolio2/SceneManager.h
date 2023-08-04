@@ -10,6 +10,7 @@ public:
 
 private:
 	GameNode* _currentScene;
+	GameNode* _exScene;
 	mapSceneList _sceneMap;
 	GImage* _blackImg;
 	GImage* _whiteImg;
@@ -24,6 +25,9 @@ public:
 	void addScene(string sceneName, GameNode* scene);
 	HRESULT loadingScene();
 	HRESULT changeScene(string sceneName);
+
+	void setExScene(GameNode* exScene) { _exScene = exScene; }
+	void returnScene() { _currentScene = _exScene; }
 
 	void fadeOutWhite(int start, int cur, int end);
 	void fadeInWhite(int start, int cur, int end);

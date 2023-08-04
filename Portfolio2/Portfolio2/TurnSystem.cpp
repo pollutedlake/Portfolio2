@@ -720,6 +720,16 @@ void TurnSystem::sortObjectList()
 						_objectList[j] = _objectList[i];
 						_objectList[i] = temp;
 					}
+					else
+					{
+						if (_objectList[i]->getTilePos().x > _objectList[j]->getTilePos().x)
+						{
+							Object* temp;
+							temp = _objectList[j];
+							_objectList[j] = _objectList[i];
+							_objectList[i] = temp;
+						}
+					}
 				}
 			}
 		}

@@ -425,6 +425,24 @@ HRESULT Resources::init(void)
 
 	// 죠안 이미지
 	IMAGEMANAGER->addImage("죠안 카트라이트Mini", "Resources/Images/UI/JoanMini.bmp", 50, 50);
+	IMAGEMANAGER->addFrameImage("JoanIdleUp", "Resources/Images/Characters/Joan/JoanIdleUp.bmp", 90, 68, 3, 1, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanIdleDown", "Resources/Images/Characters/Joan/JoanIdleDown.bmp", 96, 66, 3, 1, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanIdleSide", "Resources/Images/Characters/Joan/JoanIdleSide.bmp", 114, 136, 3, 2, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanMoveUp", "Resources/Images/Characters/Joan/JoanMoveUp.bmp", 318, 75, 6, 1, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanMoveDown", "Resources/Images/Characters/Joan/JoanMoveDown.bmp", 192, 67, 6, 1, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanMoveSide", "Resources/Images/Characters/Joan/JoanMoveSide.bmp", 366, 126, 6, 2, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanAttackUp", "Resources/Images/Characters/Joan/JoanAttackUp.bmp", 648, 109, 8, 1, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanAttackDown", "Resources/Images/Characters/Joan/JoanAttackDown.bmp", 616, 97, 8, 1, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanAttackSide", "Resources/Images/Characters/Joan/JoanAttackSide.bmp", 968, 142, 8, 2, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanDamagedSide", "Resources/Images/Characters/Joan/JoanDamagedSide.bmp", 33, 104, 1, 2, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("JoanDamagedUp", "Resources/Images/Characters/Joan/JoanDamagedUp.bmp", 32, 60, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addImage("JoanDamagedDown", "Resources/Images/Characters/Joan/JoanDamagedDown.bmp", 53, 46, true, RGB(252, 252, 252));
+	IMAGEMANAGER->addFrameImage("JoanAttackUpEffect1", "Resources/Images/Characters/Joan/JoanAttackUpEffect1.bmp", 712, 125, 8, 1, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("JoanAttackUpEffect2", "Resources/Images/Characters/Joan/JoanAttackUpEffect2.bmp", 445, 127, 5, 1, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("JoanAttackSideEffect1", "Resources/Images/Characters/Joan/JoanAttackSideEffect1.bmp", 1192, 186, 8, 2, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("JoanAttackSideEffect2", "Resources/Images/Characters/Joan/JoanAttackSideEffect2.bmp", 635, 178, 5, 2, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("JoanAttackDownEffect1", "Resources/Images/Characters/Joan/JoanAttackDownEffect1.bmp", 801, 124, 9, 1, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("JoanAttackDownEffect2", "Resources/Images/Characters/Joan/JoanAttackDownEffect2.bmp", 445, 127, 5, 1, true, RGB(0, 76, 0));
 
 	// 아지다하카
 	IMAGEMANAGER->addFrameImage("AjdahakaUp", "Resources/Images/Characters/Ajdahaka/AjdahakaUp.bmp", 2880, 141, 12, 1, true, RGB(8, 8, 4));

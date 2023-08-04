@@ -298,6 +298,13 @@ void TurnSystem2::update(POINT cursorTile)
 								SOUNDMANAGER->stopAllSoundFMOD();
 								SCENEMANAGER->changeScene("Load");
 							}
+							else if (PtInRect(&_preferenceButtons[3], _ptMouse))
+							{
+								SOUNDMANAGER->stopAllSoundFMOD();
+								DATAMANAGER->setLoadGame(true);
+								DATAMANAGER->setLoadCharList(_charList);
+								SCENEMANAGER->changeScene("Load");
+							}
 						}
 						else
 						{
@@ -669,7 +676,7 @@ void TurnSystem2::render(HDC hdc)
 	if (_preference)
 	{
 		DIALOGMANAGER->makeTextBox(hdc, _exPtMouse.x, _exPtMouse.y, 170, 195, 255);
-		char* preferenceStr[7] = { "전투 시스템 메뉴", "퀵 세이브", "로드", "전투목표", "옵션", "전투 처음부터", "게임 종료" };
+		char* preferenceStr[7] = { "전투 시스템 메뉴", "퀵 세이브", "로드", "세이브", "옵션", "전투 처음부터", "게임 종료" };
 		SetTextAlign(hdc, TA_CENTER);
 		IMAGEMANAGER->findImage("PreferenceIcon")->frameRender(hdc, _preferenceButtons[0].left + 5, _preferenceButtons[0].top + 5, 0, 0);
 		FONTMANAGER->textOut(hdc, (_preferenceButtons[0].left + _preferenceButtons[0].right) / 2, _preferenceButtons[0].top + 5, "가을체", 15, 100, preferenceStr[0], strlen(preferenceStr[0]), RGB(164, 215, 242));
@@ -760,12 +767,22 @@ void TurnSystem2::sortObjectList()
 				if (_objectList[j]->getType() != 2)
 				{
 					Character* character = (Character*)_objectList[j];
-					if (!character->isDoing())
+					if (character->isDoing())
 					{
 						Object* temp;
 						temp = _objectList[j];
 						_objectList[j] = _objectList[i];
 						_objectList[i] = temp;
+					}
+					else
+					{
+						if (_objectList[i]->getTilePos().x > _objectList[j]->getTilePos().x)
+						{
+							Object* temp;
+							temp = _objectList[j];
+							_objectList[j] = _objectList[i];
+							_objectList[i] = temp;
+						}
 					}
 				}
 			}
@@ -1140,7 +1157,9 @@ void TurnSystem2::saveGame()
 {
 	if (0 == fopen_s(&_fp, "save9.txt", "w"))
 	{
-		fprintf(_fp, "%d %d %d\n", DATAMANAGER->getScenario(), DATAMANAGER->getBattleIdx(), DATAMANAGER->getSceneIdx() - 1);
+		SYSTEMTIME st;
+		GetLocalTime(&st);
+		fprintf(_fp, "%d %d %d %d %d %d %d %d\n", DATAMANAGER->getScenario(), st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, DATAMANAGER->getBattleIdx(), DATAMANAGER->getSceneIdx() - 1);
 		fprintf(_fp, "%d\n", _charList.size());
 		for (int i = 0; i < _charList.size(); i++)
 		{
@@ -1148,7 +1167,6 @@ void TurnSystem2::saveGame()
 			if (_charList[i]->getType() == PLAYER)
 			{
 				Player* player = (Player*)_charList[i];
-				//vector<pair<char*, int>> skill = player->getSkill();
 				fprintf(_fp, "%s\n", player->getPlayerName().c_str());
 				fprintf(_fp, "%d\n", player->getSkill().size());
 				for (int j = 0; j < player->getSkill().size(); j++)

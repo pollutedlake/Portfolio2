@@ -16,15 +16,17 @@ HRESULT LoadScene::init(void)
 	_loadButton[8].top = WINSIZE_Y - 100;
 	_loadButton[8].bottom = WINSIZE_Y - 60;
 	for (int i = 0; i < 9; i++)
-	{
-		if (_fp[i].first != nullptr)
+	{	
+		_scenarioN[i] = -1;
+		if (_loadFP != nullptr)
 		{
-			fclose(_fp[i].first);
+			fclose(_loadFP);
 		}
 		wsprintf(_text, "save%d.txt", i + 1);
-		if (fopen_s(&_fp[i].first, _text, "r") == 0)
+		if (fopen_s(&_loadFP, _text, "r") == 0)
 		{
-			fscanf_s(_fp[i].first, "%d", &_fp[i].second);
+			fscanf_s(_loadFP, "%d %d %d %d %d %d", &_scenarioN[i], &_time[i].month, &_time[i].day, &_time[i].hour, &_time[i].minute, &_time[i].second);
+			fclose(_loadFP);
 		}
 	}
 	return S_OK;
@@ -32,11 +34,8 @@ HRESULT LoadScene::init(void)
 
 void LoadScene::release(void)
 {
-	for (int i = 0; i < 9; i++)
-	{
-		fclose(_fp[i].first);
-		SAFE_DELETE(_fp[i].first);
-	}
+	fclose(_loadFP);
+	fclose(_saveFP);
 }
 
 void LoadScene::update(void)
@@ -47,17 +46,28 @@ void LoadScene::update(void)
 	{
 		for (int i = 0; i < 9; i++)
 		{
-			if (PtInRect(&_loadButton[i], _ptMouse) && _fp[i].first != nullptr)
+			if (PtInRect(&_loadButton[i], _ptMouse))
 			{
-				DATAMANAGER->setScenario(_fp[i].second);
-				DATAMANAGER->loadGame(_fp[i].first);
-				SCENEMANAGER->loadingScene();
-				for (int i = 0; i < 9; i++)
+				if (DATAMANAGER->isLoadGame())
 				{
-					if (_fp[i].first != nullptr)
+					_selectButton = i;
+					saveGame();
+					DATAMANAGER->setSceneIdx(DATAMANAGER->getSceneIdx() - 1);
+					SCENEMANAGER->loadingScene();
+				}
+				else if(_scenarioN[i] != -1)
+				{
+					DATAMANAGER->setScenario(_scenarioN[i]);
+					wsprintf(_text, "save%d.txt", i + 1);
+					fopen_s(&_loadFP, _text, "r");
+					int temp;
+					for (int i = 0; i < 6; i++)
 					{
-						fclose(_fp[i].first);
+						fscanf_s(_loadFP, "%d", &temp);
 					}
+					DATAMANAGER->loadGame(_loadFP);
+					SCENEMANAGER->loadingScene();
+					fclose(_loadFP);
 				}
 			}
 		}
@@ -70,11 +80,23 @@ void LoadScene::render(void)
 	DIALOGMANAGER->makeTextBox(getMemDC(), 200, 100, WINSIZE_X - 400, WINSIZE_Y - 250, 200);
 	DIALOGMANAGER->makeTextBox(getMemDC(), 200, WINSIZE_Y - 150, WINSIZE_X - 400, 100, 200);
 	IMAGEMANAGER->findImage("SaveLoadIcon")->frameRender(getMemDC(), 210, 110, 
-		IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameWidth() * 2, IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameHeight() * 2, 1, 0);
+		IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameWidth() * 2, IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameHeight() * 2, !DATAMANAGER->isLoadGame(), 0);
 	IMAGEMANAGER->findImage("SaveLoadIcon")->frameRender(getMemDC(), 210, WINSIZE_Y - 140,
 		IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameWidth() * 2, IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameHeight() * 2, 2, 0);
-	FONTMANAGER->textOut(getMemDC(), 250, 115, "가을체", 30, 100, "로드", strlen("로드"), RGB(164, 215, 242));
-	FONTMANAGER->textOut(getMemDC(), 250, WINSIZE_Y - 135, "가을체", 30, 100, "퀵 로드", strlen("퀵 로드"), RGB(164, 215, 242));
+	if (DATAMANAGER->isLoadGame())
+	{
+		FONTMANAGER->textOut(getMemDC(), 250, 115, "가을체", 30, 100, "세이브", strlen("세이브"), RGB(164, 215, 242));
+		FONTMANAGER->textOut(getMemDC(), 250, WINSIZE_Y - 135, "가을체", 30, 100, "퀵 세이브", strlen("퀵 세이브"), RGB(164, 215, 242));
+		IMAGEMANAGER->findImage("PreferenceIcon")->frameRender(getMemDC(), 210, WINSIZE_Y - 140,
+			IMAGEMANAGER->findImage("PreferenceIcon")->getFrameWidth() * 2, IMAGEMANAGER->findImage("PreferenceIcon")->getFrameHeight() * 2, 1, 0);
+	}
+	else
+	{
+		FONTMANAGER->textOut(getMemDC(), 250, 115, "가을체", 30, 100, "로드", strlen("로드"), RGB(164, 215, 242));
+		FONTMANAGER->textOut(getMemDC(), 250, WINSIZE_Y - 135, "가을체", 30, 100, "퀵 로드", strlen("퀵 로드"), RGB(164, 215, 242));
+		IMAGEMANAGER->findImage("SaveLoadIcon")->frameRender(getMemDC(), 210, WINSIZE_Y - 140,
+			IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameWidth() * 2, IMAGEMANAGER->findImage("SaveLoadIcon")->getFrameHeight() * 2, 2, 0);
+	}
 	IMAGEMANAGER->findImage("Episode")->render(getMemDC(), 250, 160, IMAGEMANAGER->findImage("Episode")->getWidth() * 2, IMAGEMANAGER->findImage("Episode")->getHeight() * 2,
 		0, 0, IMAGEMANAGER->findImage("Episode")->getWidth(), IMAGEMANAGER->findImage("Episode")->getHeight());
 	IMAGEMANAGER->findImage("Chapter")->render(getMemDC(), 450, 160, IMAGEMANAGER->findImage("Chapter")->getWidth() * 2, IMAGEMANAGER->findImage("Chapter")->getHeight() * 2,
@@ -89,13 +111,13 @@ void LoadScene::render(void)
 				_loadButton[i].bottom - _loadButton[i].top, 0, 0, IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 200);
 		}
 		wsprintf(_text, "save%d.txt", i + 1);
-		if (_fp[i].first == nullptr)
+		if (_scenarioN[i] == -1)
 		{
 			FONTMANAGER->textOut(getMemDC(), 250, _loadButton[i].top + 5, "가을체", 30, 100, "BLANK", strlen("BLANK"), RGB(248, 136, 0));
 		}
 		else
 		{
-			switch (_fp[i].second % 3)
+			switch (_scenarioN[i] % 3)
 			{
 				case 0:
 					wsprintf(_text, "시반 슈미터");
@@ -108,7 +130,7 @@ void LoadScene::render(void)
 				break;
 			}
 			FONTMANAGER->textOut(getMemDC(), 250, _loadButton[i].top + 5, "가을체", 30, 100, _text, strlen(_text), RGB(255, 255, 255));
-			switch (_fp[i].second)
+			switch (_scenarioN[i])
 			{
 				case 69:
 					wsprintf(_text, "불사조");
@@ -118,9 +140,50 @@ void LoadScene::render(void)
 				break;
 			}
 			FONTMANAGER->textOut(getMemDC(), 450, _loadButton[i].top + 5, "가을체", 30, 100, _text, strlen(_text), RGB(255, 255, 255));
+			wsprintf(_text, "%d/%d %d:%d:%d", _time[i].month, _time[i].day, _time[i].hour, _time[i].minute, _time[i].second);
+			FONTMANAGER->textOut(getMemDC(), 600, _loadButton[i].top + 10, "가을체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 		}
 		IMAGEMANAGER->findImage("BulletPoint")->render(getMemDC(), _loadButton[i].left + 10, _loadButton[i].top + 15, IMAGEMANAGER->findImage("BulletPoint")->getWidth() * 2,
 			IMAGEMANAGER->findImage("BulletPoint")->getHeight() * 2, 0, 0, IMAGEMANAGER->findImage("BulletPoint")->getWidth(), IMAGEMANAGER->findImage("BulletPoint")->getHeight());
 	}
 	IMAGEMANAGER->findImage("MouseCursor")->frameRender(getMemDC(), _ptMouse.x, _ptMouse.y, (_frame / 5) % 7, 0);
+}
+
+void LoadScene::saveGame()
+{
+	wsprintf(_text, "save%d.txt", _selectButton + 1);
+	if (0 == fopen_s(&_saveFP, _text, "w"))
+	{
+		SYSTEMTIME st;
+		GetLocalTime(&st);
+		fprintf(_saveFP, "%d %d %d %d %d %d %d %d\n", DATAMANAGER->getScenario(), st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, DATAMANAGER->getBattleIdx(), DATAMANAGER->getSceneIdx() - 1);
+		fprintf(_saveFP, "%d\n", DATAMANAGER->getLoadCharList().size());
+		for (int i = 0; i < DATAMANAGER->getLoadCharList().size(); i++)
+		{
+			fprintf(_saveFP, "%d\n", DATAMANAGER->getLoadCharList()[i]->getType());
+			if (DATAMANAGER->getLoadCharList()[i]->getType() == 0)
+			{
+				Player* player = (Player*)DATAMANAGER->getLoadCharList()[i];
+				fprintf(_saveFP, "%s\n", player->getPlayerName().c_str());
+				fprintf(_saveFP, "%d\n", player->getSkill().size());
+				for (int j = 0; j < player->getSkill().size(); j++)
+				{
+					fprintf(_saveFP, "%s\t%d ", player->getSkill()[j].first, player->getSkill()[j].second);
+				}
+				fprintf(_saveFP, "\n");
+			}
+			else
+			{
+				Soldier* enemy = (Soldier*)DATAMANAGER->getLoadCharList()[i];
+				fprintf(_saveFP, "%d\n", enemy->getEnemyType());
+			}
+			fprintf(_saveFP, "%d %d %d %d %d %d %d %d %d\n", DATAMANAGER->getLoadCharList()[i]->getTilePos().x, DATAMANAGER->getLoadCharList()[i]->getTilePos().y, DATAMANAGER->getLoadCharList()[i]->getCurHP(), DATAMANAGER->getLoadCharList()[i]->getCurMP(),
+				DATAMANAGER->getLoadCharList()[i]->getMobility(), DATAMANAGER->getLoadCharList()[i]->getWTP(), DATAMANAGER->getLoadCharList()[i]->getCurWait(), DATAMANAGER->getLoadCharList()[i]->getTurnOrder(DATAMANAGER->getLoadCharList().size()), DATAMANAGER->getLoadCharList()[i]->getDir());
+		}
+		/*for (auto it = DATAMANAGER->getPartyData().begin(); it != DATAMANAGER->getPartyData().end(); ++it)
+		{
+
+		}*/
+		fclose(_saveFP);
+	}
 }

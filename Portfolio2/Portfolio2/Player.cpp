@@ -505,15 +505,119 @@ void Player::update(void)
 		}
 		else if (_state.test(ATTACK))
 		{
-			
+			if (_destTilePos.x - _tilePos.x > 0)
+			{
+				_dir.reset();
+				_dir.set(RIGHT);
+			}
+			else if (_destTilePos.x - _tilePos.x < 0)
+			{
+				_dir.reset();
+				_dir.set(LEFT);
+			}
+			else
+			{
+				if (_destTilePos.y - _tilePos.y > 0)
+				{
+					_dir.reset();
+					_dir.set(DOWN);
+				}
+				else if (_destTilePos.y - _tilePos.y < 0)
+				{
+					_dir.reset();
+					_dir.set(UP);
+				}
+			}
+			if (_dir.test(LEFT) || _dir.test(RIGHT))
+			{
+				if (_frame == 20 || _frame == 60)
+				{
+					SOUNDMANAGER->playSoundFMOD("GunLoad");
+				}
+				if (_frame / 10 == 2 || _frame / 10 == 6)
+				{
+					_isAttack = true;
+				}
+				else
+				{
+					_isAttack = false;
+					_damage = 0;
+				}
+				if (_frame / 10 > IMAGEMANAGER->findImage("JoanAttackSide")->getMaxFrameX())
+				{
+					_state.reset();
+					setDoing(false);
+					_turn.flip(1);
+				}
+			}
+			else if (_dir.test(UP))
+			{
+				if (_frame == 20 || _frame == 60)
+				{
+					SOUNDMANAGER->playSoundFMOD("GunLoad");
+				}
+				if (_frame / 10 == 2 || _frame / 10 == 6)
+				{
+					_isAttack = true;
+				}
+				else
+				{
+					_isAttack = false;
+					_damage = 0;
+				}
+				if (_frame / 10 > IMAGEMANAGER->findImage("JoanAttackUp")->getMaxFrameX())
+				{
+					_state.reset();
+					setDoing(false);
+					_turn.flip(1);
+				}
+			}
+			else if (_dir.test(DOWN))
+			{
+				if (_frame == 20 || _frame == 60)
+				{
+					SOUNDMANAGER->playSoundFMOD("GunLoad");
+				}
+				if (_frame / 10 == 2 || _frame / 10 == 6)
+				{
+					_isAttack = true;
+				}
+				else
+				{
+					_isAttack = false;
+					_damage = 0;
+				}
+				if (_frame / 10 > IMAGEMANAGER->findImage("JoanAttackDown")->getMaxFrameX())
+				{
+					_state.reset();
+					setDoing(false);
+					_turn.flip(1);
+				}
+			}
 		}
 		else if (_state.test(DIE))
 		{
-			
+			if (255 - 255 / 30 * _frame < 0)
+			{
+				_isDie = true;
+			}
 		}
 		else if (_state.test(DAMAGED))
 		{
-			
+			if (_frame / 5 > 0)
+			{
+				_curHP -= _damage;
+				if (_curHP <= 0)
+				{
+					_curHP = 0;
+					setState(pow(2, DIE));
+				}
+				else
+				{
+					_state.reset();
+					setDoing(false);
+				}
+			}
 		}
 		else if (_state.test(SKILL))
 		{
@@ -530,19 +634,19 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-				IMAGEMANAGER->findImage("SaladinIdleLeft")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 5) % 4, 0);
+				IMAGEMANAGER->findImage("SaladinIdleLeft")->frameRender(hdc, position.x - 10, position.y - 10, (_frame / 10) % 4, 0);
 			}
 			else if (_dir.test(RIGHT))
 			{
-				IMAGEMANAGER->findImage("SaladinIdleRight")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 5) % 4, 0);
+				IMAGEMANAGER->findImage("SaladinIdleRight")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 10) % 4, 0);
 			}
 			else if (_dir.test(UP))
 			{
-				IMAGEMANAGER->findImage("SaladinIdleUp")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 5) % 4, 0);
+				IMAGEMANAGER->findImage("SaladinIdleUp")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 10) % 4, 0);
 			}
 			else if (_dir.test(DOWN))
 			{
-				IMAGEMANAGER->findImage("SaladinIdleDown")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 5) % 4, 0);
+				IMAGEMANAGER->findImage("SaladinIdleDown")->frameRender(hdc, position.x - 20, position.y - 10, (_frame / 10) % 4, 0);
 			}
 		}
 		if (_state.test(MOVE))
@@ -1319,18 +1423,21 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-				//IMAGEMANAGER->findImage("ChristianMoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, _frame / 10 % 6, 0);
+				IMAGEMANAGER->findImage("JoanIdleSide")->frameRender(hdc, position.x, position.y, (_frame / 10) % 3, 0);
 			}
 			else if (_dir.test(RIGHT))
 			{
+				IMAGEMANAGER->findImage("JoanIdleSide")->frameRender(hdc, position.x + 5, position.y, 2 - (_frame / 10) % 3, 1);
 
 			}
 			else if (_dir.test(UP))
 			{
+				IMAGEMANAGER->findImage("JoanIdleUp")->frameRender(hdc, position.x + 5, position.y - 5, (_frame / 10) % 3, 0);
 
 			}
 			else if (_dir.test(DOWN))
 			{
+				IMAGEMANAGER->findImage("JoanIdleDown")->frameRender(hdc, position.x + 5, position.y, (_frame / 10) % 3, 0);
 
 			}
 		}
@@ -1338,56 +1445,92 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("JoanMoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 35, WINSIZE_Y / 2 - (cameraPos.y - y) - 60, (_frame / 10) % 6, 0);
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("JoanMoveSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 25, WINSIZE_Y / 2 - (cameraPos.y - y) - 60, 5 - (_frame / 10) % 6, 1);
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("JoanMoveUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 18, WINSIZE_Y / 2 - (cameraPos.y - y) - 65, (_frame / 10) % 6, 0);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("JoanMoveDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 15, WINSIZE_Y / 2 - (cameraPos.y - y) - 60, (_frame / 10) % 6, 0);
 			}
 		}
 		else if (_state.test(ATTACK))
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("JoanAttackSide")->frameRender(hdc, position.x - 63, position.y + 2, _frame / 10, LEFT);
+				if ((_frame / 10 == 2) && (_frame - 20 < 16))
+				{
+					IMAGEMANAGER->findImage("JoanAttackSideEffect1")->alphaFrameRender(hdc, position.x - 83, position.y - 5, (_frame - 20) / 2, LEFT, 128);
+				}
+				if ((_frame / 10 == 6) && (_frame - 60 < 10))
+				{
+					IMAGEMANAGER->findImage("JoanAttackSideEffect2")->alphaFrameRender(hdc, position.x - 83, position.y - 16, (_frame - 60) / 2, LEFT, 128);
+				}
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("JoanAttackSide")->frameRender(hdc, position.x - 18, position.y + 2, 7 - _frame / 10, RIGHT);
+				if ((_frame / 10 == 2) && (_frame - 20 < 16))
+				{
+					IMAGEMANAGER->findImage("JoanAttackSideEffect1")->alphaFrameRender(hdc, position.x - 3, position.y - 5, 7 - (_frame - 20) / 2, RIGHT, 128);
+				}
+				if ((_frame / 10 == 6) && (_frame - 60 < 10))
+				{
+					IMAGEMANAGER->findImage("JoanAttackSideEffect2")->alphaFrameRender(hdc, position.x - 3, position.y - 14, 4 - (_frame - 60) / 2, RIGHT, 128);
+				}
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("JoanAttackUp")->frameRender(hdc, position.x - 5, position.y - 43, _frame / 10, 0);
+				if ((_frame / 10 == 2) && (_frame - 20 < 16))
+				{
+					IMAGEMANAGER->findImage("JoanAttackUpEffect1")->alphaFrameRender(hdc, position.x - 25, position.y - 37, (_frame - 20) / 2, 0, 128);
+				}
+				if ((_frame / 10 == 6) && (_frame - 60 < 10))
+				{
+					IMAGEMANAGER->findImage("JoanAttackUpEffect2")->alphaFrameRender(hdc, position.x - 20, position.y - 67, (_frame - 60) / 2, 0, 128);
+				}
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("JoanAttackDown")->frameRender(hdc, position.x - 32, position.y + 12, _frame / 10, 0);
+				if ((_frame / 10 == 2) && (_frame - 20 < 18))
+				{
+					IMAGEMANAGER->findImage("JoanAttackDownEffect1")->alphaFrameRender(hdc, position.x - 25, position.y + 23, (_frame - 20) / 2, 0, 128);
+				}
+				if ((_frame / 10 == 6) && (_frame - 60 < 10))
+				{
+					IMAGEMANAGER->findImage("JoanAttackDownEffect2")->alphaFrameRender(hdc, position.x - 24, position.y - 3, (_frame - 60) / 2, 0, 128);
+				}
 			}
 		}
 		else if (_state.test(DAMAGED))
 		{
 			if (_dir.test(LEFT))
 			{
-				
+				IMAGEMANAGER->findImage("JoanDamagedSide")->frameRender(hdc, position.x + 5, position.y + 15, 0, LEFT);
+
 			}
 			else if (_dir.test(RIGHT))
 			{
+				IMAGEMANAGER->findImage("JoanDamagedSide")->frameRender(hdc, position.x, position.y + 15, 0, RIGHT);
 
 			}
 			else if (_dir.test(UP))
 			{
+				IMAGEMANAGER->findImage("JoanDamagedUp")->render(hdc, position.x, position.y + 10);
 
 			}
 			else if (_dir.test(DOWN))
 			{
+				IMAGEMANAGER->findImage("JoanDamagedDown")->render(hdc, position.x, position.y + 15);
 
 			}
 		}
@@ -1395,19 +1538,19 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 			if (_dir.test(LEFT))
 			{
-
+				IMAGEMANAGER->findImage("JoanDamagedSide")->alphaFrameRender(hdc, position.x + 5, position.y + 15, 0, LEFT, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(RIGHT))
 			{
-
+				IMAGEMANAGER->findImage("JoanDamagedSide")->alphaFrameRender(hdc, position.x, position.y + 15, 0, RIGHT, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(UP))
 			{
-
+				IMAGEMANAGER->findImage("JoanDamagedUp")->alphaRender(hdc, position.x, position.y + 10, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 			else if (_dir.test(DOWN))
 			{
-
+				IMAGEMANAGER->findImage("JoanDamagedDown")->alphaRender(hdc, position.x, position.y + 15, 255 - 255 / 30 * _frame < 0 ? 0 : 255 - 255 / 30 * _frame);
 			}
 		}
 		else if (_state.test(SKILL))

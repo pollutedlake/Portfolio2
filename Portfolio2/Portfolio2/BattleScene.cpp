@@ -184,8 +184,8 @@ void BattleScene::update(void)
 						{
 							Player* _player = new Player(_party[_selectCharIndex]->_name.c_str(), _party[_selectCharIndex]->_skill);
 							_player->init();
-							_turnSystem->addCharacter(_player, UP, *it, NULL);
-							//_player->setState(2);
+							_turnSystem->addCharacter(_player, RIGHT, *it, NULL);
+							_player->setState(4);
 							_launchRT[_selectCharIndex].second = true;
 							_launchOrder.reset();
 							_launchOrder.set(0);
