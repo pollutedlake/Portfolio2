@@ -199,7 +199,6 @@ HRESULT StoryScene::init(void)
 		_storyDataList = DATAMANAGER->getStoryData(DATAMANAGER->getScenario());
 		_dialogIndex = 0;
 		_backGroundIndex = 1;
-		//_backGroundIndex = 5;
 		_stopDialogIndex = 0;
 		_soundIndex = 1;
 		_objectIndex = 1;

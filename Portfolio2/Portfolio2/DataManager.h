@@ -37,8 +37,9 @@ struct ItemData
 	string _name;
 	int _price;
 	int _type;
+	int _stat;
 
-	ItemData(string name, int price, int type) { _name = name; _price = price; _type = type; }
+	ItemData(string name, int price, int type, int stat) { _name = name; _price = price; _type = type; _stat = stat;}
 };
 
 struct CharacterData
@@ -66,6 +67,7 @@ struct BattleData
 		int _height;
 		int _index;
 	};
+	int _dir;
 	vector<POINT> _launchTile;
 	vector<Enemy> _enemy;
 	vector<Object> _object;

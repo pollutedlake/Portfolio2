@@ -213,6 +213,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Pattern1", "Resources/Images/UI/Shop/Pattern1.bmp", 255, 92, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("Pattern2", "Resources/Images/UI/Shop/Pattern2.bmp", 255, 92, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addImage("ItemNum", "Resources/Images/UI/Shop/ItemNum.bmp", 17, 16);
+	IMAGEMANAGER->addImage("Shadow", "Resources/Images/Characters/Shadow.bmp", 30, 25, true, RGB(252, 252, 252));
 	IMAGEMANAGER->addFrameImage("LoadingSceneBG", "Resources/Images/BackGrounds/LoadingScene/LoadingSceneBG.bmp", 16400, 200, 41, 1);
 	IMAGEMANAGER->addFrameImage("Cham", "Resources/Images/Effects/SkillEffect/풍아열공참/Cham.bmp", 6780, 235, 30, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SlashLight", "Resources/Images/Effects/SkillEffect/풍아열공참/SlashLight.bmp", 3441, 109, 31, 1, true, RGB(255, 0, 255));
@@ -448,6 +449,12 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("AjdahakaUp", "Resources/Images/Characters/Ajdahaka/AjdahakaUp.bmp", 2880, 141, 12, 1, true, RGB(8, 8, 4));
 	IMAGEMANAGER->addFrameImage("AjdahakaDown", "Resources/Images/Characters/Ajdahaka/AjdahakaDown.bmp", 2868, 161, 12, 1, true, RGB(8, 8, 4));
 	IMAGEMANAGER->addFrameImage("AjdahakaSide", "Resources/Images/Characters/Ajdahaka/AjdahakaSide.bmp", 1800, 458, 12, 2, true, RGB(8, 8, 4));
+	IMAGEMANAGER->addFrameImage("AjdahakaShadowUp", "Resources/Images/Characters/Ajdahaka/AjdahakaShadowUp.bmp", 2880, 141, 12, 1, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addFrameImage("AjdahakaShadowDown", "Resources/Images/Characters/Ajdahaka/AjdahakaShadowDown.bmp", 2868, 161, 12, 1, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addFrameImage("AjdahakaShadowSide", "Resources/Images/Characters/Ajdahaka/AjdahakaShadowSide.bmp", 1800, 458, 12, 2, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addFrameImage("AjdahakaAttackSideEffect", "Resources/Images/Characters/Ajdahaka/AjdahakaAttackSideEffect.bmp", 624, 172, 6, 2, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("AjdahakaAttackUpEffect", "Resources/Images/Characters/Ajdahaka/AjdahakaAttackUpEffect.bmp", 516, 105, 6, 1, true, RGB(0, 76, 0));
+	IMAGEMANAGER->addFrameImage("AjdahakaAttackDownEffect", "Resources/Images/Characters/Ajdahaka/AjdahakaAttackDownEffect.bmp", 516, 105, 6, 1, true, RGB(0, 76, 0));
 
 	//UI
 	IMAGEMANAGER->addFrameImage("FingerCursor", "Resources/Images/UI/FingerCursor.bmp", 105, 27, 5, 1, true, RGB(80, 120, 116));
@@ -461,6 +468,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("BulletPoint", "Resources/Images/UI/BulletPoint.bmp", 2, 2);
 
 	// 스토리씬 배경
+	IMAGEMANAGER->addImage("Summary", "Resources/Images/BackGrounds/StoryScene/불사조/Summary.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("StoryBG69-1", "Resources/Images/BackGrounds/StoryScene/StoryBG69-1.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("StoryBG69-2", "Resources/Images/BackGrounds/StoryScene/StoryBG69-2.bmp", WINSIZE_X, WINSIZE_Y);
 	IMAGEMANAGER->addImage("StoryBG69-3", "Resources/Images/BackGrounds/StoryScene/StoryBG69-3.bmp", WINSIZE_X, WINSIZE_Y);
@@ -525,6 +533,8 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("Machinegun", "Resources/Sounds/SoundEffect/Machinegun.wav");
 	SOUNDMANAGER->addSoundFMOD("Sword", "Resources/Sounds/SoundEffect/Sword.wav");
 	SOUNDMANAGER->addSoundFMOD("Tang", "Resources/Sounds/SoundEffect/Tang.wav");
+	SOUNDMANAGER->addSoundFMOD("Rapier", "Resources/Sounds/SoundEffect/Rapier.wav");
+	SOUNDMANAGER->addSoundFMOD("AjdahakaAttack", "Resources/Sounds/SoundEffect/AjdahakaAttack.wav");
 
 	// 크리스티앙
 	SOUNDMANAGER->addSoundFMOD("ChristianFire", "Resources/Sounds/SoundEffect/ChristianFire.wav");

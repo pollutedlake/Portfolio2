@@ -20,7 +20,7 @@ private:
 	POINT _cursorTile;
 	POINT _cursorTileLT;
 	pair<RECT, bool> _launchRT[10];
-	RECT _launchButton[4];
+	RECT _launchButton[7];
 	vector<POINT> _launchTile;
 	bool _debug;
 	bool _launch;
@@ -30,6 +30,7 @@ private:
 	int _showMiniStatusFrame;
 	int _selectCharIndex;
 	bitset<4> _launchOrder;
+	int _launchDir;
 	POINT _exPtMouse;
 	
 

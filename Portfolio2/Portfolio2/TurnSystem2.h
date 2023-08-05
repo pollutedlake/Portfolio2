@@ -73,6 +73,7 @@ public:
 
 	Character* getCurChar() { return _curChar; }
 	Character* findCharacter(POINT cursorPoint);
+	Character* findCharacter(string playerName);
 
 	void addCharacter(Character* character, int dir, POINT tilePos, int turnOrder);
 	Player* deleteCharacter(string name);

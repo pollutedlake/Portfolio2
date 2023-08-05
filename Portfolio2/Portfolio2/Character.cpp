@@ -14,6 +14,7 @@ HRESULT Character::init(void)
 	_isAttack = false;
 	_skillOrder.reset();
 	_isDie = false;
+	_isRide = false;
 	return S_OK;
 }
 

@@ -13,6 +13,7 @@ HRESULT BattleScene::init(void)
 			battleData = DATAMANAGER->findBattleData("형제", DATAMANAGER->getBattleIdx());
 		break;
 	}
+	_launchDir = battleData->_dir;
 	wsprintf(_bgImg, "BattleSceneBG%d", battleData->_bgImgN);
 	wsprintf(_checkBGImg, "검사용BattleSceneBG%d", battleData->_bgImgN);
 	_camera = new Camera();
@@ -37,7 +38,6 @@ HRESULT BattleScene::init(void)
 			Soldier* soldier = new Soldier;
 			soldier->init(EnemyType(it->_type));
 			_turnSystem->addCharacter(soldier, it->_dir, it->_tilePos, it->_turnOrder);
-			//soldier->setState(4);
 		}
 	}
 	for (auto it = battleData->_object.begin(); it != battleData->_object.end(); ++it)
@@ -117,10 +117,12 @@ void BattleScene::update(void)
 					{
 						_launchOrder = _launchOrder << 1;
 						_exPtMouse = _ptMouse;
-						_launchButton[0] = { _exPtMouse.x + 5, _exPtMouse.y + 5, _exPtMouse.x + 125, _exPtMouse.y + 20 };
+						_launchButton[0] = { _exPtMouse.x + 5, _exPtMouse.y + 5, _exPtMouse.x + 125, _exPtMouse.y + 25 };
 						_launchButton[1] = { _exPtMouse.x + 5, _exPtMouse.y + 25, _exPtMouse.x + 125, _exPtMouse.y + 45 };
-						_launchButton[2] = { _exPtMouse.x + 5, _exPtMouse.y + 125, _exPtMouse.x + 125, _exPtMouse.y + 145 };
-						_launchButton[3] = { _exPtMouse.x + 5, _exPtMouse.y + 145, _exPtMouse.x + 125, _exPtMouse.y + 165 };
+						_launchButton[2] = { _exPtMouse.x + 5, _exPtMouse.y + 85, _exPtMouse.x + 125, _exPtMouse.y + 105 };
+						_launchButton[3] = { _exPtMouse.x + 5, _exPtMouse.y + 105, _exPtMouse.x + 125, _exPtMouse.y + 125 };
+						_launchButton[4] = { _exPtMouse.x + 5, _exPtMouse.y + 125, _exPtMouse.x + 125, _exPtMouse.y + 145 };
+						_launchButton[5] = { _exPtMouse.x + 5, _exPtMouse.y + 145, _exPtMouse.x + 125, _exPtMouse.y + 165 };
 						_selectCharIndex = i;
 					}
 				}
@@ -138,7 +140,15 @@ void BattleScene::update(void)
 					Player* player = _turnSystem->deleteCharacter(_party[_selectCharIndex]->_name.c_str());
 					SAFE_DELETE(player);
 				}
-				else if (PtInRect(&_launchButton[2], _ptMouse))
+				else if (PtInRect(&_launchButton[2], _ptMouse) && _launchRT[_selectCharIndex].second)
+				{
+					_turnSystem->findCharacter(_party[_selectCharIndex]->_name.c_str())->setRide(true);
+				}
+				else if (PtInRect(&_launchButton[3], _ptMouse) && _launchRT[_selectCharIndex].second)
+				{
+					_turnSystem->findCharacter(_party[_selectCharIndex]->_name.c_str())->setRide(false);
+				}
+				else if (PtInRect(&_launchButton[4], _ptMouse))
 				{
 					_launchOrder = _launchOrder >> 1;
 					for (auto it = _party.begin(); it != _party.end(); ++it)
@@ -159,11 +169,11 @@ void BattleScene::update(void)
 						}
 						Player* _player = new Player((*it)->_name.c_str(), (*it)->_skill);
 						_player->init();
-						_turnSystem->addCharacter(_player, UP, _launchTile[random], NULL);
+						_turnSystem->addCharacter(_player, _launchDir, _launchTile[random], NULL);
 						_launchRT[it - _party.begin()].second = true;
 					}
 				}
-				else if (PtInRect(&_launchButton[3], _ptMouse))
+				else if (PtInRect(&_launchButton[5], _ptMouse))
 				{
 					_launch = true;
 					_turnSystem->setStart(true);
@@ -184,8 +194,7 @@ void BattleScene::update(void)
 						{
 							Player* _player = new Player(_party[_selectCharIndex]->_name.c_str(), _party[_selectCharIndex]->_skill);
 							_player->init();
-							_turnSystem->addCharacter(_player, RIGHT, *it, NULL);
-							_player->setState(4);
+							_turnSystem->addCharacter(_player, _launchDir, *it, NULL);
 							_launchRT[_selectCharIndex].second = true;
 							_launchOrder.reset();
 							_launchOrder.set(0);
@@ -265,11 +274,23 @@ void BattleScene::render(void)
 		if (_launchOrder.test(1))
 		{
 			DIALOGMANAGER->makeTextBox(getMemDC(), _exPtMouse.x, _exPtMouse.y, 130, 170, 200);
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				if (PtInRect(&_launchButton[i], _ptMouse))
 				{
 					if (i < 2 && i != _launchRT[_selectCharIndex].second)
+					{
+						continue;
+					}
+					if ((i > 1 && i < 4) && !_launchRT[_selectCharIndex].second)
+					{
+						continue;
+					}
+					if (i == 2 && _turnSystem->findCharacter(_party[_selectCharIndex]->_name.c_str())->isRide())
+					{
+						continue;
+					}
+					if (i == 3 && !_turnSystem->findCharacter(_party[_selectCharIndex]->_name.c_str())->isRide())
 					{
 						continue;
 					}
@@ -282,8 +303,10 @@ void BattleScene::render(void)
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 25, "가을체", 15, 100, "출전 취소", strlen("출전 취소"), _launchRT[_selectCharIndex].second ? RGB(255, 255, 255) : RGB(139, 140, 141));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 45, "가을체", 15, 100, "용병 배치", strlen("용병 배치"), RGB(139, 140, 141));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 65, "가을체", 15, 100, "용병 배치 취소", strlen("용병 배치 취소"), RGB(139, 140, 141));
-			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 85, "가을체", 15, 100, "탑승", strlen("탑승"), RGB(139, 140, 141));
-			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 105, "가을체", 15, 100, "탑승 취소", strlen("탑승 취소"), RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 85, "가을체", 15, 100, "탑승", strlen("탑승"), 
+				(_launchRT[_selectCharIndex].second && !_turnSystem->findCharacter(_party[_selectCharIndex]->_name.c_str())->isRide()) ? RGB(255, 255, 255) : RGB(139, 140, 141));
+			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 105, "가을체", 15, 100, "탑승 취소", strlen("탑승 취소"), 
+				(_launchRT[_selectCharIndex].second && _turnSystem->findCharacter(_party[_selectCharIndex]->_name.c_str())->isRide()) ? RGB(255, 255, 255) : RGB(139, 140, 141));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 125, "가을체", 15, 100, "자동 배치", strlen("자동 배치"), RGB(255, 255, 255));
 			FONTMANAGER->textOut(getMemDC(), _exPtMouse.x + 65, _exPtMouse.y + 145, "가을체", 15, 100, "배치 종료", strlen("배치 종료"), RGB(255, 255, 255));
 			SetTextAlign(getMemDC(), TA_LEFT);

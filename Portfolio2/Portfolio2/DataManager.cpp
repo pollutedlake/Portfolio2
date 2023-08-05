@@ -13,9 +13,10 @@ HRESULT DataManager::init(void)
 		char itemName[256];
 		int itemPrice;
 		int itemType;
-		while(EOF != fscanf_s(_fp, "%[^\t]\t%d%d\n", itemName, _countof(itemName), &itemPrice, &itemType))
+		int stat;
+		while(EOF != fscanf_s(_fp, "%[^\t]\t%d%d%d\n", itemName, _countof(itemName), &itemPrice, &itemType, &stat))
 		{
-			ItemData* item = new ItemData(itemName, itemPrice, itemType);
+			ItemData* item = new ItemData(itemName, itemPrice, itemType, stat);
 			_mItemList.insert(make_pair(itemName, item));
 		}
 	}
@@ -96,6 +97,7 @@ HRESULT DataManager::init(void)
 				fscanf_s(_fp, "%d", &(battleData->_bgImgN));
 				int enemyTotal;
 				fscanf_s(_fp, "%d\n", &enemyTotal);
+				fscanf_s(_fp, "%d\n", &battleData->_dir);
 				int enemyN = 0;
 				while (enemyTotal != enemyN)
 				{
@@ -257,7 +259,7 @@ void DataManager::loadGame(FILE* fp)
 		if (data == 0)
 		{
 			char name[256];
-			fscanf_s(fp, "%s\n", name, _countof(name));
+			fscanf_s(fp, "%[^\n]\n", name, _countof(name));
 			int skillN;
 			fscanf_s(fp, "%d\n", &skillN);
 			vector<pair<char*, int>> skill;
@@ -270,6 +272,11 @@ void DataManager::loadGame(FILE* fp)
 			fscanf_s(fp, "\n");
 			Player* player = new Player(name, skill);
 			player->init();
+			int canMove;
+			int canAction;
+			fscanf_s(_fp, "%d %d\n", &canMove, &canAction);
+			player->setTurn(0, canMove);
+			player->setTurn(1, canAction);
 			fscanf_s(fp, "%d", &data);
 			fscanf_s(fp, "%d", &data2);
 			player->setTilePos({data, data2});
@@ -373,7 +380,31 @@ void DataManager::equipItem(string strKey, int charIdx, int itemIdx)
 	{
 		buyItem(_mParty[charIdx]->_equipment[itemIdx]->_name, 1, _mParty[charIdx]->_equipment[itemIdx]);
 	}
+	switch (_mParty[charIdx]->_equipment[itemIdx]->_type)
+	{
+	case 1:
+		_mParty[charIdx]->_status[STR] -= _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	case 2:
+		_mParty[charIdx]->_status[DEX] -= _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	case 3:
+		_mParty[charIdx]->_status[SPD] -= _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	}
 	_mParty[charIdx]->_equipment[itemIdx] = findItem(strKey);
+	switch (_mParty[charIdx]->_equipment[itemIdx]->_type)
+	{
+		case 1:
+			_mParty[charIdx]->_status[STR] += _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+		case 2:
+			_mParty[charIdx]->_status[DEX] += _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+		case 3:
+			_mParty[charIdx]->_status[SPD] += _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	}
 	if (strcmp(strKey.c_str(), "없음"))
 	{
 		sellItem(strKey, 1);
@@ -382,6 +413,17 @@ void DataManager::equipItem(string strKey, int charIdx, int itemIdx)
 
 void DataManager::takeOffEquip(int charIdx, int itemIdx)
 {
+	switch (_mParty[charIdx]->_equipment[itemIdx]->_type)
+	{
+	case 1:
+		_mParty[charIdx]->_status[STR] -= _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	case 2:
+		_mParty[charIdx]->_status[DEX] -= _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	case 3:
+		_mParty[charIdx]->_status[SPD] -= _mParty[charIdx]->_equipment[itemIdx]->_stat;
+		break;
+	}
 	_mParty[charIdx]->_equipment[itemIdx] = findItem("없음");
-
 }

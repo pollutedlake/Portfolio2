@@ -34,6 +34,7 @@ protected:
 	int _damage;
 	bool _isAttack;
 	bool _isDie;
+	bool _isRide;
 	float x, y;
 	char* _skillName;
 
@@ -66,6 +67,7 @@ public:
 	void setCurMP(int curMP) {_curMP = curMP;}
 	void setMobility(int mobility) {_mobility = mobility;}
 	void setWTP(int wtp) {_wtp = wtp;}
+	void setRide(bool ride) {_isRide = ride;}
 
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
@@ -84,6 +86,8 @@ public:
 	int getCurMP() { return _curMP; }
 	int getMobility() {return _mobility;}
 	int getDir() {for(int i = 0; i < 4; i++) {if(_dir.test(i)) {return i;} } }
+	int getFrame() {return _frame;}
+	bool isRide() {return _isRide;}
 
 	void moveTurnOrder() {_turnOrder = _turnOrder >> 1;}
 	void endTurn() {_turn.reset();}

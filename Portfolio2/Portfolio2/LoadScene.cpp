@@ -48,6 +48,7 @@ void LoadScene::update(void)
 		{
 			if (PtInRect(&_loadButton[i], _ptMouse))
 			{
+				SOUNDMANAGER->playSoundFMOD("Button");
 				if (DATAMANAGER->isLoadGame())
 				{
 					_selectButton = i;
@@ -171,6 +172,7 @@ void LoadScene::saveGame()
 					fprintf(_saveFP, "%s\t%d ", player->getSkill()[j].first, player->getSkill()[j].second);
 				}
 				fprintf(_saveFP, "\n");
+				fprintf(_saveFP, "%d %d\n", player->canMove(), player->canAction());
 			}
 			else
 			{

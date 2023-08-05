@@ -23,7 +23,82 @@ void Player::release(void)
 void Player::update(void)
 {
 	_frame++;
-	if (!strcmp(_playerName.c_str(), "살라딘"))
+	if (_isRide)
+	{
+		if (_state.test(MOVE))
+		{
+			move();
+		}
+		else if (_state.test(ATTACK))
+		{
+			if (_frame == 1)
+			{
+				SOUNDMANAGER->playSoundFMOD("AjdahakaAttack");
+				_isAttack = true;
+			}
+			else
+			{
+				_isAttack = false;
+				_damage = 0;
+			}
+			/*if (_destTilePos.x - _tilePos.x > 0)
+			{
+				_dir.reset();
+				_dir.set(RIGHT);
+			}
+			else if (_destTilePos.x - _tilePos.x < 0)
+			{
+				_dir.reset();
+				_dir.set(LEFT);
+			}
+			else
+			{
+				if (_destTilePos.y - _tilePos.y > 0)
+				{
+					_dir.reset();
+					_dir.set(DOWN);
+				}
+				else if (_destTilePos.y - _tilePos.y < 0)
+				{
+					_dir.reset();
+					_dir.set(UP);
+				}
+			}*/
+			if (_frame / 2 > 23)
+			{
+				_state.reset();
+				setDoing(false);
+				_turn.flip(1);
+			}
+		}
+		else if (_state.test(DAMAGED))
+		{
+			if (_frame / 5 > 0)
+			{
+				_curHP -= _damage;
+				if (_curHP <= 0)
+				{
+					_curHP = 0;
+					setState(pow(2, DIE));
+				}
+				else
+				{
+					_state.reset();
+					setDoing(false);
+				}
+			}
+		}
+		else if (_state.test(DIE))
+		{
+			_isRide = false;
+			_curHP = _maxMP;
+			_state.reset();
+			setDoing(false);
+		}
+	}
+	else
+	{
+		if (!strcmp(_playerName.c_str(), "살라딘"))
 	{
 		if (_state.test(MOVE))
 		{
@@ -259,7 +334,7 @@ void Player::update(void)
 			}
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "철가면"))
+		else if (!strcmp(_playerName.c_str(), "철가면"))
 	{
 		if (_state.test(MOVE))
 		{
@@ -358,7 +433,7 @@ void Player::update(void)
 
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "크리스티앙"))
+		else if (!strcmp(_playerName.c_str(), "크리스티앙"))
 	{
 		if (_state.test(MOVE))
 		{
@@ -497,7 +572,7 @@ void Player::update(void)
 
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "죠안 카트라이트"))
+		else if (!strcmp(_playerName.c_str(), "죠안 카트라이트"))
 	{
 		if (_state.test(MOVE))
 		{
@@ -532,7 +607,7 @@ void Player::update(void)
 			{
 				if (_frame == 20 || _frame == 60)
 				{
-					SOUNDMANAGER->playSoundFMOD("GunLoad");
+					SOUNDMANAGER->playSoundFMOD("Rapier");
 				}
 				if (_frame / 10 == 2 || _frame / 10 == 6)
 				{
@@ -554,7 +629,7 @@ void Player::update(void)
 			{
 				if (_frame == 20 || _frame == 60)
 				{
-					SOUNDMANAGER->playSoundFMOD("GunLoad");
+					SOUNDMANAGER->playSoundFMOD("Rapier");
 				}
 				if (_frame / 10 == 2 || _frame / 10 == 6)
 				{
@@ -576,7 +651,7 @@ void Player::update(void)
 			{
 				if (_frame == 20 || _frame == 60)
 				{
-					SOUNDMANAGER->playSoundFMOD("GunLoad");
+					SOUNDMANAGER->playSoundFMOD("Rapier");
 				}
 				if (_frame / 10 == 2 || _frame / 10 == 6)
 				{
@@ -624,11 +699,49 @@ void Player::update(void)
 
 		}
 	}
+	}
 }
 
 void Player::render(HDC hdc, POINT position, POINT cameraPos)
 {
-	if (!strcmp(_playerName.c_str(), "살라딘"))
+	if (_isRide)
+	{
+		if (_dir.test(LEFT))
+		{
+			if (_state.test(ATTACK))
+			{
+				IMAGEMANAGER->findImage("AjdahakaAttackSideEffect")->alphaFrameRender(hdc, position.x - 80, position.y - 95, (_frame / 2) % 6, LEFT, 128);
+			}
+			IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, position.x - 40, position.y - 165, (_frame / 5) % 12, LEFT);
+		}
+		else if (_dir.test(RIGHT))
+		{
+			if (_state.test(ATTACK))
+			{
+				IMAGEMANAGER->findImage("AjdahakaAttackSideEffect")->alphaFrameRender(hdc, position.x + 20, position.y - 95, 5 - (_frame / 2) % 6, RIGHT, 128);
+			}
+			IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, position.x - 80, position.y - 165, 11 - (_frame / 5) % 12, RIGHT);
+		}
+		else if (_dir.test(UP))
+		{
+			if (_state.test(ATTACK))
+			{
+				IMAGEMANAGER->findImage("AjdahakaAttackUpEffect")->alphaFrameRender(hdc, position.x, position.y - 125, (_frame / 2) % 6, 0, 128);
+			}
+			IMAGEMANAGER->findImage("AjdahakaUp")->frameRender(hdc, position.x - 100, position.y - 110, (_frame / 5) % 12, 0);
+		}
+		else if (_dir.test(DOWN))
+		{
+			if (_state.test(ATTACK))
+			{
+				IMAGEMANAGER->findImage("AjdahakaAttackDownEffect")->alphaFrameRender(hdc, position.x - 40, position.y - 60, (_frame / 2) % 6, 0, 128);
+			}
+			IMAGEMANAGER->findImage("AjdahakaDown")->frameRender(hdc, position.x - 100, position.y - 135, (_frame / 5) % 12, 0);
+		}
+	}
+	else
+	{
+		if (!strcmp(_playerName.c_str(), "살라딘"))
 	{
 		if (_state.none())
 		{
@@ -1143,7 +1256,7 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			}
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "철가면"))
+		else if (!strcmp(_playerName.c_str(), "철가면"))
 	{
 		if (_state.none())
 		{
@@ -1252,7 +1365,7 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "크리스티앙"))
+		else if (!strcmp(_playerName.c_str(), "크리스티앙"))
 	{
 		if (_state.none())
 		{
@@ -1417,7 +1530,7 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 
 		}
 	}
-	else if (!strcmp(_playerName.c_str(), "죠안 카트라이트"))
+		else if (!strcmp(_playerName.c_str(), "죠안 카트라이트"))
 	{
 		if (_state.none())
 		{
@@ -1557,5 +1670,6 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 		{
 
 		}
+	}
 	}
 }

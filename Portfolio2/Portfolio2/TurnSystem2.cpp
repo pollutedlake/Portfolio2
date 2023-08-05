@@ -510,6 +510,81 @@ void TurnSystem2::update(POINT cursorTile)
 
 void TurnSystem2::render(HDC hdc)
 {
+	// ±×¸²ÀÚ
+	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	{	
+		int x = NULL;
+		int y = NULL;
+		if ((*it)->isRide())
+		{
+			if((*it)->getDir() == LEFT)
+			{
+				if ((*it)->isDoing())
+				{
+
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("AjdahakaShadowSide")->alphaFrameRender(hdc, 
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).x - 40, 
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).y - 60, ((*it)->getFrame() / 5) % 12, LEFT, 128);
+				}
+			}
+			else if ((*it)->getDir() == RIGHT)
+			{
+				if ((*it)->isDoing())
+				{
+
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("AjdahakaShadowSide")->alphaFrameRender(hdc,
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).x - 80,
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).y - 60, 11 - ((*it)->getFrame() / 5) % 12, RIGHT, 128);
+				}
+			}
+			else if ((*it)->getDir() == UP)
+			{
+				if ((*it)->isDoing())
+				{
+
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("AjdahakaShadowUp")->alphaFrameRender(hdc,
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).x - 100,
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).y - 5, ((*it)->getFrame() / 5) % 12, 0, 128);
+				}
+			}
+			else if ((*it)->getDir() == DOWN)
+			{
+				if ((*it)->isDoing())
+				{
+
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("AjdahakaShadowDown")->alphaFrameRender(hdc,
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).x - 100,
+						_camera->worldToCamera({ (*it)->getTilePos().x * TILEWIDTH, (*it)->getTilePos().y * TILEHEIGHT - TILEHEIGHT / 2 * 3 }).y - 30, ((*it)->getFrame() / 5) % 12, 0, 128);
+				}
+			}
+		}
+		else
+		{
+			if ((*it)->isDoing())
+			{
+				x = (*it)->getX() - IMAGEMANAGER->findImage("Shadow")->getWidth() / 2;
+				y = (*it)->getY() - IMAGEMANAGER->findImage("Shadow")->getWidth() / 2;
+			}
+			else
+			{
+				x = (*it)->getTilePos().x * TILEWIDTH + TILEWIDTH / 2 - IMAGEMANAGER->findImage("Shadow")->getWidth() / 2;
+				y = (*it)->getTilePos().y * TILEHEIGHT + TILEHEIGHT / 2 - IMAGEMANAGER->findImage("Shadow")->getHeight() / 2;
+			}
+			IMAGEMANAGER->findImage("Shadow")->alphaRender(hdc, _camera->worldToCamera({x, y}).x, _camera->worldToCamera({x, y}).y, 128);
+		}
+	}
 	if (_curChar->getType() == 0)
 	{
 		if (!_curChar->isDoing())
@@ -704,6 +779,22 @@ Character* TurnSystem2::findCharacter(POINT cursorPoint)
 			return (*it);
 		}
 	}
+}
+
+Character* TurnSystem2::findCharacter(string playerName)
+{
+	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	{
+		if ((*it)->getType() == PLAYER)
+		{
+			Player* player = (Player*)(*it);
+			if (!strcmp(player->getPlayerName().c_str(), playerName.c_str()))
+			{
+				return (*it);
+			}
+		}
+	}
+	return nullptr;
 }
 
 void TurnSystem2::addCharacter(Character* character, int dir, POINT tilePos, int turnOrder)
@@ -1174,6 +1265,7 @@ void TurnSystem2::saveGame()
 					fprintf(_fp, "%s\t%d ", player->getSkill()[j].first, player->getSkill()[j].second);
 				}
 				fprintf(_fp, "\n");
+				fprintf(_fp, "%d %d\n", player->canMove(), player->canAction());
 			}
 			else
 			{
