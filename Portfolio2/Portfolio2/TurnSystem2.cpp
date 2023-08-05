@@ -28,6 +28,7 @@ HRESULT TurnSystem2::init(Camera* camera, HDC hdc, int rowN, int colN)
 	_skill = new Skill;
 	_preference = false;
 	_skill->init();
+	searchMovableTiles();
     return S_OK;
 }
 
@@ -50,6 +51,7 @@ void TurnSystem2::update(POINT cursorTile)
 				}
 			}
 			it = _charList.erase(it);
+			searchMovableTiles();
 		}
 		else
 		{
@@ -120,27 +122,89 @@ void TurnSystem2::update(POINT cursorTile)
 					// 움직일 수 있으면 움직일 수 있는 타일들을 찾는다.
 					if (_curChar->canMove())
 					{
-						searchMovableTiles();
+						//searchMovableTiles();
 					}
 					// 움직일 수 없으면 상하좌우 2칸 떨어진 타일이 움직일 수 있는 타일이거나 적이 있는 타일이면 공격가능한 타일
 					else
 					{
 						_attackableTiles.clear();
-						if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
+						if (_curChar->isRide())
 						{
-							_attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+							for (int i = 1; i <= 13; i++)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x + i, _curChar->getTilePos().y });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - i, _curChar->getTilePos().y });
+								_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - i });
+							}
+							for (int i = 0; i < 10; i++)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 1, _curChar->getTilePos().y + 3 + i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 1, _curChar->getTilePos().y + 3 + i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 1, _curChar->getTilePos().y - 3 - i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 1, _curChar->getTilePos().y - 3 - i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 3 + i, _curChar->getTilePos().y + 1 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 3 + i, _curChar->getTilePos().y - 1 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 3 - i, _curChar->getTilePos().y + 1 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 3 - i, _curChar->getTilePos().y - 1 });
+							}
+							for (int i = 0; i < 6; i++)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 6 + i, _curChar->getTilePos().y + 2 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 6 + i, _curChar->getTilePos().y - 2 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 6 - i, _curChar->getTilePos().y + 2 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 6 - i, _curChar->getTilePos().y - 2 });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y + 6 + i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y + 6 + i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y - 6 - i });
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y - 6 - i });
+							}
+							_attackableTiles.push_back({ _curChar->getTilePos().x - 3, _curChar->getTilePos().y + 9 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x + 3, _curChar->getTilePos().y + 9 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x - 3, _curChar->getTilePos().y - 9 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x + 3, _curChar->getTilePos().y - 9 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x - 9, _curChar->getTilePos().y + 3 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x - 9, _curChar->getTilePos().y - 3 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x + 9, _curChar->getTilePos().y + 3 });
+							_attackableTiles.push_back({ _curChar->getTilePos().x + 9, _curChar->getTilePos().y - 3 });
+							for (auto it = _attackableTiles.begin(); it != _attackableTiles.end();)
+							{
+								if ((*it).x < 0 || (*it).y < 0)
+								{
+									it = _attackableTiles.erase(it);
+								}
+								else if ((*it).x > _colN - 1 || (*it).y > _rowN - 1)
+								{
+									it = _attackableTiles.erase(it);
+								}
+								else if (checkTile((*it)) % 2 == 0)
+								{
+									it = _attackableTiles.erase(it);
+								}
+								else
+								{
+									++it;
+								}
+							}
 						}
-						if (checkTile({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y }) % 2 == 1)
+						else
 						{
-							_attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y });
-						}
-						if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 }) % 2 == 1)
-						{
-							_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 });
-						}
-						if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 }) % 2 == 1)
-						{
-							_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 });
+							if (checkTile({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y }) % 2 == 1)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+							}
+							if (checkTile({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y }) % 2 == 1)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y });
+							}
+							if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 }) % 2 == 1)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 });
+							}
+							if (checkTile({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 }) % 2 == 1)
+							{
+								_attackableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 });
+							}
 						}
 					}
 					if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -171,32 +235,154 @@ void TurnSystem2::update(POINT cursorTile)
 							// 스킬 선택하고 스킬 범위 받기
 							else if (_actionChoice.test(2))
 							{
-								Player* player = (Player*)_curChar;
-								for (int i = 0; i < player->getSkill().size(); i++)
+								if (_curChar->isRide())
 								{
-									if (PtInRect(&_skillButtons[i], _ptMouse))
+									if (PtInRect(&_skillButtons[0], _ptMouse))
 									{
 										_actionChoice = _actionChoice << 1;
-										_skillIdx = i;
-										searchSkillableTiles(player->getSkill()[i].second);
+										_skillableTiles.clear();
+										_skillableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y + 2 });
+										_skillableTiles.push_back({ _curChar->getTilePos().x, _curChar->getTilePos().y - 2 });
+										_skillableTiles.push_back({ _curChar->getTilePos().x + 2, _curChar->getTilePos().y });
+										_skillableTiles.push_back({ _curChar->getTilePos().x - 2, _curChar->getTilePos().y });
+										for (auto it = _skillableTiles.begin(); it != _skillableTiles.end();)
+										{
+											if ((*it).x < 0 || (*it).y < 0)
+											{
+												it = _skillableTiles.erase(it);
+											}
+											else if ((*it).x > _colN - 1 || (*it).y > _rowN - 1)
+											{
+												it = _skillableTiles.erase(it);
+											}
+											else
+											{
+												++it;
+											}
+										}
+									}
+								}
+								else
+								{
+									Player* player = (Player*)_curChar;
+									for (int i = 0; i < player->getSkill().size(); i++)
+									{
+										if (PtInRect(&_skillButtons[i], _ptMouse))
+										{
+											_actionChoice = _actionChoice << 1;
+											_skillIdx = i;
+											searchSkillableTiles(player->getSkill()[i].second);
+										}
 									}
 								}
 							}
 							else if (_actionChoice.test(3))
 							{
-								Player* _player = (Player*)_curChar;
-								if (_player->getCurMP() == _player->getMaxMP())
+								if (_curChar->isRide())
 								{
-									if (_player->getSkill()[_skillIdx].second == 1)
+									for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
 									{
-										if (checkTile(cursorTile) == ENEMY)
+										if (SamePoint(cursorTile, (*it)) && checkTile(cursorTile) == MOVABLE)
+										{
+											_curChar->setTilePos(cursorTile);
+											_curChar->setRide(false);
+											_curChar->setXY(TILEWIDTH, TILEHEIGHT);
+											_actionChoice.reset();
+											_actionChoice.set(0);
+											searchMovableTiles();
+											break;
+										}
+									}
+								}
+								else
+								{
+									Player* _player = (Player*)_curChar;
+									if (_player->getCurMP() == _player->getMaxMP())
+									{
+										if (_player->getSkill()[_skillIdx].second == 1)
+										{
+											if (checkTile(cursorTile) == ENEMY)
+											{
+												for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+												{
+													if (SamePoint(cursorTile, (*it)))
+													{
+														_curChar->setDestTilePos(cursorTile);
+														_skill->start(_charList, _curChar, _player->getSkill()[_skillIdx].first);
+														_player->setState(8);
+														_player->setXY(40, 30);
+														_player->setDoing(true);
+														_actionChoice.reset();
+														_actionChoice.set(0);
+														break;
+													}
+												}
+											}
+										}
+										else if (_player->getSkill()[_skillIdx].second == 0)
+										{
+											vector<Character*> charList;
+											for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
+											{
+												for (int i = 0; i < _charList.size(); i++)
+												{
+													if (SamePoint((*it), _charList[i]->getTilePos()))
+													{
+														if (_charList[i]->getType() == 1)
+														{
+															charList.push_back(_charList[i]);
+														}
+													}
+												}
+											}
+											if (charList.size() > 0)
+											{
+												_player->setState(8);
+												_player->setXY(40, 30);
+												_player->setDoing(true);
+												_skill->start(charList, _curChar, _player->getSkill()[_skillIdx].first);
+												_actionChoice.reset();
+												_actionChoice.set(0);
+											}
+										}
+										else if (_player->getSkill()[_skillIdx].second == 2)
 										{
 											for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
 											{
 												if (SamePoint(cursorTile, (*it)))
 												{
+													vector<Character*> charList;
+													for (auto it = _charList.begin(); it != _charList.end(); ++it)
+													{
+														if ((*it)->getType() == 0)
+														{
+															continue;
+														}
+														if (cursorTile.y == _curChar->getTilePos().y)
+														{
+															if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < abs(cursorTile.x - _curChar->getTilePos().x) &&
+																((*it)->getTilePos().x - _curChar->getTilePos().x) * (cursorTile.x - _curChar->getTilePos().x) > 0)
+															{
+																if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < 2)
+																{
+																	charList.push_back((*it));
+																}
+															}
+														}
+														else
+														{
+															if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < abs(cursorTile.y - _curChar->getTilePos().y) &&
+																((*it)->getTilePos().y - _curChar->getTilePos().y) * (cursorTile.y - _curChar->getTilePos().y) > 0)
+															{
+																if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < 2)
+																{
+																	charList.push_back((*it));
+																}
+															}
+														}
+													}
 													_curChar->setDestTilePos(cursorTile);
-													_skill->start(_charList, _curChar, _player->getSkill()[_skillIdx].first);
+													_skill->start(charList, _curChar, _player->getSkill()[_skillIdx].first);
 													_player->setState(8);
 													_player->setXY(40, 30);
 													_player->setDoing(true);
@@ -204,79 +390,6 @@ void TurnSystem2::update(POINT cursorTile)
 													_actionChoice.set(0);
 													break;
 												}
-											}
-										}
-									}
-									else if (_player->getSkill()[_skillIdx].second == 0)
-									{
-										vector<Character*> charList;
-										for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
-										{
-											for (int i = 0; i < _charList.size(); i++)
-											{
-												if (SamePoint((*it), _charList[i]->getTilePos()))
-												{
-													if (_charList[i]->getType() == 1)
-													{
-														charList.push_back(_charList[i]);
-													}
-												}
-											}
-										}
-										if (charList.size() > 0)
-										{
-											_player->setState(8);
-											_player->setXY(40, 30);
-											_player->setDoing(true);
-											_skill->start(charList, _curChar, _player->getSkill()[_skillIdx].first);
-											_actionChoice.reset();
-											_actionChoice.set(0);
-										}
-									}
-									else if (_player->getSkill()[_skillIdx].second == 2)
-									{
-										for (auto it = _skillableTiles.begin(); it != _skillableTiles.end(); ++it)
-										{
-											if (SamePoint(cursorTile, (*it)))
-											{
-												vector<Character*> charList;
-												for (auto it = _charList.begin(); it != _charList.end(); ++it)
-												{
-													if ((*it)->getType() == 0)
-													{
-														continue;
-													}
-													if (cursorTile.y == _curChar->getTilePos().y)
-													{
-														if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < abs(cursorTile.x - _curChar->getTilePos().x) &&
-															((*it)->getTilePos().x - _curChar->getTilePos().x) * (cursorTile.x - _curChar->getTilePos().x) > 0)
-														{
-															if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < 2)
-															{
-																charList.push_back((*it));
-															}
-														}
-													}
-													else
-													{
-														if (abs((*it)->getTilePos().y - _curChar->getTilePos().y) < abs(cursorTile.y - _curChar->getTilePos().y) &&
-															((*it)->getTilePos().y - _curChar->getTilePos().y) * (cursorTile.y - _curChar->getTilePos().y) > 0)
-														{
-															if (abs((*it)->getTilePos().x - _curChar->getTilePos().x) < 2)
-															{
-																charList.push_back((*it));
-															}
-														}
-													}
-												}
-												_curChar->setDestTilePos(cursorTile);
-												_skill->start(charList, _curChar, _player->getSkill()[_skillIdx].first);
-												_player->setState(8);
-												_player->setXY(40, 30);
-												_player->setDoing(true);
-												_actionChoice.reset();
-												_actionChoice.set(0);
-												break;
 											}
 										}
 									}
@@ -314,7 +427,7 @@ void TurnSystem2::update(POINT cursorTile)
 								if (_curChar->canAction())
 								{
 									// 클릭한 타일에 적이 있을 경우 상하좌우 2칸 떨어진 곳 검사해서 가장 가까운 경로 찾기
-									if (checkTile(cursorTile) == ENEMY)
+									if (checkTile(cursorTile) == ENEMY && !_curChar->isRide())
 									{
 										vector<vector<POINT>> routes;
 										vector<POINT> route;
@@ -361,11 +474,49 @@ void TurnSystem2::update(POINT cursorTile)
 									}
 								}
 								// 움직일 수 있는 타일일 시 경로 astar로 구하고 이동
-								if (checkTile(cursorTile) == MOVABLE)
+								if (checkTile(cursorTile) == MOVABLE && !_curChar->isRide())
 								{
 									_curChar->setState(1);
 									_curChar->setDoing(true);
-									_curChar->setRoute(astar(_curChar->getTilePos(), cursorTile));
+									if (!_curChar->isRide())
+									{
+										_curChar->setRoute(astar(_curChar->getTilePos(), cursorTile));
+									}
+								}
+								else if (_curChar->isRide())
+								{
+									for (int i = 0; i < _movableTiles.size(); i++)
+									{
+										if (SamePoint(_movableTiles[i], cursorTile) && !SamePoint(cursorTile, _curChar->getTilePos()))
+										{
+											_curChar->setState(1);
+											_curChar->setDoing(true);
+											if (abs(cursorTile.x - _curChar->getTilePos().x) > abs(cursorTile.y - _curChar->getTilePos().y))
+											{
+												if (cursorTile.x > _curChar->getTilePos().x)
+												{
+													_curChar->setDir(RIGHT);
+												}
+												else
+												{
+													_curChar->setDir(LEFT);
+												}
+											}
+											else
+											{
+												if (cursorTile.y > _curChar->getTilePos().y)
+												{
+													_curChar->setDir(DOWN);
+												}
+												else
+												{
+													_curChar->setDir(UP);
+												}
+											}
+											_curChar->setDestTilePos(cursorTile);
+											break;
+										}
+									}
 								}
 							}
 							// 움직일 수는 없고 행동할 수는 있을 때
@@ -373,34 +524,72 @@ void TurnSystem2::update(POINT cursorTile)
 							{
 								if (_curChar->canAction())
 								{
-									if (checkTile(cursorTile) == ENEMY)
+									if (_curChar->isRide())
 									{
-										if (SamePoint(cursorTile, { _curChar->getTilePos().x + 2, _curChar->getTilePos().y }))
+										for (int i = 0; i < _attackableTiles.size(); i++)
 										{
-											_curChar->setDestTilePos(cursorTile);
-											_curChar->setState(2);
-											_curChar->setDoing(true);
-										}
-										if (SamePoint(cursorTile, { _curChar->getTilePos().x - 2, _curChar->getTilePos().y }))
-										{
-											_curChar->setDestTilePos(cursorTile);
-											_curChar->setState(2);
-											_curChar->setDoing(true);
-										}
-										if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y + 2 }))
-										{
-											_curChar->setDestTilePos(cursorTile);
-											_curChar->setState(2);
-											_curChar->setDoing(true);
-										}
-										if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y - 2 }))
-										{
-											_curChar->setDestTilePos(cursorTile);
-											_curChar->setState(2);
-											_curChar->setDoing(true);
+											if (SamePoint(_attackableTiles[i], cursorTile))
+											{
+												if (abs(cursorTile.x - _curChar->getTilePos().x) > abs(cursorTile.y - _curChar->getTilePos().y))
+												{
+													if (cursorTile.x > _curChar->getTilePos().x)
+													{
+														_curChar->setDir(RIGHT);
+													}
+													else
+													{
+														_curChar->setDir(LEFT);
+													}
+												}
+												else
+												{
+													if (cursorTile.y > _curChar->getTilePos().y)
+													{
+														_curChar->setDir(DOWN);
+													}
+													else
+													{
+														_curChar->setDir(UP);
+													}
+												}
+												_curChar->setDestTilePos(cursorTile);
+												_curChar->setState(2);
+												_curChar->setDoing(true);
+												break;
+											}
 										}
 									}
-									else if (checkTile(cursorTile) == PLAYER)
+									else
+									{
+										if (checkTile(cursorTile) == ENEMY)
+										{
+											if (SamePoint(cursorTile, { _curChar->getTilePos().x + 2, _curChar->getTilePos().y }))
+											{
+												_curChar->setDestTilePos(cursorTile);
+												_curChar->setState(2);
+												_curChar->setDoing(true);
+											}
+											if (SamePoint(cursorTile, { _curChar->getTilePos().x - 2, _curChar->getTilePos().y }))
+											{
+												_curChar->setDestTilePos(cursorTile);
+												_curChar->setState(2);
+												_curChar->setDoing(true);
+											}
+											if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y + 2 }))
+											{
+												_curChar->setDestTilePos(cursorTile);
+												_curChar->setState(2);
+												_curChar->setDoing(true);
+											}
+											if (SamePoint(cursorTile, { _curChar->getTilePos().x, _curChar->getTilePos().y - 2 }))
+											{
+												_curChar->setDestTilePos(cursorTile);
+												_curChar->setState(2);
+												_curChar->setDoing(true);
+											}
+										}
+									}
+									if (checkTile(cursorTile) == PLAYER)
 									{
 										_actionChoice = _actionChoice << 1;
 									}
@@ -486,18 +675,35 @@ void TurnSystem2::update(POINT cursorTile)
 			{
 				if (_curChar->isAttack())
 				{
-					Character* targetChar = nullptr;
-					for (auto it = _charList.begin(); it != _charList.end(); ++it)
+					if (_curChar->isRide())
 					{
-						if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+						Character* targetChar = nullptr;
+						for (auto it = _charList.begin(); it != _charList.end(); ++it)
 						{
-							targetChar = (*it);
-							break;
+							if(abs((*it)->getTilePos().x - _curChar->getDestTilePos().x) <= 1 && abs((*it)->getTilePos().y - _curChar->getDestTilePos().y) <= 1)
+							{
+								targetChar = (*it);
+								targetChar->setState(4);
+								targetChar->setDamage(_curChar->getDamage());
+								targetChar->setDoing(true);
+							}
 						}
 					}
-					targetChar->setState(4);
-					targetChar->setDamage(_curChar->getDamage());
-					targetChar->setDoing(true);
+					else
+					{
+						Character* targetChar = nullptr;
+						for (auto it = _charList.begin(); it != _charList.end(); ++it)
+						{
+							if (SamePoint((*it)->getTilePos(), _curChar->getDestTilePos()))
+							{
+								targetChar = (*it);
+								break;
+							}
+						}
+						targetChar->setState(4);
+						targetChar->setDamage(_curChar->getDamage());
+						targetChar->setDoing(true);
+					}
 				}
 				else if (_curChar->isSkill())
 				{
@@ -521,6 +727,7 @@ void TurnSystem2::render(HDC hdc)
 			{
 				if ((*it)->isDoing())
 				{
+					IMAGEMANAGER->findImage("AjdahakaShadowSide")->alphaFrameRender(hdc, WINSIZE_X / 2 - (_camera->getPosition().x - (*it)->getX()) - 60, WINSIZE_Y / 2 - (_camera->getPosition().y - (*it)->getY()) - 120, ((*it)->getFrame() / 5) % 12, LEFT, 128);
 
 				}
 				else
@@ -534,6 +741,7 @@ void TurnSystem2::render(HDC hdc)
 			{
 				if ((*it)->isDoing())
 				{
+					IMAGEMANAGER->findImage("AjdahakaShadowSide")->alphaFrameRender(hdc, WINSIZE_X / 2 - (_camera->getPosition().x - (*it)->getX()) - 100, WINSIZE_Y / 2 - (_camera->getPosition().y - (*it)->getY()) - 120, 11 - ((*it)->getFrame() / 5) % 12, RIGHT, 128);
 
 				}
 				else
@@ -547,7 +755,7 @@ void TurnSystem2::render(HDC hdc)
 			{
 				if ((*it)->isDoing())
 				{
-
+					IMAGEMANAGER->findImage("AjdahakaShadowUp")->frameRender(hdc, WINSIZE_X / 2 - (_camera->getPosition().x - (*it)->getX()) - 120, WINSIZE_Y / 2 - (_camera->getPosition().y - (*it)->getY()) - 65, ((*it)->getFrame() / 5) % 12, 0);
 				}
 				else
 				{
@@ -560,7 +768,7 @@ void TurnSystem2::render(HDC hdc)
 			{
 				if ((*it)->isDoing())
 				{
-
+					IMAGEMANAGER->findImage("AjdahakaShadowDown")->frameRender(hdc, WINSIZE_X / 2 - (_camera->getPosition().x - (*it)->getX()) - 120, WINSIZE_Y / 2 - (_camera->getPosition().y - (*it)->getY()) - 90, ((*it)->getFrame() / 5) % 12, 0);
 				}
 				else
 				{
@@ -607,11 +815,14 @@ void TurnSystem2::render(HDC hdc)
 							_camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT, 0, 0,
 							IMAGEMANAGER->findImage("MovableTile")->getWidth(), IMAGEMANAGER->findImage("MovableTile")->getHeight(), 128);
 					}
-					for (auto it = _attackableTiles.begin(); it != _attackableTiles.end(); ++it)
+					if (!_curChar->isRide())
 					{
-						IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x,
-							_camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT, 0, 0,
-							IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
+						for (auto it = _attackableTiles.begin(); it != _attackableTiles.end(); ++it)
+						{
+							IMAGEMANAGER->findImage("AttackableTile")->alphaRender(hdc, _camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).x,
+								_camera->worldToCamera({ (*it).x * TILEWIDTH, (*it).y * TILEHEIGHT }).y, TILEWIDTH, TILEHEIGHT, 0, 0,
+								IMAGEMANAGER->findImage("AttackableTile")->getWidth(), IMAGEMANAGER->findImage("AttackableTile")->getHeight(), 128);
+						}
 					}
 				}
 			}
@@ -736,16 +947,30 @@ void TurnSystem2::render(HDC hdc)
 		Player* player = (Player*)_curChar;
 		DIALOGMANAGER->makeTextBox(hdc, _camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH,  (_curChar->getTilePos().y - 2) * TILEHEIGHT }).x,
 			_camera->worldToCamera({ (_curChar->getTilePos().x + 2) * TILEWIDTH,  (_curChar->getTilePos().y - 2) * TILEHEIGHT }).y, 160, 100, 128);
-		for (int i = 0; i < player->getSkill().size(); i++)
+		if (_curChar->isRide())
 		{
-			if (PtInRect(&_skillButtons[i], _ptMouse))
+			if (PtInRect(&_skillButtons[0], _ptMouse))
 			{
-				IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, _skillButtons[i].left,
-					_skillButtons[i].top, 150, 20, 0, 0,
+				IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, _skillButtons[0].left,
+					_skillButtons[0].top, 150, 20, 0, 0,
 					IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 128);
 			}
-			IMAGEMANAGER->findImage("SkillIcon")->render(hdc, _skillButtons[i].left, _skillButtons[i].top);
-			FONTMANAGER->textOut(hdc, _skillButtons[i].left + 22, _skillButtons[i].top, "가을체", 18, 100, player->getSkill()[i].first, strlen(player->getSkill()[i].first), RGB(255, 255, 255));
+			IMAGEMANAGER->findImage("SkillIcon")->render(hdc, _skillButtons[0].left, _skillButtons[0].top);
+			FONTMANAGER->textOut(hdc, _skillButtons[0].left + 22, _skillButtons[0].top, "가을체", 18, 100, "내리기", strlen("내리기"), RGB(255, 255, 255));
+		}
+		else
+		{
+			for (int i = 0; i < player->getSkill().size(); i++)
+			{
+				if (PtInRect(&_skillButtons[i], _ptMouse))
+				{
+					IMAGEMANAGER->findImage("SkillButtonActive")->alphaRender(hdc, _skillButtons[i].left,
+						_skillButtons[i].top, 150, 20, 0, 0,
+						IMAGEMANAGER->findImage("SkillButtonActive")->getWidth(), IMAGEMANAGER->findImage("SkillButtonActive")->getHeight(), 128);
+				}
+				IMAGEMANAGER->findImage("SkillIcon")->render(hdc, _skillButtons[i].left, _skillButtons[i].top);
+				FONTMANAGER->textOut(hdc, _skillButtons[i].left + 22, _skillButtons[i].top, "가을체", 18, 100, player->getSkill()[i].first, strlen(player->getSkill()[i].first), RGB(255, 255, 255));
+			}
 		}
 	}
 	if (_preference)
@@ -1241,6 +1466,7 @@ void TurnSystem2::nextTurn()
 		(*it)->setCurWait((*it)->getCurWait() - curWait);
 	}
 	_curChar->resetTurn();
+	searchMovableTiles();
 	_camera->setPosition({_curChar->getTilePos().x * TILEWIDTH + TILEWIDTH / 2, _curChar->getTilePos().y * TILEHEIGHT + TILEHEIGHT / 2});
 }
 
@@ -1254,7 +1480,7 @@ void TurnSystem2::saveGame()
 		fprintf(_fp, "%d\n", _charList.size());
 		for (int i = 0; i < _charList.size(); i++)
 		{
-			fprintf(_fp, "%d\n", _charList[i]->getType());
+			fprintf(_fp, "%d %d\n", _charList[i]->getType(), _charList[i]->isRide());
 			if (_charList[i]->getType() == PLAYER)
 			{
 				Player* player = (Player*)_charList[i];
@@ -1317,7 +1543,9 @@ void TurnSystem2::setStart(bool start)
 		{
 			(*it)->setCurWait((*it)->getCurWait() - curWait);
 		}
-	}/*
+		searchMovableTiles();
+	}
+	/*
 	else if (_start && DATAMANAGER->isLoadGame())
 	{
 		for (auto it = _charList.begin(); it != _charList.end(); ++it)

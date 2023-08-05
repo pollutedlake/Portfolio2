@@ -41,29 +41,6 @@ void Player::update(void)
 				_isAttack = false;
 				_damage = 0;
 			}
-			/*if (_destTilePos.x - _tilePos.x > 0)
-			{
-				_dir.reset();
-				_dir.set(RIGHT);
-			}
-			else if (_destTilePos.x - _tilePos.x < 0)
-			{
-				_dir.reset();
-				_dir.set(LEFT);
-			}
-			else
-			{
-				if (_destTilePos.y - _tilePos.y > 0)
-				{
-					_dir.reset();
-					_dir.set(DOWN);
-				}
-				else if (_destTilePos.y - _tilePos.y < 0)
-				{
-					_dir.reset();
-					_dir.set(UP);
-				}
-			}*/
 			if (_frame / 2 > 23)
 			{
 				_state.reset();
@@ -712,7 +689,14 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("AjdahakaAttackSideEffect")->alphaFrameRender(hdc, position.x - 80, position.y - 95, (_frame / 2) % 6, LEFT, 128);
 			}
-			IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, position.x - 40, position.y - 165, (_frame / 5) % 12, LEFT);
+			if (_state.test(MOVE))
+			{
+				IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 60, WINSIZE_Y / 2 - (cameraPos.y - y) - 225, (_frame / 5) % 12, LEFT);
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, position.x - 40, position.y - 165, (_frame / 5) % 12, LEFT);
+			}
 		}
 		else if (_dir.test(RIGHT))
 		{
@@ -720,7 +704,14 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("AjdahakaAttackSideEffect")->alphaFrameRender(hdc, position.x + 20, position.y - 95, 5 - (_frame / 2) % 6, RIGHT, 128);
 			}
-			IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, position.x - 80, position.y - 165, 11 - (_frame / 5) % 12, RIGHT);
+			if (_state.test(MOVE))
+			{
+				IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 100, WINSIZE_Y / 2 - (cameraPos.y - y) - 225, 11 - (_frame / 5) % 12, RIGHT);
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("AjdahakaSide")->frameRender(hdc, position.x - 80, position.y - 165, 11 - (_frame / 5) % 12, RIGHT);
+			}
 		}
 		else if (_dir.test(UP))
 		{
@@ -728,7 +719,14 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("AjdahakaAttackUpEffect")->alphaFrameRender(hdc, position.x, position.y - 125, (_frame / 2) % 6, 0, 128);
 			}
-			IMAGEMANAGER->findImage("AjdahakaUp")->frameRender(hdc, position.x - 100, position.y - 110, (_frame / 5) % 12, 0);
+			if (_state.test(MOVE))
+			{
+				IMAGEMANAGER->findImage("AjdahakaUp")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 120, WINSIZE_Y / 2 - (cameraPos.y - y) - 170, (_frame / 5) % 12, 0);
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("AjdahakaUp")->frameRender(hdc, position.x - 100, position.y - 110, (_frame / 5) % 12, 0);
+			}
 		}
 		else if (_dir.test(DOWN))
 		{
@@ -736,7 +734,20 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			{
 				IMAGEMANAGER->findImage("AjdahakaAttackDownEffect")->alphaFrameRender(hdc, position.x - 40, position.y - 60, (_frame / 2) % 6, 0, 128);
 			}
-			IMAGEMANAGER->findImage("AjdahakaDown")->frameRender(hdc, position.x - 100, position.y - 135, (_frame / 5) % 12, 0);
+			if (_state.test(MOVE))
+			{
+				IMAGEMANAGER->findImage("AjdahakaDown")->frameRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x) - 120, WINSIZE_Y / 2 - (cameraPos.y - y) - 195, (_frame / 5) % 12, 0);
+			}
+			else
+			{
+				IMAGEMANAGER->findImage("AjdahakaDown")->frameRender(hdc, position.x - 100, position.y - 135, (_frame / 5) % 12, 0);
+			}
+		}
+		if (_state.test(DAMAGED))
+		{
+			char damageStr[50];
+			wsprintf(damageStr, "%d", _damage);
+			FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "가을체", 20, 500, damageStr, strlen(damageStr), RGB(255, 0, 0));
 		}
 	}
 	else
@@ -1644,8 +1655,10 @@ void Player::render(HDC hdc, POINT position, POINT cameraPos)
 			else if (_dir.test(DOWN))
 			{
 				IMAGEMANAGER->findImage("JoanDamagedDown")->render(hdc, position.x, position.y + 15);
-
 			}
+			char damageStr[50];
+			wsprintf(damageStr, "%d", _damage);
+			FONTMANAGER->textOut(hdc, position.x + 15, position.y - _frame * 5 - 20, "가을체", 20, 500, damageStr, strlen(damageStr), RGB(255, 0, 0));
 		}
 		else if (_state.test(DIE))
 		{

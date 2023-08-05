@@ -40,14 +40,10 @@ void SceneManager::update(void)
 
 void SceneManager::release(void)
 {
-	/*_currentScene->release();
-	SAFE_DELETE(_currentScene);*/
     for (auto iter = _sceneMap.begin(); iter != _sceneMap.end();)
     {
         if (iter->second != nullptr)
         {
-            //iter->second->release();
-            //SAFE_DELETE(iter->second);
             iter = _sceneMap.erase(iter);
         }
         else
@@ -84,6 +80,7 @@ HRESULT SceneManager::loadingScene()
     {
         DATAMANAGER->setSceneIdx(0);
         DATAMANAGER->setBattleIdx(0);
+        DATAMANAGER->setMaxScenario(DATAMANAGER->getMaxScenario() + 6);
         iter->init("Title");
     }
     else

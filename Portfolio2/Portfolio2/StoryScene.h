@@ -35,6 +35,7 @@ private:
 	bool _speakFinish;
 	bool _fadeWhite;
 	bool _fadeIn;
+	bool _summary;
 	int _fadeRedStart;
 	int _fadeWhiteFrame;
 	int _speakStartFrame;

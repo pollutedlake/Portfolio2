@@ -115,6 +115,7 @@ private:
 	int _scenario;
 	int _battleIdx;
 	int _sceneIdx;
+	int _maxScenario;
 	bool _introVideo;
 	bool _loadGame;
 
@@ -143,6 +144,8 @@ public:
 	bool getIntroVideo() {return _introVideo;}
 	bool isLoadGame() {return _loadGame;}
 	void setLoadGame(bool load) {_loadGame = load;}
+	int getMaxScenario() { return _maxScenario; }
+	void setMaxScenario(int maxScenario) { _maxScenario = maxScenario; }
 
 	// 전투데이터
 	BattleData* findBattleData(string strKey, int i);

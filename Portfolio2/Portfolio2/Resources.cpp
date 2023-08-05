@@ -115,6 +115,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("SaladinAttackDown", "Resources/Images/Characters/Saladin/SaladinAttackDown.bmp", 505, 116, 5, 1, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("SaladinMove", "Resources/Images/Characters/Saladin/SaladinMove.bmp", 720, 480, 6, 4, true, RGB(168, 208, 168));
 	IMAGEMANAGER->addFrameImage("CursorTile", "Resources/Images/UI/CursorTile.bmp", 240, 32, 6, 1);
+	IMAGEMANAGER->addFrameImage("BigCursorTile", "Resources/Images/UI/BigCursorTile.bmp", 600, 96, 5, 1);
 	IMAGEMANAGER->addFrameImage("CantMoveTile", "Resources/Images/UI/CantMoveTile.bmp", 76, 42, 2, 1, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("MovableTile", "Resources/Images/UI/MovableTile.bmp", 40, 32);
 	IMAGEMANAGER->addImage("AttackableTile", "Resources/Images/UI/AttackableTile.bmp", 40, 32);

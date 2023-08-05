@@ -191,6 +191,7 @@ HRESULT StoryScene::init(void)
 	}
 	else
 	{
+		_summary = true;
 		_speakFinish = false;
 		_fadeIn = true;
 		_fadeOut = false;
@@ -522,8 +523,18 @@ void StoryScene::update(void)
 	else
 	{
 		_frame++;
-		switch(_backGroundIndex)
+		if (_summary)
 		{
+			if (_frame == 600)
+			{
+				_summary = false;
+				_frame = 0;
+			}
+		}
+		else
+		{
+			switch (_backGroundIndex)
+			{
 			case 1:
 				if (_frame == 100 && _dialogIndex == 0)
 				{
@@ -532,9 +543,9 @@ void StoryScene::update(void)
 					wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
 					SOUNDMANAGER->playSoundFMOD(_text);
 				}
-				if(_dialogIndex == 8 && !_fadeOut)
+				if (_dialogIndex == 8 && !_fadeOut)
 				{
- 					_fadeOut = true;
+					_fadeOut = true;
 					_fadeStartFrame = _frame;
 				}
 				if (_frame > _fadeStartFrame + 100 && _fadeOut)
@@ -542,7 +553,7 @@ void StoryScene::update(void)
 					_backGroundIndex++;
 					_frame = 0;
 				}
-			break;
+				break;
 			case 2:
 				if (_frame > 100)
 				{
@@ -551,7 +562,7 @@ void StoryScene::update(void)
 					_fadeOut = false;
 					_fadeIn = true;
 				}
-			break;
+				break;
 			case 3:
 				if (_frame == 100 && _dialogIndex == 8)
 				{
@@ -570,7 +581,7 @@ void StoryScene::update(void)
 					_backGroundIndex++;
 					_frame = 0;
 				}
-			break;
+				break;
 			case 4:
 				if (_frame > 100)
 				{
@@ -695,7 +706,7 @@ void StoryScene::update(void)
 					_fadeIn = false;
 					_frame = 0;
 				}
-				if(!_fadeIn)
+				if (!_fadeIn)
 				{
 					wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
 					if (SOUNDMANAGER->getCurrentPos(_text) == 0 && !_fadeOut)
@@ -714,13 +725,13 @@ void StoryScene::update(void)
 						SOUNDMANAGER->playSoundFMOD(_text);
 					}
 				}
-			break;
+				break;
 			case 7:
 				if (_frame == 20 && _fadeIn)
 				{
 					_fadeIn = false;
 				}
-				if(!_fadeIn)
+				if (!_fadeIn)
 				{
 					wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
 					if (SOUNDMANAGER->getCurrentPos(_text) == 0 && _soundIndex == 43)
@@ -738,7 +749,7 @@ void StoryScene::update(void)
 						_frame = 0;
 					}
 				}
-			break;
+				break;
 			case 8:
 				wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
 				if (SOUNDMANAGER->getCurrentPos(_text) == 0)
@@ -747,7 +758,7 @@ void StoryScene::update(void)
 					_backGroundIndex++;
 					_frame = 0;
 				}
-			break;
+				break;
 			case 9:
 				if (_frame == 20)
 				{
@@ -756,12 +767,12 @@ void StoryScene::update(void)
 					wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
 					SOUNDMANAGER->playSoundFMOD(_text);
 				}
-				if(_frame > 30)
+				if (_frame > 30)
 				{
 					wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
 					if (SOUNDMANAGER->getCurrentPos(_text) == 0 && _soundIndex == 45)
 					{
-						if(!_fadeOut)
+						if (!_fadeOut)
 						{
 							_fadeOut = true;
 							_fadeStartFrame = _frame;
@@ -772,50 +783,51 @@ void StoryScene::update(void)
 				{
 					SCENEMANAGER->loadingScene();
 				}
-			break;
-		}
-		if (_dialogData->_stopDialog[_stopDialogIndex] != _dialogIndex)
-		{
-			if (_frame % 5 == 0)
-			{
-				_typing++;
+				break;
 			}
-			wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
-			if (SOUNDMANAGER->getCurrentPos(_text) == 0)
+			if (_dialogData->_stopDialog[_stopDialogIndex] != _dialogIndex)
 			{
-				_speakFinish = true;
-			}
-			else
-			{
-				_speakFinish = false;
-			}
-			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-			{
-				if (_speakFinish)
+				if (_frame % 5 == 0)
 				{
-					_speakFinish = false;
-					if (_dialogIndex != 15)
-					{
-						_soundIndex++;
-						if (_dialogIndex != _dialogData->_stopDialog[_stopDialogIndex] - 1)
-						{
-							wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
-							SOUNDMANAGER->playSoundFMOD(_text);
-						}
-						else
-						{
-							_frame = 0;
-						}
-					}
-					_typing = 0;
-					_dialogIndex++;
+					_typing++;
+				}
+				wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
+				if (SOUNDMANAGER->getCurrentPos(_text) == 0)
+				{
+					_speakFinish = true;
 				}
 				else
 				{
-					_speakFinish = true;
-					wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
-					SOUNDMANAGER->stopSoundFMOD(_text);
-					_typing = 999;
+					_speakFinish = false;
+				}
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+				{
+					if (_speakFinish)
+					{
+						_speakFinish = false;
+						if (_dialogIndex != 15)
+						{
+							_soundIndex++;
+							if (_dialogIndex != _dialogData->_stopDialog[_stopDialogIndex] - 1)
+							{
+								wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
+								SOUNDMANAGER->playSoundFMOD(_text);
+							}
+							else
+							{
+								_frame = 0;
+							}
+						}
+						_typing = 0;
+						_dialogIndex++;
+					}
+					else
+					{
+						_speakFinish = true;
+						wsprintf(_text, "%d-%d", DATAMANAGER->getScenario(), _soundIndex);
+						SOUNDMANAGER->stopSoundFMOD(_text);
+						_typing = 999;
+					}
 				}
 			}
 		}
@@ -950,31 +962,39 @@ void StoryScene::render(void)
 	}
 	else
 	{
-		wsprintf(_text, "StoryBG%d-%d", DATAMANAGER->getScenario(), _backGroundIndex);
-		IMAGEMANAGER->findImage(_text)->render(getMemDC());
-		if (_backGroundIndex == 5)
+		if (_summary)
 		{
-			if(_dialogIndex < 35)
-			{
-				IMAGEMANAGER->findImage("Story69-Soldier")->frameRender(getMemDC(), 690, 140, 0, 0);
-			}
-			else if (_dialogIndex == 35)
-			{
-				if(_frame <= 20)
-				IMAGEMANAGER->findImage("Story69-Soldier")->frameRender(getMemDC(), (690.f * (float)(20 - _frame) + 630.f * (float)_frame) / 20.f, 140, 1, 0);
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("Story69-Soldier")->frameRender(getMemDC(), 630, 140, 0, 0);
-			}
+			IMAGEMANAGER->findImage("Black")->render(getMemDC());
+			IMAGEMANAGER->findImage("Summary")->render(getMemDC(), 0, 0, WINSIZE_X, 130 + _frame, 0, 0, WINSIZE_X, 130 + _frame);
+			IMAGEMANAGER->findImage("Summary")->render(getMemDC(), 0, 130 + _frame, WINSIZE_X, 10000, 0, 130 + _frame, WINSIZE_X, 5);
 		}
-		for(auto it  = _storyDataList[_backGroundIndex - 1]->_objectList.begin(); it != _storyDataList[_backGroundIndex - 1]->_objectList.end(); ++it)
+		else
 		{
-			wsprintf(_text, "StoryObject%d-%d", DATAMANAGER->getScenario(), (*it)._objectType);
-			IMAGEMANAGER->findImage(_text)->render(getMemDC(), (*it)._x, (*it)._y);
-		}
-		switch (_backGroundIndex)
-		{
+			wsprintf(_text, "StoryBG%d-%d", DATAMANAGER->getScenario(), _backGroundIndex);
+			IMAGEMANAGER->findImage(_text)->render(getMemDC());
+			if (_backGroundIndex == 5)
+			{
+				if (_dialogIndex < 35)
+				{
+					IMAGEMANAGER->findImage("Story69-Soldier")->frameRender(getMemDC(), 690, 140, 0, 0);
+				}
+				else if (_dialogIndex == 35)
+				{
+					if (_frame <= 20)
+						IMAGEMANAGER->findImage("Story69-Soldier")->frameRender(getMemDC(), (690.f * (float)(20 - _frame) + 630.f * (float)_frame) / 20.f, 140, 1, 0);
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("Story69-Soldier")->frameRender(getMemDC(), 630, 140, 0, 0);
+				}
+			}
+			for (auto it = _storyDataList[_backGroundIndex - 1]->_objectList.begin(); it != _storyDataList[_backGroundIndex - 1]->_objectList.end(); ++it)
+			{
+				wsprintf(_text, "StoryObject%d-%d", DATAMANAGER->getScenario(), (*it)._objectType);
+				IMAGEMANAGER->findImage(_text)->render(getMemDC(), (*it)._x, (*it)._y);
+			}
+			switch (_backGroundIndex)
+			{
 			case 3:
 				if (_dialogIndex < 18)
 				{
@@ -997,27 +1017,27 @@ void StoryScene::render(void)
 					IMAGEMANAGER->findImage("StoryObject69-6")->render(getMemDC(), 570, 380);
 				}
 				else
-			{
-				IMAGEMANAGER->findImage("StoryObject69-12")->render(getMemDC(), 560, 380);
-			}
-			break;
+				{
+					IMAGEMANAGER->findImage("StoryObject69-12")->render(getMemDC(), 560, 380);
+				}
+				break;
 			case 5:
 				for (int i = 0; i < 3; i++)
-			{
-				wsprintf(_text, "Story69-Die%d", i + 1);
-				if (_dialogIndex < 29 + i)
 				{
-					IMAGEMANAGER->findImage(_text)->frameRender(getMemDC(), 215 + 140 * i, 170, 0, 0);
+					wsprintf(_text, "Story69-Die%d", i + 1);
+					if (_dialogIndex < 29 + i)
+					{
+						IMAGEMANAGER->findImage(_text)->frameRender(getMemDC(), 215 + 140 * i, 170, 0, 0);
+					}
+					else if (_dialogIndex == 29 + i)
+					{
+						IMAGEMANAGER->findImage(_text)->frameRender(getMemDC(), 215 + 140 * i, 170, _frame / 10 - 3, 0);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage(_text)->frameRender(getMemDC(), 215 + 140 * i, 170, 7, 0);
+					}
 				}
-				else if (_dialogIndex == 29 + i)
-				{
-					IMAGEMANAGER->findImage(_text)->frameRender(getMemDC(), 215 + 140 * i, 170, _frame / 10 - 3, 0);
-				}
-				else
-				{
-					IMAGEMANAGER->findImage(_text)->frameRender(getMemDC(), 215 + 140 * i, 170, 7, 0);
-				}
-			}
 				// ¾á
 				if (_dialogIndex < 29)
 				{
@@ -1025,7 +1045,7 @@ void StoryScene::render(void)
 				}
 				else if (_dialogIndex <= 31)
 				{
-					if(_dialogIndex < 31)
+					if (_dialogIndex < 31)
 					{
 						IMAGEMANAGER->findImage("Story69-Yan")->frameRender(getMemDC(), 615, 180, (_frame / 10 + 1) > 3 ? 3 : (_frame / 10 + 1), 0);
 					}
@@ -1041,7 +1061,7 @@ void StoryScene::render(void)
 						}
 					}
 				}
-				else if(_dialogIndex < 35)
+				else if (_dialogIndex < 35)
 				{
 					IMAGEMANAGER->findImage("Story69-Yan")->frameRender(getMemDC(), 615, 180, 0, 0);
 				}
@@ -1056,7 +1076,7 @@ void StoryScene::render(void)
 						IMAGEMANAGER->findImage("Story69-Yan")->frameRender(getMemDC(), 615, 180, 4, 0);
 					}
 				}
-				else if(_dialogIndex < 40)
+				else if (_dialogIndex < 40)
 				{
 					IMAGEMANAGER->findImage("Story69-Yan")->frameRender(getMemDC(), 615, 180, 4, 0);
 				}
@@ -1070,10 +1090,10 @@ void StoryScene::render(void)
 				}
 				else if (_dialogIndex == 42)
 				{
-					if(_frame <= 50)
+					if (_frame <= 50)
 					{
-						IMAGEMANAGER->findImage("Story69-Yan")->frameRender(getMemDC(), (float)(615 * (50 - _frame) + (180 * _frame)) / 50.f, 
-							(float)(180 * (50 - _frame) + 270 * _frame)/ 50.f, (_frame / 10) % 5 + 8, 0);
+						IMAGEMANAGER->findImage("Story69-Yan")->frameRender(getMemDC(), (float)(615 * (50 - _frame) + (180 * _frame)) / 50.f,
+							(float)(180 * (50 - _frame) + 270 * _frame) / 50.f, (_frame / 10) % 5 + 8, 0);
 					}
 					if (_frame > 50)
 					{
@@ -1088,7 +1108,7 @@ void StoryScene::render(void)
 				}
 				else if (_dialogIndex <= 31)
 				{
-					if(_dialogIndex < 31)
+					if (_dialogIndex < 31)
 					{
 						IMAGEMANAGER->findImage("Story69-Osman")->frameRender(getMemDC(), 150, 250, _frame / 10 > 4 ? 0 : _frame / 10, 0);
 					}
@@ -1098,10 +1118,10 @@ void StoryScene::render(void)
 						{
 							IMAGEMANAGER->findImage("Story69-Osman")->frameRender(getMemDC(), 150, 250, _frame / 10 > 4 ? 0 : _frame / 10, 0);
 						}
-						else if(_frame <= 270)
+						else if (_frame <= 270)
 						{
-							IMAGEMANAGER->findImage("Story69-Osman")->frameRender(getMemDC(), 
-								(150.f * (140.f - (float)(_frame - 130)) + 550.0f * (float)(_frame - 130)) / 140.f, 
+							IMAGEMANAGER->findImage("Story69-Osman")->frameRender(getMemDC(),
+								(150.f * (140.f - (float)(_frame - 130)) + 550.0f * (float)(_frame - 130)) / 140.f,
 								(250.f * (140.f - (float)(_frame - 130)) + 180.f * (float)(_frame - 130)) / 140.f, (_frame / 10) % 6 + 5, 0);
 						}
 						else
@@ -1116,7 +1136,7 @@ void StoryScene::render(void)
 				}
 				else if (_dialogIndex == 39)
 				{
-					if(_frame <= 10)
+					if (_frame <= 10)
 					{
 						IMAGEMANAGER->findImage("Story69-Osman")->frameRender(getMemDC(),
 							(550.f * (10.f - (float)(_frame)) + 590.0f * (float)(_frame)) / 10.f, 180, (_frame / 10) % 6 + 5, 0);
@@ -1136,17 +1156,17 @@ void StoryScene::render(void)
 				}
 				// »ì¶óµò
 				if (_dialogIndex < 29)
-			{
-				IMAGEMANAGER->findImage("Story69-Saladin")->frameRender(getMemDC(), 150, 300, 0, 0);
-			}
+				{
+					IMAGEMANAGER->findImage("Story69-Saladin")->frameRender(getMemDC(), 150, 300, 0, 0);
+				}
 				else if (_dialogIndex == 29)
-			{
-				IMAGEMANAGER->findImage("Story69-Saladin")->frameRender(getMemDC(), 150, 300, _frame / 10 - 10, 0);
-			}
+				{
+					IMAGEMANAGER->findImage("Story69-Saladin")->frameRender(getMemDC(), 150, 300, _frame / 10 - 10, 0);
+				}
 				else
-			{
-				IMAGEMANAGER->findImage("Story69-Saladin")->frameRender(getMemDC(), 150, 300, 2, 0);
-			}
+				{
+					IMAGEMANAGER->findImage("Story69-Saladin")->frameRender(getMemDC(), 150, 300, 2, 0);
+				}
 				// ÃÑ ½î´Â ±ºÀÎµé
 				for (int i = 0; i < 4; i++)
 				{
@@ -1176,10 +1196,10 @@ void StoryScene::render(void)
 					}
 					if (_dialogIndex == 38)
 					{
-						if(_frame <=  100)
+						if (_frame <= 100)
 						{
-							IMAGEMANAGER->findImage("Story69-Soldier2")->frameRender(getMemDC(), 
-								(float)((195 + 140 * i) * (100 - _frame) + (600 + 5 * i) * _frame) / 100.f, 
+							IMAGEMANAGER->findImage("Story69-Soldier2")->frameRender(getMemDC(),
+								(float)((195 + 140 * i) * (100 - _frame) + (600 + 5 * i) * _frame) / 100.f,
 								(float)(360 * (100 - _frame) + (240 + 40 * i) * _frame) / 100.f, (_frame / 10) % 6, 0);
 
 						}
@@ -1207,49 +1227,50 @@ void StoryScene::render(void)
 						{
 							IMAGEMANAGER->findImage("GunFireSide")->alphaFrameRender(getMemDC(), 540 + 5 * i, 210 + 40 * i, (_frame - 120) / 4, 0, 200);
 						}
-						IMAGEMANAGER->findImage("Story69-Soldier2")->frameRender(getMemDC(), 600 + 5 * i, 240 + 40 * i, 
+						IMAGEMANAGER->findImage("Story69-Soldier2")->frameRender(getMemDC(), 600 + 5 * i, 240 + 40 * i,
 							_frame / 10 + 7 > 12 ? _frame / 10 % 3 + 10 : _frame / 10 + 7, 0);
 					}
 				}
-			break;
-		}
-		if (_fadeIn)
-		{
-			if (_backGroundIndex == 6 || _backGroundIndex == 7)
-			{
-				SCENEMANAGER->fadeInImage(0, _frame, 20, "Red");
+				break;
 			}
-			else if (_backGroundIndex == 9)
+			if (_fadeIn)
 			{
-				SCENEMANAGER->fadeInImage(0, _frame, 20, "Red");
+				if (_backGroundIndex == 6 || _backGroundIndex == 7)
+				{
+					SCENEMANAGER->fadeInImage(0, _frame, 20, "Red");
+				}
+				else if (_backGroundIndex == 9)
+				{
+					SCENEMANAGER->fadeInImage(0, _frame, 20, "Red");
+				}
+				else
+				{
+					SCENEMANAGER->fadeInBlack(0, _frame, 100);
+				}
 			}
-			else
+			if (_fadeOut)
 			{
-				SCENEMANAGER->fadeInBlack(0, _frame, 100);
+				if (_backGroundIndex == 5 || _backGroundIndex == 6)
+				{
+					SCENEMANAGER->fadeOutImage(140, _frame, 160, "Red");
+				}
+				else if (_backGroundIndex == 7)
+				{
+					SCENEMANAGER->fadeOutImage(_fadeStartFrame, _frame, _fadeStartFrame + 200, "Red");
+				}
+				else if (_backGroundIndex == 9)
+				{
+					SCENEMANAGER->fadeOutBlack(_fadeStartFrame, _frame, _fadeStartFrame + 20);
+				}
+				else
+				{
+					SCENEMANAGER->fadeOutBlack(_fadeStartFrame, _frame, _fadeStartFrame + 100);
+				}
 			}
-		}
-		if (_fadeOut)
-		{
-			if (_backGroundIndex == 5 || _backGroundIndex == 6)
+			if (_dialogData->_stopDialog[_stopDialogIndex] != _dialogIndex)
 			{
-				SCENEMANAGER->fadeOutImage(140, _frame, 160, "Red");
+				dialog(_dialogData->_dialogList[_dialogIndex]._speaker, _dialogData->_dialogList[_dialogIndex]._script, _typing, _dialogData->_dialogList[_dialogIndex]._dialogN, _dialogData->_dialogList[_dialogIndex]._dialogType);
 			}
-			else if (_backGroundIndex == 7)
-			{
-				SCENEMANAGER->fadeOutImage(_fadeStartFrame, _frame, _fadeStartFrame + 200, "Red");
-			}
-			else if (_backGroundIndex == 9)
-			{
-				SCENEMANAGER->fadeOutBlack(_fadeStartFrame, _frame, _fadeStartFrame + 20);
-			}
-			else
-			{
-				SCENEMANAGER->fadeOutBlack(_fadeStartFrame, _frame, _fadeStartFrame + 100);
-			}
-		}
-		if(_dialogData->_stopDialog[_stopDialogIndex] != _dialogIndex)
-		{
-			dialog(_dialogData->_dialogList[_dialogIndex]._speaker, _dialogData->_dialogList[_dialogIndex]._script, _typing, _dialogData->_dialogList[_dialogIndex]._dialogN, _dialogData->_dialogList[_dialogIndex]._dialogType);
 		}
 	}
 }
@@ -1306,18 +1327,20 @@ void StoryScene::dialog(string charName, LPCWSTR* printStringArr, int length, in
 		{
 			if (dialogType && _storyDialog[_dialogIndex - 1]._dialogType)
 			{
-
-				_textBoxImg->alphaRender(getMemDC(), _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left, _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top,
-					_dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].right - _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left, _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].bottom - _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top,
-					0, 0, _textBoxImg->getWidth(), _textBoxImg->getHeight(), 127);
+				DIALOGMANAGER->makeTextBox(getMemDC(), _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left, _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top,
+					_dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].right - _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left, 
+					_dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].bottom - _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top, 127);
 				FONTMANAGER->textOut(getMemDC(), _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].left + 20, _dialogRC[_storyDialog[_dialogIndex - 1]._dialogType].top + 20, "°¡À»Ã¼", 25, 50,
 					_storyDialog[_dialogIndex - 1]._script, _storyDialog[_dialogIndex - 1]._dialogN, 999, RGB(255, 255, 255));
 			}
 		}
-		_textBoxImg->alphaRender(getMemDC(), _dialogRC[dialogType].left, _dialogRC[dialogType].top,
-			_dialogRC[dialogType].right - _dialogRC[dialogType].left, _dialogRC[dialogType].bottom - _dialogRC[dialogType].top,
-			0, 0, _textBoxImg->getWidth(), _textBoxImg->getHeight(), 127);
+		DIALOGMANAGER->makeTextBox(getMemDC(), _dialogRC[dialogType].left, _dialogRC[dialogType].top,
+			_dialogRC[dialogType].right - _dialogRC[dialogType].left, _dialogRC[dialogType].bottom - _dialogRC[dialogType].top, 127);
 		FONTMANAGER->textOut(getMemDC(), _dialogRC[dialogType].left + 20, _dialogRC[dialogType].top + 20, "°¡À»Ã¼", 25, 50, printStringArr, arrSize, length, RGB(255, 255, 255));
+		if (_speakFinish)
+		{
+			IMAGEMANAGER->findImage("NextDialog")->frameRender(getMemDC(), _dialogRC[dialogType].right - 20, _dialogRC[dialogType].bottom - 20, (_frame / 10) % 6, 0);
+		}
 	}
 	else
 	{

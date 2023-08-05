@@ -40,12 +40,15 @@ void ScenarioScene::update(void)
 		{
 			if (_selectScenario == 75 || _selectScenario == 69)
 			{
-				SOUNDMANAGER->playSoundFMOD("Select");
-				SOUNDMANAGER->stopSoundFMOD("ScenarioScene");
-				DATAMANAGER->setScenario(_selectScenario);
-				DATAMANAGER->setBattleIdx(0);
-				DATAMANAGER->setSceneIdx(0);
-				_fadeOut = true;
+				if (_selectScenario <= DATAMANAGER->getMaxScenario())
+				{
+					SOUNDMANAGER->playSoundFMOD("Select");
+					SOUNDMANAGER->stopSoundFMOD("ScenarioScene");
+					DATAMANAGER->setScenario(_selectScenario);
+					DATAMANAGER->setBattleIdx(0);
+					DATAMANAGER->setSceneIdx(0);
+					_fadeOut = true;
+				}
 			}
 			if (PtInRect(&_scrollUpRC, _ptMouse))
 			{
@@ -166,7 +169,7 @@ void ScenarioScene::render()
 	{
 		_scrollClick->render(getMemDC(), WINSIZE_X - 58, _scrollCenterY - _scrollNoClick->getHeight() * 1.4 / 2.0f, _scrollClick->getWidth() * 1.4, _scrollClick->getHeight() * 1.4, 0, 0, _scrollClick->getWidth(), _scrollClick->getHeight());
 	}
-	if (_selectScenario != -1)
+	if (_selectScenario != -1 && _selectScenario <= DATAMANAGER->getMaxScenario())
 	{
 		RECT temp = RectMakeCenter(_scenariosCenter[_selectScenario].x, _scenariosCenter[_selectScenario].y, _scenarios->getFrameWidth(), _scenarios->getFrameHeight());
 		if (temp.top < 200 && temp.bottom > 200)

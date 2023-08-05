@@ -485,8 +485,8 @@ void BossBattleScene::render(void)
 	int eldBarY = 5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - (IMAGEMANAGER->findImage("MapCoordination")->getHeight() + IMAGEMANAGER->findImage("EldBar")->getHeight()) / 2;
 	IMAGEMANAGER->findImage("EldBar")->render(getMemDC(), eldBarX, eldBarY);
 	IMAGEMANAGER->findImage("EldIcon")->render(getMemDC(), eldBarX, eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight());
-	int eld = 0;
-	IMAGEMANAGER->findImage("CurEld")->render(getMemDC(), eldBarX + eld/10000 * IMAGEMANAGER->findImage("EldBar")->getWidth() - IMAGEMANAGER->findImage("CurEld")->getWidth() / 2,
+	int eld = DATAMANAGER->getEld();
+	IMAGEMANAGER->findImage("CurEld")->render(getMemDC(), eldBarX + (float)eld / 100000.f * IMAGEMANAGER->findImage("EldBar")->getWidth() - IMAGEMANAGER->findImage("CurEld")->getWidth() / 2,
 		eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight() / 2 - IMAGEMANAGER->findImage("CurEld")->getHeight());
 	char mapInfo[50];
 	wsprintf(mapInfo, "ÇüÁ¦¿©!");

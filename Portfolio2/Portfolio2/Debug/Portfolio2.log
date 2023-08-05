@@ -1,104 +1,28 @@
-﻿  BattleScene.cpp
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\TurnSystem2.h(90,88): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(46,71): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(46,59): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(51,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(114,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(281,58): warning C4805: '!=': 연산에 'int' 형식과 '_Ty2' 형식을 함께 사용하는 것은 안전하지 않습니다.
-          with
-          [
-              _Ty2=bool
-          ]
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(337,185): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(339,186): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(356,185): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(358,186): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(383,105): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(383,50): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(382,127): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(386,61): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(385,130): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(387,14): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(388,14): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(396,50): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(399,61): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(405,119): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(404,165): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(408,123): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(407,161): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(411,61): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\BattleScene.cpp(410,100): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Resources.cpp
-  StoryScene.cpp
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(848,138): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(848,95): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(853,111): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(853,77): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(854,193): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(854,137): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(856,193): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(856,137): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(858,177): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(858,121): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(860,177): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(860,121): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(870,138): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(870,95): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(874,139): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(874,70): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(880,134): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(880,67): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(882,129): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(882,65): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(895,49): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(899,49): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(912,23): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(911,94): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(964,128): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1076,51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1075,117): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1081,66): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1080,131): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1105,83): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1104,84): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1122,70): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1183,65): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1182,76): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1271,63): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1271,31): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1270,65): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1277,63): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1277,31): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1276,54): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1290,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1290,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1289,96): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1289,81): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1295,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1295,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1294,64): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1300,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1300,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1299,53): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1333,63): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1333,31): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1332,91): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1332,48): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1339,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1339,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1338,81): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1338,64): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1352,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1352,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1351,97): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1351,82): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1357,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1357,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1356,91): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1356,48): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1362,62): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1362,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1361,81): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Portfolio2\StoryScene.cpp(1361,64): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  ScenarioScene.cpp
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(38,163): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(38,128): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(38,85): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(38,45): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(97,45): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(113,63): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(164,110): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(165,119): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(165,89): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(166,129): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(166,97): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(167,174): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(167,139): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(167,68): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(170,169): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(170,136): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\ScenarioScene.cpp(170,67): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SceneManager.cpp
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\TurnSystem2.h(90,88): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(112,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(117,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(122,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(127,59): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(132,78): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Portfolio2\SceneManager.cpp(137,78): warning C4244: '인수': 'float'에서 'BYTE'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다...
-  Portfolio2.vcxproj -> C:\Users\psh95\Desktop\상현\GameAcademy\Porfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe
+  Portfolio2.vcxproj -> C:\Users\언리얼\Desktop\박상현\Portfolio2\Portfolio2\Portfolio2\Debug\Portfolio2.exe

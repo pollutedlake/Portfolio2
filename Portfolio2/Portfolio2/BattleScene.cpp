@@ -228,7 +228,14 @@ void BattleScene::render(void)
 	IMAGEMANAGER->findImage(_bgImg)->render(getMemDC(), _camera->worldToCamera({ 0, 0 }).x, _camera->worldToCamera({ 0, 0 }).y);
 	if(_launch)
 	{
-		IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y, TILEWIDTH, TILEHEIGHT, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);
+		if (_turnSystem->getCurChar()->isRide())
+		{
+			IMAGEMANAGER->findImage("BigCursorTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x - TILEWIDTH, _camera->worldToCamera(_cursorTileLT).y - TILEHEIGHT, TILEWIDTH * 3, TILEHEIGHT * 3, (_frame / 5) % IMAGEMANAGER->findImage("BigCursorTile")->getMaxFrameX(), 0, 200);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("CursorTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y, TILEWIDTH, TILEHEIGHT, (_frame / 5) % IMAGEMANAGER->findImage("CursorTile")->getMaxFrameX(), 0, 200);
+		}
 		if (GetPixel(IMAGEMANAGER->findImage(_checkBGImg)->getMemDC(), _cursorTileLT.x + TILEWIDTH / 2, _cursorTileLT.y + TILEHEIGHT / 2) == RGB(255, 0, 255))
 		{
 			IMAGEMANAGER->findImage("CantMoveTile")->alphaFrameRender(getMemDC(), _camera->worldToCamera(_cursorTileLT).x, _camera->worldToCamera(_cursorTileLT).y,
@@ -388,8 +395,8 @@ void BattleScene::render(void)
 	int eldBarY = 5 + IMAGEMANAGER->findImage("TextBox")->getHeight() * 0.7 - (IMAGEMANAGER->findImage("MapCoordination")->getHeight() + IMAGEMANAGER->findImage("EldBar")->getHeight()) / 2;
 	IMAGEMANAGER->findImage("EldBar")->render(getMemDC(), eldBarX, eldBarY);
 	IMAGEMANAGER->findImage("EldIcon")->render(getMemDC(), eldBarX, eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight());
-	int eld = 0;
-	IMAGEMANAGER->findImage("CurEld")->render(getMemDC(), eldBarX + eld / 10000 * IMAGEMANAGER->findImage("EldBar")->getWidth() - IMAGEMANAGER->findImage("CurEld")->getWidth() / 2,
+	int eld = DATAMANAGER->getEld();
+	IMAGEMANAGER->findImage("CurEld")->render(getMemDC(), eldBarX + (float)eld / 100000.f * IMAGEMANAGER->findImage("EldBar")->getWidth() - IMAGEMANAGER->findImage("CurEld")->getWidth() / 2,
 		eldBarY + IMAGEMANAGER->findImage("EldBar")->getHeight() / 2 - IMAGEMANAGER->findImage("CurEld")->getHeight());
 	char mapInfo[50];
 	wsprintf(mapInfo, "자비단 돌입");

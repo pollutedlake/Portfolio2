@@ -67,7 +67,7 @@ public:
 	void setCurMP(int curMP) {_curMP = curMP;}
 	void setMobility(int mobility) {_mobility = mobility;}
 	void setWTP(int wtp) {_wtp = wtp;}
-	void setRide(bool ride) {_isRide = ride;}
+	void setRide(bool ride);
 
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}

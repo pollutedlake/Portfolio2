@@ -50,6 +50,21 @@ void Character::setDir(int dir)
 	_dir.set(dir, true);
 }
 
+void Character::setRide(bool ride)
+{
+	if (ride)
+	{
+		_mobility *= 2;
+		_curMobility = _mobility;
+	}
+	else
+	{
+		_mobility /= 2;
+		_curMobility = _mobility;
+	}
+	_isRide = ride;
+}
+
 int Character::getTurnOrder(int charN)
 {
 	for (int i = 0; i < charN - 1; i++)
@@ -63,83 +78,99 @@ int Character::getTurnOrder(int charN)
 
 void Character::move()
 {
-	if (_route.size() > 0 && _curMobility > 0)
+	if (_isRide)
 	{
-		x = (_route.back().x * 40 + 20) * ((_frame % 11) / 10.f) + (_tilePos.x * 40 + 20) * ((10 - (_frame % 11)) / 10.f);
-		y = (_route.back().y * 30 + 15) * ((_frame % 11) / 10.f) + (_tilePos.y * 30 + 15) * ((10 - (_frame % 11)) / 10.f);
-		if (_tilePos.x - _route.back().x == 1)
+		float dest = (abs)(_destTilePos.x - _tilePos.x) + (abs)(_destTilePos.y - _tilePos.y);
+		x = (float)((_destTilePos.x * TILEWIDTH + TILEWIDTH / 2) * _frame + (_tilePos.x * TILEWIDTH + TILEWIDTH / 2) * ((dest * 10.f - _frame ))) / (dest * 10.f);
+		y = (float)((_destTilePos.y * TILEHEIGHT + TILEHEIGHT / 2) * _frame + (_tilePos.y * TILEHEIGHT + TILEHEIGHT / 2) * ((dest * 10.f - _frame))) / (dest * 10.f);
+		if ((x == _destTilePos.x * TILEWIDTH + TILEWIDTH / 2) && (y == _destTilePos.y * TILEHEIGHT + TILEHEIGHT / 2))
 		{
-			_dir.reset();
-			_dir.set(LEFT, true);
-		}
-		else if (_tilePos.x - _route.back().x == -1)
-		{
-			_dir.reset();
-			_dir.set(RIGHT, true);
-		}
-		else if (_tilePos.y - _route.back().y == 1)
-		{
-			_dir.reset();
-			_dir.set(UP, true);
-		}
-		else if (_tilePos.y - _route.back().y == -1)
-		{
-			_dir.reset();
-			_dir.set(DOWN, true);
-		}
-		if (x == (_route.back().x * 40 + 20))
-		{
-			if (y == (_route.back().y * 30 + 15))
-			{
-
-				_tilePos.x = _route.back().x;
-				_tilePos.y = _route.back().y;
-				_route.pop_back();
-				_curMobility--;
-			}
+			_state.reset();
+			_doing = false;
+			_tilePos = _destTilePos;
+			_turn.flip(0);
 		}
 	}
 	else
 	{
-		if(_state.test(ATTACK) && _route.empty())
+		if (_route.size() > 0 && _curMobility > 0)
 		{
-			if (_tilePos.x - _destTilePos.x > 0)
+			x = (_route.back().x * 40 + 20) * ((_frame % 11) / 10.f) + (_tilePos.x * 40 + 20) * ((10 - (_frame % 11)) / 10.f);
+			y = (_route.back().y * 30 + 15) * ((_frame % 11) / 10.f) + (_tilePos.y * 30 + 15) * ((10 - (_frame % 11)) / 10.f);
+			if (_tilePos.x - _route.back().x == 1)
 			{
 				_dir.reset();
 				_dir.set(LEFT, true);
 			}
-			else if (_tilePos.x - _destTilePos.x < 0)
+			else if (_tilePos.x - _route.back().x == -1)
 			{
 				_dir.reset();
 				_dir.set(RIGHT, true);
 			}
-			else if (_tilePos.y - _destTilePos.y > 0)
+			else if (_tilePos.y - _route.back().y == 1)
 			{
 				_dir.reset();
 				_dir.set(UP, true);
 			}
-			else if (_tilePos.y - _destTilePos.y < 0)
+			else if (_tilePos.y - _route.back().y == -1)
 			{
 				_dir.reset();
 				_dir.set(DOWN, true);
 			}
-			setState(2);
+			if (x == (_route.back().x * 40 + 20))
+			{
+				if (y == (_route.back().y * 30 + 15))
+				{
+
+					_tilePos.x = _route.back().x;
+					_tilePos.y = _route.back().y;
+					_route.pop_back();
+					_curMobility--;
+				}
+			}
 		}
 		else
 		{
-			_state.reset();
-			_doing = false;
+			if (_state.test(ATTACK) && _route.empty())
+			{
+				if (_tilePos.x - _destTilePos.x > 0)
+				{
+					_dir.reset();
+					_dir.set(LEFT, true);
+				}
+				else if (_tilePos.x - _destTilePos.x < 0)
+				{
+					_dir.reset();
+					_dir.set(RIGHT, true);
+				}
+				else if (_tilePos.y - _destTilePos.y > 0)
+				{
+					_dir.reset();
+					_dir.set(UP, true);
+				}
+				else if (_tilePos.y - _destTilePos.y < 0)
+				{
+					_dir.reset();
+					_dir.set(DOWN, true);
+				}
+				setState(2);
+			}
+			else
+			{
+				_state.reset();
+				_doing = false;
+			}
+			_curMobility = _mobility;
+			if (_type == 0)
+			{
+				_turn.flip(0);
+			}
+			else
+			{
+				endTurn();
+			}
+			_route.clear();
 		}
-		_curMobility = _mobility;
-		if(_type == 0)
-		{
-			_turn.flip(0);
-		}
-		else
-		{
-			endTurn();
-		}
-		_route.clear();
 	}
 }
 

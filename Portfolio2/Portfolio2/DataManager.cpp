@@ -4,6 +4,7 @@
 HRESULT DataManager::init(void)
 {
 	_introVideo = true;
+	_maxScenario = 69;
 	_scenario = 69;
 	_sceneIdx = 0;
 	_battleIdx = 0;
@@ -255,7 +256,7 @@ void DataManager::loadGame(FILE* fp)
 	int data2;
 	for (int i = 0; i < charN; i++)
 	{
-		fscanf_s(fp, "%d\n", &data);
+		fscanf_s(fp, "%d %d\n", &data, &data2);
 		if (data == 0)
 		{
 			char name[256];
@@ -272,6 +273,7 @@ void DataManager::loadGame(FILE* fp)
 			fscanf_s(fp, "\n");
 			Player* player = new Player(name, skill);
 			player->init();
+			player->setRide(data2);
 			int canMove;
 			int canAction;
 			fscanf_s(_fp, "%d %d\n", &canMove, &canAction);

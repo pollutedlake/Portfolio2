@@ -161,7 +161,7 @@ void LoadScene::saveGame()
 		fprintf(_saveFP, "%d\n", DATAMANAGER->getLoadCharList().size());
 		for (int i = 0; i < DATAMANAGER->getLoadCharList().size(); i++)
 		{
-			fprintf(_saveFP, "%d\n", DATAMANAGER->getLoadCharList()[i]->getType());
+			fprintf(_saveFP, "%d %d\n", DATAMANAGER->getLoadCharList()[i]->getType(), DATAMANAGER->getLoadCharList()[i]->isRide());
 			if (DATAMANAGER->getLoadCharList()[i]->getType() == 0)
 			{
 				Player* player = (Player*)DATAMANAGER->getLoadCharList()[i];
