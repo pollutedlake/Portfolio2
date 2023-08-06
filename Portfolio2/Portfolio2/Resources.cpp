@@ -104,6 +104,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Object4-6", "Resources/Images/BackGrounds/BattleScene/Object4-6.bmp", 600, 240, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("Object4-7", "Resources/Images/BackGrounds/BattleScene/Object4-7.bmp", 40, 272, true, RGB(0, 0, 0));
 
+	IMAGEMANAGER->addImage("BattleSceneBG2", "Resources/Images/BackGrounds/BattleScene/BattleSceneBG2.bmp", 1680, 1890);
+	IMAGEMANAGER->addImage("검사용BattleSceneBG2", "Resources/Images/BackGrounds/BattleScene/검사용BattleSceneBG2.bmp", 1680, 1890);
+
 
 	IMAGEMANAGER->addImage("Table", "Resources/Images/BackGrounds/BossBattleScene/Table.bmp", 120, 136, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addFrameImage("SaladinIdleLeft", "Resources/Images/Characters/Saladin/SaladinIdleLeft.bmp", 272, 90, 4, 1, true, RGB(255, 0, 255));

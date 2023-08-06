@@ -3,8 +3,8 @@
 
 HRESULT DataManager::init(void)
 {
-	_introVideo = true;
-	_maxScenario = 69;
+	_introVideo = false;
+	_maxScenario = 75;
 	_scenario = 69;
 	_sceneIdx = 0;
 	_battleIdx = 0;
@@ -296,6 +296,8 @@ void DataManager::loadGame(FILE* fp)
 			player->setTurnOder(data);
 			fscanf_s(fp, "%d", &data);
 			player->setDir(data);
+			fscanf_s(fp, "%d", &data);
+			player->setCurMobility(data);
 			fscanf_s(fp, "\n");
 			_loadCharList.push_back(player);
 		}
@@ -321,6 +323,8 @@ void DataManager::loadGame(FILE* fp)
 			enemy->setTurnOder(data);
 			fscanf_s(fp, "%d", &data);
 			enemy->setDir(data);
+			fscanf_s(fp, "%d", &data);
+			enemy->setCurMobility(data);
 			fscanf_s(fp, "\n");
 			_loadCharList.push_back(enemy);
 		}

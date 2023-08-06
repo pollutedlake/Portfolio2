@@ -188,6 +188,7 @@ HRESULT StoryScene::init(void)
 	_fadeWhite = false;
 	_fadeWhiteFrame = 0;
 	_speakStartFrame = 0;
+	_dialogIndex = 0;
 	}
 	else
 	{
@@ -916,14 +917,6 @@ void StoryScene::render(void)
 		else if (_backGroundIndex < 4)
 		{
 			_storyBG->frameRender(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, _backGroundIndex, 0);
-			if (_soundIndex >= 11)
-			{
-				for (int i = 0; i < 4; i++)
-				{
-					IMAGEMANAGER->findImage("FireFly")->alphaFrameRender(getMemDC(), (float)WINSIZE_X / 4.f * i, WINSIZE_Y - IMAGEMANAGER->findImage("FireFly")->getFrameHeight() + 50, 
-					(float)WINSIZE_X / 4.f, IMAGEMANAGER->findImage("FireFly")->getFrameHeight(), (_frame / 5) % 31, 0, 50);
-				}
-			}
 			if (_fadeWhite)
 			{
 				if (_soundIndex == 19)

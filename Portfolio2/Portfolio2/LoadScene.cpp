@@ -179,8 +179,8 @@ void LoadScene::saveGame()
 				Soldier* enemy = (Soldier*)DATAMANAGER->getLoadCharList()[i];
 				fprintf(_saveFP, "%d\n", enemy->getEnemyType());
 			}
-			fprintf(_saveFP, "%d %d %d %d %d %d %d %d %d\n", DATAMANAGER->getLoadCharList()[i]->getTilePos().x, DATAMANAGER->getLoadCharList()[i]->getTilePos().y, DATAMANAGER->getLoadCharList()[i]->getCurHP(), DATAMANAGER->getLoadCharList()[i]->getCurMP(),
-				DATAMANAGER->getLoadCharList()[i]->getMobility(), DATAMANAGER->getLoadCharList()[i]->getWTP(), DATAMANAGER->getLoadCharList()[i]->getCurWait(), DATAMANAGER->getLoadCharList()[i]->getTurnOrder(DATAMANAGER->getLoadCharList().size()), DATAMANAGER->getLoadCharList()[i]->getDir());
+			fprintf(_saveFP, "%d %d %d %d %d %d %d %d %d %d\n", DATAMANAGER->getLoadCharList()[i]->getTilePos().x, DATAMANAGER->getLoadCharList()[i]->getTilePos().y, DATAMANAGER->getLoadCharList()[i]->getCurHP(), DATAMANAGER->getLoadCharList()[i]->getCurMP(),
+				DATAMANAGER->getLoadCharList()[i]->getMobility(), DATAMANAGER->getLoadCharList()[i]->getWTP(), DATAMANAGER->getLoadCharList()[i]->getCurWait(), DATAMANAGER->getLoadCharList()[i]->getTurnOrder(DATAMANAGER->getLoadCharList().size()), DATAMANAGER->getLoadCharList()[i]->getDir(), DATAMANAGER->getLoadCharList()[i]->getCurMobility());
 		}
 		/*for (auto it = DATAMANAGER->getPartyData().begin(); it != DATAMANAGER->getPartyData().end(); ++it)
 		{

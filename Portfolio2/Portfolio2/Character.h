@@ -68,6 +68,7 @@ public:
 	void setMobility(int mobility) {_mobility = mobility;}
 	void setWTP(int wtp) {_wtp = wtp;}
 	void setRide(bool ride);
+	void setCurMobility(int curMobility) {_curMobility = _mobility;}
 
 	POINT getDestTilePos() {return _destTilePos;}
 	int getWTP() {return _wtp;}
@@ -85,6 +86,7 @@ public:
 	int getMaxMP() { return _maxMP; }
 	int getCurMP() { return _curMP; }
 	int getMobility() {return _mobility;}
+	int getCurMobility() {return _curMobility;}
 	int getDir() {for(int i = 0; i < 4; i++) {if(_dir.test(i)) {return i;} } }
 	int getFrame() {return _frame;}
 	bool isRide() {return _isRide;}

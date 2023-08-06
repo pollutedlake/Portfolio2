@@ -225,7 +225,14 @@ void BattleScene::release(void)
 
 void BattleScene::render(void)
 {
-	IMAGEMANAGER->findImage(_bgImg)->render(getMemDC(), _camera->worldToCamera({ 0, 0 }).x, _camera->worldToCamera({ 0, 0 }).y);
+	if (_debug)
+	{
+		IMAGEMANAGER->findImage(_checkBGImg)->render(getMemDC(), _camera->worldToCamera({ 0, 0 }).x, _camera->worldToCamera({ 0, 0 }).y);
+	}
+	else
+	{
+		IMAGEMANAGER->findImage(_bgImg)->render(getMemDC(), _camera->worldToCamera({ 0, 0 }).x, _camera->worldToCamera({ 0, 0 }).y);
+	}
 	if(_launch)
 	{
 		if (_turnSystem->getCurChar()->isRide())

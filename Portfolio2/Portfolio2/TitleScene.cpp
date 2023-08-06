@@ -128,26 +128,7 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
-	if (DATAMANAGER->getIntroVideo())
-	{
-		//// (Assume that g_rcDest was calculated previously.)
-		//HRGN rgnClient = CreateRectRgnIndirect(&rcSrc);
-		//HRGN rgnVideo = CreateRectRgnIndirect(&rcDest);
-		//CombineRgn(rgnClient, rgnClient, rgnVideo, RGN_DIFF);
-
-		//// Paint on window.
-		//HBRUSH hbr = GetSysColorBrush(COLOR_BTNFACE);
-		//FillRgn(getMemDC(), rgnClient, hbr);
-
-		//// Clean up.
-		//DeleteObject(hbr);
-		//DeleteObject(rgnClient);
-		//DeleteObject(rgnVideo);
-
-		//// Request the VMR to paint the video.
-		//_pWindowless->RepaintVideo(_hWnd, getMemDC());
-	}
-	else
+	if (!DATAMANAGER->getIntroVideo())
 	{
 		_titleBG->render(getMemDC());
 		if(!_fadeOut)

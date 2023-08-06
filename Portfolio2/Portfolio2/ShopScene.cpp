@@ -36,7 +36,6 @@ HRESULT ShopScene::init(void)
 	_saleList.push_back(DATAMANAGER->findItem("스나이퍼 건"));
 	_saleList.push_back(DATAMANAGER->findItem("테슈브"));
 	_saleList.push_back(DATAMANAGER->findItem("벽력궁"));
-	//_saleList = DATAMANAGER->getSaleList();
 	_partyList = DATAMANAGER->getPartyData();
 	_priceSum = 0;
 	for (int i = 0; i < _saleList.size(); i++)

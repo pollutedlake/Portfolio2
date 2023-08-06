@@ -83,7 +83,7 @@ HRESULT BossBattleScene::init(void)
 	_tileInfo[_vermont->getTilePos().y][_vermont->getTilePos().x] = ENEMY;
 
 	Character* _enemySoldier = new Soldier();
-	((Soldier*)(_enemySoldier))->init(EnemyType::SOLDIER4);
+	((Soldier*)(_enemySoldier))->init(EnemyType::SOLDIER3);
 	_enemySoldier->setDir(UP);
 	_enemySoldier->setTilePos({ 32, 42 });
 	_enemySoldier->setTurnOder(6);
@@ -97,14 +97,14 @@ HRESULT BossBattleScene::init(void)
 	_tileInfo[_enemySoldier2->getTilePos().y][_enemySoldier2->getTilePos().x] = ENEMY;
 
 	Character* _vermont5 = new Soldier();
-	((Soldier*)(_vermont5))->init(EnemyType::SOLDIER4);
+	((Soldier*)(_vermont5))->init(EnemyType::SOLDIER1);
 	_vermont5->setDir(UP);
 	_vermont5->setTilePos({ 32, 45 });
 	_vermont5->setTurnOder(9);
 	_tileInfo[_vermont5->getTilePos().y][_vermont5->getTilePos().x] = ENEMY;
 
 	Character* _vermont4 = new Soldier();
-	((Soldier*)(_vermont4))->init(EnemyType::SOLDIER4);
+	((Soldier*)(_vermont4))->init(EnemyType::SOLDIER2);
 	_vermont4->setDir(UP);
 	_vermont4->setTilePos({ 32, 44 });
 	_vermont4->setTurnOder(8);
@@ -202,21 +202,21 @@ HRESULT BossBattleScene::init(void)
 	_tileInfo[_vermont18->getTilePos().y][_vermont18->getTilePos().x] = ENEMY;
 
 	Character* _vermont19 = new Soldier();
-	((Soldier*)(_vermont19))->init(EnemyType::SOLDIER4);
+	((Soldier*)(_vermont19))->init(EnemyType::SOLDIER8);
 	_vermont19->setDir(DOWN);
 	_vermont19->setTilePos({ 32, 34 });
 	_vermont19->setTurnOder(22);
 	_tileInfo[_vermont19->getTilePos().y][_vermont19->getTilePos().x] = ENEMY;
 
 	Character* _vermont20 = new Soldier();
-	((Soldier*)(_vermont20))->init(EnemyType::SOLDIER4);
+	((Soldier*)(_vermont20))->init(EnemyType::SOLDIER9);
 	_vermont20->setDir(LEFT);
 	_vermont20->setTilePos({ 37, 43 });
 	_vermont20->setTurnOder(22);
 	_tileInfo[_vermont20->getTilePos().y][_vermont20->getTilePos().x] = ENEMY;
 
 	Character* _vermont21 = new Soldier();
-	((Soldier*)(_vermont21))->init(EnemyType::SOLDIER4);
+	((Soldier*)(_vermont21))->init(EnemyType::SOLDIER10);
 	_vermont21->setDir(LEFT);
 	_vermont21->setTilePos({ 37, 41 });
 	_vermont21->setTurnOder(22);

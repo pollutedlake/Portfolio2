@@ -56,7 +56,8 @@ void TurnSystem::update(int tileInfo[][60], int rowN, int colN, POINT cursorTile
 					++it2;
 				}
 			}
-			SAFE_DELETE(*it);
+			//SAFE_DELETE(*it);
+			//tileInfo[(*it)->getTilePos().y][(*it)->getTilePos().x] == MOVABLE;
 			it = _charList.erase(it);
 		}
 		else

@@ -1498,13 +1498,9 @@ void TurnSystem2::saveGame()
 				Soldier* enemy = (Soldier*)_charList[i];
 				fprintf(_fp, "%d\n", enemy->getEnemyType());
 			}
-			fprintf(_fp, "%d %d %d %d %d %d %d %d %d\n", _charList[i]->getTilePos().x, _charList[i]->getTilePos().y, _charList[i]->getCurHP(), _charList[i]->getCurMP(), 
-				_charList[i]->getMobility(), _charList[i]->getWTP(), _charList[i]->getCurWait(), _charList[i]->getTurnOrder(_charList.size()), _charList[i]->getDir());
+			fprintf(_fp, "%d %d %d %d %d %d %d %d %d %d\n", _charList[i]->getTilePos().x, _charList[i]->getTilePos().y, _charList[i]->getCurHP(), _charList[i]->getCurMP(), 
+				_charList[i]->getMobility(), _charList[i]->getWTP(), _charList[i]->getCurWait(), _charList[i]->getTurnOrder(_charList.size()), _charList[i]->getDir(), _charList[i]->getCurMobility());
 		}
-		/*for (auto it = DATAMANAGER->getPartyData().begin(); it != DATAMANAGER->getPartyData().end(); ++it)
-		{
-			
-		}*/
 		fclose(_fp);
 	}
 }
@@ -1545,18 +1541,6 @@ void TurnSystem2::setStart(bool start)
 		}
 		searchMovableTiles();
 	}
-	/*
-	else if (_start && DATAMANAGER->isLoadGame())
-	{
-		for (auto it = _charList.begin(); it != _charList.end(); ++it)
-		{
-			if ((*it)->getTurnOrder(_charList.size()) == 0)
-			{
-				_curChar = (*it);
-				break;
-			}
-		}
-	}*/
 }
 
 vector<POINT> TurnSystem2::astar(POINT start, POINT dest)
