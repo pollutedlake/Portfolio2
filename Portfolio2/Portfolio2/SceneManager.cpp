@@ -81,7 +81,14 @@ HRESULT SceneManager::loadingScene()
         DATAMANAGER->setSceneIdx(0);
         DATAMANAGER->setBattleIdx(0);
         DATAMANAGER->setMaxScenario(DATAMANAGER->getMaxScenario() + 6);
-        iter->init("Title");
+        if (DATAMANAGER->getScenario() == 75)
+        {
+            iter->init("Title");
+        }
+        else
+        {
+            iter->init("Senario");
+        }
     }
     else
     {

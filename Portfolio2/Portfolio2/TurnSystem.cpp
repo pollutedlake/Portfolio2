@@ -491,6 +491,23 @@ void TurnSystem::release(void)
 
 void TurnSystem::render(HDC hdc, int tileHeight, int tileWidth, POINT cameraPos)
 {
+	// 그림자
+	for (auto it = _charList.begin(); it != _charList.end(); ++it)
+	{
+		int x = NULL;
+		int y = NULL;
+		if ((*it)->isDoing())
+		{
+			x = (*it)->getX() - IMAGEMANAGER->findImage("Shadow")->getWidth() / 2;
+			y = (*it)->getY() - IMAGEMANAGER->findImage("Shadow")->getWidth() / 2;
+		}
+		else
+		{
+			x = (*it)->getTilePos().x * TILEWIDTH + TILEWIDTH / 2 - IMAGEMANAGER->findImage("Shadow")->getWidth() / 2;
+			y = (*it)->getTilePos().y * TILEHEIGHT + TILEHEIGHT / 2 - IMAGEMANAGER->findImage("Shadow")->getHeight() / 2;
+		}
+		IMAGEMANAGER->findImage("Shadow")->alphaRender(hdc, WINSIZE_X / 2 - (cameraPos.x - x), WINSIZE_Y / 2 - (cameraPos.y - y), 128);
+	}
 	// 현재 캐릭터가 플레이어일 때
 	if (_curChar->getType() == 0)
 	{
