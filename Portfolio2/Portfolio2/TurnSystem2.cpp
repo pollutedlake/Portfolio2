@@ -84,7 +84,7 @@ void TurnSystem2::update(POINT cursorTile)
 					break;
 				}
 				++it;
-				if (it == _charList.end())
+				if (it == _charList.end() && _skill->isFinish())
 				{
 					_isClear = true;
 					_frame = 0;

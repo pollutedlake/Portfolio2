@@ -53,7 +53,7 @@ void Skill::update(void)
 			}
 			if (_startFrame == 1)
 			{
-				SOUNDMANAGER->playSoundFMOD("SkillCasting");
+				SOUNDMANAGER->playSoundFMOD("SuperSkillCasting");
 			}
 			if ((_startFrame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
 			{
@@ -366,7 +366,6 @@ void Skill::update(void)
 				_isFinish = true;
 				_curChar->setState(0);
 				_curChar->endTurn();
-				//_curChar->setTurn(1, false);
 				_curChar->setDir(DOWN);
 				_curChar->setDoing(false);
 			}
@@ -387,7 +386,7 @@ void Skill::update(void)
 			}
 			if (_startFrame == 1)
 			{
-				SOUNDMANAGER->playSoundFMOD("SkillCasting");
+				SOUNDMANAGER->playSoundFMOD("SuperSkillCasting");
 			}
 			if ((_startFrame - 1) / 2 > IMAGEMANAGER->findImage("SkillCasting")->getMaxFrameX())
 			{
@@ -496,7 +495,7 @@ void Skill::update(void)
 		}
 		else if (_order.test(2))
 		{
-			if (_frame == 1)//3 * 2 - 8 + (IMAGEMANAGER->findImage("Eruption2RU")->getMaxFrameX() + 1) * 5)
+			if (_frame == 1)
 			{
 				for (auto it = _charList.begin(); it != _charList.end(); ++it)
 				{

@@ -83,19 +83,22 @@ HRESULT SceneManager::loadingScene()
         DATAMANAGER->setMaxScenario(DATAMANAGER->getMaxScenario() + 6);
         if (DATAMANAGER->getScenario() == 75)
         {
-            iter->init("Title");
+			_currentScene = _sceneMap.find("Title")->second;
+			_currentScene->init();
+			//iter->init("Title");
         }
         else
         {
-            iter->init("Senario");
+            _currentScene = _sceneMap.find("Scenario")->second;
+            _currentScene->init();
         }
     }
     else
     {
         iter->init(DATAMANAGER->getSceneList(DATAMANAGER->getScenario())[DATAMANAGER->getSceneIdx()]);
+        DATAMANAGER->setSceneIdx(DATAMANAGER->getSceneIdx() + 1);
+        _currentScene = iter;
     }
-    DATAMANAGER->setSceneIdx(DATAMANAGER->getSceneIdx() + 1);
-    _currentScene = iter;
     return S_OK;
 }
 

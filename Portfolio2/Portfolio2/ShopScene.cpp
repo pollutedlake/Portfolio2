@@ -375,7 +375,8 @@ void ShopScene::render(void)
 	}
 	else if (_order.test(1))
 	{
-
+		FONTMANAGER->textOut(getMemDC(), 20, WINSIZE_Y - 180, "가을체", 20, 100, "[무기점주인]", strlen("[무기점주인]"), RGB(0, 255, 0));
+		FONTMANAGER->textOut(getMemDC(), 20, WINSIZE_Y - 160, "가을체", 20, 100, "어서오세요. 무엇을 찾으시나요?", strlen("어서오세요. 무엇을 찾으시나요?"), RGB(255, 255, 255));
 	}
 
 	if (_order.none())

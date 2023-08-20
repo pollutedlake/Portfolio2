@@ -449,9 +449,11 @@ void StoryScene::update(void)
 		}
 		else if (_backGroundIndex == 4)
 		{
-			if (SOUNDMANAGER->getCurrentPos("SherazadeDead") > SOUNDMANAGER->getSoundLength("SherazadeDead") + 3000)
+			_frame++;
+			if (_frame > 3000)
 			{
 				_backGroundIndex = 5;
+				_frame = 0;
 				_dialogIndex = 17;
 			}
 		}

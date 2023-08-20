@@ -3,7 +3,7 @@
 
 HRESULT DataManager::init(void)
 {
-	_introVideo = false;
+	_introVideo = true;
 	_maxScenario = 75;
 	_scenario = 69;
 	_sceneIdx = 0;

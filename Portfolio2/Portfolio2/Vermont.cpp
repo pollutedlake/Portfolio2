@@ -32,7 +32,6 @@ void Vermont::update(void)
 		if (_frame == 3)
 		{
 			SOUNDMANAGER->playEffectSoundWave("Resources/Sounds/SoundEffect/VermontAttack.wav");
-			//SOUNDMANAGER->playSoundFMOD("VermontAttack");
 		}
 		if ((_frame / 10) % 4 == 2)
 		{

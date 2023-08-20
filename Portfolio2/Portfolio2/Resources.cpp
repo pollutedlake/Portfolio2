@@ -524,6 +524,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSoundFMOD("BreakIce", "Resources/Sounds/SoundEffect/BreakIce.wav");
 	SOUNDMANAGER->addSoundFMOD("VermontSkillAttack", "Resources/Sounds/SoundEffect/VermontSkillAttack.wav");
 	SOUNDMANAGER->addSoundFMOD("SkillCasting", "Resources/Sounds/SoundEffect/SkillCasting.wav");
+	SOUNDMANAGER->addSoundFMOD("SuperSkillCasting", "Resources/Sounds/SoundEffect/SuperSkillCasting.wav");
 	SOUNDMANAGER->addSoundFMOD("Blizzard","Resources/Sounds/SoundEffect/Blizzard.wav");
 	SOUNDMANAGER->addSoundFMOD("Magma","Resources/Sounds/SoundEffect/Magma.wav");
 	SOUNDMANAGER->addSoundFMOD("CrackedEarth","Resources/Sounds/SoundEffect/CrackedEarth.wav");
