@@ -84,6 +84,7 @@ void Vermont::update(void)
 			}
 		}
 	}
+	// 설화난영참
 	else if (_state.test(SKILL))
 	{
 		if (_skillOrder.test(0))
@@ -100,8 +101,10 @@ void Vermont::update(void)
 			static float moveDist;
 			if(_frame == 1)
 			{ 
+				// 목표 지점까지 방향 거리를 계산
 				angle = atan2((float)_destTilePos.y * 30.f + 15.f - y, (float)_destTilePos.x * 40.f + 20.f - x);
 				dist = sqrt(pow(((float)_destTilePos.x * 40.f + 20.f - x) * 1.1f, 2) + pow(((float)_destTilePos.y * 30.f + 15.f - y) * 1.1f, 2));
+				// 처음위치로 되돌아 올 때
 				if (SamePoint(_destTilePos, _tilePos))
 				{
 					dist = sqrt(pow(((float)_destTilePos.x * 40.f + 20.f - x), 2) + pow(((float)_destTilePos.y * 30.f + 15.f - y), 2));
@@ -112,6 +115,7 @@ void Vermont::update(void)
 			{
 				SOUNDMANAGER->playSoundFMOD("VermontSkillAttack");
 			}
+			// 방향 설정
 			if (abs((float)_destTilePos.y * 30.f + 15.f - y) > abs((float)_destTilePos.x * 40.f + 20.f - x))
 			{
 				if (sin(angle) < 0)
@@ -144,16 +148,13 @@ void Vermont::update(void)
 					x = (float)_destTilePos.x * 40.f + 20.f;
 					y = (float)_destTilePos.y * 30.f + 15.f;
 				}
+				// 이동거리가 처음 계산한 거리보다 크면 제자리에 멈춘다.
 				else
 				{
 					x -= 10.f * cos(angle);
 					y -= 10.f * sin(angle);
 				}
 			}
-		}
-		else if (_skillOrder.test(3))
-		{
-			
 		}
 	}
 	else if (_state.test(DIE))

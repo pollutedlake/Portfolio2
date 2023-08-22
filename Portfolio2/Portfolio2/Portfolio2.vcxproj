@@ -144,21 +144,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AStar.h" />
+    <ClInclude Include="Class\AStar.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="BossBattleScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CommonMacroFunction.h" />
-    <ClInclude Include="DataManager.h" />
+    <ClInclude Include="ManagerClass\DataManager.h" />
     <ClInclude Include="DialogManager.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="ManagerClass\FontManager.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GImage.h" />
-    <ClInclude Include="ImageManager.h" />
-    <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="ManagerClass\ImageManager.h" />
+    <ClInclude Include="ManagerClass\KeyManager.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MainGame.h" />
@@ -177,7 +177,7 @@
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Soldier.h" />
-    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="ManagerClass\SoundManager.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StoryScene.h" />
     <ClInclude Include="TitleScene.h" />
@@ -187,20 +187,20 @@
     <ClInclude Include="WorldMapScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="Class\AStar.cpp" />
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="BossBattleScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="ManagerClass\DataManager.cpp" />
     <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="ManagerClass\FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GImage.cpp" />
-    <ClCompile Include="ImageManager.cpp" />
-    <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="ManagerClass\ImageManager.cpp" />
+    <ClCompile Include="ManagerClass\KeyManager.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="LoadScene.cpp" />
     <ClCompile Include="MainGame.cpp" />
@@ -216,7 +216,7 @@
     <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Soldier.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="ManagerClass\SoundManager.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>

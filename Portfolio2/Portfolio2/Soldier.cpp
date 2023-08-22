@@ -21,6 +21,7 @@ void Soldier::release(void)
 	Enemy::release();
 }
 
+// 병사의 상태, 방향, 타입에 따라 다른 이미지, 소리를 출력한다.
 void Soldier::update(void)
 {
 	_frame++;

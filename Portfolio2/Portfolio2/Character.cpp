@@ -32,6 +32,7 @@ void Character::render(HDC hdc, POINT position, POINT cameraPos)
 {
 }
 
+// 상태 변경하고 초기화
 void Character::setState(int state)
 {
 	_state.reset();
@@ -44,12 +45,14 @@ void Character::setState(int state)
 	_frame = 0;
 }
 
+// 방향 설정
 void Character::setDir(int dir)
 {
 	_dir.reset();
 	_dir.set(dir, true);
 }
 
+// 공중탈것 탑승하고 내리기
 void Character::setRide(bool ride)
 {
 	if (ride)
@@ -78,6 +81,7 @@ int Character::getTurnOrder(int charN)
 
 void Character::move()
 {
+	// 공중탈것에 탄 상태라면 목적지 까지 선형보간으로 이동
 	if (_isRide)
 	{
 		float dest = (abs)(_destTilePos.x - _tilePos.x) + (abs)(_destTilePos.y - _tilePos.y);
@@ -91,6 +95,7 @@ void Character::move()
 			_turn.flip(0);
 		}
 	}
+	// 공중탈것에 타지 않는 상태라면 경로가 빌 때까지 경로의 다음 노드까지 선형보간으로 이동하고 하나씩 pop한다. 
 	else
 	{
 		if (_route.size() > 0 && _curMobility > 0)

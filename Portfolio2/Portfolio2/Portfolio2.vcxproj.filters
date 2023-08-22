@@ -64,7 +64,7 @@
     <ClInclude Include="Stdafx.h">
       <Filter>FrameWork\PCH</Filter>
     </ClInclude>
-    <ClInclude Include="ImageManager.h">
+    <ClInclude Include="ManagerClass\ImageManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="CommonMacroFunction.h">
@@ -73,7 +73,7 @@
     <ClInclude Include="RandomFunction.h">
       <Filter>FrameWork\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="KeyManager.h">
+    <ClInclude Include="ManagerClass\KeyManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
@@ -89,10 +89,10 @@
     <ClInclude Include="StoryScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="SoundManager.h">
+    <ClInclude Include="ManagerClass\SoundManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h">
+    <ClInclude Include="ManagerClass\FontManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="EndingScene.h">
@@ -107,7 +107,7 @@
     <ClInclude Include="DialogManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
-    <ClInclude Include="AStar.h">
+    <ClInclude Include="Class\AStar.h">
       <Filter>Class</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -164,7 +164,7 @@
     <ClInclude Include="LoadingScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DataManager.h">
+    <ClInclude Include="ManagerClass\DataManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
     <ClInclude Include="TurnSystem2.h">
@@ -181,10 +181,10 @@
     <ClCompile Include="GImage.cpp">
       <Filter>FrameWork\GImage</Filter>
     </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
+    <ClCompile Include="ManagerClass\ImageManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
+    <ClCompile Include="ManagerClass\KeyManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp" />
@@ -203,10 +203,10 @@
     <ClCompile Include="StoryScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
+    <ClCompile Include="ManagerClass\SoundManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp">
+    <ClCompile Include="ManagerClass\FontManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
     <ClCompile Include="EndingScene.cpp">
@@ -221,7 +221,7 @@
     <ClCompile Include="DialogManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="AStar.cpp">
+    <ClCompile Include="Class\AStar.cpp">
       <Filter>Class</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -278,7 +278,7 @@
     <ClCompile Include="LoadingScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DataManager.cpp">
+    <ClCompile Include="ManagerClass\DataManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
     <ClCompile Include="TurnSystem2.cpp">

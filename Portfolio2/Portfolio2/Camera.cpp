@@ -13,6 +13,7 @@ void Camera::release(void)
 {
 }
 
+// 방향키 입력 또는 마우스로 카메라 이동
 void Camera::update(void)
 {
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || _ptMouse.x > WINSIZE_X - 8)
@@ -90,6 +91,7 @@ void Camera::setPosition(POINT position)
 	}
 }
 
+// 월드 좌표계에서 카메라 좌표계로 변환
 POINT Camera::worldToCamera(POINT point)
 {
 	return PointMake(WINSIZE_X / 2 - (_position.x - point.x), WINSIZE_Y / 2 - (_position.y - point.y));

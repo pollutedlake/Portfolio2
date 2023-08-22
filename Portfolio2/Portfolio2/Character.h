@@ -21,7 +21,7 @@ protected:
 	bitset<2> _turn;
 	bitset<5> _state;
 	bitset<4> _skillOrder;
-	bitset<50> _turnOrder;
+	bitset<50> _turnOrder; // 턴 순서
 	POINT _destTilePos;
 	int _frame;
 	vector<POINT> _route;
@@ -34,7 +34,7 @@ protected:
 	int _damage;
 	bool _isAttack;
 	bool _isDie;
-	bool _isRide;
+	bool _isRide;		// 공중 탈것을 탔는지
 	float x, y;
 	char* _skillName;
 
