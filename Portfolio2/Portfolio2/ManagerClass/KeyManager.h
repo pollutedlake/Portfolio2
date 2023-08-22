@@ -1,5 +1,5 @@
 #pragma once
-#include "SingletonBase.h"
+#include "../FrameWork/DesignPattern/SingletonBase.h"
 
 // 객체 지향 젼환 -> 설계 방식 / 방법론
 

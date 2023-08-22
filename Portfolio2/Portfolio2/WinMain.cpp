@@ -1,6 +1,4 @@
-#include "Stdafx.h"
-
-#
+#include "./FrameWork/PCH/Stdafx.h"
 #include "MainGame.h"
 MainGame* _mg;
 
@@ -23,33 +21,33 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
     WNDCLASS wndClass;
 
-    wndClass.cbClsExtra = 0;                                                    // 클래스 여분 메모리
-    wndClass.cbWndExtra = 0;                                                    // 윈도우 여분 메모리
-    wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);               // 백그라운드
-    wndClass.hCursor = LoadCursor(NULL, IDC_CROSS);                             // 마우스 커서
-    wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);                           // 아이콘
-    wndClass.hInstance = hInstance;                                             // 윈도우를 소요한 프로그램의 식별자 정보
-    wndClass.lpfnWndProc = (WNDPROC)WndProc;                                    // 윈도우 프로시저
-    wndClass.lpszClassName = WINNAME;                                        // 클래스 이름 (식별자 정보)
-    wndClass.lpszMenuName = NULL;                                               // 메뉴 이름
-    wndClass.style = CS_HREDRAW | CS_VREDRAW;                                   // 윈도우 스타일 (다시 그리기 정보)
+    wndClass.cbClsExtra = 0;           
+    wndClass.cbWndExtra = 0;               
+    wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);    
+    wndClass.hCursor = LoadCursor(NULL, IDC_CROSS);       
+    wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);    
+    wndClass.hInstance = hInstance;       
+    wndClass.lpfnWndProc = (WNDPROC)WndProc;  
+    wndClass.lpszClassName = WINNAME;  
+    wndClass.lpszMenuName = NULL; 
+    wndClass.style = CS_HREDRAW | CS_VREDRAW;
 
     RegisterClass(&wndClass);
 
     _hWnd = CreateWindow
     (
-        WINNAME,                     // 윈도우 클래스 식별자
-        WINNAME,                     // 윈도우 타이틀 바 이름
-        WINSTYLE,            // 윈도우 스타일
-        WINSTART_X,                            // 윈도우 화면 X 좌표
-        WINSTART_Y,                            // 윈도우 화면 Y 좌표
-        WINSIZE_X,                            // 윈도우 화면 가로 크기
-        WINSIZE_Y,                            // 윈도우 화면 세로 크기
-        NULL,                           // 부모 윈도우 -> GetDsktopWindow
-        (HMENU)NULL,                    // 메뉴 핸들
-        hInstance,                      // 인스턴스 지정
-        NULL                            // 윈도우의 자식 윈도우를 생성하면 지정하고 그렇지 않다면 NULL
-                                        // ㄴ 필요에 의해서 사용하기도 하지만 지금은 NULL
+        WINNAME,                     
+        WINNAME,                    
+        WINSTYLE,       
+        WINSTART_X,                            
+        WINSTART_Y,                            
+        WINSIZE_X,                            
+        WINSIZE_Y,                          
+        NULL,                           
+        (HMENU)NULL,                    
+        hInstance,                      
+        NULL                            
+                                        
     );
 
     setWindowSize(WINSTART_X, WINSTART_Y, WINSIZE_X, WINSIZE_Y);

@@ -1,6 +1,6 @@
 #pragma once
-#include "SingletonBase.h"
-#include "GImage.h"
+#include "../FrameWork/DesignPattern/SingletonBase.h"
+#include "../FrameWork/GImage/GImage.h"
 
 class ImageManager : public SingletonBase<ImageManager>
 {

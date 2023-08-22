@@ -1,5 +1,5 @@
-#include "Stdafx.h"
-#include "FontManager.h"
+#include "../FrameWork/PCH/Stdafx.h"
+#include "./FontManager.h"
 
 void FontManager::textOut(HDC hdc, int destX, int destY, char* fontName, int fontSize, int fontWeight, char* printString, int length, COLORREF color)
 {

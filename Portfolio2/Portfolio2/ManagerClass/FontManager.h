@@ -1,5 +1,5 @@
 #pragma once
-#include "SingletonBase.h"
+#include "../FrameWork/DesignPattern/SingletonBase.h"
 
 class FontManager : public SingletonBase<FontManager>
 {

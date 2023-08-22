@@ -1,7 +1,7 @@
 #pragma once
-#include "SingletonBase.h"
-#include "Player.h"
-#include "Soldier.h"
+#include "../FrameWork/DesignPattern/SingletonBase.h"
+#include "../Class/Object/Character/Player.h"
+#include "../Class/Object/Character/Enemy/Soldier.h"
 
 enum STATUS
 {

@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "../FrameWork/PCH/Stdafx.h"
 #include "AStar.h"
 
 vector<POINT> AStar::findRoute(POINT start, POINT dest, int map[][60], int rowN, int colN)

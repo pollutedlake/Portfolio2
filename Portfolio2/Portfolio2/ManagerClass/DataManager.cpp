@@ -1,5 +1,5 @@
-#include "Stdafx.h"
-#include "DataManager.h"
+#include "../FrameWork/PCH/Stdafx.h"
+#include "./DataManager.h"
 
 HRESULT DataManager::init(void)
 {

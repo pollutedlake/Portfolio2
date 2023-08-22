@@ -1,9 +1,6 @@
 #pragma once
-#include "SingletonBase.h"
-// 윈도우 내장 라이브러리 (재생)
-// 시간 / v사운드 -> PlaySound()
+#include "../FrameWork/DesignPattern/SingletonBase.h"
 #include <mmsystem.h>
-// mciSendString()이라는 함수를 사용하기 위해
 #include <mciapi.h>
 
 #pragma comment(lib, "Winmm.lib")
