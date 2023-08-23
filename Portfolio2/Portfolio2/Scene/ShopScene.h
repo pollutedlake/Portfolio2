@@ -1,10 +1,5 @@
 #pragma once
-#include "GameNode.h"
-
-//enum State 
-//{
-//	
-//};
+#include "../FrameWork/GameNode/GameNode.h"
 
 class ShopScene : public GameNode
 {

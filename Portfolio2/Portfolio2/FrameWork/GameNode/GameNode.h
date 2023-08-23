@@ -1,5 +1,5 @@
 #pragma once
-#include "../FrameWork/GImage/GImage.h"
+#include "../GImage/GImage.h"
 
 static GImage* _backBuffer = IMAGEMANAGER->addImage("backBuffer", WINSIZE_X, WINSIZE_Y);
 

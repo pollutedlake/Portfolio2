@@ -1,6 +1,6 @@
 #pragma once
-#include "GameNode.h"
-#include "Resources.h"
+#include "../GameNode/GameNode.h"
+#include "../../Resource/Resources.h"
 
 class MainGame : public GameNode
 {

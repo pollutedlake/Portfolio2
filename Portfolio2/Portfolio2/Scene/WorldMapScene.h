@@ -1,6 +1,6 @@
 #pragma once
-#include "GameNode.h"
-#include "Camera.h"
+#include "../FrameWork/GameNode/GameNode.h"
+#include "../Class/Camera.h"
 
 class WorldMapScene	: public GameNode
 {

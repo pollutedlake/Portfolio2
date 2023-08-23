@@ -3,7 +3,7 @@
 #pragma comment(lib, "comsuppw.lib")
 #include <dshow.h>
 #include <comutil.h>
-#include "GameNode.h"
+#include "../FrameWork/GameNode/GameNode.h"
 #include <Mfidl.h>
 
 class TitleScene : public GameNode

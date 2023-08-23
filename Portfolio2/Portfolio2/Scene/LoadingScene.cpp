@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "../FrameWork/PCH/Stdafx.h"
 #include "LoadingScene.h"
 
 HRESULT LoadingScene::init(string nextScene)

@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "../FrameWork/PCH/Stdafx.h"
 #include "WorldMapScene.h"
 
 HRESULT WorldMapScene::init(void)

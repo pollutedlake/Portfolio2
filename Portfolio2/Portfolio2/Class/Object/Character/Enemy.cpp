@@ -1,5 +1,5 @@
-#include "Stdafx.h"
-#include "Enemy.h"
+#include "../../../FrameWork/PCH/Stdafx.h"
+#include "./Enemy.h"
 
 POINT Enemy::findPlayer(int tileInfo[][60], int rowN, int colN)
 {

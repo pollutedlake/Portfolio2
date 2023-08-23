@@ -1,14 +1,11 @@
 #pragma once
-#include "SingletonBase.h"
+#include "../DesignPattern/SingletonBase.h"
 
 class RandomFunction : public SingletonBase <RandomFunction>
 {
 public:
 	RandomFunction()
 	{
-		// GetTickCount() : API 공용 함수
-		// ㄴ API 함수로 OS가 부팅된 후의 경과 시간을 체크해 준다.
-		// ㄴ 밀리세컨드 단위로 체크가 가능하며 밀리세컨드 단위로 시간 값을 반환하기 때문에 규모가 크지 않는 로직에 적합하다.
 		srand(GetTickCount());
 	}
 	~RandomFunction() {}

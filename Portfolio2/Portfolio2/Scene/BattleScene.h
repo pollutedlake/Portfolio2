@@ -1,13 +1,13 @@
 #pragma once
-#include "GameNode.h"
-#include "Camera.h"
-#include "TurnSystem2.h"
-#include "Object.h"
-#include "Character.h"
-#include "Player.h"
-#include "Saladin.h"
-#include "Soldier.h"
-#include "Obstacle.h"
+#include "../FrameWork/GameNode/GameNode.h"
+#include "../Class/Camera.h"
+#include "../Class/TurnSystem2.h"
+#include "../Class/Object.h"
+#include "../Class/Object/Character.h"
+#include "../Class/Object/Character/Player.h"
+#include "../Class/Object/Character/Player/Saladin.h"
+#include "../Class/Object/Character/Enemy/Soldier.h"
+#include "../Class/Object/Obstacle.h"
 
 class BattleScene : public GameNode
 {

@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "../FrameWork/PCH/Stdafx.h"
 #include "StoryScene.h"
 
 HRESULT StoryScene::init(void)

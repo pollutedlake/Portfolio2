@@ -1,9 +1,5 @@
-#include "Stdafx.h"
-#include "GameNode.h"
-
-// 객체지향 프로그래밍 -> 설계의 기반한 효율적인 방법론과 관리 쳬계
-
-//POINT _ptMouse;
+#include "../PCH/Stdafx.h"
+#include "./GameNode.h"
 
 HRESULT GameNode::init(void)
 {

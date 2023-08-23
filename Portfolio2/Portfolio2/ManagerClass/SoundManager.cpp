@@ -1,5 +1,5 @@
-#include "Stdafx.h"
-#include "SoundManager.h"
+#include "../FrameWork/PCH/Stdafx.h"
+#include "./SoundManager.h"
 
 HRESULT SoundManager::init(void)
 {

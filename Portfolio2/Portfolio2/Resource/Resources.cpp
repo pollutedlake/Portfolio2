@@ -1,5 +1,5 @@
-#include "Stdafx.h"
-#include "Resources.h"
+#include "../FrameWork/PCH/Stdafx.h"
+#include "./Resources.h"
 
 HRESULT Resources::init(void)
 {

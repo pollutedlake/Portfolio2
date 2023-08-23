@@ -1,12 +1,12 @@
 #pragma once
-#include "GameNode.h"
-#include "Camera.h"
-#include "TurnSystem.h"
-#include "Saladin.h"
-#include "Vermont.h"
-#include "Soldier.h"
-#include "PlayerSoldier.h"
-#include "AStar.h"
+#include "../FrameWork/GameNode/GameNode.h"
+#include "../Class/Camera.h"
+#include "../Class/TurnSystem.h"
+#include "../Class/Object/Character/Player/Saladin.h"
+#include "../Class/Object/Character/Enemy/Vermont.h"
+#include "../Class/Object/Character/Enemy/Soldier.h"
+#include "../Class/Object/Character/Player/PlayerSoldier.h"
+#include "../Class/AStar.h"
 
 #define TileWidth	40
 #define TileHeight	30

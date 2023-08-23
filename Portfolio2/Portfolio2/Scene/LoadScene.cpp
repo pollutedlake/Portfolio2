@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+#include "../FrameWork/PCH/Stdafx.h"
 #include "LoadScene.h"
 
 HRESULT LoadScene::init(void)
