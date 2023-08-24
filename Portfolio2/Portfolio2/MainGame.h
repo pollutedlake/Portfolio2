@@ -1,4 +1,5 @@
 // FMOD »ç¿ë
+// Debug x86
 #pragma once
 #include "GameNode.h"
 #include "Resources.h"
