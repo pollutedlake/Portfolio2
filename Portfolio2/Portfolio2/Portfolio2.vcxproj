@@ -89,8 +89,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>../FrameWork/PCH/Stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -144,168 +144,90 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Class\AStar.h" />
-    <ClInclude Include="Class\Camera.h" />
-    <ClInclude Include="Class\Object.h" />
-    <ClInclude Include="Class\Object\Character.h" />
-    <ClInclude Include="Class\Object\Character\Enemy.h" />
-    <ClInclude Include="Class\Object\Character\Enemy\Soldier.h" />
-    <ClInclude Include="Class\Object\Character\Enemy\Vermont.h" />
-    <ClInclude Include="Class\Object\Character\Player.h" />
-    <ClInclude Include="Class\Object\Character\Player\PlayerSoldier.h" />
-    <ClInclude Include="Class\Object\Character\Player\Saladin.h" />
-    <ClInclude Include="Class\Object\Obstacle.h" />
-    <ClInclude Include="Class\Skill.h" />
-    <ClInclude Include="Class\TurnSystem.h" />
-    <ClInclude Include="Class\TurnSystem2.h" />
-    <ClInclude Include="FrameWork\DesignPattern\SingletonBase.h" />
-    <ClInclude Include="FrameWork\GameNode\GameNode.h" />
-    <ClInclude Include="FrameWork\GImage\GImage.h" />
-    <ClInclude Include="FrameWork\MainGame\MainGame.h" />
-    <ClInclude Include="FrameWork\PCH\Stdafx.h" />
-    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h" />
-    <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
-    <ClInclude Include="inc\fmod.h" />
-    <ClInclude Include="inc\fmod.hpp" />
-    <ClInclude Include="inc\fmod_codec.h" />
-    <ClInclude Include="inc\fmod_common.h" />
-    <ClInclude Include="inc\fmod_dsp.h" />
-    <ClInclude Include="inc\fmod_dsp_effects.h" />
-    <ClInclude Include="inc\fmod_errors.h" />
-    <ClInclude Include="inc\fmod_output.h" />
-    <ClInclude Include="ManagerClass\DataManager.h" />
-    <ClInclude Include="ManagerClass\DialogManager.h" />
-    <ClInclude Include="ManagerClass\FontManager.h" />
-    <ClInclude Include="ManagerClass\ImageManager.h" />
-    <ClInclude Include="ManagerClass\KeyManager.h" />
-    <ClInclude Include="ManagerClass\SceneManager.h" />
+    <ClInclude Include="AStar.h" />
+    <ClInclude Include="BattleScene.h" />
+    <ClInclude Include="BossBattleScene.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="CommonMacroFunction.h" />
+    <ClInclude Include="DataManager.h" />
+    <ClInclude Include="DialogManager.h" />
+    <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="GameNode.h" />
+    <ClInclude Include="GImage.h" />
+    <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="LoadingScene.h" />
+    <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerSoldier.h" />
+    <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ManagerClass\SoundManager.h" />
-    <ClInclude Include="Resource\Resources.h" />
-    <ClInclude Include="Scene\BattleScene.h" />
-    <ClInclude Include="Scene\BossBattleScene.h" />
-    <ClInclude Include="Scene\EndingScene.h" />
-    <ClInclude Include="Scene\LoadingScene.h" />
-    <ClInclude Include="Scene\LoadScene.h" />
-    <ClInclude Include="Scene\ScenarioScene.h" />
-    <ClInclude Include="Scene\ShopScene.h" />
-    <ClInclude Include="Scene\StoryScene.h" />
-    <ClInclude Include="Scene\TitleScene.h" />
-    <ClInclude Include="Scene\WorldMapScene.h" />
+    <ClInclude Include="Resources.h" />
+    <ClInclude Include="Saladin.h" />
+    <ClInclude Include="ScenarioScene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ShopScene.h" />
+    <ClInclude Include="SingletonBase.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="Soldier.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="StoryScene.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="TurnSystem.h" />
+    <ClInclude Include="TurnSystem2.h" />
+    <ClInclude Include="Vermont.h" />
+    <ClInclude Include="WorldMapScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Class\AStar.cpp" />
-    <ClCompile Include="Class\Camera.cpp" />
-    <ClCompile Include="Class\Object.cpp" />
-    <ClCompile Include="Class\Object\Character.cpp" />
-    <ClCompile Include="Class\Object\Character\Enemy.cpp" />
-    <ClCompile Include="Class\Object\Character\Enemy\Soldier.cpp" />
-    <ClCompile Include="Class\Object\Character\Enemy\Vermont.cpp" />
-    <ClCompile Include="Class\Object\Character\Player.cpp" />
-    <ClCompile Include="Class\Object\Character\Player\PlayerSoldier.cpp" />
-    <ClCompile Include="Class\Object\Character\Player\Saladin.cpp" />
-    <ClCompile Include="Class\Object\Obstacle.cpp" />
-    <ClCompile Include="Class\Skill.cpp" />
-    <ClCompile Include="Class\TurnSystem.cpp" />
-    <ClCompile Include="Class\TurnSystem2.cpp" />
-    <ClCompile Include="FrameWork\GameNode\GameNode.cpp" />
-    <ClCompile Include="FrameWork\GImage\GImage.cpp" />
-    <ClCompile Include="FrameWork\MainGame\MainGame.cpp" />
-    <ClCompile Include="FrameWork\PCH\Stdafx.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/FrameWork/PCH/Stdafx.h</PrecompiledHeaderFile>
+    <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="BattleScene.cpp" />
+    <ClCompile Include="BossBattleScene.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="DialogManager.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="GameNode.cpp" />
+    <ClCompile Include="GImage.cpp" />
+    <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
+    <ClCompile Include="LoadScene.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerSoldier.cpp" />
+    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Saladin.cpp" />
+    <ClCompile Include="ScenarioScene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ShopScene.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="Soldier.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="Stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ManagerClass\DataManager.cpp" />
-    <ClCompile Include="ManagerClass\DialogManager.cpp" />
-    <ClCompile Include="ManagerClass\FontManager.cpp" />
-    <ClCompile Include="ManagerClass\ImageManager.cpp" />
-    <ClCompile Include="ManagerClass\KeyManager.cpp" />
-    <ClCompile Include="ManagerClass\SceneManager.cpp" />
-    <ClCompile Include="ManagerClass\SoundManager.cpp" />
-    <ClCompile Include="Resource\Resources.cpp" />
-    <ClCompile Include="Scene\BattleScene.cpp" />
-    <ClCompile Include="Scene\BossBattleScene.cpp" />
-    <ClCompile Include="Scene\EndingScene.cpp" />
-    <ClCompile Include="Scene\LoadingScene.cpp" />
-    <ClCompile Include="Scene\LoadScene.cpp" />
-    <ClCompile Include="Scene\ScenarioScene.cpp" />
-    <ClCompile Include="Scene\ShopScene.cpp" />
-    <ClCompile Include="Scene\StoryScene.cpp" />
-    <ClCompile Include="Scene\TitleScene.cpp" />
-    <ClCompile Include="Scene\WorldMapScene.cpp" />
+    <ClCompile Include="StoryScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="TurnSystem.cpp" />
+    <ClCompile Include="TurnSystem2.cpp" />
+    <ClCompile Include="Vermont.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="WorldMapScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Debug\datamanager.new.obj.enc" />
-    <None Include="Debug\Portfolio2.exe.recipe" />
-    <None Include="Debug\Portfolio2.ilk" />
-    <None Include="Debug\Portfolio2.pch" />
-    <None Include="Debug\Portfolio2.tlog\CL.command.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\CL.read.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\CL.write.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.command.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.delete.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.read.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.write.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\Portfolio2.lastbuildstate" />
-    <None Include="Debug\Portfolio2.tlog\rc.command.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\rc.read.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\rc.write.1.tlog" />
-    <None Include="Debug\vc142.idb" />
-    <None Include="Debug\vc142.pdb" />
-    <None Include="fmod.dll" />
-    <None Include="inc\fmod.cs" />
-    <None Include="inc\fmod_dsp.cs" />
-    <None Include="inc\fmod_errors.cs" />
-    <None Include="Portfolio2.aps" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Debug\Portfolio2.log" />
-    <Text Include="save1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Debug\AStar.obj" />
-    <Object Include="Debug\BattleScene.obj" />
-    <Object Include="Debug\BossBattleScene.obj" />
-    <Object Include="Debug\Camera.obj" />
-    <Object Include="Debug\Character.obj" />
-    <Object Include="Debug\DataManager.obj" />
-    <Object Include="Debug\DialogManager.obj" />
-    <Object Include="Debug\EndingScene.obj" />
-    <Object Include="Debug\Enemy.obj" />
-    <Object Include="Debug\FontManager.obj" />
-    <Object Include="Debug\GameNode.obj" />
-    <Object Include="Debug\GImage.obj" />
-    <Object Include="Debug\ImageManager.obj" />
-    <Object Include="Debug\KeyManager.obj" />
-    <Object Include="Debug\LoadingScene.obj" />
-    <Object Include="Debug\LoadScene.obj" />
-    <Object Include="Debug\MainGame.obj" />
-    <Object Include="Debug\Object.obj" />
-    <Object Include="Debug\Obstacle.obj" />
-    <Object Include="Debug\Player.obj" />
-    <Object Include="Debug\PlayerSoldier.obj" />
-    <Object Include="Debug\Resources.obj" />
-    <Object Include="Debug\Saladin.obj" />
-    <Object Include="Debug\ScenarioScene.obj" />
-    <Object Include="Debug\SceneManager.obj" />
-    <Object Include="Debug\ShopScene.obj" />
-    <Object Include="Debug\Skill.obj" />
-    <Object Include="Debug\Soldier.obj" />
-    <Object Include="Debug\SoundManager.obj" />
-    <Object Include="Debug\Stdafx.obj" />
-    <Object Include="Debug\StoryScene.obj" />
-    <Object Include="Debug\TitleScene.obj" />
-    <Object Include="Debug\TurnSystem.obj" />
-    <Object Include="Debug\TurnSystem2.obj" />
-    <Object Include="Debug\Vermont.obj" />
-    <Object Include="Debug\WinMain.obj" />
-    <Object Include="Debug\WorldMapScene.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Debug\Portfolio2.res" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

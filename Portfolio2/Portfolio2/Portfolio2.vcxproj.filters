@@ -29,9 +29,6 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{f8fbb3f3-a981-406a-a0f7-ce490e7d60d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame">
-      <UniqueIdentifier>{308c46f6-6052-4057-8b34-d692c54c6f4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Class">
       <UniqueIdentifier>{019e5340-7add-4eec-b997-34a175785565}</UniqueIdentifier>
     </Filter>
@@ -52,191 +49,235 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ManagerClass\ImageManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="ManagerClass\KeyManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ManagerClass\SoundManager.h">
+    <ClInclude Include="BattleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBattleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StoryScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerClass\FontManager.h">
+    <ClInclude Include="DialogManager.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
-    <ClInclude Include="Class\AStar.h">
+    <ClInclude Include="FontManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>FrameWork\GameCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GImage.h">
+      <Filter>FrameWork\GImage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>FrameWork\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonMacroFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerClass\DataManager.h">
-      <Filter>ManagerClass</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="Class\Object\Character\Enemy\Soldier.h" />
-    <ClInclude Include="Class\Object\Character\Enemy\Vermont.h" />
-    <ClInclude Include="Class\Object\Character\Enemy.h" />
-    <ClInclude Include="Class\Object\Character\Player.h" />
-    <ClInclude Include="Class\Object\Character.h" />
-    <ClInclude Include="Class\Object\Obstacle.h" />
-    <ClInclude Include="Class\Camera.h" />
-    <ClInclude Include="Class\Object.h" />
-    <ClInclude Include="Class\Skill.h" />
-    <ClInclude Include="Class\TurnSystem.h" />
-    <ClInclude Include="Class\TurnSystem2.h" />
-    <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
-    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h" />
-    <ClInclude Include="inc\fmod.h" />
-    <ClInclude Include="inc\fmod.hpp" />
-    <ClInclude Include="inc\fmod_codec.h" />
-    <ClInclude Include="inc\fmod_common.h" />
-    <ClInclude Include="inc\fmod_dsp.h" />
-    <ClInclude Include="inc\fmod_dsp_effects.h" />
-    <ClInclude Include="inc\fmod_errors.h" />
-    <ClInclude Include="inc\fmod_output.h" />
-    <ClInclude Include="ManagerClass\DialogManager.h" />
-    <ClInclude Include="ManagerClass\SceneManager.h" />
-    <ClInclude Include="Resource\Resources.h" />
-    <ClInclude Include="Scene\BattleScene.h" />
-    <ClInclude Include="Scene\BossBattleScene.h" />
-    <ClInclude Include="Scene\EndingScene.h" />
-    <ClInclude Include="Scene\LoadingScene.h" />
-    <ClInclude Include="Scene\LoadScene.h" />
-    <ClInclude Include="Scene\ScenarioScene.h" />
-    <ClInclude Include="Scene\ShopScene.h" />
-    <ClInclude Include="Scene\StoryScene.h" />
-    <ClInclude Include="Scene\TitleScene.h" />
-    <ClInclude Include="Scene\WorldMapScene.h" />
-    <ClInclude Include="FrameWork\PCH\Stdafx.h" />
-    <ClInclude Include="FrameWork\DesignPattern\SingletonBase.h" />
-    <ClInclude Include="FrameWork\GameNode\GameNode.h" />
-    <ClInclude Include="FrameWork\GImage\GImage.h" />
-    <ClInclude Include="FrameWork\MainGame\MainGame.h" />
-    <ClInclude Include="Class\Object\Character\Player\PlayerSoldier.h" />
-    <ClInclude Include="Class\Object\Character\Player\Saladin.h" />
+    <ClInclude Include="Object.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnSystem.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnSystem2.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Class\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Class\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Class\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Class\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSoldier.h">
+      <Filter>Class\Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Saladin.h">
+      <Filter>Class\Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Class\Object\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Vermont.h">
+      <Filter>Class\Object\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>FrameWork\DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ManagerClass\ImageManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="ManagerClass\KeyManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
     <ClCompile Include="WinMain.cpp" />
-    <ClCompile Include="ManagerClass\SoundManager.cpp">
+    <ClCompile Include="BattleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBattleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StoryScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerClass\FontManager.cpp">
+    <ClCompile Include="DialogManager.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
-    <ClCompile Include="Class\AStar.cpp">
+    <ClCompile Include="FontManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNode.cpp">
+      <Filter>FrameWork\GameCore</Filter>
+    </ClCompile>
+    <ClCompile Include="GImage.cpp">
+      <Filter>FrameWork\GImage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>FrameWork\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="AStar.cpp">
       <Filter>Class</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerClass\DataManager.cpp">
-      <Filter>ManagerClass</Filter>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Class</Filter>
     </ClCompile>
-    <ClCompile Include="Class\Object\Character\Enemy\Soldier.cpp" />
-    <ClCompile Include="Class\Object\Character\Enemy\Vermont.cpp" />
-    <ClCompile Include="Class\Object\Character\Enemy.cpp" />
-    <ClCompile Include="Class\Object\Character\Player.cpp" />
-    <ClCompile Include="Class\Object\Character.cpp" />
-    <ClCompile Include="Class\Object\Obstacle.cpp" />
-    <ClCompile Include="Class\Camera.cpp" />
-    <ClCompile Include="Class\Object.cpp" />
-    <ClCompile Include="Class\Skill.cpp" />
-    <ClCompile Include="Class\TurnSystem.cpp" />
-    <ClCompile Include="Class\TurnSystem2.cpp" />
-    <ClCompile Include="ManagerClass\DialogManager.cpp" />
-    <ClCompile Include="ManagerClass\SceneManager.cpp" />
-    <ClCompile Include="Resource\Resources.cpp" />
-    <ClCompile Include="Scene\BattleScene.cpp" />
-    <ClCompile Include="Scene\BossBattleScene.cpp" />
-    <ClCompile Include="Scene\EndingScene.cpp" />
-    <ClCompile Include="Scene\LoadingScene.cpp" />
-    <ClCompile Include="Scene\LoadScene.cpp" />
-    <ClCompile Include="Scene\ScenarioScene.cpp" />
-    <ClCompile Include="Scene\ShopScene.cpp" />
-    <ClCompile Include="Scene\StoryScene.cpp" />
-    <ClCompile Include="Scene\TitleScene.cpp" />
-    <ClCompile Include="Scene\WorldMapScene.cpp" />
-    <ClCompile Include="FrameWork\PCH\Stdafx.cpp" />
-    <ClCompile Include="FrameWork\GameNode\GameNode.cpp" />
-    <ClCompile Include="FrameWork\GImage\GImage.cpp" />
-    <ClCompile Include="FrameWork\MainGame\MainGame.cpp" />
-    <ClCompile Include="Class\Object\Character\Player\PlayerSoldier.cpp" />
-    <ClCompile Include="Class\Object\Character\Player\Saladin.cpp" />
+    <ClCompile Include="Object.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnSystem.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnSystem2.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Class\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Class\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSoldier.cpp">
+      <Filter>Class\Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Saladin.cpp">
+      <Filter>Class\Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Class\Object\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Vermont.cpp">
+      <Filter>Class\Object\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Portfolio2.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="inc\fmod.cs" />
-    <None Include="inc\fmod_dsp.cs" />
-    <None Include="inc\fmod_errors.cs" />
-    <None Include="Portfolio2.aps" />
-    <None Include="fmod.dll" />
-    <None Include="Debug\datamanager.new.obj.enc" />
-    <None Include="Debug\Portfolio2.exe.recipe" />
-    <None Include="Debug\Portfolio2.ilk" />
-    <None Include="Debug\Portfolio2.pch" />
-    <None Include="Debug\vc142.idb" />
-    <None Include="Debug\vc142.pdb" />
-    <None Include="Debug\Portfolio2.tlog\CL.command.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\CL.read.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\CL.write.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.command.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.delete.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.read.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\link.write.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\Portfolio2.lastbuildstate" />
-    <None Include="Debug\Portfolio2.tlog\rc.command.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\rc.read.1.tlog" />
-    <None Include="Debug\Portfolio2.tlog\rc.write.1.tlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="save1.txt" />
-    <Text Include="Debug\Portfolio2.log" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Debug\AStar.obj" />
-    <Object Include="Debug\BattleScene.obj" />
-    <Object Include="Debug\BossBattleScene.obj" />
-    <Object Include="Debug\Camera.obj" />
-    <Object Include="Debug\Character.obj" />
-    <Object Include="Debug\DataManager.obj" />
-    <Object Include="Debug\DialogManager.obj" />
-    <Object Include="Debug\EndingScene.obj" />
-    <Object Include="Debug\Enemy.obj" />
-    <Object Include="Debug\FontManager.obj" />
-    <Object Include="Debug\GameNode.obj" />
-    <Object Include="Debug\GImage.obj" />
-    <Object Include="Debug\ImageManager.obj" />
-    <Object Include="Debug\KeyManager.obj" />
-    <Object Include="Debug\LoadingScene.obj" />
-    <Object Include="Debug\LoadScene.obj" />
-    <Object Include="Debug\MainGame.obj" />
-    <Object Include="Debug\Object.obj" />
-    <Object Include="Debug\Obstacle.obj" />
-    <Object Include="Debug\Player.obj" />
-    <Object Include="Debug\PlayerSoldier.obj" />
-    <Object Include="Debug\Resources.obj" />
-    <Object Include="Debug\Saladin.obj" />
-    <Object Include="Debug\ScenarioScene.obj" />
-    <Object Include="Debug\SceneManager.obj" />
-    <Object Include="Debug\ShopScene.obj" />
-    <Object Include="Debug\Skill.obj" />
-    <Object Include="Debug\Soldier.obj" />
-    <Object Include="Debug\SoundManager.obj" />
-    <Object Include="Debug\Stdafx.obj" />
-    <Object Include="Debug\StoryScene.obj" />
-    <Object Include="Debug\TitleScene.obj" />
-    <Object Include="Debug\TurnSystem.obj" />
-    <Object Include="Debug\TurnSystem2.obj" />
-    <Object Include="Debug\Vermont.obj" />
-    <Object Include="Debug\WinMain.obj" />
-    <Object Include="Debug\WorldMapScene.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Debug\Portfolio2.res" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
-#include "./FrameWork/PCH/Stdafx.h"
-#include "./FrameWork//MainGame//MainGame.h"
+#include "Stdafx.h"
+#include "MainGame.h"
 MainGame* _mg;
 
 HINSTANCE _hInstance;
